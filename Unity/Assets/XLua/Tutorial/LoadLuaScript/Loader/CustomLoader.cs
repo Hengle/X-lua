@@ -24,7 +24,8 @@ public class CustomLoader : MonoBehaviour {
              }
              return null;
          });
-        luaenv.DoString("print('InMemory.ccc=', require('InMemory').ccc)");
+        luaenv.DoString("require('InMemory')");
+        luaenv.DoString("print('InMemory.ccc=', 1)");//.ccc
     }
 
     // Update is called once per frame
