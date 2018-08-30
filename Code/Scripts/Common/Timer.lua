@@ -4,8 +4,8 @@
 --      Use, modification and distribution are subject to the "MIT License"
 --------------------------------------------------------------------------------
 local setmetatable = setmetatable
-local UpdateBeat = UpdateBeat
-local CoUpdateBeat = CoUpdateBeat
+local UpdateEvent = UpdateEvent
+local CoUpdateEvent = CoUpdateEvent
 local Time = Time
 
 Timer = {}
@@ -24,10 +24,10 @@ function Timer:Start()
 	self.running = true
 
 	if not self.handle then
-		self.handle = UpdateBeat:CreateListener(self.Update, self)
+		self.handle = UpdateEvent:CreateListener(self.Update, self)
 	end
 
-	UpdateBeat:AddListener(self.handle)	
+	UpdateEvent:AddListener(self.handle)
 end
 
 function Timer:Reset(func, duration, loop, unscaled)
@@ -42,7 +42,7 @@ function Timer:Stop()
 	self.running = false
 
 	if self.handle then
-		UpdateBeat:RemoveListener(self.handle)	
+		UpdateEvent:RemoveListener(self.handle)
 	end
 end
 
@@ -91,10 +91,10 @@ end
 
 function FrameTimer:Start()		
 	if not self.handle then
-		self.handle = CoUpdateBeat:CreateListener(self.Update, self)
+		self.handle = CoUpdateEvent:CreateListener(self.Update, self)
 	end
 	
-	CoUpdateBeat:AddListener(self.handle)	
+	CoUpdateEvent:AddListener(self.handle)
 	self.running = true
 end
 
@@ -102,7 +102,7 @@ function FrameTimer:Stop()
 	self.running = false
 
 	if self.handle then
-		CoUpdateBeat:RemoveListener(self.handle)	
+		CoUpdateEvent:RemoveListener(self.handle)
 	end
 end
 
@@ -138,11 +138,11 @@ end
 
 function CoTimer:Start()		
 	if not self.handle then	
-		self.handle = CoUpdateBeat:CreateListener(self.Update, self)
+		self.handle = CoUpdateEvent:CreateListener(self.Update, self)
 	end
 	
 	self.running = true
-	CoUpdateBeat:AddListener(self.handle)	
+	CoUpdateEvent:AddListener(self.handle)
 end
 
 function CoTimer:Reset(func, duration, loop)
@@ -156,7 +156,7 @@ function CoTimer:Stop()
 	self.running = false
 
 	if self.handle then
-		CoUpdateBeat:RemoveListener(self.handle)	
+		CoUpdateEvent:RemoveListener(self.handle)
 	end
 end
 
