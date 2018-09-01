@@ -1,31 +1,20 @@
-local event = event
+local Event = event
 local Time = Time
 
----@type _Event
-UpdateEvent = event("Update")
----@type _Event
-CoUpdateEvent = event("CoUpdate")
----@type _Event
-LateUpdateEvent = event("LateUpdate")
----@type _Event
-FixedUpdateEvent = event("FixedUpdate")
 
-function PrintEvents()
-    UpdateEvent:Dump()
-    FixedUpdateEvent:Dump()
+local UpdateEvent = Event.NewSimple("Update")
+local CoUpdateEvent = Event.NewSimple("CoUpdate")
+local LateUpdateEvent = Event.NewSimple("LateUpdate")
+local FixedUpdateEvent = Event.NewSimple("FixedUpdate")
+
+local function Dump()
+    Event.Dump()
 end
 
---逻辑update
-function Update(deltaTime, unscaledDeltaTime)
-    Time:SetDeltaTime(deltaTime, unscaledDeltaTime)
-    UpdateEvent()
-    CoUpdateEvent()
-end
-function LateUpdate()
-    LateUpdateEvent()
-end
---物理update
-function FixedUpdate(fixedDeltaTime)
-    Time:SetFixedDelta(fixedDeltaTime)
-    FixedUpdateEvent()
-end
+return {
+    Dump = Dump,
+    UpdateEvent = UpdateEvent,
+    CoUpdateEvent = CoUpdateEvent,
+    LateUpdateEvent = LateUpdateEvent,
+    FixedUpdateEvent = FixedUpdateEvent,
+}

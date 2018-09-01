@@ -8,19 +8,19 @@ using Game.Platform;
 
 namespace Game
 {
-    public class GameManger : IManager
+    public class GameManager : IManager
     {
-        public static GameManger Instance
+        public static GameManager Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new GameManger();
+                    _instance = new GameManager();
                 return _instance;
             }
         }
-        static GameManger _instance;
-        protected GameManger() { }
+        static GameManager _instance;
+        protected GameManager() { }
 
         enum LaunchState
         {

@@ -4,23 +4,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
+using XLua;
 
 namespace Game
 {
+    [CSharpCallLua]
+    public delegate void UpdateFunc(float deltaTime, float unscaledDeltaTime);
+    [CSharpCallLua]
+    public delegate void LateUpdateFunc();
+    [CSharpCallLua]
+    public delegate void FixedUpdateFunc(float fixedDeltaTime);
+
     public class Main : MonoBehaviour
     {
         public static Main Instance { get; private set; }
 
-        public Action<float, float> Updater;
-        public Action LateUpdater;
-        public Action<float> FixedUpdater;
+        public UpdateFunc Updater;
+        public LateUpdateFunc LateUpdater;
+        public FixedUpdateFunc FixedUpdater;
 
 
         List<IManager> _managers = new List<IManager>()
         {
             LuaManager.Instance,
             ResourceManager.Instance,
-            GameManger.Instance,
+            GameManager.Instance,
         };
 
         void Awake()
@@ -46,15 +54,15 @@ namespace Game
 
         IEnumerator Start()
         {
-            yield return GameManger.Instance.InitSDK();
-            yield return GameManger.Instance.DowmloadUnZip();
-            yield return GameManger.Instance.UnZipFile();
-            yield return GameManger.Instance.UpdateAppVersion();
-            yield return GameManger.Instance.UpdateResVersion();
-            yield return GameManger.Instance.GetServerList();
-            yield return GameManger.Instance.LoadResource();
+            yield return GameManager.Instance.InitSDK();
+            yield return GameManager.Instance.DowmloadUnZip();
+            yield return GameManager.Instance.UnZipFile();
+            yield return GameManager.Instance.UpdateAppVersion();
+            yield return GameManager.Instance.UpdateResVersion();
+            yield return GameManager.Instance.GetServerList();
+            yield return GameManager.Instance.LoadResource();
 
-            GameManger.Instance.StartGame();
+            GameManager.Instance.StartGame();
         }
 
         void Update()

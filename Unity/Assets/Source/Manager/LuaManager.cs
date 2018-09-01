@@ -64,9 +64,9 @@ namespace Game
         {
             _luaEnv.DoString(string.Format("require '{0}'", _luaMain), _luaMain);
             _luaEnv.DoString(string.Format("{0}.Init()", _luaMain), _luaMain);
-            Main.Instance.Updater += _luaEnv.Global.Get<Action<float, float>>("Update");
-            Main.Instance.LateUpdater += _luaEnv.Global.Get<Action>("LateUpdate");
-            Main.Instance.FixedUpdater += _luaEnv.Global.Get<Action<float>>("FixedUpdate");
+            Main.Instance.Updater += _luaEnv.Global.GetInPath<UpdateFunc>(_luaMain + ".Update");
+            Main.Instance.LateUpdater += _luaEnv.Global.GetInPath<LateUpdateFunc>(_luaMain + ".LateUpdate");
+            Main.Instance.FixedUpdater += _luaEnv.Global.GetInPath<FixedUpdateFunc>(_luaMain + ".FixedUpdate");
         }
 
         public void Tick()
