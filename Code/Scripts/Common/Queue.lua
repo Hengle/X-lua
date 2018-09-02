@@ -1,11 +1,12 @@
-local list = list
+local List = List
+local Class = Class
 
 ---@class Queue:list
-local Queue = Class:new(list)
+local Queue = Class:new(List)
 
-function Queue:new()
+function Queue:__new()
     ---@type Queue
-    local o = list:new()
+    local o = List:new()
     setmetatable(o, self)
     return o
 end

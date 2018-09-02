@@ -73,7 +73,7 @@ namespace Game
         {
             if (_luaEnv != null && Time.frameCount % 100 == 0)
             {
-                _luaEnv.Tick();
+                _luaEnv.GC();
                 _luaEnv.FullGc();
             }
         }

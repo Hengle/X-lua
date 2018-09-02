@@ -4,65 +4,10 @@ local tostring = tostring
 local concat = table.concat
 local format = string.format
 local traceback = debug.traceback
+local collectgarbage = collectgarbage
 local dump = table.dump
-local Debug = Debug
-
---unity对象判空--
-function IsNull(unity_object)
-	if unity_object == nil then
-		return true
-	end
-	
-	if type(unity_object) == "userdata" and unity_object.IsNull ~= nil then
-		return unity_object:IsNull()
-	end
-	
-	return false
-end
-
---输出日志--
-function Log(str)
-    if not Local.LogManager then
-        return
-    end
-    if Local.LogTraceback then
-        Debug.Log(str .. "\r\n" .. traceback());
-    else
-        Debug.Log(str);
-    end
-end
---错误日志--
-function LogError(str)
-    if not Local.LogManager then
-        return
-    end
-    if Local.LogTraceback then
-        Debug.LogError(str .. "\r\n" .. traceback());
-    else
-        Debug.LogError(str)
-    end
-end
---警告日志--
-function LogWarning(str)
-    if not Local.LogManager then
-        return
-    end
-    if Local.LogTraceback then
-        Debug.LogWarning(str .. "\r\n" .. traceback());
-    else
-        Debug.LogWarning(str)
-    end
-end
----@param a 判定条件
----@param b true返回b
----@param c false返回c
-function ConditionOp(a, b, c)
-    if a then
-        return b
-    else
-        return c
-    end
-end
+local Debug = CS.UnityEngine.Debug
+local GameObject = GameObject
 
 print = function(...)
     if not Local.LogManager then
@@ -101,9 +46,96 @@ function printt(t, des)
     if not Local.LogManager then
         return
     end
+    des = des or ''
     if type(t) == "table" then
         print(format("<color=orange>%s</color>\n%s", des, dump(t, dump_level)))
     else
         print(des .. '\n' .. t)
     end
+end
+
+
+--unity对象判空--
+function IsNull(unity_object)
+    if unity_object == nil then
+        return true
+    end
+
+    if type(unity_object) == "userdata" and unity_object.IsNull ~= nil then
+        return unity_object:IsNull()
+    end
+
+    return false
+end
+
+--输出日志--
+function Log(...)
+    if not Local.LogManager then
+        return
+    end
+    local str = format(...)
+    if Local.LogTraceback then
+        Debug.Log(str .. "\r\n" .. traceback());
+    else
+        Debug.Log(str);
+    end
+end
+--错误日志--
+function LogError(...)
+    if not Local.LogManager then
+        return
+    end
+    local str = format(...)
+    if Local.LogTraceback then
+        Debug.LogError(str .. "\r\n" .. traceback());
+    else
+        Debug.LogError(str)
+    end
+end
+--警告日志--
+function LogWarning(...)
+    if not Local.LogManager then
+        return
+    end
+    local str = format(...)
+    if Local.LogTraceback then
+        Debug.LogWarning(str .. "\r\n" .. traceback());
+    else
+        Debug.LogWarning(str)
+    end
+end
+---@param a 判定条件
+---@param b true返回b
+---@param c false返回c
+function ConditionOp(a, b, c)
+    if a then
+        return b
+    else
+        return c
+    end
+end
+function LuaGC()
+    local c1 = collectgarbage("count")
+    collectgarbage("collect")
+    local c2 = collectgarbage("count")
+    Log("=== gc before:%.1fkb, after %.1fkb", c1, c2)
+end
+function DontDestroyOnLoad(obj)
+    if not IsNull(obj) then
+        if IsNull(obj.transform.parent) then
+            GameObject.DontDestroyOnLoad(obj)
+        end
+    end
+    return obj
+end
+
+--Unity对象操作--
+function FindObj(str)
+    return GameObject.Find(str);
+end
+function Destroy(obj)
+    GameObject.Destroy(obj);
+end
+function NewObject(prefab)
+    return GameObject.Instantiate(prefab);
 end

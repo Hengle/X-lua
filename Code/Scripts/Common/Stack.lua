@@ -1,12 +1,12 @@
-local list = list
-local PrintTable = PrintTable
+local List = List
+local Class = Class
 
 ---@class Stack:list
-local Stack = Class:new(list)
+local Stack = Class:new(List)
 
-function Stack:new()
+function Stack:__new()
     ---@type Stack
-    local o = list:new()
+    local o = List:new()
     setmetatable(o, self)
     return o
 end

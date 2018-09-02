@@ -2,6 +2,7 @@ local unpack = unpack or table.unpack
 local insert = table.insert
 local find = string.find
 local format = string.format
+local gsub = string.gsub
 
 -- 字符串分割
 -- @str：被分割的字符串
@@ -59,9 +60,14 @@ local function endswith(target_string, start_pattern, plain)
 	return find_pos_end == #target_string
 end
 
+local function trim(target_string)
+    return gsub(target_string, "^%s*(.-)%s*$", "%1")
+end
+
 
 string.split = split
 string.join = join
 string.contains = contains
 string.startswith = startswith
 string.endswith = endswith
+string.trim = endswith

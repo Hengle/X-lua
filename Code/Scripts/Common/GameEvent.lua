@@ -1,18 +1,13 @@
-local Event = event
+local Event = Event
 local Time = Time
 
 
-local UpdateEvent = Event.NewSimple("Update")
-local CoUpdateEvent = Event.NewSimple("CoUpdate")
-local LateUpdateEvent = Event.NewSimple("LateUpdate")
-local FixedUpdateEvent = Event.NewSimple("FixedUpdate")
-
-local function Dump()
-    Event.Dump()
-end
+local UpdateEvent = Event:NewSimple("Update")
+local CoUpdateEvent = Event:NewSimple("CoUpdate")
+local LateUpdateEvent = Event:NewSimple("LateUpdate")
+local FixedUpdateEvent = Event:NewSimple("FixedUpdate")
 
 return {
-    Dump = Dump,
     UpdateEvent = UpdateEvent,
     CoUpdateEvent = CoUpdateEvent,
     LateUpdateEvent = LateUpdateEvent,

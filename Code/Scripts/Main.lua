@@ -4,6 +4,7 @@ require "Global"
 
 local modules = require "Modules"
 local gameEvent = GameEvent
+local LogError = LogError
 
 local Time = Time
 Main = {}
@@ -11,36 +12,29 @@ Main = {}
 local function InitModule()
     for _, name in ipairs(modules) do
         local module = require(name)
-        module.Init()
+        if module then
+            module.Init()
+        else
+            LogError("module %s init fail!", name)
+        end
     end
-end
-
-local sumTime = 0
-
-local function A() 
-    print("------", sumTime)
-    sumTime = sumTime + 1
 end
 
 function Main.Init()
     InitModule()
-    gameEvent.UpdateEvent.Add(A)
-    gameEvent.LateUpdateEvent.Add(A)
-    gameEvent.FixedUpdateEvent.Add(A)
-    print('xlua init successful')
+    print('lua framework init successful.')
 end
 
 --逻辑update
 function Main.Update(deltaTime, unscaledDeltaTime)
-    print("--Update")
     Time:SetDeltaTime(deltaTime, unscaledDeltaTime)
-    gameEvent.UpdateEvent.Trigger()
+    gameEvent.UpdateEvent:Trigger()
 end
 function Main.LateUpdate()
-    gameEvent.LateUpdateEvent.Trigger()
+    gameEvent.LateUpdateEvent:Trigger()
 end
 --物理update
 function Main.FixedUpdate(fixedDeltaTime)
     Time:SetFixedDelta(fixedDeltaTime)
-    gameEvent.FixedUpdateEvent.Trigger()
+    gameEvent.FixedUpdateEvent:Trigger()
 end

@@ -9,14 +9,14 @@ local ipairs = ipairs
 local math = math
 local traceback = debug.traceback
 local xpcall = xpcall
+local LogError = LogError
 
-local Debug = Debug
 local Util = {}
 local this = Util
 
 --错误处理机制
 function Util.ErrHandler(e)
-    Debug.LogError(traceback())
+    LogError(traceback())
 end
 
 function Util.Myxpcall(func, data)

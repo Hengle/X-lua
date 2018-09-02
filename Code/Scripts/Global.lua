@@ -20,7 +20,6 @@ Input = CS.UnityEngine.Input
 KeyCode = CS.UnityEngine.KeyCode
 CharacterController = CS.UnityEngine.CharacterController
 SkinnedMeshRenderer = CS.UnityEngine.SkinnedMeshRenderer
-Debug = CS.UnityEngine.Debug
 
 CSUtil = CS.Game.Util
 AppConst = CS.Game.AppConst
@@ -30,6 +29,7 @@ ResMgr = CS.Game.ResourceManager.Instance
 SoundMgr = CS.Game.SoundManager.Instance
 NetworkMgr = CS.Game.NetworkManager.Instance
 
+local require = require
 require 'System.string'
 require 'System.table'
 
@@ -47,8 +47,10 @@ LayerMask	= require "UnityEngine.LayerMask"
 Plane		= require "UnityEngine.Plane"
 Time		= require "UnityEngine.Time"
 
-list = require 'System.list'
-event = require 'System.events'
+Profiler = require 'System.profiler'
+Memory = require 'System.memory'
+List = require 'System.list'
+
 
 require 'System.coroutine'
 require "Local"
@@ -60,6 +62,8 @@ Class = require "Common.Class"
 Util = require "Common.Util"
 Queue = require "Common.Queue"
 Stack = require "Common.Stack"
+Event = require "Common.Event"
+
 GameEvent = require "Common.GameEvent"
 --CfgMgr = require "Cfg.CfgManager"
 --

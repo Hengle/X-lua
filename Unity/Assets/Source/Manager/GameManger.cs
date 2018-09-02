@@ -127,7 +127,7 @@ namespace Game
             RefreshLaunch(LaunchState.CheckAppVersion, 0.2f);
             //与服务器版本号进行对比
             //TODO
-            yield return new WaitForSeconds(1);
+            yield return new WaitForEndOfFrame();
             if (true)
             {
                 //下载资源-安装包
@@ -162,9 +162,9 @@ namespace Game
         }
         public IEnumerator LoadResource()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForEndOfFrame();
             ResourceManager.Instance.Start();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForEndOfFrame();
             //场景加载
             //TODO
             RefreshLaunch(LaunchState.LoadResource, 1f);
