@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModelActionConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ModelName>金</ModelName>
+  <GroupType>Base</GroupType>
+  <ModelActionList>
+    <ModelAction>
+      <ActionName>站</ActionName>
+      <IsFromOther>false</IsFromOther>
+      <OtherModelName />
+      <ActionFile>idel</ActionFile>
+      <ActionSpeed>0</ActionSpeed>
+      <LoopTimes>0</LoopTimes>
+      <EffectId>0</EffectId>
+      <Actions />
+      <Effects />
+    </ModelAction>
+    <ModelAction>
+      <ActionName>跑</ActionName>
+      <IsFromOther>false</IsFromOther>
+      <OtherModelName />
+      <ActionFile>run</ActionFile>
+      <ActionSpeed>0</ActionSpeed>
+      <LoopTimes>0</LoopTimes>
+      <EffectId>0</EffectId>
+      <Actions />
+      <Effects />
+    </ModelAction>
+  </ModelActionList>
+  <SkillActionList />
+</ModelActionConfig>
