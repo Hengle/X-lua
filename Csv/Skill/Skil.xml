@@ -1,0 +1,249 @@
+<Configs Namespace = "Skill">
+    <!-- 动作配置 -->
+    <Class Name = "ModelActions"  Index = "ModelName" DataPath="ModelActionCfg">
+        <Field Name = "ModelName" Type = "string" Des = "模型名称" />
+        <Field Name = "BaseModelName" Type = "string" Des = "基础模型名称"/>
+        <Field Name = "NormalActions" Type = "list:NormalAction" Des = "普通动作" />
+        <Field Name = "SkillActions" Type = "list:SkillAction" Des = "技能动作"/>
+    </Class>
+
+    <Class Name = "NormalAction">
+        <Field Name = "ActionName" Type = "string" Des = "行为名称" />
+        <Field Name = "ActionSource" Type = "ActionSourceType" Des = "动作来源" />
+        <Field Name = "OtherModelName" Type = "string" Des = "其他模型名称,用于套用其他模型动作" />
+        <Field Name = "ActionFile" Type = "string" Des = "绑定的动作名称" />
+        <Field Name = "PreActionFile" Type = "string" Des = "前摇动作名称" />
+        <Field Name = "PostActionFile" Type = "string" Des = "后摇动作名称" />
+        <Field Name = "ActionSpeed" Type = "float" Des = "动作播放速率" />
+        <Field Name = "LoopTimes" Type = "int" Des = "动作循环次数" />
+        <Field Name = "EffectId" Type = "int" Des = "特效ID" />
+        <Field Name = "Actions" Type = "list:Action" Des = "时间事件列表" />
+        <Field Name = "Effects" Type = "list:EffectGroup" Des = "特效组列表" />
+    </Class>
+
+    <Class Name = "SkillAction">
+        <Const Name = "EXPIRE_TIME" Type = "float" Value = "1" Des = "默认后续技能使用期限,用于单个技能多段输出" />
+        <Field Name = "SkillExpireTime" Type = "float" Des = "后续技能使用期限,用于单个技能多段输出" />
+        <Field Name = "SkillEndTime" Type = "float" Des = "技能结束时间" />
+        <Field Name = "NeedTarget" Type = "bool" Des = "是否需要目标" />
+        <Field Name = "CanInterrupt" Type = "bool" Des = "是否可被打断" />
+        <Field Name = "SkillRange" Type = "float" Des = "技能作用范围[半径]" />
+        <Field Name = "CanShowSkillRange" Type = "bool" Des = "是否显示技能范围" />
+        <Field Name = "CanRotate" Type = "bool" Des = "放技能时人是否可以转动" />
+        <Field Name = "CanMove" Type = "bool" Des = "放技能时人是否可以移动" />
+        <Field Name = "StartMoveTime" Type = "float" Des = "开始位移时间，如果改值为-1 则改值等于技能开始时间" />
+        <Field Name = "EndMoveTime" Type = "float" Des = "结束位移时间，如果改值为-1 则改值等于技能结束时间" />
+        <Field Name = "RelateType" Type = "SkillRelateType" Des = "施放相对位置(1 自己 ,2目标)" />
+        <Field Name = "HitPoints" Type = "list:HitPointGroup" Des = "打击点组列表" />
+        <Field Name = "HitZones" Type = "list:HitZone" Des = "打击区域列表" />
+        <Field Name = "BeAttackEffects" Type = "list:BeAttackEffect" Des = "被击效果列表" />
+    </Class>
+
+    <Class Name = "HitZone">
+        <Field Name = "Id" Type = "int" Des = "打击区域id" />
+        <Field Name = "Sharp" Type = "HitSharpType" Des = "打击范围的形态，0：方盒，1:圆柱,2:三棱柱" />
+        <Field Name = "Zoffset" Type = "float" Des = "打击范围的中心点在Z轴上的偏移量，向前为正" />
+        <Field Name = "Xlength" Type = "float" Des = "X方向长度" />
+        <Field Name = "BottomHeight" Type = "float" Des = "底边距地面的高度" />
+        <Field Name = "TopHeight" Type = "float" Des = "顶部距地面的高度" />
+        <Field Name = "Zlength" Type = "float" Des = "Z方向长度" />
+        <Field Name = "YAngle" Type = "float" Des = "以y轴为中心的切面角度" />
+        <Field Name = "YRotation" Type = "float" Des = "打击区域绕y轴旋转角度（顺时针）,构成扇形" />
+        <Field Name = "MaxTarget" Type = "int" Des = "最大数量" />
+    </Class>
+
+    <Class Name = "BeAttackEffect">
+        <Field Name = "Id" Type = "int" Des = "被击效果id" />
+        <Field Name = "Curve" Type = "int" Des = "被打击者的抛物曲线" />
+        <Field Name = "DefencerAction" Type = "string" Des = "被打击者的受击动作，null为默认" />
+        <Field Name = "DefencerEffectId" Type = "int" Des = "被打击者身上出现的被击特效，Null为默认" />
+    </Class>
+
+    <Class Name = "EffectGroup">
+        <Field Name = "Id" Type = "int" Des = "特效组ID" />
+        <Field Name = "Name" Type = "string" Des = "特效组名称" />
+        <Field Name = "Actions" Type = "list:Action" Des = "特效组行为列表" />
+    </Class>
+
+    <Class Name = "HitPointGroup">
+        <Field Name = "Id" Type = "int" Des = "打击点组ID" />
+        <Field Name = "Name" Type = "string" Des = "打击点组名称" />
+        <Field Name = "Attacks" Type = "list:Attack" Des = "打击点列表" />
+    </Class>
+
+	<!-- 动作行为 -->
+    <Class Name = "Action">
+        <Field Name = "Timeline" Type = "float" Des = "时间点" />
+    </Class>
+
+    <Class Name = "Attack" Inherit="Action">
+        <Field Name = "Id" Type = "int" Des = "打击点id" />
+        <Field Name = "HitZoneId" Type = "int" Des = "打击区域id" />
+        <Field Name = "BeAttackEffectId" Type = "int" Des = "被击效果id" />
+    </Class>
+
+    <Class Name = "ShakeScreen" Inherit="Action">
+        <Field Name = "Type" Type = "string" Des = "震屏方式" />
+        <Field Name = "Frequency" Type = "int" Des = "每秒震动的次数" />
+        <Field Name = "FrequencyDuration" Type = "float" Des = "初始频率维持时间" />
+        <Field Name = "FrequencyAtten" Type = "float" Des = "频率衰减" />
+        <Field Name = "Amplitude" Type = "float" Des = "单次振幅" />
+        <Field Name = "AmplitudeAtten" Type = "float" Des = "单次震动的衰减幅度" />
+        <Field Name = "Life" Type = "float" Des = "本次震动持续时间，-1表持续到下一次震动触发或技能结束为止" />
+        <Field Name = "MinRange" Type = "float" Des = "最小完整影响范围" />
+        <Field Name = "MaxRange" Type = "float" Des = "最大影响范围" />
+    </Class>
+
+    <Class Name = "Movement" Inherit="Action">
+        <Field Name = "Type" Type = "MoveType" Des = "移动方式" />
+        <Field Name = "Duration" Type = "float" Des = "持续时间" />
+        <Field Name = "Speed" Type = "float" Des = "速度" />
+        <Field Name = "Acceleration" Type = "float" Des = "加速度" />
+    </Class>
+
+    <Class Name = "ParticleEffect" Inherit="Action">
+        <Field Name = "Id" Type = "int" Des = "粒子特效id" />
+        <Field Name = "Type" Type = "int" Des = "特效类型" />
+        <Field Name = "FadeOutTime" Type = "float" Des = "淡出时间" />
+        <Field Name = "Path" Type = "string" Des = "粒子资源的路径" />
+        <Field Name = "Life" Type = "float" Des = "粒子的存续时间，-1则与参与动画播放时间等长" />
+        <Field Name = "FollowDirection" Type = "bool" Des = "是否跟随释放者方向" />
+        <Field Name = "FollowBeAttackedDirection" Type = "bool" Des = "敌人的被击特效是否始终跟随敌我位置变化而转向" />
+        <Field Name = "Scale" Type = "float" Des = "缩放大小" />
+        <Field Name = "CasterBindType" Type = "int" Des = "释放者施放技能的位置编号" />
+        <Field Name = "FollowBoneDirection" Type = "bool" Des = "是否跟随绑定骨骼方向" />
+        <Field Name = "TargetBindType" Type = "int" Des = "被击者出现被击特效的位置" />
+        <Field Name = "InstanceTraceType" Type = "int" Des = "跟踪类型(0:Line)" />
+        <Field Name = "WorldOffsetX" Type = "float" Des = "特效世界偏移X" />
+        <Field Name = "WorldOffsetY" Type = "float" Des = "特效世界偏移Y" />
+        <Field Name = "WorldOffsetZ" Type = "float" Des = "特效世界偏移Z" />
+        <Field Name = "WorldRotateX" Type = "float" Des = "特效世界旋转X" />
+        <Field Name = "WorldRotateY" Type = "float" Des = "特效世界旋转Y" />
+        <Field Name = "WorldRotateZ" Type = "float" Des = "特效世界旋转Z" />
+        <Field Name = "BonePostionX" Type = "float" Des = "特效骨骼偏移X" />
+        <Field Name = "BonePostionY" Type = "float" Des = "特效骨骼偏移Y" />
+        <Field Name = "BonePostionZ" Type = "float" Des = "特效骨骼偏移Z" />
+        <Field Name = "BoneRotationX" Type = "float" Des = "特效骨骼旋转X" />
+        <Field Name = "BoneRotationY" Type = "float" Des = "特效骨骼旋转Y" />
+        <Field Name = "BoneRotationZ" Type = "float" Des = "特效骨骼旋转Z" />
+        <Field Name = "BoneScaleX" Type = "float" Des = "特效骨骼缩放X" />
+        <Field Name = "BoneScaleY" Type = "float" Des = "特效骨骼缩放Y" />
+        <Field Name = "BoneScaleZ" Type = "float" Des = "特效骨骼缩放Z" />
+        <Field Name = "BoneName" Type = "string" Des = "骨骼名称" />
+        <Field Name = "TraceTime" Type = "float" Des = "飞行时间" />
+        <Field Name = "AlignType" Type = "EffectAlignType" Des = "屏幕对齐类型" />
+        <Field Name = "IsPoolDestroy" Type = "bool" Des = "是否特效池管理" />
+    </Class>
+
+    <Class Name = "SoundEffect" Inherit="Action">
+        <Field Name = "Probability" Type = "float" Des = "触发概率" />
+        <Field Name = "VolumeMin" Type = "float" Des = "最小音量" />
+        <Field Name = "VolumeMax" Type = "float" Des = "最大音量" />
+        <Field Name = "PathList" Type = "list:string" Des = "音效资源路径列表" />
+    </Class>
+
+    <Class Name = "SpawnObject" Inherit="Action">
+        <Field Name = "Id" Type = "float" Des = "子物体ID" />
+        <Field Name = "SpawnType" Type = "float" Des = "子物体类型" />
+        <Field Name = "Life" Type = "float" Des = "子物体存活时间" />
+    </Class>
+
+    <Class Name = "TraceObject" Inherit="SpawnObject">
+        <Const Name = "BODY_CORRECT" Type = "float" Value="0.7" Des = "身体矫正值" />
+        <Const Name = "HEAD_CORRECT" Type = "float" Value="1.3" Des = "头部矫正值" />
+        <Field Name = "EffectId" Type = "int" Des = "特效ID" />
+        <Field Name = "IsTraceTarget" Type = "bool" Des = "是否追踪目标" />
+        <Field Name = "TraceCurveId" Type = "int" Des = "飞行参数ID,数据有配置表" />
+        <Field Name = "OffsetX" Type = "float" Des = "目标偏移X" />
+        <Field Name = "OffsetY" Type = "float" Des = "目标偏移Y" />
+        <Field Name = "OffsetZ" Type = "float" Des = "目标偏移Z" />
+        <Field Name = "TraceType" Type = "TraceType" Des = "追踪类型" />
+        <Field Name = "CasterBindType" Type = "TraceBindType" Des = "释放者绑定位置" />
+        <Field Name = "TargetBindType" Type = "TraceBindType" Des = "被击者绑定位置" />
+    </Class>
+
+    <Class Name = "FlyWeapon" Inherit="TraceObject">
+        <Field Name = "BulletRadius" Type = "float" Des = "子弹半径" />
+        <Field Name = "PassBody" Type = "bool" Des = "是否穿透" />
+        <Field Name = "BeAttackEffectId" Type = "int" Des = "被击效果ID" />
+    </Class>
+
+    <Class Name = "Bomb" Inherit="TraceObject">
+        <Field Name = "Id" Type = "int" Des = "打击点组(HitPointGroup)ID" />
+    </Class>
+
+    <!-- 枚举配置 -->
+    <Enum Name="ActionSourceType">
+        <Const Name = "SelfModel" Value = "0" Des="自己模型"/>
+        <Const Name = "OtherModel" Value = "1" Des="其他模型"/>
+    </Enum>
+
+    <Enum Name="SkillTargetType">
+        <Const Name = "Enemy" Value = "0" Des="敌方目标"/>
+        <Const Name = "Teammate" Value = "1" Des="己方目标"/>
+        <Const Name = "Self" Value ="2" Des="自己"/>
+    </Enum>
+
+    <Enum Name="SkillRelateType">
+        <Const Name = "Self" Value = "0" Des="相对于自己"/>
+        <Const Name = "Target" Value = "1" Des="相对于目标"/>
+    </Enum>
+
+    <Enum Name="HitSharpType">
+        <Const Name = "Cube" Value = "0" Des="立方体"/>
+        <Const Name = "Cylinder" Value = "1" Des="圆柱形"/>
+        <Const Name = "Trangle" Value = "2" Des="三棱柱"/>
+    </Enum>
+
+    <Enum Name="ShakeType">
+        <Const Name = "Horizontal" Value = "0" Des="水平"/>
+        <Const Name = "Vertical" Value = "1" Des="垂直"/>
+        <Const Name = "Mix" Value = "2" Des="混合"/>
+    </Enum>
+
+    <Enum Name="MoveType">
+        <Const Name = "MoveBack" Value = "0" Des="方向移动"/>
+        <Const Name = "MoveToTarget" Value = "1" Des="向目标移动"/>
+        <Const Name = "MoveInDirection" Value ="2" Des="按当前方向移动"/>
+    </Enum>
+
+    <Enum Name="EffectType">
+        <Const Name = "Stand" Value ="0" Des="站立"/>
+        <Const Name = "Follow" Value ="1" Des="跟随"/>
+        <Const Name = "Trace" Value ="2" Des="追踪对象"/>
+        <Const Name = "TracePos" Value ="3" Des="追踪位置"/>
+        <Const Name = "BindToCamera" Value ="4" Des="绑定到相机"/>
+        <Const Name = "UIStand" Value ="5" Des="UI站立"/>
+    </Enum>
+
+    <Enum Name="EffectAlignType">
+        <Const Name = "None" Value ="0"/>
+        <Const Name = "LeftTop" Value ="1"/>
+        <Const Name = "Left" Value ="2"/>
+        <Const Name = "LeftBottom" Value ="3"/>
+        <Const Name = "Top" Value ="4"/>
+        <Const Name = "Center" Value ="5"/>
+        <Const Name = "Bottom" Value ="6"/>
+        <Const Name = "RightTop" Value = "7" />
+        <Const Name = "Right" Value = "8" />
+        <Const Name = "RightBottom" Value = "9" />
+    </Enum>
+
+    <Enum Name="SpawnType">
+        <Const Name = "FlyWeapon" Value ="0" Des="飞行武器"/>
+        <Const Name = "Bomb" Value ="1" Des="炸弹"/>
+        <Const Name = "Object" Value ="2" Des="游戏对象"/>
+    </Enum>
+
+    <Enum Name="TraceType">
+        <Const Name = "Fly" Value ="0" Des="飞"/>
+        <Const Name = "Fixed" Value ="1" Des="固定"/>
+    </Enum>
+
+    <Enum Name="TraceBindType">
+        <Const Name = "Body" Value ="0" Des="身体"/>
+        <Const Name = "Head" Value ="1" Des="头"/>
+        <Const Name = "Foot" Value ="2" Des="脚"/>
+    </Enum>
+
+</Configs>

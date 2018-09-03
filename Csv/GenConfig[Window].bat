@@ -1,10 +1,11 @@
-@set cfg=%~dp0..\Tool\CfgGen\
+@cd %~dp0..\Tool\CfgGen\
+@set rootPath=..\..
 
-%cfg%ConfigGen.exe -optMode all ^
--configDir ..\Csv ^
--exportCsv ..\Code\Config ^
--exportLua ..\Code\Scripts\Cfg ^
--exportCSharp ..\Unity\Assets\Editor\Config ^
--exportCsLson ..\Unity\Assets\Editor\Marsh ^
+ConfigGen.exe -optMode part ^
+-configDir %rootPath%\Csv ^
+-dataDir %rootPath%\Code\Config ^
+-luaDir %rootPath%\Code\Scripts\Config ^
+-codeDir %rootPath%\Unity\Assets\Editor\Code ^
+-xmlCodeDir %rootPath%\Unity\Assets\Editor\XmlCode
 
-@pause
+
