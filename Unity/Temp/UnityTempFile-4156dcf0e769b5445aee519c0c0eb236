@@ -1,0 +1,357 @@
+-debug
+-target:library
+-nowarn:0169
+-langversion:4
+-out:Temp/Assembly-CSharp-Editor.dll
+-unsafe
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.WebModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.StyleSheetsModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ParticlesLegacyModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll"
+-r:Library/ScriptAssemblies/Assembly-CSharp.dll
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/Editor/UnityEditor.UIAutomation.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll"
+-r:"C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll"
+-r:"C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll"
+-r:Assets/Editor/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll
+-r:Assets/Editor/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll
+-r:Assets/Editor/Sirenix/Assemblies/Sirenix.Serialization.Config.dll
+-r:Assets/Editor/Sirenix/Assemblies/Sirenix.Serialization.dll
+-r:Assets/Editor/Sirenix/Assemblies/Sirenix.Utilities.dll
+-r:Assets/Editor/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll
+-r:C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll
+-r:C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll
+-r:C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/Editor/UnityEditor.Analytics.dll
+-r:C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll
+-r:C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/Editor/UnityEditor.Purchasing.dll
+-r:C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_4_OR_NEWER
+-define:UNITY_5_5_OR_NEWER
+-define:UNITY_5_6_OR_NEWER
+-define:UNITY_2017_1_OR_NEWER
+-define:UNITY_2017_2_OR_NEWER
+-define:UNITY_2017_3_OR_NEWER
+-define:UNITY_2017_4_OR_NEWER
+-define:UNITY_2017_4_8
+-define:UNITY_2017_4
+-define:UNITY_2017
+-define:PLATFORM_ARCH_64
+-define:UNITY_64
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_DUCK_TYPING
+-define:ENABLE_GENERICS
+-define:ENABLE_PVR_GI
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_SPRITERENDERER_FLIPPING
+-define:ENABLE_SPRITES
+-define:ENABLE_GRID
+-define:ENABLE_TILEMAP
+-define:ENABLE_TERRAIN
+-define:ENABLE_RAKNET
+-define:ENABLE_DIRECTOR
+-define:ENABLE_UNET
+-define:ENABLE_LZMA
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_WEBCAM
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES_COLLAB
+-define:ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_HUB
+-define:ENABLE_CLOUD_PROJECT_ID
+-define:ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+-define:ENABLE_CLOUD_SERVICES_UNET
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_HUB
+-define:ENABLE_EDITOR_HUB_LICENSE
+-define:ENABLE_WEBSOCKET_CLIENT
+-define:ENABLE_DIRECTOR_AUDIO
+-define:ENABLE_DIRECTOR_TEXTURE
+-define:ENABLE_TIMELINE
+-define:ENABLE_EDITOR_METRICS
+-define:ENABLE_EDITOR_METRICS_CACHING
+-define:ENABLE_NATIVE_ARRAY
+-define:ENABLE_SPRITE_MASKING
+-define:INCLUDE_DYNAMIC_GI
+-define:INCLUDE_GI
+-define:ENABLE_MONO_BDWGC
+-define:PLATFORM_SUPPORTS_MONO
+-define:RENDER_SOFTWARE_CURSOR
+-define:INCLUDE_PUBNUB
+-define:ENABLE_PLAYMODE_TESTS_RUNNER
+-define:ENABLE_VIDEO
+-define:ENABLE_RMGUI
+-define:ENABLE_PACKMAN
+-define:ENABLE_CUSTOM_RENDER_TEXTURE
+-define:ENABLE_STYLE_SHEETS
+-define:ENABLE_LOCALIZATION
+-define:PLATFORM_STANDALONE_WIN
+-define:PLATFORM_STANDALONE
+-define:UNITY_STANDALONE_WIN
+-define:UNITY_STANDALONE
+-define:ENABLE_SUBSTANCE
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_MOVIES
+-define:ENABLE_NETWORK
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+-define:ENABLE_EVENT_QUEUE
+-define:ENABLE_CLUSTERINPUT
+-define:ENABLE_VR
+-define:ENABLE_AR
+-define:ENABLE_WEBSOCKET_HOST
+-define:ENABLE_MONO
+-define:NET_2_0_SUBSET
+-define:ENABLE_PROFILER
+-define:DEBUG
+-define:TRACE
+-define:UNITY_ASSERTIONS
+-define:UNITY_EDITOR
+-define:UNITY_EDITOR_64
+-define:UNITY_EDITOR_WIN
+-define:ENABLE_NATIVE_ARRAY_CHECKS
+-define:UNITY_TEAM_LICENSE
+-define:ENABLE_VSTU
+-define:UNITY_PRO_LICENSE
+-define:ODIN_INSPECTOR
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/EasytouchHierachyCallBack.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/EasyTouchInspector.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/EasyTouchMenu.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/EasyTouchTriggerInspector.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/EasyTouchWelcomeScreen.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/HTGuiTools.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/QuickDragInspector.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/QuickEnterExitInspector.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/QuickLongTapInspector.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/QuickPinchInspector.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/QuickSwipeInspector.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/QuickTapInspector.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/QuickTouchInspector.cs
+Assets/EasyTouchBundle/EasyTouch/Plugins/Editor/QuickTwistInspector.cs
+Assets/EasyTouchBundle/EasyTouchControls/Plugins/Editor/ETCAreaInspector.cs
+Assets/EasyTouchBundle/EasyTouchControls/Plugins/Editor/ETCAxisInspector.cs
+Assets/EasyTouchBundle/EasyTouchControls/Plugins/Editor/ETCButtonInspector.cs
+Assets/EasyTouchBundle/EasyTouchControls/Plugins/Editor/ETCDPadInspector.cs
+Assets/EasyTouchBundle/EasyTouchControls/Plugins/Editor/ETCGuiTools.cs
+Assets/EasyTouchBundle/EasyTouchControls/Plugins/Editor/ETCJoystickInspector.cs
+Assets/EasyTouchBundle/EasyTouchControls/Plugins/Editor/ETCMenu.cs
+Assets/EasyTouchBundle/EasyTouchControls/Plugins/Editor/ETCTouchPadInspector.cs
+Assets/Editor/Code/AllType/AllClass.cs
+Assets/Editor/Code/AllType/CardElement.cs
+Assets/Editor/Code/AllType/SingleClass.cs
+Assets/Editor/Code/CfgManager.cs
+Assets/Editor/Code/CfgObject.cs
+Assets/Editor/Code/Character/Model.cs
+Assets/Editor/Code/DataStream.cs
+Assets/Editor/Code/Skill/Action.cs
+Assets/Editor/Code/Skill/ActionSourceType.cs
+Assets/Editor/Code/Skill/ActorConfig.cs
+Assets/Editor/Code/Skill/Attack.cs
+Assets/Editor/Code/Skill/BeAttackEffect.cs
+Assets/Editor/Code/Skill/Bomb.cs
+Assets/Editor/Code/Skill/EffectAlignType.cs
+Assets/Editor/Code/Skill/EffectGroup.cs
+Assets/Editor/Code/Skill/EffectType.cs
+Assets/Editor/Code/Skill/FlyWeapon.cs
+Assets/Editor/Code/Skill/GeneralAction.cs
+Assets/Editor/Code/Skill/GroupType.cs
+Assets/Editor/Code/Skill/HitPointGroup.cs
+Assets/Editor/Code/Skill/HitSharpType.cs
+Assets/Editor/Code/Skill/HitZone.cs
+Assets/Editor/Code/Skill/Movement.cs
+Assets/Editor/Code/Skill/MoveType.cs
+Assets/Editor/Code/Skill/ParticleEffect.cs
+Assets/Editor/Code/Skill/ShakeScreen.cs
+Assets/Editor/Code/Skill/ShakeType.cs
+Assets/Editor/Code/Skill/SkillAction.cs
+Assets/Editor/Code/Skill/SkillRelateType.cs
+Assets/Editor/Code/Skill/SkillTargetType.cs
+Assets/Editor/Code/Skill/SoundEffect.cs
+Assets/Editor/Code/Skill/SpawnObject.cs
+Assets/Editor/Code/Skill/SpawnType.cs
+Assets/Editor/Code/Skill/TraceBindType.cs
+Assets/Editor/Code/Skill/TraceObject.cs
+Assets/Editor/Code/Skill/TraceType.cs
+Assets/Editor/Export/ExportResource.All.cs
+Assets/Editor/Export/ExportResource.AnimationClip.cs
+Assets/Editor/Export/ExportResource.Audio.cs
+Assets/Editor/Export/ExportResource.Avatar.cs
+Assets/Editor/Export/ExportResource.Base.cs
+Assets/Editor/Export/ExportResource.Character.cs
+Assets/Editor/Export/ExportResource.Scene.cs
+Assets/Editor/Export/ExportResource.SFX.cs
+Assets/Editor/Export/ExportResource.Texture.cs
+Assets/Editor/Export/ExportResource.UI.cs
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/ContextExample.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/CustomDrawerExample.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/CustomGroupExample.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/GenericDrawerExample.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/GenericMenuExample.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/HealthBarExample.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/MinesweeperExample.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/PriorityExamples.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/ReflectionExample.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/StringMemberHelperExample.cs"
+"Assets/Editor/Sirenix/Demos/Custom Drawer Examples/Scripts/ValidationExample.cs"
+"Assets/Editor/Sirenix/Demos/Odin Editor Windows/Scripts/Editor/BasicOdinEditorExampleWindow.cs"
+"Assets/Editor/Sirenix/Demos/Odin Editor Windows/Scripts/Editor/OdinMenuEditorWindowExample.cs"
+"Assets/Editor/Sirenix/Demos/Odin Editor Windows/Scripts/Editor/OdinMenuStyleExample.cs"
+"Assets/Editor/Sirenix/Demos/Odin Editor Windows/Scripts/Editor/OverrideGetTargetsExampleWindow.cs"
+"Assets/Editor/Sirenix/Demos/Odin Editor Windows/Scripts/Editor/QuicklyInspectObjects.cs"
+"Assets/Editor/Sirenix/Demos/Odin Editor Windows/Scripts/Editor/SomeData.cs"
+"Assets/Editor/Sirenix/Demos/Odin Editor Windows/Scripts/Editor/SomeTextureToolWindow.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Character/Character.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Character/CharacterAlignment.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Character/CharacterEquipment.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Character/CharacterOverview.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Character/CharacterStats.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Editor/CharacterTable.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Editor/ItemDrawer.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Editor/ItemSlotCellDrawer.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Editor/RPGEditorWindow.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Editor/ScriptableObjectCreator.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Items/Armor.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Items/ConsumableItem.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Items/EquipableItem.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Items/Item.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Items/ItemTypes.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Items/WeaponItem.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Misc/ItemSlot.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Misc/RequirementList.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Misc/StatType.cs"
+"Assets/Editor/Sirenix/Demos/Sample - RPG Editor/Scripts/Misc/StatValue.cs"
+"Assets/Editor/Sirenix/Odin Inspector/Scripts/Editor/BuildAOTAutomation.cs"
+"Assets/Editor/Sirenix/Odin Inspector/Scripts/Editor/EnsureOdinInspectorDefine.cs"
+"Assets/Editor/Sirenix/Odin Inspector/Scripts/Editor/OdinGettingStartedWizard.cs"
+"Assets/Editor/Sirenix/Odin Inspector/Scripts/Editor/VectorIntDrawers.cs"
+"Assets/Editor/Sirenix/Odin Inspector/Scripts/VectorIntFormatters.cs"
+Assets/Editor/XmlUtil.cs
+Assets/Examples/13_BuildFromCLI/Editor/BuildFromCLI.cs
+Assets/ModelEditor/Editor/ActorConfig/ActionHomeConfig.cs
+Assets/ModelEditor/Editor/ActorConfig/ActionWindow.cs
+Assets/ModelEditor/Editor/ActorConfig/ModelActionConfigEditor.cs
+Assets/ModelEditor/Editor/ActorConfig/ModelActionEditor.cs
+Assets/ModelEditor/Editor/ActorConfig/ModelCfgWindow.cs
+Assets/ModelEditor/Editor/ActorConfig/SimplePopupCreator.cs
+Assets/ModelEditor/Editor/VFXConfig/Clip/BeAttackClip.cs
+Assets/ModelEditor/Editor/VFXConfig/Track/BaseTrack.cs
+Assets/ModelEditor/Editor/VFXConfig/Track/BeAttackedTrack.cs
+Assets/ModelEditor/Editor/VFXConfig/TrackGroup/BaseTrackGroup.cs
+Assets/ModelEditor/Editor/VFXConfig/TrackGroup/ConfigTrackGroup.cs
+Assets/ModelEditor/Editor/VFXConfig/TrackGroup/EffectTrackGroup.cs
+Assets/ModelEditor/Editor/VFXConfig/TrackGroup/TimeEventTrackGroup.cs
+Assets/ModelEditor/Editor/VFXConfig/VFXEditor.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.Action.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.ActionSourceType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.ActorConfig.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.Attack.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.BeAttackEffect.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.Bomb.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.EffectAlignType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.EffectGroup.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.EffectType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.FlyWeapon.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.GeneralAction.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.GroupType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.HitPointGroup.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.HitSharpType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.HitZone.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.Movement.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.MoveType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.ParticleEffect.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.ShakeScreen.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.ShakeType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.SkillAction.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.SkillRelateType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.SkillTargetType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.SoundEffect.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.SpawnObject.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.SpawnType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.TraceBindType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.TraceObject.cs
+Assets/ModelEditor/Editor/XmlCode/XmlCode.Skill.TraceType.cs
+Assets/ModelEditor/Editor/XmlCode/XmlObject.cs
+Assets/XLua/Editor/ExampleConfig.cs
+Assets/XLua/Editor/ExportConfig.cs
+Assets/XLua/Src/Editor/Generator.cs
+Assets/XLua/Src/Editor/Hotfix.cs
+Assets/XLua/Src/Editor/LinkXmlGen/LinkXmlGen.cs
+Assets/XLua/Src/Editor/TemplateRef.cs
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\System.Runtime.Serialization.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\System.Xml.Linq.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\UnityScript.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\UnityScript.Lang.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0-api\Boo.Lang.dll"
+-sdk:2.0

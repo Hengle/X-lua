@@ -90,14 +90,17 @@ namespace Csv.AllType
 			}
 			for (int n = data.GetInt(); n-- > 0;)
 			{
+				int k = data.GetInt();
 				this.VarDictBase[k] = data.GetString();
 			}
 			for (int n = data.GetInt(); n-- > 0;)
 			{
-				this.VarDictEnum[k] = data.GetInt();
+				long k = data.GetLong();
+				this.VarDictEnum[k] = (AllType.CardElement)data.GetInt();
 			}
 			for (int n = data.GetInt(); n-- > 0;)
 			{
+				string k = data.GetString();
 				this.VarDictClass[k] = new SingleClass(data);
 			}
 		}

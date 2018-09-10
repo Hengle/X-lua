@@ -28,6 +28,9 @@ Interface = CS.Game.Platform.Interface
 ResMgr = CS.Game.ResourceManager.Instance
 SoundMgr = CS.Game.SoundManager.Instance
 NetworkMgr = CS.Game.NetworkManager.Instance
+EasyTouch = CS.HedgehogTeam.EasyTouch.EasyTouch
+Gesture = CS.HedgehogTeam.EasyTouch.Gesture
+ECTInput = CS.HedgehogTeam.EasyTouch.ECTInput
 
 local require = require
 require 'System.string'
@@ -49,8 +52,6 @@ Time		= require "UnityEngine.Time"
 
 Profiler = require 'System.profiler'
 Memory = require 'System.memory'
-List = require 'System.list'
-
 
 require 'System.coroutine'
 require "Local"
@@ -60,14 +61,10 @@ require 'Function'
 Define = require "Define"
 Class = require "Common.Class"
 Util = require "Common.Util"
+List = require 'Common.List'
 Queue = require "Common.Queue"
 Stack = require "Common.Stack"
 Event = require "Common.Event"
-
 GameEvent = require "Common.GameEvent"
---CfgMgr = require "Cfg.CfgManager"
---
-----加载所以配置
---Util.Myxpcall(CfgMgr.Init)
 
 

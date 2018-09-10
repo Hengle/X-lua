@@ -4,7 +4,7 @@ using Csv;
 
 namespace Csv.Skill
 {
-	public  class SkillAction : CfgObject
+	public  class SkillAction : Csv.Skill.GeneralAction
 	{
 		/// <summary>
 		/// 默认后续技能使用期限,用于单个技能多段输出
@@ -67,7 +67,7 @@ namespace Csv.Skill
 		/// <summary>
 		public readonly List<BeAttackEffect> BeAttackEffects = new List<BeAttackEffect>();
 
-		public SkillAction(DataStream data)
+		public SkillAction(DataStream data) : base(data)
 		{
 			this.SkillExpireTime = data.GetFloat();
 			this.SkillEndTime = data.GetFloat();

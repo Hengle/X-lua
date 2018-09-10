@@ -4,15 +4,15 @@ using Csv;
 
 namespace Csv.Skill
 {
-	public sealed class SkillRelateType
+	public enum SkillRelateType
 	{
 		/// <summary>
 		/// 相对于自己
 		/// <summary>
-		public const int Self = 0;
+		Self = 0,
 		/// <summary>
 		/// 相对于目标
 		/// <summary>
-		public const int Target = 1;
+		Target = 1,
 	}
 }

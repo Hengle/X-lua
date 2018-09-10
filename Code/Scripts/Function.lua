@@ -50,7 +50,7 @@ function printt(t, des)
     if type(t) == "table" then
         print(format("<color=orange>%s</color>\n%s", des, dump(t, dump_level)))
     else
-        print(des .. '\n' .. t)
+        print(format("%s\n%s", des, tostring(t)))
     end
 end
 

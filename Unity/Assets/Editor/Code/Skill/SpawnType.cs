@@ -4,19 +4,19 @@ using Csv;
 
 namespace Csv.Skill
 {
-	public sealed class SpawnType
+	public enum SpawnType
 	{
 		/// <summary>
 		/// 飞行武器
 		/// <summary>
-		public const int FlyWeapon = 0;
+		FlyWeapon = 0,
 		/// <summary>
 		/// 炸弹
 		/// <summary>
-		public const int Bomb = 1;
+		Bomb = 1,
 		/// <summary>
 		/// 游戏对象
 		/// <summary>
-		public const int Object = 2;
+		Object = 2,
 	}
 }

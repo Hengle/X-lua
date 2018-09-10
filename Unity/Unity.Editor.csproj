@@ -28,7 +28,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_8;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_8;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE;ODIN_INSPECTOR</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -38,7 +38,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_8;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2017_4_8;UNITY_2017_4;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE;ODIN_INSPECTOR</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -260,6 +260,24 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="Sirenix.OdinInspector.Attributes">
+      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.OdinInspector.Editor">
+      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization.Config">
+      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities">
+      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities.Editor">
+      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -286,7 +304,164 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasytouchHierachyCallBack.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchMenu.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchTriggerInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchWelcomeScreen.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\HTGuiTools.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickDragInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickEnterExitInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickLongTapInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickPinchInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickSwipeInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickTapInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickTouchInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickTwistInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCAreaInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCAxisInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCButtonInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCDPadInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCGuiTools.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCJoystickInspector.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCMenu.cs" />
+    <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCTouchPadInspector.cs" />
+    <Compile Include="Assets\Editor\Code\AllType\AllClass.cs" />
+    <Compile Include="Assets\Editor\Code\AllType\CardElement.cs" />
+    <Compile Include="Assets\Editor\Code\AllType\SingleClass.cs" />
+    <Compile Include="Assets\Editor\Code\CfgManager.cs" />
+    <Compile Include="Assets\Editor\Code\CfgObject.cs" />
+    <Compile Include="Assets\Editor\Code\Character\Model.cs" />
+    <Compile Include="Assets\Editor\Code\DataStream.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\Action.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\ActionSourceType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\ActorConfig.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\Attack.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\BeAttackEffect.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\Bomb.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\EffectAlignType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\EffectGroup.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\EffectType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\FlyWeapon.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\GeneralAction.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\GroupType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\HitPointGroup.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\HitSharpType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\HitZone.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\Movement.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\MoveType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\ParticleEffect.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\ShakeScreen.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\ShakeType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\SkillAction.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\SkillRelateType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\SkillTargetType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\SoundEffect.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\SpawnObject.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\SpawnType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\TraceBindType.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\TraceObject.cs" />
+    <Compile Include="Assets\Editor\Code\Skill\TraceType.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.All.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.AnimationClip.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.Audio.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.Avatar.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.Base.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.Character.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.Scene.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.SFX.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.Texture.cs" />
+    <Compile Include="Assets\Editor\Export\ExportResource.UI.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\ContextExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\CustomDrawerExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\CustomGroupExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\GenericDrawerExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\GenericMenuExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\HealthBarExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\MinesweeperExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\PriorityExamples.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\ReflectionExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\StringMemberHelperExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\ValidationExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\BasicOdinEditorExampleWindow.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\OdinMenuEditorWindowExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\OdinMenuStyleExample.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\OverrideGetTargetsExampleWindow.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\QuicklyInspectObjects.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\SomeData.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\SomeTextureToolWindow.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\Character.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterAlignment.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterEquipment.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterOverview.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterStats.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\CharacterTable.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\ItemDrawer.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\ItemSlotCellDrawer.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\RPGEditorWindow.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\ScriptableObjectCreator.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\Armor.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\ConsumableItem.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\EquipableItem.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\Item.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\ItemTypes.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\WeaponItem.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\ItemSlot.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\RequirementList.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\StatType.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\StatValue.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\Editor\BuildAOTAutomation.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\Editor\EnsureOdinInspectorDefine.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\Editor\OdinGettingStartedWizard.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\Editor\VectorIntDrawers.cs" />
+    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\VectorIntFormatters.cs" />
+    <Compile Include="Assets\Editor\XmlUtil.cs" />
     <Compile Include="Assets\Examples\13_BuildFromCLI\Editor\BuildFromCLI.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\ActorConfig\ActionHomeConfig.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\ActorConfig\ActionWindow.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\ActorConfig\ModelActionConfigEditor.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\ActorConfig\ModelActionEditor.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\ActorConfig\ModelCfgWindow.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\ActorConfig\SimplePopupCreator.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\VFXConfig\Playable\BasePlayable.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\VFXConfig\Playable\BeAttackPlayable.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\VFXConfig\Track\BeAttackedTrack.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\VFXConfig\Track\ConfigTrack.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\VFXConfig\TrackGroup\BaseTrackGroup.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\VFXConfig\TrackGroup\ConfigTrackGroup.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\VFXConfig\TrackGroup\EffectTrackGroup.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\VFXConfig\TrackGroup\TimeEventTrackGroup.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\VFXConfig\VFXEditor.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.Action.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.ActionSourceType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.ActorConfig.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.Attack.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.BeAttackEffect.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.Bomb.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.EffectAlignType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.EffectGroup.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.EffectType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.FlyWeapon.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.GeneralAction.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.GroupType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.HitPointGroup.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.HitSharpType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.HitZone.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.Movement.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.MoveType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.ParticleEffect.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.ShakeScreen.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.ShakeType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.SkillAction.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.SkillRelateType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.SkillTargetType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.SoundEffect.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.SpawnObject.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.SpawnType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.TraceBindType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.TraceObject.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlCode.Skill.TraceType.cs" />
+    <Compile Include="Assets\ModelEditor\Editor\XmlCode\XmlObject.cs" />
     <Compile Include="Assets\XLua\Editor\ExampleConfig.cs" />
     <Compile Include="Assets\XLua\Editor\ExportConfig.cs" />
     <Compile Include="Assets\XLua\Src\Editor\Generator.cs" />
@@ -295,6 +470,21 @@
     <Compile Include="Assets\XLua\Src\Editor\TemplateRef.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\EasyTouchBundle\EasyTouch\How to migrate from EasyTouch 4.X.txt" />
+    <None Include="Assets\EasyTouchBundle\EasyTouch\RealseNotes.txt" />
+    <None Include="Assets\EasyTouchBundle\EasyTouch\_Documentation\How to migrate from EasyTouch 4.X.txt" />
+    <None Include="Assets\EasyTouchBundle\EasyTouchControls\Documentation\Version 2.0.txt" />
+    <None Include="Assets\EasyTouchBundle\EasyTouchControls\Issues in button behavior (MAC).txt" />
+    <None Include="Assets\EasyTouchBundle\EasyTouchControls\ReleaseNotes.txt" />
+    <None Include="Assets\EasyTouchBundle\Readme.txt" />
+    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.xml" />
+    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.xml" />
+    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Serialization.Config.xml" />
+    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Serialization.xml" />
+    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Utilities.Editor.xml" />
+    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Utilities.xml" />
+    <None Include="Assets\Editor\Sirenix\Assemblies\link.xml" />
+    <None Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Icons\icons_by_ravenmore.txt" />
     <None Include="Assets\Examples\02_U3DScripting\LuaTestScript.lua.txt" />
     <None Include="Assets\Examples\03_UIEvent\ButtonInteraction.lua.txt" />
     <None Include="Assets\Examples\06_Coroutine\Resources\coruntine_test.lua.txt" />

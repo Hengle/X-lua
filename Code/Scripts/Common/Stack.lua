@@ -1,15 +1,9 @@
 local List = List
 local Class = Class
 
----@class Stack:list
+---@class Stack:List
 local Stack = Class:new(List)
 
-function Stack:__new()
-    ---@type Stack
-    local o = List:new()
-    setmetatable(o, self)
-    return o
-end
 function Stack:Push(item)
     self:push(item)
 end

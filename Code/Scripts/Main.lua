@@ -38,3 +38,19 @@ function Main.FixedUpdate(fixedDeltaTime)
     Time:SetFixedDelta(fixedDeltaTime)
     gameEvent.FixedUpdateEvent:Trigger()
 end
+
+
+--------------------------------------------------------
+---------------------- 测试 ----------------------------
+function TEST()
+    --local CfgMgr = require('Manager.CfgManager')
+    --printt(CfgMgr.NameTable, 'NameTable')
+    --local queue = Queue:new()
+    --queue:Enqueue('1')
+    --queue:Enqueue('2')
+    --print("Queue Count:", queue:Count())
+    --print("Queue Dequeue:", queue:Dequeue())
+    --print("Queue Count:", queue:Count())
+    --print("Queue Dequeue:", queue:Dequeue())
+    --print("Queue Count:", queue:Count())
+end

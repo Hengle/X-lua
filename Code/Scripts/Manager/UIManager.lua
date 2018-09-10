@@ -142,7 +142,7 @@ HideLoadedView = function(viewName)
 end
 
 function UIManager.Init()
-    _uiRoot = FindObj("/Canvas/GuiCamera")
+    _uiRoot = FindObj("/UIRoot/UICamera")
     if _uiRoot and _uiRoot.transform.parent then
         GameObject.DontDestroyOnLoad(_uiRoot.transform.parent)
     end
@@ -150,10 +150,10 @@ function UIManager.Init()
     gameEvent.UpdateEvent:Add(this.Update)
     gameEvent.LateUpdateEvent:Add(this.LateUpdate)
     _dialogStack = Stack:new()
-    _dialogConfigs = CfgMgr.GetConfig("dialog")
-    if Local.LogModuals.UIManager then
-        printt(_dialogConfigs or {})
-    end
+    --_dialogConfigs = CfgMgr.GetConfig("dialog")
+    --if Local.LogModuals.UIManager then
+    --    printt(_dialogConfigs or {})
+    --end
 end
 
 function UIManager.Update()

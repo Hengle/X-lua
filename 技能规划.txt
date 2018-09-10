@@ -1,30 +1,35 @@
-    Black Back£º-_-ºÚÆÁ£¬Ð´³ÉBlackÄÜÈÃ±à¼­Õß¸üÈÝÒ×¿´¶®Ò»Ð©¡£
-    Camera Motion£ºÏà»úÔË¶¯£¬¹æ»®Ò»ÌõÏà»úÔË¶¯µÄÂ·Ïß£¬ÔÚÊÍ·Å¼¼ÄÜÊ±£¬Ïà»úËæ¹ìµÀÔË¶¯¡£
-    Change TimeScale£ºÐÞ¸ÄTimeScale£¬ÊÍ·Å¼¼ÄÜÊ±£¬Õû¸öÊÀ½ç¶¼±äÂýÁË£¬»òÕßÍ»È»¼ÓËÙ¡£
-    Character Motion£ºÈËÎïÔË¶¯£¬¹æ»®Ò»ÌõÈËÎïÔË¶¯µÄÇúÏß£¬ÕâÑù´ò¶·ÆðÀ´ÈËÎïÉÏ´ÚÏÂÌø¡¢Õ·×ªÌÚÅ²¡£
-    Debuffs£ºDebuffÊÂ¼þ£¬ÒòÎªDebuffÔÚÂß¼­ÉÏÓÐÌØÊâ´¦Àí£¬ËùÒÔµ¥¶À¿ªÊÂ¼þ¡£
-    Hited Event£ºÊÜ»÷ÊÂ¼þ£¬ÈËÎïÊÜ»÷£¬Ôò´¥·¢´ËÊÂ¼þ£¬ÔÚ´ËÊÂ¼þÖÐ£¬×ö¸÷ÖÖÊÜ»÷ÐèÒª×öµÄ´¦Àí¡£
-    Normal Effect£ºÊÍ·ÅÌØÐ§£¬Ö§³Ö¹ÒÔÚÈÎÒâµØ·½£¬²¥·ÅÊ±¸úËæ¡¢ÍÑÀëµÈµÈ¡£
-    Play Audio£º²¥·ÅÉùÒô¡£
-    Shake Camera£º¶¶ÆÁ¡£
-    Shoot Event£º·¢ÉäÊÂ¼þ£¬ÖÆ×÷·¢ÉäÀà¼¼ÄÜ£¬¹­¼ý¡¢»ðÇòÊõµÈµÈ¡£
-    Skill End Control£ºÄ³Ð©¼¼ÄÜÐèÒªÃ÷È·Ö§³Ö½áÊø£¬ÔòÔö¼Ó´ËÊÂ¼þ£¬ÔÚ¼¼ÄÜ½áÊøÊ±£¬¸ø³öÍ¨Öª¡£
-    Sprint Event£º³å´Ì¼¼ÄÜ£¬³å´Ì£¿ÕâºÍCharacter MotionÓÐÊ²Ã´Çø±ðÄØ£¿ÒòÎª²»ÂÛ³¯ÄÄ¸ö·½Ïò³å´Ì£¬³å´Ì¹ý³ÌÖÐÊÇ´ø¹¥»÷ÅÐ¶¨µÄ£¬¸ü¼ÓÏûºÄÐ§ÂÊ£¬ËùÒÔ×öÁËÇø·Ö¡£
-    Trigger Sequence£º±ðÍüÁË£¬Sequence×ö¼¼ÄÜÊ±¸ÄÔì¶øÀ´£¬ËüÔ­±¾ÊÇÖÆ×÷¸÷ÀàÑÝÊ¾µÄ£¬Trigger Sequence£¬ÔÚ¼¼ÄÜÊÍ·Å¹ý³ÌÖÐ£¬¿ÉÒÔ´¥·¢Ò»Ì×ÑÝÊ¾¡£ÕâÑùÖ§³ÖÑÝÊ¾ºÍ¼¼ÄÜÇ¶Ì×¡£
-    Weapon Attach£ºÌí¼ÓÎäÆ÷£¬²»ÊÇÌí¼ÓÔÚÊÖÉÏ£¬¶øÊÇÌí¼ÓÔÚÖ¸¶¨µã£¬ÕâÑù¿ÉÒÔ×ö³öÍ·ÉÏ²åÁË°Ñµ¶µÄÐ§¹û¡£
-    Weapon Shower£ºÏÔÊ¾»òÒþ²ØÎäÆ÷£¬±ÈÈç½«ÎäÆ÷ÈÓ³öÎäÆ÷£¬ÕâÊ±ÐèÒªÒþ²ØÎäÆ÷£¬ÔÙ½«ÎäÆ÷´Ó¹ÖÎïÉíÉÏ°ÎÏÂ£¬ÕâÊ±ÐèÒªÏÔÊ¾ÎäÆ÷¡£
+ï»¿    Black Backï¼š-_-é»‘å±ï¼Œå†™æˆBlackèƒ½è®©ç¼–è¾‘è€…æ›´å®¹æ˜“çœ‹æ‡‚ä¸€äº›ã€‚
+    Camera Motionï¼šç›¸æœºè¿åŠ¨ï¼Œè§„åˆ’ä¸€æ¡ç›¸æœºè¿åŠ¨çš„è·¯çº¿ï¼Œåœ¨é‡Šæ”¾æŠ€èƒ½æ—¶ï¼Œç›¸æœºéšè½¨é“è¿åŠ¨ã€‚
+    Change TimeScaleï¼šä¿®æ”¹TimeScaleï¼Œé‡Šæ”¾æŠ€èƒ½æ—¶ï¼Œæ•´ä¸ªä¸–ç•Œéƒ½å˜æ…¢äº†ï¼Œæˆ–è€…çªç„¶åŠ é€Ÿã€‚
+    Character Motionï¼šäººç‰©è¿åŠ¨ï¼Œè§„åˆ’ä¸€æ¡äººç‰©è¿åŠ¨çš„æ›²çº¿ï¼Œè¿™æ ·æ‰“æ–—èµ·æ¥äººç‰©ä¸Šè¹¿ä¸‹è·³ã€è¾—è½¬è…¾æŒªã€‚
+    Debuffsï¼šDebuffäº‹ä»¶ï¼Œå› ä¸ºDebuffåœ¨é€»è¾‘ä¸Šæœ‰ç‰¹æ®Šå¤„ç†ï¼Œæ‰€ä»¥å•ç‹¬å¼€äº‹ä»¶ã€‚
+    Hited Eventï¼šå—å‡»äº‹ä»¶ï¼Œäººç‰©å—å‡»ï¼Œåˆ™è§¦å‘æ­¤äº‹ä»¶ï¼Œåœ¨æ­¤äº‹ä»¶ä¸­ï¼Œåšå„ç§å—å‡»éœ€è¦åšçš„å¤„ç†ã€‚
+    Normal Effectï¼šé‡Šæ”¾ç‰¹æ•ˆï¼Œæ”¯æŒæŒ‚åœ¨ä»»æ„åœ°æ–¹ï¼Œæ’­æ”¾æ—¶è·Ÿéšã€è„±ç¦»ç­‰ç­‰ã€‚
+    Play Audioï¼šæ’­æ”¾å£°éŸ³ã€‚
+    Shake Cameraï¼šæŠ–å±ã€‚
+    Shoot Eventï¼šå‘å°„äº‹ä»¶ï¼Œåˆ¶ä½œå‘å°„ç±»æŠ€èƒ½ï¼Œå¼“ç®­ã€ç«çƒæœ¯ç­‰ç­‰ã€‚
+    Skill End Controlï¼šæŸäº›æŠ€èƒ½éœ€è¦æ˜Žç¡®æ”¯æŒç»“æŸï¼Œåˆ™å¢žåŠ æ­¤äº‹ä»¶ï¼Œåœ¨æŠ€èƒ½ç»“æŸæ—¶ï¼Œç»™å‡ºé€šçŸ¥ã€‚
+    Sprint Eventï¼šå†²åˆºæŠ€èƒ½ï¼Œå†²åˆºï¼Ÿè¿™å’ŒCharacter Motionæœ‰ä»€ä¹ˆåŒºåˆ«å‘¢ï¼Ÿå› ä¸ºä¸è®ºæœå“ªä¸ªæ–¹å‘å†²åˆºï¼Œå†²åˆºè¿‡ç¨‹ä¸­æ˜¯å¸¦æ”»å‡»åˆ¤å®šçš„ï¼Œæ›´åŠ æ¶ˆè€—æ•ˆçŽ‡ï¼Œæ‰€ä»¥åšäº†åŒºåˆ†ã€‚
+    Trigger Sequenceï¼šåˆ«å¿˜äº†ï¼ŒSequenceåšæŠ€èƒ½æ—¶æ”¹é€ è€Œæ¥ï¼Œå®ƒåŽŸæœ¬æ˜¯åˆ¶ä½œå„ç±»æ¼”ç¤ºçš„ï¼ŒTrigger Sequenceï¼Œåœ¨æŠ€èƒ½é‡Šæ”¾è¿‡ç¨‹ä¸­ï¼Œå¯ä»¥è§¦å‘ä¸€å¥—æ¼”ç¤ºã€‚è¿™æ ·æ”¯æŒæ¼”ç¤ºå’ŒæŠ€èƒ½åµŒå¥—ã€‚
+    Weapon Attachï¼šæ·»åŠ æ­¦å™¨ï¼Œä¸æ˜¯æ·»åŠ åœ¨æ‰‹ä¸Šï¼Œè€Œæ˜¯æ·»åŠ åœ¨æŒ‡å®šç‚¹ï¼Œè¿™æ ·å¯ä»¥åšå‡ºå¤´ä¸Šæ’äº†æŠŠåˆ€çš„æ•ˆæžœã€‚
+    Weapon Showerï¼šæ˜¾ç¤ºæˆ–éšè—æ­¦å™¨ï¼Œæ¯”å¦‚å°†æ­¦å™¨æ‰”å‡ºæ­¦å™¨ï¼Œè¿™æ—¶éœ€è¦éšè—æ­¦å™¨ï¼Œå†å°†æ­¦å™¨ä»Žæ€ªç‰©èº«ä¸Šæ‹”ä¸‹ï¼Œè¿™æ—¶éœ€è¦æ˜¾ç¤ºæ­¦å™¨ã€‚
 	
 	----------------------------------------------------------------------------------------------------------------------
 	
-	#¼¼ÄÜ»ù´¡ÅäÖÃ
-		1.´ò»÷ÇøÓòÅäÖÃ
-		2.±»»÷Ð§¹ûÅäÖÃ
-		3.¶¯»­ÅäÖÃ:Ç°ÖÃ¶¯×÷,±ØÒª¶¯×÷,ºóÖÃ¶¯×÷
-		4.Ã÷È·µÄ¶¯×÷½áÊøÊ±¿Ì:Ô¤ÁôºóÐø¼¼ÄÜ¶¯×÷ÏÎ½ÓÊ±¼ä
-	#»ùÓÚÊ±¼äµÄÊÂ¼þ(ÊµÊ±Åö×²¼ì²âµÈ)
-		1.Ö¸¶¨Ê±¼ä¶ÎÄÚ,¶¨µã½øÐÐÖ¸¶¨ÐÎ×´Åö×²¼ì²â
-		2....¶¯µã.....
-		3.Î»ÒÆ
-	#ÌØÐ§ÅäÖÃ
-		1.ÊÓ¾õÌØÐ§ÅäÖÃ:³¤¶È²»¹Ì¶¨,ÊÓÇé¿ö¶ø¶¨
-		2.Ìý¾õÌØÐ§ÅäÖÃ:TimelineClip³¤¶ÈÓëÒôÆµ³¤¶ÈÒ»ÖÂ
+	#æŠ€èƒ½åŸºç¡€é…ç½®
+		1.æ‰“å‡»åŒºåŸŸé…ç½®
+		2.è¢«å‡»æ•ˆæžœé…ç½®
+		3.åŠ¨ç”»é…ç½®:å‰ç½®åŠ¨ä½œ,å¿…è¦åŠ¨ä½œ,åŽç½®åŠ¨ä½œ
+		4.æ˜Žç¡®çš„åŠ¨ä½œç»“æŸæ—¶åˆ»:é¢„ç•™åŽç»­æŠ€èƒ½åŠ¨ä½œè¡”æŽ¥æ—¶é—´
+	#åŸºäºŽæ—¶é—´çš„äº‹ä»¶(å®žæ—¶ç¢°æ’žæ£€æµ‹ç­‰)
+		1.æŒ‡å®šæ—¶é—´æ®µå†…,å®šç‚¹è¿›è¡ŒæŒ‡å®šå½¢çŠ¶ç¢°æ’žæ£€æµ‹
+		2....åŠ¨ç‚¹.....
+		3.ä½ç§»
+	#ç‰¹æ•ˆé…ç½®
+		1.è§†è§‰ç‰¹æ•ˆé…ç½®:é•¿åº¦ä¸å›ºå®š,è§†æƒ…å†µè€Œå®š
+		2.å¬è§‰ç‰¹æ•ˆé…ç½®:TimelineClipé•¿åº¦ä¸ŽéŸ³é¢‘é•¿åº¦ä¸€è‡´
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+	

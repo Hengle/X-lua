@@ -1,0 +1,6 @@
+<Configs Namespace = "Character">
+	<Class Name="Model" Index="Name" DataPath="Model.xlsx">
+		<Field Name="Name" Type="string" Des = "模型名称" />
+		<Field Name="Level" Type="int" Des = "模型级别" />
+	</Class>
+</Configs>

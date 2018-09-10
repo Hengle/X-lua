@@ -4,15 +4,15 @@ using Csv;
 
 namespace Csv.Skill
 {
-	public sealed class TraceType
+	public enum TraceType
 	{
 		/// <summary>
 		/// 飞
 		/// <summary>
-		public const int Fly = 0;
+		Fly = 0,
 		/// <summary>
 		/// 固定
 		/// <summary>
-		public const int Fixed = 1;
+		Fixed = 1,
 	}
 }

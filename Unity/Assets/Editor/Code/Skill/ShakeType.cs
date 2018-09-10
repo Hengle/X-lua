@@ -4,19 +4,19 @@ using Csv;
 
 namespace Csv.Skill
 {
-	public sealed class ShakeType
+	public enum ShakeType
 	{
 		/// <summary>
 		/// 水平
 		/// <summary>
-		public const int Horizontal = 0;
+		Horizontal = 0,
 		/// <summary>
 		/// 垂直
 		/// <summary>
-		public const int Vertical = 1;
+		Vertical = 1,
 		/// <summary>
 		/// 混合
 		/// <summary>
-		public const int Mix = 2;
+		Mix = 2,
 	}
 }

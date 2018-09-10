@@ -138,7 +138,8 @@ end
 -- dump table
 local function dump(hashtable, max_level)
     local limit = max_level or 3
-    local _dump = function(t, level)
+    local _dump = nil
+    _dump = function(t, level)
         if level >= limit then
             return
         end
@@ -146,11 +147,11 @@ local function dump(hashtable, max_level)
         local tab = rep("\t", level)
         for k, v in pairs(t) do
             if type(v) == "number" then
-                insert(code, tab .. "\t<color=orange>[" .. tostring(k) .. "]</color> = " .. tostring(v) .. ",\n")
+                insert(code, format("%s\t<color=orange>[%s]</color> = %s,\n",tab, k, v))
             elseif type(v) == "string" then
-                insert(code, tab .. "\t<color=orange>" .. tostring(k) .. "</color> = " .. tostring(v) .. ",\n")
+                insert(code, format("%s\t<color=orange>%s</color> = %s,\n",tab, k, v))
             elseif type(v) == "table" then
-                insert(code, tab .. "\t<color=orange>" .. tostring(k) .. "</color> = " .. _dump(v, level + 1) .. ",\n")
+                insert(code, format("%s\t<color=orange>%s</color> = %s,\n",tab, k, _dump(v, level + 1) or ''))
             end
         end
         insert(code, tab .. "}")
@@ -169,7 +170,7 @@ local function clear(t)
         t[k] = nil
     end
 end
--- 深复制表,但不包含table类型
+-- 深复制表,但不包含function类型
 local function deepcopyto(src, dst)
     for k, v in pairs(src) do
         if type(v) ~= "table" then
@@ -180,7 +181,7 @@ local function deepcopyto(src, dst)
         end
     end
 end
--- 浅复制表
+-- 浅复制表,只取第一层基础类型
 local function shallowcopyto(src, dst)
     for k, v in pairs(src) do
         dst[k] = v
@@ -206,15 +207,15 @@ local function binsearch(array, v)
     from = 1
     to = #array
     while from <= to do
-    local mid = floor(from / 2 + to / 2)
-    -- PrintYellow(from,to,mid)
-    if array[mid] > v then
-    to = mid - 1
-    elseif array[mid] < v then
-    from = mid + 1
-    else
-    return array[mid]
-    end
+        local mid = floor(from / 2 + to / 2)
+        -- PrintYellow(from,to,mid)
+        if array[mid] > v then
+            to = mid - 1
+        elseif array[mid] < v then
+            from = mid + 1
+        else
+            return array[mid]
+        end
     end
     return nil
 end
@@ -259,8 +260,6 @@ local function compare(array1, array2, cmp)
         end
     end
 end
-
-
 
 table.count = count
 table.length = length

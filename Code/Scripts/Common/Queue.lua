@@ -1,15 +1,9 @@
 local List = List
 local Class = Class
 
----@class Queue:list
+---@class Queue:List
 local Queue = Class:new(List)
 
-function Queue:__new()
-    ---@type Queue
-    local o = List:new()
-    setmetatable(o, self)
-    return o
-end
 function Queue:Enqueue(item)
     self:push(item)
 end

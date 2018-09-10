@@ -49,7 +49,7 @@ Quaternion.__index = function(t, k)
 	return rawget(unity_quaternion, k)
 end
 
-Quaternion.__newindex = function(t, name, k)	
+Quaternion.newindex = function(t, name, k)	
 	if name == "eulerAngles" then
 		t:SetEuler(k)
 	else

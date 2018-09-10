@@ -4,19 +4,19 @@ using Csv;
 
 namespace Csv.Skill
 {
-	public sealed class MoveType
+	public enum MoveType
 	{
 		/// <summary>
 		/// 方向移动
 		/// <summary>
-		public const int MoveBack = 0;
+		MoveBack = 0,
 		/// <summary>
 		/// 向目标移动
 		/// <summary>
-		public const int MoveToTarget = 1;
+		MoveToTarget = 1,
 		/// <summary>
 		/// 按当前方向移动
 		/// <summary>
-		public const int MoveInDirection = 2;
+		MoveInDirection = 2,
 	}
 }
