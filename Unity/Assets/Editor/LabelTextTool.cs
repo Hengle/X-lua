@@ -5,6 +5,7 @@ using UnityEditor.VersionControl;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using UnityEngine.UI;
 
 public class LabelTextTool : EditorWindow
 {
@@ -93,7 +94,8 @@ public class LabelTextTool : EditorWindow
     void Find(Transform t, string str, string title)
     {
         StringBuilder builder = new StringBuilder();
-        var labels = t.GetComponentsInChildren<UILabel>();
+        //var labels = t.GetComponentsInChildren<UILabel>();    
+        var labels = t.GetComponentsInChildren<Text>();
         for (int i = 0; i < labels.Length; i++)
         {
             var l = labels[i];
@@ -121,7 +123,8 @@ public class LabelTextTool : EditorWindow
     {
         StringBuilder builder = new StringBuilder();
         var ins = PrefabUtility.InstantiatePrefab(go) as GameObject;
-        var labels = ins.transform.GetComponentsInChildren<UILabel>(true);
+        //var labels = ins.transform.GetComponentsInChildren<UILabel>(true);
+        var labels = ins.transform.GetComponentsInChildren<Text>(true);
         bool needReplace = false;
         for (int i = 0; i < labels.Length; i++)
         {

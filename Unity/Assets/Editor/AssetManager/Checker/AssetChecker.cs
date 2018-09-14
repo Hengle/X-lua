@@ -5,6 +5,7 @@
     using Sirenix.OdinInspector.Editor;
     using Sirenix.Utilities.Editor;
     using Sirenix.Utilities;
+    using System.Linq;
 
     public class AssetChecker : OdinMenuEditorWindow
     {

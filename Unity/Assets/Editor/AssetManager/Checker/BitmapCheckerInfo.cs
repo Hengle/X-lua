@@ -137,10 +137,11 @@
         public override void CheckAsset()
         {
             base.CheckAsset();
-            if (!Directory.Exists(BitmapPath))
-                EditorUtility.DisplayDialog("错误", "位图目录路径不存在", "确定");
-            ClearAsset();
+
 #if ASSET_MGR_NGUI
+            if (!Directory.Exists(BitmapPath))
+            EditorUtility.DisplayDialog("错误", "位图目录路径不存在", "确定");
+            ClearAsset();
             Dictionary<string, HashSet<string>> pairs = new Dictionary<string, HashSet<string>>();
             string[] prefabs = Directory.GetFiles(GetAbsPath(Path), "*.prefab");
             foreach (var file in prefabs)

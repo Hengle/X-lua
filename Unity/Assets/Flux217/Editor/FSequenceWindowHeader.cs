@@ -35,7 +35,7 @@ namespace FluxEditor
 		private SerializedProperty _sequenceLength;
 
 		// sequence selection popup variables
-		private GUIContent _sequenceLabel = new GUIContent( "Sequence", "Select Sequence..." );
+		private GUIContent _sequenceLabel = new GUIContent( "序列", "选择序列..." );
 
 		// rect of the sequence label
 		private Rect _sequenceLabelRect;
@@ -53,29 +53,29 @@ namespace FluxEditor
 		private int _selectedSequenceIndex;
 
 		// update mode UI variables
-		private GUIContent _updateModeLabel = new GUIContent( "Update Mode", "How does the sequence update:\n\tNormal: uses Time.time in Update()\n\tAnimatePhysics: uses Time.fixedTime in FixedUpdate()\n\tUnscaledTime: uses Time.unscaledTime in Update()" );
+		private GUIContent _updateModeLabel = new GUIContent( "更新模式", "How does the sequence update:\n\tNormal: uses Time.time in Update()\n\tAnimatePhysics: uses Time.fixedTime in FixedUpdate()\n\tUnscaledTime: uses Time.unscaledTime in Update()" );
 		private Rect _updateModeLabelRect;
 		private Rect _updateModeFieldRect;
 		private bool _showUpdadeMode;
 
 		// framerate UI variables
-		private GUIContent _framerateLabel = new GUIContent( "Frame Rate", "How many frames does the sequence have per second" );
+		private GUIContent _framerateLabel = new GUIContent( "帧率", "序列每秒多少帧" );
 		private Rect _framerateLabelRect;
 		private Rect _framerateFieldRect;
 		private bool _showFramerate;
 
 		// length UI variables
-		private GUIContent _lengthLabel = new GUIContent( "Length", "What's the length of the sequence" );
+		private GUIContent _lengthLabel = new GUIContent( "长度", "序列长度" );
 		private Rect _lengthLabelRect;
 		private Rect _lengthFieldRect;
 		private bool _showLength;
 
 
-		private GUIContent _addContainerLabel = new GUIContent( string.Empty, "Add Container To Sequence" );
+		private GUIContent _addContainerLabel = new GUIContent( string.Empty, "添加容器到序列" );
 		private Rect _addContainerRect;
 		private bool _showAddContainer;
 
-		private GUIContent _openInspectorLabel = new GUIContent( string.Empty, "Open Flux Inspector" );
+		private GUIContent _openInspectorLabel = new GUIContent( string.Empty, "打开参数界面" );
 		private Rect _openInspectorRect;
 
 		// cached number field style, since we want numbers centered
@@ -109,7 +109,7 @@ namespace FluxEditor
 				_sequenceNames[i] = new GUIContent(_sequences[i].name);
 			}
 
-			_sequenceNames[_sequenceNames.Length-1] = new GUIContent("[Create New Sequence]");
+			_sequenceNames[_sequenceNames.Length-1] = new GUIContent("[创建新序列]");
 			_selectedSequenceIndex = -1;
 		}
 

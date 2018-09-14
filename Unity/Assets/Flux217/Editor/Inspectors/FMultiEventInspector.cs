@@ -22,7 +22,7 @@ namespace FluxEditor
 			}
 			
 			EditorGUI.BeginChangeCheck();
-			bool triggerOnSkip = EditorGUILayout.Toggle( "Trigger On Skip", _objects[0].TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed" );
+			bool triggerOnSkip = EditorGUILayout.Toggle("跳过触发器", _objects[0].TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed" );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				Undo.RecordObjects( _objects, " Inspector" );

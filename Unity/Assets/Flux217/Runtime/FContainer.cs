@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 
 namespace Flux
 {
@@ -8,6 +9,7 @@ namespace Flux
 		public static readonly Color DEFAULT_COLOR = new Color(0.14f, 0.14f, 0.14f, 0.7f);
 
 		[SerializeField]
+        [HideInInspector]
 		private FSequence _sequence = null;
 
 		[SerializeField]
@@ -19,7 +21,7 @@ namespace Flux
 		public List<FTrack> Tracks { get { return _tracks; } }
 
 		public override FSequence Sequence { get { return _sequence; } }
-		public override Transform Owner { get { return _sequence.transform; } }
+		public override Transform Owner { get { return null; } }
 
 		public static FContainer Create( Color color )
 		{
@@ -177,7 +179,7 @@ namespace Flux
 			UpdateTrackIds();
 		}
 
-		// Updates the ids of the timelines
+		// Updates the ids of the tracks
 		private void UpdateTrackIds()
 		{
 			for( int i = 0; i != _tracks.Count; ++i )

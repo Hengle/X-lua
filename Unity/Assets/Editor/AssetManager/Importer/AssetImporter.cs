@@ -6,6 +6,7 @@
     using Sirenix.Utilities.Editor;
     using Sirenix.Utilities;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class AssetImporter : OdinMenuEditorWindow
     {
@@ -80,7 +81,7 @@
 
         protected override void OnBeginDrawEditors()
         {
-            var selected = this.MenuTree.Selection.FirstOrDefault();
+            var selected = MenuTree.Selection.FirstOrDefault();
             var toolbarHeight = this.MenuTree.Config.SearchToolbarHeight;
 
             if (selected == null) return;

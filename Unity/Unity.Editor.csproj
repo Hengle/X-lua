@@ -260,23 +260,26 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>Assets/Editor/AssetManager/System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
-      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Editor">
-      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization.Config">
-      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization">
-      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Utilities">
-      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Utilities.Editor">
-      <HintPath>Assets/Editor/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
@@ -298,9 +301,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Unity.Plugins.csproj">
+      <Project>{D1FDB199-0FB7-099D-3771-C6A942E4E326}</Project>
+      <Name>Unity.Plugins</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.csproj">
       <Project>{CF118143-7E37-744F-BE45-3F55345FEC40}</Project>
       <Name>Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Editor.Plugins.csproj">
+      <Project>{81A6E58E-BFF2-F1C8-1C4E-6316985F642C}</Project>
+      <Name>Unity.Editor.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +337,20 @@
     <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCJoystickInspector.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCMenu.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCTouchPadInspector.cs" />
+    <Compile Include="Assets\Editor\AssetManager\AssetOption.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Checker\AssetChecker.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Checker\BitmapCheckerInfo.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Checker\CheckerConfig.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Checker\FileNameCheckerInfo.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Checker\RoleMeshCheckerInfo.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Checker\TextureStretchCheckerInfo.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Importer\AssetImporter.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Importer\AudioClipImportSetting.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Importer\ImporterConfig.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Importer\ModelImportSetting.cs" />
+    <Compile Include="Assets\Editor\AssetManager\Importer\TextureImportSetting.cs" />
+    <Compile Include="Assets\Editor\AssetManager\RefCounter\AssetRefCounter.cs" />
+    <Compile Include="Assets\Editor\AssetManager\RefCounter\RefCounterConfig.cs" />
     <Compile Include="Assets\Editor\Code\AllType\AllClass.cs" />
     <Compile Include="Assets\Editor\Code\AllType\CardElement.cs" />
     <Compile Include="Assets\Editor\Code\AllType\SingleClass.cs" />
@@ -372,51 +397,45 @@
     <Compile Include="Assets\Editor\Export\ExportResource.SFX.cs" />
     <Compile Include="Assets\Editor\Export\ExportResource.Texture.cs" />
     <Compile Include="Assets\Editor\Export\ExportResource.UI.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\ContextExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\CustomDrawerExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\CustomGroupExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\GenericDrawerExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\GenericMenuExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\HealthBarExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\MinesweeperExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\PriorityExamples.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\ReflectionExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\StringMemberHelperExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Custom Drawer Examples\Scripts\ValidationExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\BasicOdinEditorExampleWindow.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\OdinMenuEditorWindowExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\OdinMenuStyleExample.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\OverrideGetTargetsExampleWindow.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\QuicklyInspectObjects.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\SomeData.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Odin Editor Windows\Scripts\Editor\SomeTextureToolWindow.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\Character.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterAlignment.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterEquipment.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterOverview.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterStats.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\CharacterTable.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\ItemDrawer.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\ItemSlotCellDrawer.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\RPGEditorWindow.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Editor\ScriptableObjectCreator.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\Armor.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\ConsumableItem.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\EquipableItem.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\Item.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\ItemTypes.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\WeaponItem.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\ItemSlot.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\RequirementList.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\StatType.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\StatValue.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\Editor\BuildAOTAutomation.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\Editor\EnsureOdinInspectorDefine.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\Editor\OdinGettingStartedWizard.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\Editor\VectorIntDrawers.cs" />
-    <Compile Include="Assets\Editor\Sirenix\Odin Inspector\Scripts\VectorIntFormatters.cs" />
+    <Compile Include="Assets\Editor\LabelTextTool.cs" />
     <Compile Include="Assets\Editor\XmlUtil.cs" />
     <Compile Include="Assets\Examples\13_BuildFromCLI\Editor\BuildFromCLI.cs" />
+    <Compile Include="Assets\Flux217\Editor\AnimatorWindowProxy.cs" />
+    <Compile Include="Assets\Flux217\Editor\Drawers\FrameRangeDrawer.cs" />
+    <Compile Include="Assets\Flux217\Editor\Editors\FAnimationEventEditor.cs" />
+    <Compile Include="Assets\Flux217\Editor\Editors\FAnimationTrackEditor.cs" />
+    <Compile Include="Assets\Flux217\Editor\FAssetProcessor.cs" />
+    <Compile Include="Assets\Flux217\Editor\FChangeFrameRateWindow.cs" />
+    <Compile Include="Assets\Flux217\Editor\FContainerEditor.cs" />
+    <Compile Include="Assets\Flux217\Editor\FContainerEditorInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\FEditor.cs" />
+    <Compile Include="Assets\Flux217\Editor\FEditorCache.cs" />
+    <Compile Include="Assets\Flux217\Editor\FEditorInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\FEditorList.cs" />
+    <Compile Include="Assets\Flux217\Editor\FEventEditor.cs" />
+    <Compile Include="Assets\Flux217\Editor\FEventEditorInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\FGUI.cs" />
+    <Compile Include="Assets\Flux217\Editor\FInspectorWindow.cs" />
+    <Compile Include="Assets\Flux217\Editor\FSequenceEditor.cs" />
+    <Compile Include="Assets\Flux217\Editor\FSequenceEditorWindow.cs" />
+    <Compile Include="Assets\Flux217\Editor\FSequenceWindowHeader.cs" />
+    <Compile Include="Assets\Flux217\Editor\FSequenceWindowToolbar.cs" />
+    <Compile Include="Assets\Flux217\Editor\FSettings.cs" />
+    <Compile Include="Assets\Flux217\Editor\FTrackEditor.cs" />
+    <Compile Include="Assets\Flux217\Editor\FTrackEditorInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\FUtility.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FAnimationEventInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FAnimationTrackInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FContainerInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FEventInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FMultiEventInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FMultiTrackInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FMultiTypeInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FSequenceInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FSettingsInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FTrackInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\Inspectors\FTweenEventInspector.cs" />
+    <Compile Include="Assets\Flux217\Editor\ISelectableElement.cs" />
     <Compile Include="Assets\ModelEditor\Editor\ActorConfig\ActionHomeConfig.cs" />
     <Compile Include="Assets\ModelEditor\Editor\ActorConfig\ActionWindow.cs" />
     <Compile Include="Assets\ModelEditor\Editor\ActorConfig\ModelActionConfigEditor.cs" />
@@ -477,20 +496,21 @@
     <None Include="Assets\EasyTouchBundle\EasyTouchControls\Issues in button behavior (MAC).txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouchControls\ReleaseNotes.txt" />
     <None Include="Assets\EasyTouchBundle\Readme.txt" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Serialization.Config.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Serialization.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Utilities.Editor.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Utilities.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\link.xml" />
-    <None Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Icons\icons_by_ravenmore.txt" />
+    <None Include="Assets\Editor\AssetManager\Config\gmcs.rsp" />
     <None Include="Assets\Examples\02_U3DScripting\LuaTestScript.lua.txt" />
     <None Include="Assets\Examples\03_UIEvent\ButtonInteraction.lua.txt" />
     <None Include="Assets\Examples\06_Coroutine\Resources\coruntine_test.lua.txt" />
     <None Include="Assets\Examples\06_Coroutine\Resources\cs_coroutine.lua.txt" />
     <None Include="Assets\Examples\07_AsyncTest\Resources\async_test.lua.txt" />
     <None Include="Assets\Examples\07_AsyncTest\Resources\message_box.lua.txt" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\link.xml" />
+    <None Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Icons\icons_by_ravenmore.txt" />
     <None Include="Assets\Resources\launcher.txt" />
     <None Include="Assets\XLua\CHANGELOG.txt" />
     <None Include="Assets\XLua\Gen\link.xml" />

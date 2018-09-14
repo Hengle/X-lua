@@ -61,28 +61,6 @@ namespace Flux
         /// @brief Containers inside the sequence.
         public List<FContainer> Containers { get { return _containers; } }
 
-        //		[SerializeField]
-        //		[HideInInspector]
-        //		private FTimeline _commentTimeline = null;
-        //		public FTimeline CommentTimeline {
-        //			get {
-        //				if( _commentTimeline == null )
-        //					AddCommentTimeline();
-        //				return _commentTimeline;
-        //			}
-        //		}
-
-        //		[SerializeField]
-        //		[HideInInspector]
-        //		private FCommentTrack _commentTrack = null;
-        //		public FCommentTrack CommentTrack { 
-        //			get { 
-        //				if( _commentTrack == null ) 
-        //					AddCommentTrack(); 
-        //				return _commentTrack; 
-        //			}
-        //		}
-
         [SerializeField]
         [HideInInspector]
         private int _version = 0;

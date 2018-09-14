@@ -208,12 +208,12 @@ namespace FluxEditor
 			PopulateContextMenu(menu);
 			if( CanPaste( FSequenceEditor.CopyObject ) )
 			{
-				menu.AddItem( new GUIContent( "Paste " + FSequenceEditor.CopyObject.name ), false, Paste, FSequenceEditor.CopyObject );
+				menu.AddItem( new GUIContent( "粘贴" + FSequenceEditor.CopyObject.name ), false, Paste, FSequenceEditor.CopyObject );
 			}
-			menu.AddItem( new GUIContent( "Copy" ), false, Copy );
-			menu.AddItem( new GUIContent( "Cut" ), false, Cut );
-			menu.AddItem( new GUIContent( "Duplicate" ), false, Duplicate );
-			menu.AddItem( new GUIContent( "Delete" ), false, Delete );
+			menu.AddItem( new GUIContent( "复制" ), false, Copy );
+			menu.AddItem( new GUIContent( "剪切" ), false, Cut );
+			menu.AddItem( new GUIContent("复制+粘贴"), false, Duplicate );
+			menu.AddItem( new GUIContent( "删除" ), false, Delete );
 			menu.ShowAsContext();
 		}
 

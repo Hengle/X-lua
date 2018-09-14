@@ -29,7 +29,7 @@
         readonly string[] PLATFORM = { "Window", "Android", "IOS" };
 
         [BoxGroup("导入设置")]
-        public TextureImporterType ImportType = TextureImporterType.Advanced;
+        public TextureImporterType ImportType = TextureImporterType.Default;
         [BoxGroup("导入设置")]
         public TextureImporterNPOTScale TextureNPOT = TextureImporterNPOTScale.ToNearest;
         [BoxGroup("导入设置"), LabelText("Read/Write Enabled")]

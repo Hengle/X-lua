@@ -221,6 +221,24 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="Sirenix.OdinInspector.Attributes">
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.OdinInspector.Editor">
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization.Config">
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities">
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities.Editor">
+      <HintPath>Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
     </Reference>
@@ -230,6 +248,12 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/mslzw/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Unity.Plugins.csproj">
+      <Project>{D1FDB199-0FB7-099D-3771-C6A942E4E326}</Project>
+      <Name>Unity.Plugins</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Examples\4.X\AdvancedExamples\AutoSelect\MultiLayerTouch.cs" />
@@ -325,6 +349,28 @@
     <Compile Include="Assets\Examples\11_RawObject\RawObjectTest.cs" />
     <Compile Include="Assets\Examples\12_ReImplementInLua\ReImplementInLua.cs" />
     <Compile Include="Assets\Examples\ExampleGenConfig.cs" />
+    <Compile Include="Assets\Flux217\Extensions\PlayMaker\FluxEaseSpeed.cs" />
+    <Compile Include="Assets\Flux217\Extensions\PlayMaker\FluxPauseSequence.cs" />
+    <Compile Include="Assets\Flux217\Extensions\PlayMaker\FluxPlaySequence.cs" />
+    <Compile Include="Assets\Flux217\Extensions\PlayMaker\FluxResumeSequence.cs" />
+    <Compile Include="Assets\Flux217\Extensions\PlayMaker\FluxSetCurrentFrame.cs" />
+    <Compile Include="Assets\Flux217\Extensions\PlayMaker\FluxSetCurrentTime.cs" />
+    <Compile Include="Assets\Flux217\Extensions\PlayMaker\FluxStopSequence.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Caches\FAnimationTrackCache.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Caches\FTrackCache.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\FPlayAnimationEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\FTweenEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\FContainer.cs" />
+    <Compile Include="Assets\Flux217\Runtime\FEasing.cs" />
+    <Compile Include="Assets\Flux217\Runtime\FEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\FObject.cs" />
+    <Compile Include="Assets\Flux217\Runtime\FSequence.cs" />
+    <Compile Include="Assets\Flux217\Runtime\FSequencePlayer.cs" />
+    <Compile Include="Assets\Flux217\Runtime\FTrack.cs" />
+    <Compile Include="Assets\Flux217\Runtime\FTween.cs" />
+    <Compile Include="Assets\Flux217\Runtime\FUtility.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Tracks\FAnimationTrack.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Tracks\FTransformTrack.cs" />
     <Compile Include="Assets\Source\Common\AppConst.cs" />
     <Compile Include="Assets\Source\Common\ObjectPool.cs" />
     <Compile Include="Assets\Source\Main.cs" />
@@ -458,20 +504,21 @@
     <None Include="Assets\EasyTouchBundle\EasyTouchControls\Issues in button behavior (MAC).txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouchControls\ReleaseNotes.txt" />
     <None Include="Assets\EasyTouchBundle\Readme.txt" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Serialization.Config.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Serialization.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Utilities.Editor.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\Sirenix.Utilities.xml" />
-    <None Include="Assets\Editor\Sirenix\Assemblies\link.xml" />
-    <None Include="Assets\Editor\Sirenix\Demos\Sample - RPG Editor\Icons\icons_by_ravenmore.txt" />
+    <None Include="Assets\Editor\AssetManager\Config\gmcs.rsp" />
     <None Include="Assets\Examples\02_U3DScripting\LuaTestScript.lua.txt" />
     <None Include="Assets\Examples\03_UIEvent\ButtonInteraction.lua.txt" />
     <None Include="Assets\Examples\06_Coroutine\Resources\coruntine_test.lua.txt" />
     <None Include="Assets\Examples\06_Coroutine\Resources\cs_coroutine.lua.txt" />
     <None Include="Assets\Examples\07_AsyncTest\Resources\async_test.lua.txt" />
     <None Include="Assets\Examples\07_AsyncTest\Resources\message_box.lua.txt" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.xml" />
+    <None Include="Assets\Plugins\Sirenix\Assemblies\link.xml" />
+    <None Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Icons\icons_by_ravenmore.txt" />
     <None Include="Assets\Resources\launcher.txt" />
     <None Include="Assets\XLua\CHANGELOG.txt" />
     <None Include="Assets\XLua\Gen\link.xml" />

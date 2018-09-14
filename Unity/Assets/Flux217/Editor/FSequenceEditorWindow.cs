@@ -11,485 +11,485 @@ using Object = UnityEngine.Object;
 
 namespace FluxEditor
 {
-	public enum TimeFormat
-	{
-		Frames = 0,
-		Seconds,
-		SecondsFormatted
-	}
-	
-	public class FSequenceEditorWindow : EditorWindow
-	{
-		public const string MENU_PATH = "";
-		public const string PRODUCT_NAME = "Flux";
+    public enum TimeFormat
+    {
+        Frames = 0,
+        Seconds,
+        SecondsFormatted
+    }
 
-		#region Menus		
-		[MenuItem(MENU_PATH+PRODUCT_NAME+"/Open Editor %&c",false, 0)]
-		public static void Open()
-		{
-			FSequenceEditorWindow window = GetWindow<FSequenceEditorWindow>();
-			window.Show();
+    public class FSequenceEditorWindow : EditorWindow
+    {
+        public const string MENU_PATH = "";
+        public const string PRODUCT_NAME = "Flux";
 
-			window.titleContent = new GUIContent(PRODUCT_NAME);
+        #region Menus		
+        [MenuItem(MENU_PATH + PRODUCT_NAME + "/Open Editor %&c", false, 0)]
+        public static void Open()
+        {
+            FSequenceEditorWindow window = GetWindow<FSequenceEditorWindow>();
+            window.Show();
 
-			window.Update();
-		}
+            window.titleContent = new GUIContent(PRODUCT_NAME);
 
-		public static void Open( FSequence sequence )
-		{
-			Open();
+            window.Update();
+        }
 
-			instance._sequenceEditor.OpenSequence( sequence );
-		}
-		
-		[MenuItem(MENU_PATH+PRODUCT_NAME+"/Create Sequence", false, 100)]
-		public static FSequence CreateSequence()
-		{
-			// find new name & priority for sequence
-			string sequenceNameFormat = "Sequence_{0}";
+        public static void Open(FSequence sequence)
+        {
+            Open();
 
-			int sequenceId = 0;
+            instance._sequenceEditor.OpenSequence(sequence);
+        }
 
-			string sequenceName = string.Format( sequenceNameFormat, sequenceId.ToString("000") );
+        [MenuItem(MENU_PATH + PRODUCT_NAME + "/Create Sequence", false, 100)]
+        public static FSequence CreateSequence(string seqName = null)
+        {
+            // find new name & priority for sequence
+            string sequenceNameFormat = "Sequence_{0}";
 
-			FSequence[] sequences = FindObjectsOfType<FSequence>();
-			for( int i = 0, limit = sequences.Length; i != limit; ++i )
-			{
-				if( sequences[i].name == sequenceName )
-				{
-					// try new name
-					++sequenceId;
-					sequenceName = string.Format( sequenceNameFormat, sequenceId.ToString("000") );
-					i = -1; // restart search
-				}
-			}
+            int sequenceId = 0;
 
-			FSequence sequence = FSequence.CreateSequence();
-			sequence.name = sequenceName;
-			sequence.FrameRate = FUtility.FrameRate;
-			sequence.Length = sequence.FrameRate * FSequence.DEFAULT_LENGTH;
+            string sequenceName = string.IsNullOrEmpty(seqName) ? string.Format(sequenceNameFormat, sequenceId.ToString("000")) : seqName;
 
-			Undo.RegisterCreatedObjectUndo( sequence.gameObject, "Create Sequence" );
+            FSequence[] sequences = FindObjectsOfType<FSequence>();
+            for (int i = 0, limit = sequences.Length; i != limit; ++i)
+            {
+                if (sequences[i].name == sequenceName)
+                {
+                    // try new name
+                    ++sequenceId;
+                    sequenceName = string.Format(sequenceNameFormat, sequenceId.ToString("000"));
+                    i = -1; // restart search
+                }
+            }
 
-			return sequence;
-		}
+            FSequence sequence = FSequence.CreateSequence();
+            sequence.name = sequenceName;
+            sequence.FrameRate = FUtility.FrameRate;
+            sequence.Length = sequence.FrameRate * FSequence.DEFAULT_LENGTH;
 
-		[MenuItem(MENU_PATH+PRODUCT_NAME+"/Website", false, 200)]
-		public static void OpenWebsite()
-		{
-			Application.OpenURL( "http://www.fluxeditor.com" );
-		}
+            Undo.RegisterCreatedObjectUndo(sequence.gameObject, "Create Sequence");
 
-		[MenuItem(MENU_PATH+PRODUCT_NAME+"/Contact Support", false, 201)]
-		public static void ContactSupport()
-		{
-			Application.OpenURL( "mailto:support@fluxeditor.com" );
-		}
-		#endregion
+            return sequence;
+        }
 
-		public static FSequenceEditorWindow instance = null;
+        //[MenuItem(MENU_PATH + PRODUCT_NAME + "/Website", false, 200)]
+        //public static void OpenWebsite()
+        //{
+        //    Application.OpenURL("http://www.fluxeditor.com");
+        //}
 
-		// size of the whole window, cached to determine if it was resized
-		private Rect _windowRect;
+        //[MenuItem(MENU_PATH + PRODUCT_NAME + "/Contact Support", false, 201)]
+        //public static void ContactSupport()
+        //{
+        //    Application.OpenURL("mailto:support@fluxeditor.com");
+        //}
+        #endregion
 
-		// rect used for the header at the top of the window
-		private Rect _windowHeaderRect;
+        public static FSequenceEditorWindow instance = null;
 
-		// header
-		private FSequenceWindowHeader _windowHeader;
+        // size of the whole window, cached to determine if it was resized
+        private Rect _windowRect;
 
-		// toolbar
-		private FSequenceWindowToolbar _toolbar;
+        // rect used for the header at the top of the window
+        private Rect _windowHeaderRect;
 
-		// area for the toolbar
-		private Rect _toolbarRect;
+        // header
+        private FSequenceWindowHeader _windowHeader;
 
-		[SerializeField]
-		private FSequenceEditor _sequenceEditor;
-		
-		void OnEnable()
-		{
-			instance = this;
-			wantsMouseMove = true;
+        // toolbar
+        private FSequenceWindowToolbar _toolbar;
 
-			minSize = new Vector2(450, 300);
+        // area for the toolbar
+        private Rect _toolbarRect;
 
-			_windowHeader = new FSequenceWindowHeader( this );
+        [SerializeField]
+        private FSequenceEditor _sequenceEditor;
 
-			_toolbar = new FSequenceWindowToolbar( this );
+        void OnEnable()
+        {
+            instance = this;
+            wantsMouseMove = true;
 
-			_windowRect = new Rect();
+            minSize = new Vector2(450, 300);
 
-			FUtility.LoadPreferences();
-		}
+            _windowHeader = new FSequenceWindowHeader(this);
 
-		void OnSelectionChange()
-		{
-			if( !FUtility.OpenSequenceOnSelect )
-				return;
+            _toolbar = new FSequenceWindowToolbar(this);
 
-			FSequence sequence = Selection.activeGameObject == null || PrefabUtility.GetPrefabType(Selection.activeGameObject) == PrefabType.Prefab ? null : Selection.activeGameObject.GetComponent<FSequence>();
+            _windowRect = new Rect();
 
-			if( sequence != null )
-			{
-				Open( sequence );
-			}
-		}
+            FUtility.LoadPreferences();
+        }
 
-		public FSequenceEditor GetSequenceEditor()
-		{
-			return _sequenceEditor;
-		}
+        void OnSelectionChange()
+        {
+            if (!FUtility.OpenSequenceOnSelect)
+                return;
 
-		void OnDestroy()
-		{
-			if( _sequenceEditor != null )
-			{
-				_sequenceEditor.Stop();
-				DestroyImmediate( _sequenceEditor );
-			}
-		}
+            FSequence sequence = Selection.activeGameObject == null || PrefabUtility.GetPrefabType(Selection.activeGameObject) == PrefabType.Prefab ? null : Selection.activeGameObject.GetComponent<FSequence>();
 
-		void OnLostFocus()
-		{
-		}
+            if (sequence != null)
+            {
+                Open(sequence);
+            }
+        }
 
-		#region Editor state changes hookups
-		private void OnDidOpenScene()
-		{
-			if( _sequenceEditor )
-				_sequenceEditor.OpenSequence( null );
-		}
+        public FSequenceEditor GetSequenceEditor()
+        {
+            return _sequenceEditor;
+        }
 
-		#endregion
+        void OnDestroy()
+        {
+            if (_sequenceEditor != null)
+            {
+                _sequenceEditor.Stop();
+                DestroyImmediate(_sequenceEditor);
+            }
+        }
+
+        void OnLostFocus()
+        {
+        }
+
+        #region Editor state changes hookups
+        private void OnDidOpenScene()
+        {
+            if (_sequenceEditor)
+                _sequenceEditor.OpenSequence(null);
+        }
+
+        #endregion
 
 
-		public bool IsPlaying { get { return _sequenceEditor.IsPlaying; } }
+        public bool IsPlaying { get { return _sequenceEditor.IsPlaying; } }
 
-		void Update()
-		{
+        void Update()
+        {
 #if FLUX_PROFILE
 			Profiler.BeginSample("flux Update");
 #endif
-			if( _sequenceEditor == null )
-			{
-				_sequenceEditor = FSequenceEditor.CreateInstance<FSequenceEditor>();
-				_sequenceEditor.Init( this );
-			}
+            if (_sequenceEditor == null)
+            {
+                _sequenceEditor = FSequenceEditor.CreateInstance<FSequenceEditor>();
+                _sequenceEditor.Init(this);
+            }
 
-			FSequence sequence = _sequenceEditor.Sequence;
+            FSequence sequence = _sequenceEditor.Sequence;
 
-			if( Application.isPlaying && sequence != null && FUtility.RenderOnEditorPlay )
-			{
-				Repaint();
-			}
+            if (Application.isPlaying && sequence != null && FUtility.RenderOnEditorPlay)
+            {
+                Repaint();
+            }
 
-			_sequenceEditor.Update();
+            _sequenceEditor.Update();
 
 #if FLUX_PROFILE
 			Profiler.EndSample();
 #endif
-		}
+        }
 
-		public void Play( bool restart )
-		{
-			_sequenceEditor.IsPlayingForward = true;
-			_sequenceEditor.Play( restart );
-		}
+        public void Play(bool restart)
+        {
+            _sequenceEditor.IsPlayingForward = true;
+            _sequenceEditor.Play(restart);
+        }
 
-		public void PlayBackwards( bool restart )
-		{
-			_sequenceEditor.IsPlayingForward = false;
-			_sequenceEditor.Play( restart );
-		}
+        public void PlayBackwards(bool restart)
+        {
+            _sequenceEditor.IsPlayingForward = false;
+            _sequenceEditor.Play(restart);
+        }
 
-		public void Pause()
-		{
-			_sequenceEditor.Pause();
-		}
-		
-		public void Stop()
-		{
-			_sequenceEditor.Stop();
-		}
-		
-		private void RebuildLayout()
-		{
-			_windowRect = position;
-			_windowRect.x = 0;
-			_windowRect.y = 0;
+        public void Pause()
+        {
+            _sequenceEditor.Pause();
+        }
 
-			_windowHeaderRect = _windowRect;
-			_windowHeaderRect.height = FSequenceWindowHeader.HEIGHT;
+        public void Stop()
+        {
+            _sequenceEditor.Stop();
+        }
 
-			_windowHeader.RebuildLayout( _windowHeaderRect );
+        private void RebuildLayout()
+        {
+            _windowRect = position;
+            _windowRect.x = 0;
+            _windowRect.y = 0;
 
-			_toolbarRect = _windowRect;
-			_toolbarRect.yMin = _toolbarRect.yMax - FSequenceWindowToolbar.HEIGHT;
+            _windowHeaderRect = _windowRect;
+            _windowHeaderRect.height = FSequenceWindowHeader.HEIGHT;
 
-			_toolbar.RebuildLayout( _toolbarRect );
+            _windowHeader.RebuildLayout(_windowHeaderRect);
 
-			Rect timelineViewRect = _windowRect;
-			timelineViewRect.yMin += FSequenceWindowHeader.HEIGHT;
-			timelineViewRect.yMax -= FSequenceWindowToolbar.HEIGHT;
+            _toolbarRect = _windowRect;
+            _toolbarRect.yMin = _toolbarRect.yMax - FSequenceWindowToolbar.HEIGHT;
 
-			_sequenceEditor.RebuildLayout( timelineViewRect );			
+            _toolbar.RebuildLayout(_toolbarRect);
 
-			Repaint();
-		}
+            Rect timelineViewRect = _windowRect;
+            timelineViewRect.yMin += FSequenceWindowHeader.HEIGHT;
+            timelineViewRect.yMax -= FSequenceWindowToolbar.HEIGHT;
+
+            _sequenceEditor.RebuildLayout(timelineViewRect);
+
+            Repaint();
+        }
 
 
-		public void Refresh()
-		{
-			if( _sequenceEditor != null )
-			{
-				_sequenceEditor.OpenSequence( _sequenceEditor.Sequence );
-			}
+        public void Refresh()
+        {
+            if (_sequenceEditor != null)
+            {
+                _sequenceEditor.OpenSequence(_sequenceEditor.Sequence);
+            }
 
-			Repaint();
-		}
+            Repaint();
+        }
 
-		public static void RefreshIfOpen()
-		{
-			if( instance != null )
-				instance.Refresh();
-		}
+        public static void RefreshIfOpen()
+        {
+            if (instance != null)
+                instance.Refresh();
+        }
 
-		void OnGUI()
-		{	
+        void OnGUI()
+        {
 #if FLUX_PROFILE
 			Profiler.BeginSample("Flux OnGUI");
 #endif
-			if( _sequenceEditor == null )
-				return;
+            if (_sequenceEditor == null)
+                return;
 
-			Rect currentWindowRect = position;
-			currentWindowRect.x = 0;
-			currentWindowRect.y = 0;
-			
-			if( currentWindowRect != _windowRect )
-			{
-				RebuildLayout();
-			}
+            Rect currentWindowRect = position;
+            currentWindowRect.x = 0;
+            currentWindowRect.y = 0;
 
-			if( !FUtility.RenderOnEditorPlay && EditorApplication.isPlaying && !EditorApplication.isPaused )
-			{
-				GUI.Label( _windowRect, "Draw in play mode is disabled. You can change it on Flux Preferences" );
-				return;
-			}
+            if (currentWindowRect != _windowRect)
+            {
+                RebuildLayout();
+            }
 
-			FSequence sequence = _sequenceEditor.Sequence;
+            if (!FUtility.RenderOnEditorPlay && EditorApplication.isPlaying && !EditorApplication.isPaused)
+            {
+                GUI.Label(_windowRect, "Draw in play mode is disabled. You can change it on Flux Preferences");
+                return;
+            }
 
-			if( sequence == null )
-				ShowNotification( new GUIContent( "Select Or Create Sequence" ) );
-			else if( Event.current.isKey )
-			{
-				if( Event.current.keyCode == KeyCode.Space )
-				{
-					if( Event.current.type == EventType.KeyUp )
-					{
-						if( _sequenceEditor.IsPlaying )
-						{
-							if( Event.current.shift )
-								Stop ();
-							else
-								Pause();
-						}
-						else
-							Play( Event.current.shift );
+            FSequence sequence = _sequenceEditor.Sequence;
 
-						
-						Repaint();
-					}
-					Event.current.Use();
-				}
-
-				if( Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return )
-				{
-					EditorGUIUtility.keyboardControl = 0;
-					Event.current.Use();
-					Repaint();
-				}
-			}
+            if (sequence == null)
+                ShowNotification(new GUIContent("Select Or Create Sequence"));
+            else if (Event.current.isKey)
+            {
+                if (Event.current.keyCode == KeyCode.Space)
+                {
+                    if (Event.current.type == EventType.KeyUp)
+                    {
+                        if (_sequenceEditor.IsPlaying)
+                        {
+                            if (Event.current.shift)
+                                Stop();
+                            else
+                                Pause();
+                        }
+                        else
+                            Play(Event.current.shift);
 
 
-			// header
-			_windowHeader.OnGUI();
+                        Repaint();
+                    }
+                    Event.current.Use();
+                }
 
-			if( sequence == null )
-				return;
-
-			// toolbar
-			_toolbar.OnGUI();
-
-			switch( Event.current.type )
-			{
-			case EventType.KeyDown:
-				if( Event.current.keyCode == KeyCode.Backspace || Event.current.keyCode == KeyCode.Delete )
-				{
-					_sequenceEditor.DestroyEvents( _sequenceEditor.EventSelection.Editors );
-					Event.current.Use();
-				}
-				else if( Event.current.keyCode == KeyCode.K && _sequenceEditor.Sequence.CurrentFrame >= 0 )
-				{
-					_sequenceEditor.AddEvent( _sequenceEditor.Sequence.CurrentFrame );
-					Event.current.Use();
-				}
-//				else if( Event.current.keyCode == KeyCode.C && _sequenceEditor.GetSequence().GetCurrentFrame() >= 0 )
-//				{
-//					_sequenceEditor.AddCommentEvent( _sequenceEditor.GetSequence().GetCurrentFrame() );
-//					Event.current.Use();
-//				}
-				break;
-
-			case EventType.MouseDown:
-				break;
-
-			case EventType.MouseUp:
-				break;
-			}
-
-			if( Event.current.type == EventType.ValidateCommand )
-			{
-				Repaint();
-			}
-
-			_sequenceEditor.OnGUI();
+                if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
+                {
+                    EditorGUIUtility.keyboardControl = 0;
+                    Event.current.Use();
+                    Repaint();
+                }
+            }
 
 
-			// because of a bug with windows editor, we have to not catch right button
-			// otherwise ContextClick doesn't get called
-			if( Event.current.type == EventType.MouseUp && Event.current.button != 1 )
-			{
-				Event.current.Use();
-			}
+            // header
+            _windowHeader.OnGUI();
 
-			if( Event.current.type == EventType.Ignore )
-			{
-				EditorGUIUtility.hotControl = 0;
-			}
-		
-//			// handle drag & drop
-//			if( Event.current.type == EventType.DragUpdated )
-//			{
-//				if( _windowRect.Contains( Event.current.mousePosition ) )
-//				{
-//					DragAndDrop.visualMode = DragAndDropVisualMode.Link;
-//					Event.current.Use();
-//				}
-//			}
-//			else if( Event.current.type == EventType.DragPerform )
-//			{
-//				if( _windowRect.Contains( Event.current.mousePosition ) )
-//				{
-//					foreach( UnityEngine.Object obj in DragAndDrop.objectReferences )
-//					{
-//						if( !(obj is GameObject) )
-//						{
-//							continue;
-//						}
-//
-//						PrefabType prefabType = PrefabUtility.GetPrefabType(obj);
-//						if( prefabType == PrefabType.ModelPrefab || prefabType == PrefabType.Prefab )
-//							continue;
-//
-//						Undo.IncrementCurrentGroup();
-//						UnityEngine.Object[] objsToSave = new UnityEngine.Object[]{ sequence, this };
-//						
-//						Undo.RegisterCompleteObjectUndo( objsToSave, string.Empty );
-//						
-//						GameObject timelineGO = new GameObject(obj.name);
-//						// TODO
-////						FTimeline timeline = timelineGO.AddComponent<Flux.FTimeline>();
-////						timeline.SetOwner( ((GameObject)obj).transform );
-////						sequence.Add( timeline );
-//						
-////						Undo.RegisterCompleteObjectUndo( objsToSave, string.Empty );
-////						Undo.RegisterCreatedObjectUndo( timeline.gameObject, "create Timeline" );
-////						Undo.CollapseUndoOperations( Undo.GetCurrentGroup() );
-//					}
-//					RemoveNotification();
-//					Event.current.Use();
-//					DragAndDrop.AcceptDrag();
-//					Refresh();
-//					EditorGUIUtility.ExitGUI();
-//				}
-//			}
+            if (sequence == null)
+                return;
 
-			if( Event.current.type == EventType.Repaint )
-			{
-				Handles.DrawLine( new Vector3( _windowHeaderRect.xMin, _windowHeaderRect.yMax, 0 ), new Vector3( _windowHeaderRect.xMax-FSequenceEditor.RIGHT_BORDER, _windowHeaderRect.yMax, 0 ) );
-			}
+            // toolbar
+            _toolbar.OnGUI();
+
+            switch (Event.current.type)
+            {
+                case EventType.KeyDown:
+                    if (Event.current.keyCode == KeyCode.Backspace || Event.current.keyCode == KeyCode.Delete)
+                    {
+                        _sequenceEditor.DestroyEvents(_sequenceEditor.EventSelection.Editors);
+                        Event.current.Use();
+                    }
+                    else if (Event.current.keyCode == KeyCode.K && _sequenceEditor.Sequence.CurrentFrame >= 0)
+                    {
+                        _sequenceEditor.AddEvent(_sequenceEditor.Sequence.CurrentFrame);
+                        Event.current.Use();
+                    }
+                    //				else if( Event.current.keyCode == KeyCode.C && _sequenceEditor.GetSequence().GetCurrentFrame() >= 0 )
+                    //				{
+                    //					_sequenceEditor.AddCommentEvent( _sequenceEditor.GetSequence().GetCurrentFrame() );
+                    //					Event.current.Use();
+                    //				}
+                    break;
+
+                case EventType.MouseDown:
+                    break;
+
+                case EventType.MouseUp:
+                    break;
+            }
+
+            if (Event.current.type == EventType.ValidateCommand)
+            {
+                Repaint();
+            }
+
+            _sequenceEditor.OnGUI();
+
+
+            // because of a bug with windows editor, we have to not catch right button
+            // otherwise ContextClick doesn't get called
+            if (Event.current.type == EventType.MouseUp && Event.current.button != 1)
+            {
+                Event.current.Use();
+            }
+
+            if (Event.current.type == EventType.Ignore)
+            {
+                EditorGUIUtility.hotControl = 0;
+            }
+
+            //			// handle drag & drop
+            //			if( Event.current.type == EventType.DragUpdated )
+            //			{
+            //				if( _windowRect.Contains( Event.current.mousePosition ) )
+            //				{
+            //					DragAndDrop.visualMode = DragAndDropVisualMode.Link;
+            //					Event.current.Use();
+            //				}
+            //			}
+            //			else if( Event.current.type == EventType.DragPerform )
+            //			{
+            //				if( _windowRect.Contains( Event.current.mousePosition ) )
+            //				{
+            //					foreach( UnityEngine.Object obj in DragAndDrop.objectReferences )
+            //					{
+            //						if( !(obj is GameObject) )
+            //						{
+            //							continue;
+            //						}
+            //
+            //						PrefabType prefabType = PrefabUtility.GetPrefabType(obj);
+            //						if( prefabType == PrefabType.ModelPrefab || prefabType == PrefabType.Prefab )
+            //							continue;
+            //
+            //						Undo.IncrementCurrentGroup();
+            //						UnityEngine.Object[] objsToSave = new UnityEngine.Object[]{ sequence, this };
+            //						
+            //						Undo.RegisterCompleteObjectUndo( objsToSave, string.Empty );
+            //						
+            //						GameObject timelineGO = new GameObject(obj.name);
+            //						// TODO
+            ////						FTimeline timeline = timelineGO.AddComponent<Flux.FTimeline>();
+            ////						timeline.SetOwner( ((GameObject)obj).transform );
+            ////						sequence.Add( timeline );
+            //						
+            ////						Undo.RegisterCompleteObjectUndo( objsToSave, string.Empty );
+            ////						Undo.RegisterCreatedObjectUndo( timeline.gameObject, "create Timeline" );
+            ////						Undo.CollapseUndoOperations( Undo.GetCurrentGroup() );
+            //					}
+            //					RemoveNotification();
+            //					Event.current.Use();
+            //					DragAndDrop.AcceptDrag();
+            //					Refresh();
+            //					EditorGUIUtility.ExitGUI();
+            //				}
+            //			}
+
+            if (Event.current.type == EventType.Repaint)
+            {
+                Handles.DrawLine(new Vector3(_windowHeaderRect.xMin, _windowHeaderRect.yMax, 0), new Vector3(_windowHeaderRect.xMax - FSequenceEditor.RIGHT_BORDER, _windowHeaderRect.yMax, 0));
+            }
 #if FLUX_PROFILE
 			Profiler.EndSample();
 #endif
-		}
+        }
 
-		public float GetXForFrame( int frame )
-		{
-			return _sequenceEditor.GetXForFrame( frame );
-		}
+        public float GetXForFrame(int frame)
+        {
+            return _sequenceEditor.GetXForFrame(frame);
+        }
 
-		public int GetFrameForX( float x )
-		{
-			return _sequenceEditor.GetFrameForX( x );
-		}
+        public int GetFrameForX(float x)
+        {
+            return _sequenceEditor.GetFrameForX(x);
+        }
 
-		private string FormatTime( float time )
-		{
-			int timeInInt = (int)time;
-			int minutes = timeInInt / 60;
-			int seconds = timeInInt % 60;
-			int deciSeconds = (int)((time - timeInInt)*100f);
-			
-			return minutes > 0 ? string.Format( "{0}:{1}.{2}", 
-				minutes.ToString("00"), 
-				seconds.ToString("00"), 
-				deciSeconds.ToString("00") ) : string.Format( "{0}.{1}", seconds.ToString("00"), deciSeconds.ToString("00") );
-		}
-		
-		float timelineViewRectHeight;
+        private string FormatTime(float time)
+        {
+            int timeInInt = (int)time;
+            int minutes = timeInInt / 60;
+            int seconds = timeInInt % 60;
+            int deciSeconds = (int)((time - timeInInt) * 100f);
 
-		private void RenderHeader( Rect rect )
-		{
-			FSequence sequence = _sequenceEditor.Sequence;
+            return minutes > 0 ? string.Format("{0}:{1}.{2}",
+                minutes.ToString("00"),
+                seconds.ToString("00"),
+                deciSeconds.ToString("00")) : string.Format("{0}.{1}", seconds.ToString("00"), deciSeconds.ToString("00"));
+        }
 
-			GUI.Label( rect, sequence.name );
+        float timelineViewRectHeight;
 
-			Rect r = rect;
+        private void RenderHeader(Rect rect)
+        {
+            FSequence sequence = _sequenceEditor.Sequence;
 
-			r.xMin = r.xMax - 100;
+            GUI.Label(rect, sequence.name);
 
-			EditorGUI.IntField( r, sequence.Length );
+            Rect r = rect;
 
-			GUIContent lengthLabel = new GUIContent( "Length" );
-			r.x -= EditorStyles.label.CalcSize( lengthLabel ).x + 5;
+            r.xMin = r.xMax - 100;
 
-			EditorGUI.PrefixLabel( r, lengthLabel );
+            EditorGUI.IntField(r, sequence.Length);
 
-			r.x -= 50;
-			r.width = 40;
+            GUIContent lengthLabel = new GUIContent("Length");
+            r.x -= EditorStyles.label.CalcSize(lengthLabel).x + 5;
 
-			EditorGUI.IntField( r, sequence.FrameRate );
+            EditorGUI.PrefixLabel(r, lengthLabel);
 
-			GUIContent framerateLabel = new GUIContent("Frame Rate");
+            r.x -= 50;
+            r.width = 40;
 
-			r.x -= EditorStyles.label.CalcSize( framerateLabel ).x + 5;
-			EditorGUI.PrefixLabel( r, framerateLabel );
+            EditorGUI.IntField(r, sequence.FrameRate);
 
-			r.x -= 110;
-			r.width = 100;
+            GUIContent framerateLabel = new GUIContent("Frame Rate");
 
-			EditorGUI.EnumPopup( r, sequence.UpdateMode );
+            r.x -= EditorStyles.label.CalcSize(framerateLabel).x + 5;
+            EditorGUI.PrefixLabel(r, framerateLabel);
 
-			GUIContent updateModeLabel = new GUIContent( "Update Mode" );
+            r.x -= 110;
+            r.width = 100;
 
-			Vector2 updateModeLabelSize = EditorStyles.label.CalcSize( updateModeLabel );
+            EditorGUI.EnumPopup(r, sequence.UpdateMode);
 
-			r.x -= updateModeLabelSize.x + 5;
-			r.width = updateModeLabelSize.x;
+            GUIContent updateModeLabel = new GUIContent("Update Mode");
 
-			EditorGUI.PrefixLabel( r, updateModeLabel );
-		}
-	}
+            Vector2 updateModeLabelSize = EditorStyles.label.CalcSize(updateModeLabel);
+
+            r.x -= updateModeLabelSize.x + 5;
+            r.width = updateModeLabelSize.x;
+
+            EditorGUI.PrefixLabel(r, updateModeLabel);
+        }
+    }
 }

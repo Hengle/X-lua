@@ -3,36 +3,25 @@ using System.Collections;
 
 namespace Flux
 {
-	[FEvent("Animation/Play Animation", typeof(FAnimationTrack))]
+	[FEvent("动画/播放动画", typeof(FAnimationTrack))]
 	public class FPlayAnimationEvent : FEvent
 	{
 		[HideInInspector]
 		public AnimationClip _animationClip = null;
 
 		[HideInInspector]
-		[SerializeField]
-		private bool _controlsAnimation = false;
-		public bool ControlsAnimation { get { return _controlsAnimation; } set { _controlsAnimation = FUtility.IsAnimationEditable(_animationClip) && value; } }
-
-		[HideInInspector]
-		[Tooltip("How long is the transition blending?")]
+		[Tooltip("过渡时混合长度")]
 		public int _blendLength;
 
 		[HideInInspector]
-		[Tooltip("What's the offset from where we play the animation?")]
+		[Tooltip("动画从什么位置开始播放")]
 		public int _startOffset;
 
 		[HideInInspector]
 		public int _stateHash;
 
 		private Animator _animator = null;
-
 		private FAnimationTrack _animTrack = null;
-
-//		protected override void OnInit()
-//		{
-//			base.OnInit();
-//		}
 
 		protected override void OnTrigger( float timeSinceTrigger )
 		{
@@ -130,11 +119,6 @@ namespace Flux
 			int id = GetId();
 			return id > 0 && _track != null && _track.Events[id-1].End == Start && ((FAnimationTrack)_track).AnimatorController != null && ((FPlayAnimationEvent)_track.Events[id-1])._animationClip != null && _animationClip != null ;
 		}
-
-//		public bool IsAnimationEditable()
-//		{
-//			return _animationClip == null || (((_animationClip.hideFlags & HideFlags.NotEditable) == 0) && !_animationClip.isLooping);
-//		}
 
 		public int GetMaxStartOffset()
 		{

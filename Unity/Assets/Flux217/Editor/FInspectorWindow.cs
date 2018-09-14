@@ -16,7 +16,7 @@ namespace FluxEditor
 			_instance = GetWindow<FInspectorWindow>();
 
 			_instance.Show();
-			_instance.titleContent = new GUIContent("Flux Inspector");
+			_instance.titleContent = new GUIContent("参数面板");
 
 		}
 
@@ -55,13 +55,12 @@ namespace FluxEditor
 
 			GUI.skin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Scene);
 
+            _sequenceEditor.TrackSelection.OnInspectorGUI(contentWidth);
 
-			_sequenceEditor.EventSelection.OnInspectorGUI( contentWidth );
+            if (_sequenceEditor.TrackSelection.Editors.Count > 0)
+                GUILayout.Space(10);
 
-			if( _sequenceEditor.EventSelection.Editors.Count > 0 )
-				GUILayout.Space(10);
-
-			_sequenceEditor.TrackSelection.OnInspectorGUI( contentWidth );
+            _sequenceEditor.EventSelection.OnInspectorGUI( contentWidth );
 
 			_sequenceEditor.ContainerSelection.OnInspectorGUI( contentWidth );
 

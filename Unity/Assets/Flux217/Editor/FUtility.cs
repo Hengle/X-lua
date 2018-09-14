@@ -97,6 +97,7 @@ namespace FluxEditor
         private static string _fluxPath = null;
         private static string _fluxEditorPath = null;
         private static string _fluxSkinPath = null;
+        private static string _fluxAssetsPath = null;
 
         private static EditorWindow _gameView = null;
 
@@ -107,7 +108,7 @@ namespace FluxEditor
 
         public static string FindFluxDirectory()
         {
-            string[] directories = Directory.GetDirectories("Assets", "Flux", SearchOption.AllDirectories);
+            string[] directories = Directory.GetDirectories("Assets", "Flux217", SearchOption.AllDirectories);
             return directories.Length > 0 ? directories[0] : string.Empty;
         }
 
@@ -116,9 +117,10 @@ namespace FluxEditor
         {
             if (_fluxPath == null)
             {
-                _fluxPath = FindFluxDirectory() + '/';
+                _fluxPath = FindFluxDirectory().Replace("\\", "/") + '/';
                 _fluxEditorPath = _fluxPath + "Editor/";
                 _fluxSkinPath = _fluxEditorPath + "Skin/";
+                _fluxAssetsPath = _fluxEditorPath + "Resource/";
             }
             return _fluxPath;
         }
@@ -135,11 +137,23 @@ namespace FluxEditor
             return _fluxSkinPath;
         }
 
+        public static string GetFluxAssetsPath()
+        {
+            if (_fluxAssetsPath == null) GetFluxPath();
+            return _fluxAssetsPath;
+        }
+
         public static GUISkin GetFluxSkin()
         {
             if (_fluxSkin == null)
                 _fluxSkin = (GUISkin)AssetDatabase.LoadAssetAtPath(GetFluxSkinPath() + "FSkin.guiskin", typeof(GUISkin));
             return _fluxSkin;
+        }
+
+        public static T GetFluxAssets<T>(string assetName) where T : UnityEngine.Object
+        {
+            string path = GetFluxAssetsPath() + assetName;
+            return AssetDatabase.LoadAssetAtPath<T>(path);
         }
 
         public static Texture2D GetFluxTexture(string textureFile)
@@ -241,28 +255,28 @@ namespace FluxEditor
             evt.Start = newFrameRange.Start;
             evt.End = newFrameRange.End;
 
-            if (evt is FPlayAnimationEvent)
-            {
-                FPlayAnimationEvent animEvt = (FPlayAnimationEvent)evt;
+            //if (evt is FPlayAnimationEvent)
+            //{
+            //    FPlayAnimationEvent animEvt = (FPlayAnimationEvent)evt;
 
-                if (animEvt._animationClip != null)
-                {
-                    if (Flux.FUtility.IsAnimationEditable(animEvt._animationClip))
-                    {
-                        animEvt._animationClip.frameRate = animEvt.Sequence.FrameRate;
-                        EditorUtility.SetDirty(animEvt._animationClip);
-                    }
-                    else if (Mathf.RoundToInt(animEvt._animationClip.frameRate) != animEvt.Sequence.FrameRate)
-                    {
-                        Debug.LogError(string.Format("Removed AnimationClip '{0}' ({1} fps) from Animation Event '{2}'",
-                                                      animEvt._animationClip.name,
-                                                      animEvt._animationClip.frameRate,
-                                                      animEvt.name), animEvt);
+            //    if (animEvt._animationClip != null)
+            //    {
+            //        if (Flux.FUtility.IsAnimationEditable(animEvt._animationClip))
+            //        {
+            //            animEvt._animationClip.frameRate = animEvt.Sequence.FrameRate;
+            //            EditorUtility.SetDirty(animEvt._animationClip);
+            //        }
+            //        else if (Mathf.RoundToInt(animEvt._animationClip.frameRate) != animEvt.Sequence.FrameRate)
+            //        {
+            //            Debug.LogError(string.Format("Removed AnimationClip '{0}' ({1} fps) from Animation Event '{2}'",
+            //                                          animEvt._animationClip.name,
+            //                                          animEvt._animationClip.frameRate,
+            //                                          animEvt.name), animEvt);
 
-                        animEvt._animationClip = null;
-                    }
-                }
-            }
+            //            animEvt._animationClip = null;
+            //        }
+            //    }
+            //}
 
             EditorUtility.SetDirty(evt);
         }
@@ -341,126 +355,126 @@ namespace FluxEditor
 
         #endregion
 
-        #region Upgrade Sequences
+        #region Upgrade Sequences--版本升级
 
-        public static void Upgrade(FSequence sequence)
-        {
-            const int fluxVersion = Flux.FUtility.FLUX_VERSION;
-            if (sequence.Version == fluxVersion)
-                return;
+        //public static void Upgrade(FSequence sequence)
+        //{
+        //    const int fluxVersion = Flux.FUtility.FLUX_VERSION;
+        //    if (sequence.Version == fluxVersion)
+        //        return;
 
-            Debug.LogFormat("Upgrading sequence '{0}' from version '{1}' to '{2}'", sequence.name, sequence.Version, fluxVersion);
+        //    Debug.LogFormat("Upgrading sequence '{0}' from version '{1}' to '{2}'", sequence.name, sequence.Version, fluxVersion);
 
-            // don't allow to undo
-            //			Undo.RecordObject( sequence, "Upgrading Sequence" );
+        //    // don't allow to undo
+        //    //			Undo.RecordObject( sequence, "Upgrading Sequence" );
 
-            // is it before 2.0.0 release?
-            if (sequence.Version < 200)
-                Upgrade100To200(sequence);
+        //    // is it before 2.0.0 release?
+        //    if (sequence.Version < 200)
+        //        Upgrade100To200(sequence);
 
-            if (sequence.Version < 210)
-                Upgrade200To210(sequence);
+        //    if (sequence.Version < 210)
+        //        Upgrade200To210(sequence);
 
-            sequence.Version = fluxVersion;
+        //    sequence.Version = fluxVersion;
 
-            if (PrefabUtility.GetPrefabType(sequence) == PrefabType.Prefab)
-                EditorUtility.SetDirty(sequence);
-            else
-                EditorSceneManager.MarkAllScenesDirty(); //@TODO make sure it only dirties it's scene
-        }
+        //    if (PrefabUtility.GetPrefabType(sequence) == PrefabType.Prefab)
+        //        EditorUtility.SetDirty(sequence);
+        //    else
+        //        EditorSceneManager.MarkAllScenesDirty(); //@TODO make sure it only dirties it's scene
+        //}
 
-        private static void Upgrade100To200(FSequence sequence)
-        {
-            // set TimelineContainer as Content
-            Transform timelineContainer = null;
-            foreach (Transform t in sequence.transform)
-            {
-                if (t.name == "Timeline Container")
-                {
-                    timelineContainer = t;
-                    break;
-                }
-            }
+        //private static void Upgrade100To200(FSequence sequence)
+        //{
+        //    // set TimelineContainer as Content
+        //    Transform timelineContainer = null;
+        //    foreach (Transform t in sequence.transform)
+        //    {
+        //        if (t.name == "Timeline Container")
+        //        {
+        //            timelineContainer = t;
+        //            break;
+        //        }
+        //    }
 
-            if (timelineContainer == null)
-            {
-                timelineContainer = new GameObject("SequenceContent").transform;
-                timelineContainer.hideFlags |= HideFlags.HideInHierarchy;
-            }
+        //    if (timelineContainer == null)
+        //    {
+        //        timelineContainer = new GameObject("SequenceContent").transform;
+        //        timelineContainer.hideFlags |= HideFlags.HideInHierarchy;
+        //    }
 
-            sequence.Content = timelineContainer;
+        //    sequence.Content = timelineContainer;
 
-            // create a container, and add it to the sequence
+        //    // create a container, and add it to the sequence
 
-            FContainer container = FContainer.Create(FContainer.DEFAULT_COLOR);
-            sequence.Add(container);
+        //    FContainer container = FContainer.Create(FContainer.DEFAULT_COLOR);
+        //    sequence.Add(container);
 
-            FTrack[] tracks = timelineContainer.GetComponentsInChildren<FTrack>();
-            foreach (FTrack track in tracks)
-            {
-                container.Add(track);
-                if (track is FAnimationTrack)
-                {
-                    FAnimationTrack animTrack = (FAnimationTrack)track;
-                    if (animTrack.AnimatorController != null)
-                    {
-                        FAnimationTrackInspector inspector = (FAnimationTrackInspector)FAnimationTrackInspector.CreateEditor(animTrack);
-                        AnimatorController controller = (AnimatorController)animTrack.AnimatorController;
-                        inspector.UpdateLayer(controller == null || controller.layers.Length == 0 ? null : controller.layers[0]);
-                        inspector.serializedObject.ApplyModifiedProperties();
-                        if (controller.layers.Length > 0)
-                        {
-                            while (controller.layers[0].stateMachine.stateMachines.Length > 0)
-                                controller.layers[0].stateMachine.RemoveStateMachine(controller.layers[0].stateMachine.stateMachines[controller.layers[0].stateMachine.stateMachines.Length - 1].stateMachine);
-                            while (controller.layers[0].stateMachine.states.Length > 0)
-                                controller.layers[0].stateMachine.RemoveState(controller.layers[0].stateMachine.states[controller.layers[0].stateMachine.states.Length - 1].state);
-                        }
-                        Editor.DestroyImmediate(inspector);
-                        FAnimationTrackInspector.RebuildStateMachine(animTrack);
-                    }
-                }
+        //    FTrack[] tracks = timelineContainer.GetComponentsInChildren<FTrack>();
+        //    foreach (FTrack track in tracks)
+        //    {
+        //        container.Add(track);
+        //        if (track is FAnimationTrack)
+        //        {
+        //            FAnimationTrack animTrack = (FAnimationTrack)track;
+        //            if (animTrack.AnimatorController != null)
+        //            {
+        //                FAnimationTrackInspector inspector = (FAnimationTrackInspector)FAnimationTrackInspector.CreateEditor(animTrack);
+        //                AnimatorController controller = (AnimatorController)animTrack.AnimatorController;
+        //                inspector.UpdateLayer(controller == null || controller.layers.Length == 0 ? null : controller.layers[0]);
+        //                inspector.serializedObject.ApplyModifiedProperties();
+        //                if (controller.layers.Length > 0)
+        //                {
+        //                    while (controller.layers[0].stateMachine.stateMachines.Length > 0)
+        //                        controller.layers[0].stateMachine.RemoveStateMachine(controller.layers[0].stateMachine.stateMachines[controller.layers[0].stateMachine.stateMachines.Length - 1].stateMachine);
+        //                    while (controller.layers[0].stateMachine.states.Length > 0)
+        //                        controller.layers[0].stateMachine.RemoveState(controller.layers[0].stateMachine.states[controller.layers[0].stateMachine.states.Length - 1].state);
+        //                }
+        //                Editor.DestroyImmediate(inspector);
+        //                FAnimationTrackInspector.RebuildStateMachine(animTrack);
+        //            }
+        //        }
 
-                track.CacheMode = track.RequiredCacheMode;
-                //					foreach( FTrack track in tracks )
-                //					{
-                //						track.CacheType = track.DefaultCacheType();
-                //					}
-            }
-        }
+        //        track.CacheMode = track.RequiredCacheMode;
+        //        //					foreach( FTrack track in tracks )
+        //        //					{
+        //        //						track.CacheType = track.DefaultCacheType();
+        //        //					}
+        //    }
+        //}
 
-        private static void Upgrade200To210(FSequence sequence)
-        {
-            MethodInfo setEventType = typeof(FTrack).GetMethod("SetEventType", BindingFlags.NonPublic | BindingFlags.Instance);
-            foreach (FContainer container in sequence.Containers)
-            {
-                foreach (FTrack track in container.Tracks)
-                {
-                    Type evtType = track.GetEventType();
+        //private static void Upgrade200To210(FSequence sequence)
+        //{
+        //    MethodInfo setEventType = typeof(FTrack).GetMethod("SetEventType", BindingFlags.NonPublic | BindingFlags.Instance);
+        //    foreach (FContainer container in sequence.Containers)
+        //    {
+        //        foreach (FTrack track in container.Tracks)
+        //        {
+        //            Type evtType = track.GetEventType();
 
-                    object[] customAttributes = evtType.GetCustomAttributes(typeof(FEventAttribute), true);
+        //            object[] customAttributes = evtType.GetCustomAttributes(typeof(FEventAttribute), true);
 
-                    foreach (FEventAttribute customAttribute in customAttributes)
-                    {
-                        if (customAttribute.trackType == typeof(FTransformTrack) && !(track is FTransformTrack))
-                        {
-                            FTransformTrack transformTrack = track.gameObject.AddComponent<FTransformTrack>();
-                            setEventType.Invoke(transformTrack, new object[] { track.GetEventType() });
+        //            foreach (FEventAttribute customAttribute in customAttributes)
+        //            {
+        //                if (customAttribute.trackType == typeof(FTransformTrack) && !(track is FTransformTrack))
+        //                {
+        //                    FTransformTrack transformTrack = track.gameObject.AddComponent<FTransformTrack>();
+        //                    setEventType.Invoke(transformTrack, new object[] { track.GetEventType() });
 
-                            Editor.DestroyImmediate(track);
-                            break;
-                        }
-                        //else if (customAttribute.trackType == typeof(FCommentTrack) && !(track is FCommentTrack))
-                        //{
-                        //    FCommentTrack commentTrack = track.gameObject.AddComponent<FCommentTrack>();
-                        //    setEventType.Invoke(commentTrack, new object[] { track.GetEventType() });
+        //                    Editor.DestroyImmediate(track);
+        //                    break;
+        //                }
+        //                //else if (customAttribute.trackType == typeof(FCommentTrack) && !(track is FCommentTrack))
+        //                //{
+        //                //    FCommentTrack commentTrack = track.gameObject.AddComponent<FCommentTrack>();
+        //                //    setEventType.Invoke(commentTrack, new object[] { track.GetEventType() });
 
-                        //    Editor.DestroyImmediate(track);
-                        //    break;
-                        //}
-                    }
-                }
-            }
-        }
+        //                //    Editor.DestroyImmediate(track);
+        //                //    break;
+        //                //}
+        //            }
+        //        }
+        //    }
+        //}
 
         #endregion
     }

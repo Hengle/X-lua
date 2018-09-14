@@ -41,9 +41,7 @@ namespace Flux
 
         protected override bool BuildInternal()
         {
-            List<FTrack> tracksToUpdate = GetTracksToUpdate(out _tracksCached);
-            //			_tracksCached = GetAnimationTracks();
-
+            _tracksCached = GetAnimationTracks();
             _validFrameRanges.Clear();
 
             if (_tracksCached.Count == 0 || Animator == null || Animator.runtimeAnimatorController == null)
@@ -122,7 +120,7 @@ namespace Flux
                 {
                     bool wasEnabled = Animator.enabled;
 
-                    foreach (FTrack track in tracksToUpdate)
+                    foreach (FTrack track in _tracksCached)
                         track.UpdateEvents(frame, frame * delta);
 
                     if (wasEnabled)
@@ -277,38 +275,25 @@ namespace Flux
             return Mathf.Clamp(playbackTime, Animator.recorderStartTime, Animator.recorderStopTime - 0.0001f);
         }
 
-        //		private List<FAnimationTrack> GetAnimationTracks()
-        private List<FTrack> GetTracksToUpdate(out List<FAnimationTrack> animTracks)
+        private List<FAnimationTrack> GetAnimationTracks()
         {
-            List<FTrack> tracksToUpdate = new List<FTrack>();
-
-            animTracks = new List<FAnimationTrack>();
+            List<FAnimationTrack> animTracks = new List<FAnimationTrack>();
 
             Transform owner = Track.Owner;
 
             List<FContainer> containers = Track.Sequence.Containers;
-
-            //			bool isPlaying = Application.isPlaying;
 
             foreach (FContainer container in containers)
             {
                 List<FTrack> tracks = container.Tracks;
                 foreach (FTrack track in tracks)
                 {
-                    if (track.Owner == owner && track != null && track.enabled /*&& (isPlaying || track is FTransformTrack)*/ )
-                    {
-                        if (track is FAnimationTrack)
-                        {
-                            animTracks.Add((FAnimationTrack)track);
-                            tracksToUpdate.Add(track);
-                        }
-                        else if (track is FTransformTrack)
-                            tracksToUpdate.Add(track);
-                    }
+                    if (track != null && track.enabled && track is FAnimationTrack)
+                        animTracks.Add((FAnimationTrack)track);
                 }
             }
 
-            return tracksToUpdate;
+            return animTracks;
         }
     }
 

@@ -58,7 +58,7 @@ namespace FluxEditor
 			if( _allEventsSameType )
 			{
 				serializedObject.Update();
-				EditorGUILayout.PropertyField( _triggerOnSkip );
+				EditorGUILayout.PropertyField( _triggerOnSkip, new GUIContent("跳过触发器"));
 			}
 			else
 			{
@@ -74,7 +74,7 @@ namespace FluxEditor
 				}
 				
 				EditorGUI.BeginChangeCheck();
-				bool triggerOnSkip = EditorGUILayout.Toggle( "Trigger On Skip", _evt.TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed" );
+				bool triggerOnSkip = EditorGUILayout.Toggle( "跳过触发器", _evt.TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed" );
 				if( EditorGUI.EndChangeCheck() )
 				{
 					Undo.RecordObjects( targets, " Inspector" );
@@ -96,11 +96,11 @@ namespace FluxEditor
 			EditorGUI.BeginChangeCheck();
 
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.PrefixLabel( "Range" );
-			GUILayout.Label( "S:", EditorStyles.label );
+			EditorGUILayout.PrefixLabel( "范围" );
+			GUILayout.Label( "开始:", EditorStyles.label );
 			GUI.SetNextControlName( FRAMERANGE_START_FIELD_ID );
 			startFrame = EditorGUILayout.IntField( _evt.Start );
-			GUILayout.Label( "E:", EditorStyles.label );
+			GUILayout.Label( "结束:", EditorStyles.label );
 			endFrame = EditorGUILayout.IntField( _evt.End );
 			EditorGUILayout.EndHorizontal();
 	        
@@ -194,7 +194,7 @@ namespace FluxEditor
 			}
 
 			EditorGUI.BeginChangeCheck();
-			bool triggerOnSkip = EditorGUILayout.Toggle( "Trigger On Skip", evts[0].TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed" );
+			bool triggerOnSkip = EditorGUILayout.Toggle("跳过触发器", evts[0].TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed" );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				Undo.RecordObjects( evts.ToArray(), "Inspector" );
@@ -216,11 +216,11 @@ namespace FluxEditor
 //			}
 
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.PrefixLabel( "Range" );
-			GUILayout.Label( "S:", EditorStyles.label );
+			EditorGUILayout.PrefixLabel( "范围" );
+			GUILayout.Label( "开始:", EditorStyles.label );
 			GUI.SetNextControlName( FRAMERANGE_START_FIELD_ID );
 			startFrame = EditorGUILayout.IntField( startFrame, startFrameMatch ? EditorStyles.numberField : "PR TextField" );
-			GUILayout.Label( "E:", EditorStyles.label );
+			GUILayout.Label( "结束:", EditorStyles.label );
 			endFrame = EditorGUILayout.IntField( endFrame, endFrameMatch ? EditorStyles.numberField : "PR TextField"  );
 			EditorGUILayout.EndHorizontal();
 			

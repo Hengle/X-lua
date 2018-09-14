@@ -13,8 +13,8 @@ namespace FluxEditor
 		public override string Title {
 			get {
 				if( _editors.Count == 1 )
-					return "Track:";
-				return "Tracks:";
+					return "轨道:";
+				return "轨道列表:";
 			}
 		}
 
@@ -38,7 +38,7 @@ namespace FluxEditor
 				GUILayout.Space( 10 );
 
 				EditorGUILayout.BeginVertical(EditorStyles.textArea, GUILayout.Width(contentWidth));
-				EditorGUILayout.LabelField("Track Tools:", EditorStyles.boldLabel);
+				EditorGUILayout.LabelField("轨道工具:", EditorStyles.boldLabel);
 				_editors[0].OnToolsGUI();
 				EditorGUILayout.EndVertical();
 

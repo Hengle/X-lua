@@ -19,15 +19,15 @@ namespace FluxEditor
 
 		public override void OnInspectorGUI ()
 		{
-			EditorGUI.BeginChangeCheck();
-			string name = EditorGUILayout.TextField( "Name", _container.gameObject.name );
-			if( EditorGUI.EndChangeCheck() )
-			{
-				Undo.RecordObject( _container.gameObject, "change name" );
-				_container.gameObject.name = name;
-				EditorUtility.SetDirty( _container.gameObject );
-			}
-			base.DrawDefaultInspector();
-		}
+            EditorGUI.BeginChangeCheck();
+            string name = EditorGUILayout.TextField("Name", _container.gameObject.name);
+            if (EditorGUI.EndChangeCheck())
+            {
+                Undo.RecordObject(_container.gameObject, "change name");
+                _container.gameObject.name = name;
+                EditorUtility.SetDirty(_container.gameObject);
+            }
+            base.DrawDefaultInspector();
+        }
 	}
 }

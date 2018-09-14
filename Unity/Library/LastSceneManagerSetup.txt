@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Evironment/Scene/Main.unity
+- path: Assets/Flux217/test.unity
   isLoaded: 1
   isActive: 1

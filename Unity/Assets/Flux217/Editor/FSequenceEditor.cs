@@ -323,7 +323,7 @@ namespace FluxEditor
                 }
             }
 
-            FAnimationTrack.DeleteAnimationPreviews(Sequence);
+            //FAnimationTrack.DeleteAnimationPreviews(Sequence);
 
             _editorCache.Refresh();
             EventSelection.Refresh();
@@ -460,10 +460,11 @@ namespace FluxEditor
 
             if (sequence != null)
             {
-                if (!EditorApplication.isPlaying && sequence.Version != Flux.FUtility.FLUX_VERSION)
-                {
-                    FluxEditor.FUtility.Upgrade(sequence);
-                }
+                //----版本升级操作
+                //if (!EditorApplication.isPlaying && sequence.Version != Flux.FUtility.FLUX_VERSION)
+                //{
+                //    FluxEditor.FUtility.Upgrade(sequence);
+                //}
 
                 if (_viewRange.Length == 0)
                     _viewRange = new FrameRange(0, sequence.Length);

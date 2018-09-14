@@ -39,7 +39,7 @@ namespace FluxEditor
 			if( _allTracksSameType )
 			{
 				_events = serializedObject.FindProperty("_events");
-			}
+            }
 			else
 				_showEvents = false;
 		}
@@ -50,9 +50,8 @@ namespace FluxEditor
 				base.OnInspectorGUI();
 
 			FTrack track = (FTrack)target;
-
-			EditorGUI.BeginChangeCheck();
-			bool enabled = EditorGUILayout.Toggle( "Enabled", ((FTrack)target).enabled );
+            EditorGUI.BeginChangeCheck();
+			bool enabled = EditorGUILayout.Toggle( "是否启用", ((FTrack)target).enabled );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				Undo.RecordObject( target, (enabled ? "enable" : "disable") + " Track" );
@@ -61,7 +60,7 @@ namespace FluxEditor
 			}
 
 			EditorGUI.BeginChangeCheck();
-			string newName = EditorGUILayout.TextField( "Name",  target.name );
+			string newName = EditorGUILayout.TextField( "名称",  target.name );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				Undo.RecordObject( track.gameObject, "rename Track" );
@@ -72,7 +71,7 @@ namespace FluxEditor
 			if( track.AllowedCacheMode != track.RequiredCacheMode )
 			{
 				EditorGUI.BeginChangeCheck();
-				CacheMode cacheMode = (CacheMode)EditorGUILayout.EnumMaskField( "Cache Mode", track.CacheMode );
+				CacheMode cacheMode = (CacheMode)EditorGUILayout.EnumMaskField( "缓存模式", track.CacheMode );
 				if( EditorGUI.EndChangeCheck() )
 				{
 					Undo.RecordObject( track, "change Cache Mode" );
