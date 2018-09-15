@@ -30,7 +30,7 @@ namespace FluxEditor
         {
             base.OnEnable();
 
-            _enableContent = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(FUtility.GetFluxSkinPath() + "View.png", typeof(Texture2D)), "Enable/Disable Track");
+            _enableContent = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(FUtility.GetFluxSkinPath() + "View.png", typeof(Texture2D)), "激活/隐藏 轨道");
         }
 
         public override void Init(FObject obj, FEditor owner)

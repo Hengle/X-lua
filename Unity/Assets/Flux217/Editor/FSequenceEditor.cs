@@ -738,7 +738,7 @@ namespace FluxEditor
             if (!Sequence.HasTracks())
             {
                 if (_renderingOnEditorWindow)
-                    _renderingOnEditorWindow.ShowNotification(new GUIContent("Add Track And Event"));
+                    _renderingOnEditorWindow.ShowNotification(new GUIContent("添加轨道和事件"));
             }
 
             if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.F && EditorGUIUtility.keyboardControl == 0)

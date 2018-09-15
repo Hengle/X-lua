@@ -257,7 +257,7 @@ namespace FluxEditor
 
             GUI.color = Color.white;
         }
-        //----------------------------------- 拖拽计算还有问题
+        
         private Rect GetDragSelectionRect(Vector2 rawStartPos, Vector2 rawEndPos, out FrameRange selectedRange, out bool isSelectingTracks)
         {
             int startFrame = GetFrameForX(rawStartPos.x);
