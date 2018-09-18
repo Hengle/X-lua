@@ -334,7 +334,8 @@ namespace FluxEditor
         {
             if (oldFrameRange.Length != AnimEvt.FrameRange.Length && Flux.FUtility.IsAnimationEditable(AnimEvt._animationClip))
             {
-                FAnimationEventInspector.ScaleAnimationClip(AnimEvt._animationClip, AnimEvt.FrameRange);
+                //---动画帧数据不做缩放操作
+                //FAnimationEventInspector.ScaleAnimationClip(AnimEvt._animationClip, AnimEvt.FrameRange);
             }
         }
 

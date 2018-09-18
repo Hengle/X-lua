@@ -31,12 +31,9 @@ namespace FluxEditor
             //    SyncWithAnimationWindow = false;
         }
 
-        public override void Init(FObject obj, FEditor owner)
+        private void SetAnimator()
         {
-            base.Init(obj, owner);
-
-            FAnimationTrack animTrack = (FAnimationTrack)Obj;
-
+            FAnimationTrack animTrack = (FAnimationTrack)Track;
             if (animTrack.Owner.GetComponent<Animator>() == null)
             {
                 Animator animator = animTrack.Owner.gameObject.AddComponent<Animator>();
@@ -57,9 +54,19 @@ namespace FluxEditor
             }
         }
 
+        public override void Init(FObject obj, FEditor owner)
+        {
+            base.Init(obj, owner);
+
+            SetAnimator();
+        }
+
         public override void OnTrackChanged()
         {
+            FAnimationTrack animTrack = (FAnimationTrack)Track;
             FAnimationTrackInspector.RebuildStateMachine((FAnimationTrack)Track);
+
+            SetAnimator();
         }
 
         public override void Render(Rect rect, float headerWidth)

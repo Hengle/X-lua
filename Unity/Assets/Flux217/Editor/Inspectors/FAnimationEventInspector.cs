@@ -77,15 +77,13 @@ namespace FluxEditor
                     DragAndDrop.AcceptDrag();
                     AnimationClip clip = GetAnimationClipDragAndDrop(_animEvent.Sequence.FrameRate);
                     if (clip != null)
-                        _animationClip.objectReferenceValue = Instantiate(clip);
+                        _animationClip.objectReferenceValue = clip;
                 }
             }
 
             if (EditorGUI.EndChangeCheck())
             {
                 AnimationClip clip = (AnimationClip)_animationClip.objectReferenceValue;
-                clip = Instantiate(clip);
-                _animationClip.objectReferenceValue = clip;
                 if (clip)
                 {
                     if (clip.frameRate != _animEvent.Track.Container.Sequence.FrameRate)
@@ -109,8 +107,6 @@ namespace FluxEditor
                     CheckDeleteAnimation(_animEvent);
                 }
             }
-
-            bool isAnimationEditable = Flux.FUtility.IsAnimationEditable(_animEvent._animationClip);
 
             if (_animEvent.IsBlending())
             {
@@ -138,8 +134,7 @@ namespace FluxEditor
                 {
                     EditorGUI.BeginChangeCheck();
                     ++EditorGUI.indentLevel;
-                    if (!isAnimationEditable)
-                        EditorGUILayout.IntSlider(_startOffset, 0, _animEvent.GetMaxStartOffset(), _startOffsetUI);
+                    EditorGUILayout.IntSlider(_startOffset, 0, _animEvent.GetMaxStartOffset(), _startOffsetUI);
 
                     //			if( _animEvent.IsBlending() )
                     {
@@ -166,7 +161,7 @@ namespace FluxEditor
         public static void CheckDeleteAnimation(FPlayAnimationEvent animEvt)
         {
             if (animEvt._animationClip != null)
-                Undo.DestroyObjectImmediate(animEvt._animationClip);
+                Undo.RecordObject(animEvt._animationClip, "DeleteAnimation");
         }
 
         private static bool _showBlendAndOffsetContent = false;
@@ -257,9 +252,9 @@ namespace FluxEditor
                 _dragAndDropSelectedAnimation = (AnimationClip)data;
         }
 
-        private void SetAnimationClip(AnimationClip animClip)
+        private void SetAnimationClip(AnimationClip clip)
         {
-            _animationClip.objectReferenceValue = Instantiate(animClip);
+            _animationClip.objectReferenceValue = clip;
             serializedObject.ApplyModifiedProperties();
         }
 
@@ -273,6 +268,10 @@ namespace FluxEditor
         }
 
         // animation editing
+
+        /// <summary>
+        /// 动画缩放
+        /// </summary>
         public static void ScaleAnimationClip(AnimationClip clip, FrameRange range)
         {
             if (clip == null)
@@ -322,7 +321,9 @@ namespace FluxEditor
             EditorApplication.RepaintAnimationWindow();
             EditorUtility.SetDirty(clip);
         }
-
+        /// <summary>
+        /// 获取动画曲线信息
+        /// </summary>
         private static AnimationCurve GetAnimationCurve(AnimationClip clip, ref EditorCurveBinding curveBinding)
         {
             AnimationCurve curve = null;
@@ -350,8 +351,9 @@ namespace FluxEditor
 
             return curve;
         }
-
-
+        /// <summary>
+        /// 创建动画剪辑(不包含缩放数据)
+        /// </summary>
         public static AnimationClip CreateAnimationClip(FPlayAnimationEvent animEvent)
         {
             FAnimationTrack track = (FAnimationTrack)animEvent.Track;

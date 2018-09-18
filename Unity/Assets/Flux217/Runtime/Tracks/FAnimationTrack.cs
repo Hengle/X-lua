@@ -75,7 +75,7 @@ namespace Flux
                 _animPreviews.Remove(sequence.GetInstanceID());
             }
         }
-
+        
 
 
 
@@ -128,6 +128,7 @@ namespace Flux
 
             _snapshot.TakeChildSnapshots();
         }
+ 
 
         public override void Stop()
         {
