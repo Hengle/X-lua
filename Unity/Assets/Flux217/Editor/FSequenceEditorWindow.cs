@@ -281,7 +281,7 @@ namespace FluxEditor
             FSequence sequence = _sequenceEditor.Sequence;
 
             if (sequence == null)
-                ShowNotification(new GUIContent("Select Or Create Sequence"));
+                ShowNotification(new GUIContent("Select Or Create Sequeuce"));
             else if (Event.current.isKey)
             {
                 if (Event.current.keyCode == KeyCode.Space)

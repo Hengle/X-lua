@@ -53,10 +53,12 @@ namespace Flux
         private static void DeleteAnimationPreview(FAnimationTrack animTrack)
         {
             Dictionary<int, FAnimationTrackCache> sequencePreviews = null;
-            if (_animPreviews.TryGetValue(animTrack.Sequence.GetInstanceID(), out sequencePreviews))
+            int seqId = animTrack.Sequence.GetInstanceID();
+            if (_animPreviews.TryGetValue(seqId, out sequencePreviews))
             {
-                sequencePreviews[animTrack.Owner.GetInstanceID()].Clear();
-                sequencePreviews.Remove(animTrack.Owner.GetInstanceID());
+                int trackID = animTrack.Owner.GetInstanceID();
+                sequencePreviews[trackID].Clear();
+                sequencePreviews.Remove(trackID);
             }
         }
 
@@ -178,7 +180,6 @@ namespace Flux
                 else
                     preview.Build(true);
             }
-            Cache = null;
         }
 
         public override bool CanCreateCache()

@@ -52,27 +52,11 @@ namespace FluxEditor
             EditorGUILayout.PropertyField(_owner, _ownerUI);
             if (EditorGUI.EndChangeCheck())
             {
-                if (_animTrack.Owner.GetComponent<Animator>() == null)
-                {
-                    Animator animator = _animTrack.Owner.gameObject.AddComponent<Animator>();
-                    Undo.RegisterCreatedObjectUndo(animator, string.Empty);
-                }
-                if (_animTrack.AnimatorController == null)
-                {
-                    var temp = FUtility.GetFluxAssets<UnityEditor.Animations.AnimatorController>("EditorAnimatorController.controller");
-                    var animatorController = Instantiate(temp);
-                    _animTrack.LayerId = 0;
-                    _animTrack.LayerName = "Base Layer";
-                    var layers = animatorController.layers;
-                    layers[_animTrack.LayerId].name = _animTrack.LayerName;
-                    layers[_animTrack.LayerId].stateMachine.name = _animTrack.LayerName;
-                    animatorController.layers = layers;
-                    _animTrack.AnimatorController = animatorController;
-                    RebuildStateMachine(_animTrack);
-                }
+                _animTrack.ClearCache();
+                _animTrack.AnimatorController = null;
+                serializedObject.ApplyModifiedProperties();
+                SetAnimator(_animTrack);
             }
-
-            serializedObject.ApplyModifiedProperties();
         }
 
         public void UpdateLayer(AnimatorControllerLayer layer)
@@ -100,6 +84,27 @@ namespace FluxEditor
             }
         }
 
+        public static void SetAnimator(FAnimationTrack animTrack)
+        {
+            if (animTrack.Owner.GetComponent<Animator>() == null)
+            {
+                Animator animator = animTrack.Owner.gameObject.AddComponent<Animator>();
+                Undo.RegisterCreatedObjectUndo(animator, string.Empty);
+            }
+            if (animTrack.AnimatorController == null)
+            {
+                var temp = FUtility.GetFluxAssets<UnityEditor.Animations.AnimatorController>("EditorAnimatorController.controller");
+                var animatorController = Instantiate(temp);
+                animTrack.LayerId = 0;
+                animTrack.LayerName = "Base Layer";
+                var layers = animatorController.layers;
+                layers[animTrack.LayerId].name = animTrack.LayerName;
+                layers[animTrack.LayerId].stateMachine.name = animTrack.LayerName;
+                animatorController.layers = layers;
+                animTrack.AnimatorController = animatorController;
+                FAnimationTrackInspector.RebuildStateMachine(animTrack);
+            }
+        }
         public static void RebuildStateMachine(FAnimationTrack track)
         {
             if (track.AnimatorController == null || track.LayerId == -1)
