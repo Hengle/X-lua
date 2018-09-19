@@ -293,22 +293,25 @@ namespace FluxEditor
 
                     GUIStyle transitionOffsetStyle = skin.GetStyle("BlendOffset");
 
-                    Texture2D t = FUtility.GetFluxTexture("EventBlend.png");
+                    Texture2D t = FUtility.GetFluxAssets<Texture2D>("Blender.png");
 
-                    Rect r = new Rect(_eventRect.xMin, _eventRect.yMin + 1, transitionOffsetRect.center.x - _eventRect.xMin, _eventRect.height - 2);
+                    float x = _eventRect.xMin + SequenceEditor.GetXForFrame(AnimEvt._startOffset);
+                    float remainWidth = SequenceEditor.GetXForFrame(AnimEvt.End) - x;
+                    float width = SequenceEditor.GetXForFrame(AnimEvt._blendLength);
+                    if (width > remainWidth)
+                        width = remainWidth;
+                    Rect r = new Rect(x, _eventRect.yMin + 1, width, _eventRect.height - 2);
 
                     Color guiColor = GUI.color;
 
-                    Color c = new Color(1f, 1f, 1f, 0.3f);
+                    Color c = new Color(1f, 1f, 1f, 0.5f);
                     c.a *= guiColor.a;
                     GUI.color = c;
 
                     GUI.DrawTexture(r, t);
 
                     if (Event.current.alt)
-                        GUI.color = Color.white;
-
-                    transitionOffsetStyle.Draw(transitionOffsetRect, false, false, false, false);
+                        GUI.color = Color.black;
 
                     GUI.color = guiColor;
                 }
