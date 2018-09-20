@@ -357,9 +357,14 @@
     <Compile Include="Assets\Flux217\Extensions\PlayMaker\FluxSetCurrentTime.cs" />
     <Compile Include="Assets\Flux217\Extensions\PlayMaker\FluxStopSequence.cs" />
     <Compile Include="Assets\Flux217\Runtime\Caches\FAnimationTrackCache.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Caches\FParticleTrackCache.cs" />
     <Compile Include="Assets\Flux217\Runtime\Caches\FTrackCache.cs" />
-    <Compile Include="Assets\Flux217\Runtime\Events\FPlayAnimationEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Animation\FPlayAnimationEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Audio\FGlobalVolumeAudioEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Audio\FPlayAudioEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Audio\FVolumeAudioEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\FTweenEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Particle\FPlayParticleEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\FContainer.cs" />
     <Compile Include="Assets\Flux217\Runtime\FEasing.cs" />
     <Compile Include="Assets\Flux217\Runtime\FEvent.cs" />
@@ -370,6 +375,7 @@
     <Compile Include="Assets\Flux217\Runtime\FTween.cs" />
     <Compile Include="Assets\Flux217\Runtime\FUtility.cs" />
     <Compile Include="Assets\Flux217\Runtime\Tracks\FAnimationTrack.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Tracks\FParticleTrack.cs" />
     <Compile Include="Assets\Flux217\Runtime\Tracks\FTransformTrack.cs" />
     <Compile Include="Assets\Source\Common\AppConst.cs" />
     <Compile Include="Assets\Source\Common\ObjectPool.cs" />
