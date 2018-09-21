@@ -12,7 +12,8 @@ namespace Flux
 
 		public static bool IsAnimationEditable( AnimationClip clip )
 		{
-			return clip == null || ( ((clip.hideFlags & HideFlags.NotEditable) == 0) && !clip.isLooping );
+            //return clip == null || ( ((clip.hideFlags & HideFlags.NotEditable) == 0) && !clip.isLooping);
+            return false;
 		}
 
 		public static void ResizeAnimationCurve( AnimationCurve curve, float newLength )

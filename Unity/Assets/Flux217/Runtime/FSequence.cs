@@ -73,15 +73,19 @@ namespace Flux
         public ActionOnStart ActionOnStart { get { return _actionOnStart; } set { _actionOnStart = value; } }
 
         [SerializeField]
-        private bool _loop = false;
+        [Tooltip("小于0时,为无限循环;反之执行指定次数.")]
+        private int _executeTime = 0;
         /// @brief Does the sequence loop when it reaches the end?
-        public bool Loop { get { return _loop; } set { _loop = value; } }
+        public int ExecuteTime { get { return _executeTime; } set { _executeTime = value; } }
+        [HideInInspector]
+        public int LoopNum = 0;
+
+        //[SerializeField]
+        //private float _defaultSpeed = DEFAULT_SPEED;
+        ///// @brief Speed that is used when sequence is loaded. When you want to change runtime see, use Speed instead
+        //public float DefaultSpeed { get { return _defaultSpeed; } set { _defaultSpeed = value; } }
 
         [SerializeField]
-        private float _defaultSpeed = DEFAULT_SPEED;
-        /// @brief Speed that is used when sequence is loaded. When you want to change runtime see, use Speed instead
-        public float DefaultSpeed { get { return _defaultSpeed; } set { _defaultSpeed = value; } }
-
         private float _speed = DEFAULT_SPEED;
         /// @brief Current speed, used to control the speed of the sequence. If negative, sequence will play backwards.
         public float Speed
@@ -438,7 +442,6 @@ namespace Flux
             if (reset)
                 _isInit = false;
 
-
             if (IsStopped && !reset)
                 return;
 
@@ -538,7 +541,7 @@ namespace Flux
 
         protected virtual void Awake()
         {
-            Speed = DefaultSpeed;
+            //Speed = DefaultSpeed;
             _isPlayingForward = Speed * Time.timeScale >= 0;
         }
 
@@ -605,14 +608,17 @@ namespace Flux
                     {
                         OnFinishedCallback.Invoke(this);
 
-                        if (_loop)
+                        bool isLoop = _executeTime <= 0;
+                        if (isLoop || IsLoopEnd())
                         {
                             Stop();
                             Play();
+                            ++LoopNum;
                         }
                         else
                         {
                             Pause();
+                            LoopNum = 0;
                         }
                     }
                 }
@@ -622,14 +628,17 @@ namespace Flux
                     {
                         OnFinishedCallback.Invoke(this);
 
-                        if (_loop)
+                        bool isLoop = _executeTime <= 0;
+                        if (isLoop || IsLoopEnd())
                         {
                             Stop();
                             Play(); // @TODO Play backwards
+                            ++LoopNum;
                         }
                         else
                         {
                             Pause();
+                            LoopNum = 0;
                         }
                     }
                 }
@@ -637,6 +646,11 @@ namespace Flux
                 _lastUpdateTime = time;
             }
         }
+
+        public bool IsLoopEnd()
+        {
+            return LoopNum + 1 != _executeTime;
+        }      
 
         /// @brief Rebuilds the sequence. This is to be called whenever timelines,
         /// tracks, or events are added / removed from the sequence.

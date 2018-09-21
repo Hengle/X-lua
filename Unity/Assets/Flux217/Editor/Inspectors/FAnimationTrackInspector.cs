@@ -207,14 +207,17 @@ namespace FluxEditor
 
                         FPlayAnimationEvent prevAnimEvent = (FPlayAnimationEvent)events[i - 1];
 
-                        animEvent._startOffset = Mathf.Clamp(Mathf.RoundToInt(transition.offset * animEvent._animationClip.length * animEvent._animationClip.frameRate), 0, animEvent._animationClip.isLooping ? animEvent.Length : Mathf.RoundToInt(animEvent._animationClip.length * animEvent._animationClip.frameRate) - animEvent.Length);
+                        int offsetFrame = Mathf.RoundToInt(transition.offset * animEvent._animationClip.length * animEvent._animationClip.frameRate);
+                        animEvent._startOffset = Mathf.Clamp(offsetFrame, 0, animEvent.GetMaxStartOffset());
                         transition.offset = (animEvent._startOffset / animEvent._animationClip.frameRate) / animEvent._animationClip.length;
                         EditorUtility.SetDirty(animEvent);
 
-                        transition.duration = (animEvent._blendLength / prevAnimEvent._animationClip.frameRate) / prevAnimEvent._animationClip.length;
+                        float blendSeconds = animEvent._blendLength / prevAnimEvent._animationClip.frameRate;
+                        transition.duration = blendSeconds;
 
                         transition.hasExitTime = true;
-                        transition.exitTime = (prevAnimEvent.Length + prevAnimEvent._startOffset) / (prevAnimEvent._animationClip.length * prevAnimEvent._animationClip.frameRate);
+                        float p = blendSeconds / prevAnimEvent._animationClip.length;
+                        transition.exitTime = p > 1f ? 1f : 1f - Mathf.Clamp01(blendSeconds / prevAnimEvent._animationClip.length);
 
                         for (int j = transition.conditions.Length - 1; j >= 0; --j)
                         {

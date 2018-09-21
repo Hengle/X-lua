@@ -110,37 +110,13 @@ namespace FluxEditor
 
             if (_animEvent.IsBlending())
             {
-                float offset = _startOffset.intValue / _animEvent._animationClip.frameRate;
-                float blendFinish = offset + (_blendLength.intValue / _animEvent._animationClip.frameRate);
-
-                EditorGUILayout.BeginHorizontal();
-
-                EditorGUILayout.BeginHorizontal(GUILayout.Width(EditorGUIUtility.labelWidth - 5)); // hack to get around some layout issue with imgui
-                _showBlendAndOffsetContent = EditorGUILayout.Foldout(_showBlendAndOffsetContent, _frameRangeUI);
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUI.BeginChangeCheck();
-                EditorGUILayout.MinMaxSlider(ref offset, ref blendFinish, 0, _animEvent.GetMaxStartOffset() / _animEvent._animationClip.frameRate + _animEvent.LengthTime);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    _startOffset.intValue = Mathf.Clamp(Mathf.RoundToInt(offset * _animEvent.Sequence.FrameRate), 0, _animEvent.GetMaxStartOffset());
-                    _blendLength.intValue = Mathf.Clamp(Mathf.RoundToInt((blendFinish - offset) * _animEvent.Sequence.FrameRate), 0, _animEvent.Length);
-                    rebuildTrack = true;
-                }
-
-                EditorGUILayout.EndHorizontal();
-
-                if (_showBlendAndOffsetContent)
+                int id = _animEvent.GetId();
+                FPlayAnimationEvent preAnimEvt = _animEvent.Track.Events[id - 1] as FPlayAnimationEvent;
+                if (id > 0)
                 {
                     EditorGUI.BeginChangeCheck();
-                    ++EditorGUI.indentLevel;
                     EditorGUILayout.IntSlider(_startOffset, 0, _animEvent.GetMaxStartOffset(), _startOffsetUI);
-
-                    //			if( _animEvent.IsBlending() )
-                    {
-                        EditorGUILayout.IntSlider(_blendLength, 0, _animEvent.Length, _blendLengthUI);
-                    }
-                    --EditorGUI.indentLevel;
+                    EditorGUILayout.IntSlider(_blendLength, 0, preAnimEvt.Length > _animEvent.Length ? _animEvent.Length : preAnimEvt.Length, _blendLengthUI);
                     if (EditorGUI.EndChangeCheck())
                         rebuildTrack = true;
                 }

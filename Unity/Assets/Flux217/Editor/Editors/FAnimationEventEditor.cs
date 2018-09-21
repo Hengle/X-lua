@@ -93,40 +93,27 @@ namespace FluxEditor
                 _animEvtSO.Update();
 
                 FPlayAnimationEvent prevAnimEvt = (FPlayAnimationEvent)AnimTrack.Events[AnimEvt.GetId() - 1];
-
                 AnimationClip prevAnimEvtClip = prevAnimEvt._animationClip;
                 if (prevAnimEvtClip != null)
                 {
-                    float exitTimeNormalized = (prevAnimEvt.Length + prevAnimEvt._startOffset) / (prevAnimEvtClip.frameRate * prevAnimEvtClip.length);
+                    float blendSeconds = _blendLength.intValue / prevAnimEvtClip.frameRate;
 
-                    if (!Mathf.Approximately(exitTimeNormalized, _transitionExitTime.floatValue))
+                    if (!Mathf.Approximately(blendSeconds, _transitionDuration.floatValue))
                     {
-                        _transitionExitTime.floatValue = exitTimeNormalized;
-                    }
-
-                    float blendNormalized = (_blendLength.intValue / prevAnimEvtClip.frameRate) / prevAnimEvtClip.length;
-
-                    if (!Mathf.Approximately(blendNormalized, _transitionDuration.floatValue))
-                    {
-                        _blendLength.intValue = Mathf.Clamp(Mathf.RoundToInt(_transitionDuration.floatValue * prevAnimEvtClip.length * prevAnimEvtClip.frameRate), 0, AnimEvt.Length);
-
-                        _transitionDuration.floatValue = (_blendLength.intValue / prevAnimEvtClip.frameRate) / prevAnimEvtClip.length;
-
+                        _transitionDuration.floatValue = blendSeconds;
+                        float p = blendSeconds / prevAnimEvtClip.length;
+                        _transitionExitTime.floatValue = p > 1f ? 1f : 1f - Mathf.Clamp01(blendSeconds / prevAnimEvtClip.length);
                         _animEvtSO.ApplyModifiedProperties();
-
                     }
 
-                    float startOffsetNorm = (_startOffset.intValue / AnimEvt._animationClip.frameRate) / AnimEvt._animationClip.length;
+                    float startOffsetNorm = _startOffset.intValue / AnimEvt._animationClip.frameRate / AnimEvt._animationClip.length;
 
                     if (!Mathf.Approximately(startOffsetNorm, _transitionOffset.floatValue))
                     {
-                        _startOffset.intValue = Mathf.RoundToInt(_transitionOffset.floatValue * AnimEvt._animationClip.length * AnimEvt._animationClip.frameRate);
-                        _transitionOffset.floatValue = (_startOffset.intValue / AnimEvt._animationClip.frameRate) / AnimEvt._animationClip.length;
-
+                        _transitionOffset.floatValue = startOffsetNorm;
                         _animEvtSO.ApplyModifiedProperties();
                     }
                 }
-
                 _transitionSO.ApplyModifiedProperties();
             }
         }
@@ -209,9 +196,13 @@ namespace FluxEditor
 
                             FPlayAnimationEvent prevAnimEvt = (FPlayAnimationEvent)animTrackEditor.Track.GetEvent(AnimEvt.GetId() - 1);
 
+                            float blendSeconds = _blendLength.intValue / prevAnimEvt._animationClip.frameRate;
                             if (_transitionDuration != null)
-                                _transitionDuration.floatValue = (_blendLength.intValue / prevAnimEvt._animationClip.frameRate) / prevAnimEvt._animationClip.length;
-
+                            {
+                                _transitionDuration.floatValue = blendSeconds;
+                                float p = blendSeconds / prevAnimEvt._animationClip.length;
+                                _transitionExitTime.floatValue = p > 1f ? 1f : 1f - Mathf.Clamp01(blendSeconds / prevAnimEvt._animationClip.length);
+                            }
                             Undo.RecordObject(this, "Animation Blending");
                         }
                         Event.current.Use();
@@ -295,11 +286,12 @@ namespace FluxEditor
 
                     Texture2D t = FUtility.GetFluxAssets<Texture2D>("Blender.png");
 
-                    float x = _eventRect.xMin + SequenceEditor.GetXForFrame(AnimEvt._startOffset);
-                    float remainWidth = SequenceEditor.GetXForFrame(AnimEvt.End) - x;
-                    float width = SequenceEditor.GetXForFrame(AnimEvt._blendLength);
-                    if (width > remainWidth)
-                        width = remainWidth;
+                    float offset = SequenceEditor.PixelsPerFrame * AnimEvt._startOffset;
+                    float x = _eventRect.xMin + offset;
+                    float maxWidth = SequenceEditor.PixelsPerFrame * AnimEvt.Length - offset;
+                    float width = SequenceEditor.PixelsPerFrame * AnimEvt._blendLength;
+                    if (width > maxWidth)
+                        width = maxWidth;
                     Rect r = new Rect(x, _eventRect.yMin + 1, width, _eventRect.height - 2);
 
                     Color guiColor = GUI.color;
@@ -335,11 +327,11 @@ namespace FluxEditor
 
         public override void OnEventFinishedMoving(FrameRange oldFrameRange)
         {
-            if (oldFrameRange.Length != AnimEvt.FrameRange.Length && Flux.FUtility.IsAnimationEditable(AnimEvt._animationClip))
-            {
-                //---动画帧数据不做缩放操作
-                //FAnimationEventInspector.ScaleAnimationClip(AnimEvt._animationClip, AnimEvt.FrameRange);
-            }
+            ////---动画帧数据不做缩放操作
+            //if (oldFrameRange.Length != AnimEvt.FrameRange.Length && Flux.FUtility.IsAnimationEditable(AnimEvt._animationClip))
+            //{
+            //    FAnimationEventInspector.ScaleAnimationClip(AnimEvt._animationClip, AnimEvt.FrameRange);
+            //}
         }
 
     }

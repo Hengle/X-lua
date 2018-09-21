@@ -16,7 +16,7 @@ namespace FluxEditor
 		public const int STOP_BUTTON_WIDTH = 50;
 		public const int PLAY_BUTTON_WIDTH = 50;
 
-		public const int SPEED_LABEL_WIDTH = 40;
+		public const int SPEED_LABEL_WIDTH = 50;
 		public const int SPEED_SLIDER_WIDTH = 80;
 
 		public const int FRAME_FIELD_WIDTH = 100;
@@ -47,7 +47,7 @@ namespace FluxEditor
 		private GUIContent _stop = null;
 
 		private bool _showSpeedSlider;
-		private GUIContent _speedLabel = new GUIContent("速度", "Playback Speed, only for preview purposes");
+		private GUIContent _speedLabel = new GUIContent("播放速度", "Playback Speed, only for preview purposes");
 		private float[] _speedValues = new float[]{ 0.1f, 0.25f, 0.5f, 0.75f, 1f, 1.25f, 1.5f, 1.75f, 2f };
 //		private GUIContent[] _speedValueStrs = new GUIContent[]{ new GUIContent("Custom"), new GUIContent( "1/10x" ), new GUIContent( "1/4x" ), new GUIContent( "1/2x" ), 
 //			new GUIContent( "3/4x" ), new GUIContent( "1x" ), new GUIContent( "1.25x" ), new GUIContent( "1.5x" ), new GUIContent( "1.75x" ), new GUIContent( "2x" ) };

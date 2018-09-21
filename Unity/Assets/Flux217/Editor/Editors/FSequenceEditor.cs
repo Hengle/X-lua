@@ -447,7 +447,7 @@ namespace FluxEditor
                 Editors.Clear();
 
                 if (sequence != null)
-                    sequence.Speed = sequence.DefaultSpeed;
+                    sequence.Speed = FSequence.DEFAULT_SPEED;
             }
             else if (!EditorApplication.isPlaying)
             {
@@ -1715,7 +1715,7 @@ namespace FluxEditor
             _currentTime = frame * Sequence.InverseFrameRate;
 
             if (Sequence.Speed == 0)
-                Sequence.Speed = Sequence.DefaultSpeed;
+                Sequence.Speed = FSequence.DEFAULT_SPEED;
 
             if (Application.isPlaying)
             {
@@ -1838,7 +1838,10 @@ namespace FluxEditor
             //			}
 
             if (!_isPlaying)
+            {
+                Sequence.LoopNum = 0;
                 return;
+            }
 
             float delta = (float)((EditorApplication.timeSinceStartup - _timeLastUpdate) * Sequence.Speed);
 
@@ -1855,13 +1858,23 @@ namespace FluxEditor
             {
                 Sequence.OnFinishedCallback.Invoke(Sequence);
 
-                Play();
+                bool isLoop = Sequence.ExecuteTime <= 0;
+                if (isLoop || Sequence.IsLoopEnd())
+                {
+                    Play();
+                    ++Sequence.LoopNum;
+                }
             }
             else if (newTime < 0 && !Sequence.IsPlayingForward)
             {
                 Sequence.OnFinishedCallback.Invoke(Sequence);
 
-                Play();
+                bool isLoop = Sequence.ExecuteTime <= 0;
+                if (isLoop || Sequence.IsLoopEnd())
+                {
+                    Play();
+                    ++Sequence.LoopNum;
+                }
             }
             else
                 SetCurrentTime(newTime);
