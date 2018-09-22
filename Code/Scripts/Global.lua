@@ -65,6 +65,7 @@ List = require 'Common.List'
 Queue = require "Common.Queue"
 Stack = require "Common.Stack"
 Event = require "Common.Event"
+Easing = require "Common.Easing"
 GameEvent = require "Common.GameEvent"
 
 

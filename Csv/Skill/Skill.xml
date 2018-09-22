@@ -23,49 +23,106 @@
     </Class>
 
     <Class Name = "SkillAction" Inherit="GeneralAction">
-        <Const Name = "EXPIRE_TIME" Type = "float" Value = "1" Des = "默认后续技能使用期限,用于单个技能多段输出" />
-        <Field Name = "SkillExpireTime" Type = "float" Des = "后续技能使用期限,用于单个技能多段输出" />
+        <Const Name = "EXPIRE_TIME" Type = "float" Value = "1" Des = "默认后续技能使用期限,用于单个技能多段输出" />       
+		<Field Name = "LoopTimes" Type = "int" Des="技能序列循环次数">
+		<Field Name = "SkillExpireTime" Type = "float" Des = "后续技能使用期限,用于单个技能多段输出" />
         <Field Name = "SkillEndTime" Type = "float" Des = "技能结束时间" />
         <Field Name = "NeedTarget" Type = "bool" Des = "是否需要目标" />
+		<!-- <Field Name = "LockType" Type = "SkillLockType" Des = "技能锁定对象类型(1敌方目标 ,2己方目标 3自己)" /> -->
         <Field Name = "CanInterrupt" Type = "bool" Des = "是否可被打断" />
         <Field Name = "SkillRange" Type = "float" Des = "技能作用范围[半径]" />
         <Field Name = "CanShowSkillRange" Type = "bool" Des = "是否显示技能范围" />
         <Field Name = "CanRotate" Type = "bool" Des = "放技能时人是否可以转动" />
         <Field Name = "CanMove" Type = "bool" Des = "放技能时人是否可以移动" />
-        <Field Name = "StartMoveTime" Type = "float" Des = "开始位移时间，如果改值为-1 则改值等于技能开始时间" />
-        <Field Name = "EndMoveTime" Type = "float" Des = "结束位移时间，如果改值为-1 则改值等于技能结束时间" />
-        <Field Name = "RelateType" Type = "SkillRelateType" Des = "施放相对位置(1 自己 ,2目标)" />
+        <Field Name = "StartMoveTime" Type = "float" Des = "开始位移时间，如果改值为-1 则该值等于技能开始时间" />
+        <Field Name = "EndMoveTime" Type = "float" Des = "结束位移时间，如果改值为-1 则该值等于技能结束时间" />		
+        <Field Name = "RelateType" Type = "SkillRelateType" Des = "施放相对位置(1 自己 ,2目标)" />        
         <Field Name = "HitPoints" Type = "list:HitPointGroup" Des = "打击点组列表" />
         <Field Name = "HitZones" Type = "list:HitZone" Des = "打击区域列表" />
         <Field Name = "BeAttackEffects" Type = "list:BeAttackEffect" Des = "被击效果列表" />
     </Class>	
 
-	
-	
-	
-	
-	
-    <Class Name = "HitZone">
-        <Field Name = "Id" Type = "int" Des = "打击区域id" />
-        <Field Name = "Sharp" Type = "HitSharpType" Des = "打击范围的形态，0：方盒，1:圆柱,2:三棱柱" />
-        <Field Name = "Zoffset" Type = "float" Des = "打击范围的中心点在Z轴上的偏移量，向前为正" />
-        <Field Name = "Xlength" Type = "float" Des = "X方向长度" />
-        <Field Name = "BottomHeight" Type = "float" Des = "底边距地面的高度" />
-        <Field Name = "TopHeight" Type = "float" Des = "顶部距地面的高度" />
-        <Field Name = "Zlength" Type = "float" Des = "Z方向长度" />
-        <Field Name = "YAngle" Type = "float" Des = "以y轴为中心的切面角度" />
-        <Field Name = "YRotation" Type = "float" Des = "打击区域绕y轴旋转角度（顺时针）,构成扇形" />
-        <Field Name = "MaxTarget" Type = "int" Des = "最大数量" />
-    </Class>
-	
-
-    <Class Name = "BeAttackEffect">
+	<!-- 配置型 -->
+	<Class Name = "BeAttackEffect">
         <Field Name = "Id" Type = "int" Des = "被击效果id" />
-        <Field Name = "Curve" Type = "int" Des = "被打击者的抛物曲线" />
-        <Field Name = "DefencerAction" Type = "string" Des = "被打击者的受击动作，null为默认" />
-        <Field Name = "DefencerEffectId" Type = "int" Des = "被打击者身上出现的被击特效，Null为默认" />
+        <!-- <Field Name = "Curve" Type = "int" Des = "被打击者的抛物曲线" /> -->
+        <Field Name = "Action" Type = "string" Des = "被打击者的受击动作，null为默认" />
+        <Field Name = "EffectId" Type = "int" Des = "被打击者身上出现的被击特效，Null为默认" />
     </Class>
+	
+	<Class Name = "HitZone">
+        <Field Name = "Id" Type = "int" Des = "打击区域id" />
+        <Field Name = "Sharp" Type = "HitSharpType" Des = "打击范围的形态，0：方盒，1:圆柱,2:球" />
+		<Field Name = "Offset" Type = "Vector3" Des = "坐标偏移量"/>								        
+        <Field Name = "MaxNum" Type = "int" Des = "最大数量" />
+    </Class>
+	<Class Name = "CubeZone" Inherit = "HitZone">
+		<Field Name = "Scale" Type = "Vector3" Des = "方盒缩放大小"/>
+	</Class>
+	<Class Name = "SphereZone" Inherit = "HitZone">
+		<Field Name = "Radius" Type = "float" Des = "球半径"/>
+	</Class>
+	<Class Name = "CylinderZone" Inherit = "HitZone">
+		<Field Name = "Radius" Type = "float" Des = "圆半径"/>
+		<Field Name = "Height" Type = "float" Des = "圆柱高度"/>
+		<Field Name = "Angle" Type = "float" Des = "打击区域绕y轴旋转角度（顺时针:左手定则）,构成扇形" />
+	</Class>
 
+	
+		
+	<!-- 枚举配置 -->
+    <Enum Name="ActionSourceType">
+        <Const Name = "SelfModel" Value = "0" Des="自己模型"/>
+        <Const Name = "OtherModel" Value = "1" Des="其他模型"/>
+    </Enum>
+
+    <Enum Name="SkillLockType">
+        <Const Name = "Enemy" Value = "0" Des="敌方目标"/>
+        <Const Name = "Teammate" Value = "1" Des="己方目标"/>
+        <Const Name = "Self" Value ="2" Des="自己"/>
+    </Enum>
+
+    <Enum Name="SkillRelateType">
+        <Const Name = "Self" Value = "0" Des="相对于自己"/>
+        <Const Name = "Target" Value = "1" Des="相对于目标"/>
+    </Enum>
+
+    <Enum Name="HitSharpType">
+        <Const Name = "Cube" Value = "0" Des="立方体"/>
+		<Const Name = "Sphere" Value = "1" Des="球"/>
+        <Const Name = "Cylinder" Value = "2" Des="圆柱形"/>        
+    </Enum>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+	
     <Class Name = "EffectGroup">
         <Field Name = "Id" Type = "int" Des = "特效组ID" />
         <Field Name = "Name" Type = "string" Des = "特效组名称" />
@@ -179,28 +236,7 @@
         <Field Name = "Id" Type = "int" Des = "打击点组(HitPointGroup)ID" />
     </Class>
 
-    <!-- 枚举配置 -->
-    <Enum Name="ActionSourceType">
-        <Const Name = "SelfModel" Value = "0" Des="自己模型"/>
-        <Const Name = "OtherModel" Value = "1" Des="其他模型"/>
-    </Enum>
 
-    <Enum Name="SkillTargetType">
-        <Const Name = "Enemy" Value = "0" Des="敌方目标"/>
-        <Const Name = "Teammate" Value = "1" Des="己方目标"/>
-        <Const Name = "Self" Value ="2" Des="自己"/>
-    </Enum>
-
-    <Enum Name="SkillRelateType">
-        <Const Name = "Self" Value = "0" Des="相对于自己"/>
-        <Const Name = "Target" Value = "1" Des="相对于目标"/>
-    </Enum>
-
-    <Enum Name="HitSharpType">
-        <Const Name = "Cube" Value = "0" Des="立方体"/>
-        <Const Name = "Cylinder" Value = "1" Des="圆柱形"/>
-        <Const Name = "Trangle" Value = "2" Des="三棱柱"/>
-    </Enum>
 
     <Enum Name="ShakeType">
         <Const Name = "Horizontal" Value = "0" Des="水平"/>
@@ -261,3 +297,20 @@
         <Const Name = "NPC" Value ="4" Des="NPC"/>
 	</Enum>
 </Configs>
+
+
+
+
+	
+<!-- 	<Class Name = "HitZone">
+        <Field Name = "Id" Type = "int" Des = "打击区域id" />
+        <Field Name = "Sharp" Type = "HitSharpType" Des = "打击范围的形态，0：方盒，1:圆柱,2:球" />
+        <Field Name = "Zoffset" Type = "float" Des = "打击范围的中心点在Z轴上的偏移量，向前为正" />
+        <Field Name = "Xlength" Type = "float" Des = "X方向长度" />
+        <Field Name = "BottomHeight" Type = "float" Des = "底边距地面的高度" />
+        <Field Name = "TopHeight" Type = "float" Des = "顶部距地面的高度" />
+        <Field Name = "Zlength" Type = "float" Des = "Z方向长度" />
+        <Field Name = "YAngle" Type = "float" Des = "以y轴为中心的切面角度" />
+        <Field Name = "YRotation" Type = "float" Des = "打击区域绕y轴旋转角度（顺时针）,构成扇形" />
+        <Field Name = "MaxTarget" Type = "int" Des = "最大数量" />
+    </Class> -->

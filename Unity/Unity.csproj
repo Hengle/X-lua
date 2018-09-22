@@ -363,6 +363,12 @@
     <Compile Include="Assets\Flux217\Runtime\Events\Audio\FGlobalVolumeAudioEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\Audio\FPlayAudioEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\Audio\FVolumeAudioEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Character\FRushEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Character\FTransformEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Character\FTweenPositionEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Character\FTweenRotationEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Character\FTweenScaleEvent.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\Config\FBeAttackEffect.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\FTweenEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\Particle\FPlayParticleEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\FContainer.cs" />
@@ -375,6 +381,7 @@
     <Compile Include="Assets\Flux217\Runtime\FTween.cs" />
     <Compile Include="Assets\Flux217\Runtime\FUtility.cs" />
     <Compile Include="Assets\Flux217\Runtime\Tracks\FAnimationTrack.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Tracks\FCharacterTrack.cs" />
     <Compile Include="Assets\Flux217\Runtime\Tracks\FParticleTrack.cs" />
     <Compile Include="Assets\Flux217\Runtime\Tracks\FTransformTrack.cs" />
     <Compile Include="Assets\Source\Common\AppConst.cs" />
