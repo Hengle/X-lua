@@ -3,14 +3,16 @@ using System.Collections;
 
 namespace Flux
 {
-    [FEvent("模型控制/冲刺", typeof(FCharacterTrack))]
+    [FEvent("模型控制/冲刺"/*, typeof(FCharacterTrack)*/)]
     public class FRushEvent : FEvent
     {
-        [SerializeField]
+        [SerializeField, Range(0, 360)]
         [HideInInspector]
+        [FEventField("角度", "绕Y轴顺时针旋转")]
         private int _angle;
         [SerializeField]
         [HideInInspector]
+        [FEventField("距离", "距离长度")]
         private float _length;
         private FTweenVector3 _tween;
         private Vector3 _startPosition;

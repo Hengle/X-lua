@@ -3,251 +3,290 @@ using UnityEditor;
 using UnityEditorInternal;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 using Flux;
 
 namespace FluxEditor
 {
-	[CustomEditor( typeof( Flux.FEvent ), true )]
-	[CanEditMultipleObjects]
-	public class FEventInspector : Editor
-	{
-		private const string FRAMERANGE_START_FIELD_ID = "FrameRange.Start";
+    [CustomEditor(typeof(Flux.FEvent), true)]
+    [CanEditMultipleObjects]
+    public class FEventInspector : Editor
+    {
+        private const string FRAMERANGE_START_FIELD_ID = "FrameRange.Start";
 
-	    private FEvent _evt;
+        private FEvent _evt;
 
-		private bool _allEventsSameType = true;
+        private bool _allEventsSameType = true;
+        private bool _isSingleFrame = false;
 
-	//	protected SerializedProperty _script;
-	    protected SerializedProperty _triggerOnSkip;
+        //	protected SerializedProperty _script;
+        protected SerializedProperty _triggerOnSkip;
+        private List<FieldDraw> _fields = new List<FieldDraw>();
+        class FieldDraw
+        {
+            public GUIContent DisplayName;
+            public SerializedProperty Property;
+        }
+
+        protected virtual void OnEnable()
+        {
+            if (target == null)
+            {
+                DestroyImmediate(this);
+                return;
+
+            }
+            _evt = (Flux.FEvent)target;
+
+            Type evtType = _evt.GetType();
+
+            for (int i = 0; i != targets.Length; ++i)
+            {
+                FEvent evt = (FEvent)targets[i];
+                if (evtType != evt.GetType())
+                {
+                    _allEventsSameType = false;
+                    break;
+                }
+            }
+
+            //		_script = serializedObject.FindProperty("m_Script");
+            if (_allEventsSameType)
+            {
+                _triggerOnSkip = serializedObject.FindProperty("_triggerOnSkip");
+            }
+
+            _fields.Clear();
+            var fields = evtType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+            foreach (var f in fields)
+            {
+                if (!f.DeclaringType.Equals(evtType)) continue;
+
+                var attributes = f.GetCustomAttributes(typeof(FEventField), false);
+                if (attributes != null && attributes.Length > 0)
+                {
+                    string alias = (attributes[0] as FEventField).Name;
+                    string tip = (attributes[0] as FEventField).Tip;
+                    SerializedProperty property = serializedObject.FindProperty(f.Name);
+                    _fields.Add(new FieldDraw() { DisplayName = new GUIContent(alias, tip), Property = property });
+                }
+            }
+
+            object[] customAttributes = evtType.GetCustomAttributes(typeof(FEventAttribute), false);
+            if (customAttributes.Length > 0)
+                _isSingleFrame = ((FEventAttribute)customAttributes[0]).isSingleFrame;
+        }
 
 
-	    protected virtual void OnEnable()
-	    {
-	        if( target == null )
-	        {
-	            DestroyImmediate( this );
-	            return;
+        public override void OnInspectorGUI()
+        {
+            //		EditorGUILayout.PropertyField( _script );
 
-	        }
-	        _evt = (Flux.FEvent)target;
+            if (_allEventsSameType)
+            {
+                serializedObject.Update();
+                EditorGUILayout.PropertyField(_triggerOnSkip, new GUIContent("跳过触发器"));
+            }
+            else
+            {
+                bool triggerOnSkipMatch = true;
 
-			Type evtType = _evt.GetType();
+                for (int i = 0; i != targets.Length; ++i)
+                {
+                    if (((FEvent)targets[i]).TriggerOnSkip != _evt.TriggerOnSkip)
+                    {
+                        triggerOnSkipMatch = false;
+                        break;
+                    }
+                }
 
-			for( int i = 0; i != targets.Length; ++i )
-			{
-				FEvent evt = (FEvent)targets[i];
-				if( evtType != evt.GetType() )
-				{
-					_allEventsSameType = false;
-					break;
-				}
-			}
+                EditorGUI.BeginChangeCheck();
+                bool triggerOnSkip = EditorGUILayout.Toggle("跳过触发器", _evt.TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed");
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObjects(targets, " Inspector");
+                    for (int i = 0; i != targets.Length; ++i)
+                    {
+                        FEvent evt = (FEvent)targets[i];
+                        evt.TriggerOnSkip = triggerOnSkip;
+                    }
+                }
+            }
 
-	//		_script = serializedObject.FindProperty("m_Script");
-			if( _allEventsSameType )
-			{
-				_triggerOnSkip = serializedObject.FindProperty( "_triggerOnSkip");
-			}
-	    }
+            //        EditorGUILayout.IntField( "Instance ID", _evt.GetInstanceID() );
 
-	    public override void OnInspectorGUI()
-	    {
-	//		EditorGUILayout.PropertyField( _script );
+            if (!_isSingleFrame)
+            {
+                float startFrame = _evt.Start;
+                float endFrame = _evt.End;
 
-			if( _allEventsSameType )
-			{
-				serializedObject.Update();
-				EditorGUILayout.PropertyField( _triggerOnSkip, new GUIContent("跳过触发器"));
-			}
-			else
-			{
-				bool triggerOnSkipMatch = true;
+                FrameRange validRange = _evt.Track != null ? _evt.Track.GetValidRange(_evt) : new FrameRange(_evt.Start, _evt.End);
 
-				for( int i = 0; i != targets.Length; ++i )
-				{
-					if( ((FEvent)targets[i]).TriggerOnSkip != _evt.TriggerOnSkip )
-					{
-						triggerOnSkipMatch = false;
-						break;
-					}
-				}
-				
-				EditorGUI.BeginChangeCheck();
-				bool triggerOnSkip = EditorGUILayout.Toggle( "跳过触发器", _evt.TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed" );
-				if( EditorGUI.EndChangeCheck() )
-				{
-					Undo.RecordObjects( targets, " Inspector" );
-					for( int i = 0; i != targets.Length; ++i )
-					{
-						FEvent evt = (FEvent)targets[i];
-						evt.TriggerOnSkip = triggerOnSkip;
-					}
-				}
-			}
+                EditorGUI.BeginChangeCheck();
 
-	//        EditorGUILayout.IntField( "Instance ID", _evt.GetInstanceID() );
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PrefixLabel("范围");
+                GUILayout.Label("开始:", EditorStyles.label);
+                GUI.SetNextControlName(FRAMERANGE_START_FIELD_ID);
+                startFrame = EditorGUILayout.IntField(_evt.Start);
+                GUILayout.Label("结束:", EditorStyles.label);
+                endFrame = EditorGUILayout.IntField(_evt.End);
+                EditorGUILayout.EndHorizontal();
 
-	        float startFrame = _evt.Start;
-	        float endFrame = _evt.End;
 
-			FrameRange validRange = _evt.Track != null ? _evt.Track.GetValidRange( _evt ) : new FrameRange(_evt.Start, _evt.End);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    bool changedStart = GUI.GetNameOfFocusedControl() == FRAMERANGE_START_FIELD_ID;
 
-			EditorGUI.BeginChangeCheck();
+                    for (int i = 0; i != targets.Length; ++i)
+                    {
+                        FEvent evt = (FEvent)targets[i];
 
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.PrefixLabel( "范围" );
-			GUILayout.Label( "开始:", EditorStyles.label );
-			GUI.SetNextControlName( FRAMERANGE_START_FIELD_ID );
-			startFrame = EditorGUILayout.IntField( _evt.Start );
-			GUILayout.Label( "结束:", EditorStyles.label );
-			endFrame = EditorGUILayout.IntField( _evt.End );
-			EditorGUILayout.EndHorizontal();
-	        
-			if( EditorGUI.EndChangeCheck() )
-			{
-				bool changedStart = GUI.GetNameOfFocusedControl() == FRAMERANGE_START_FIELD_ID;
-				
-				for( int i = 0; i != targets.Length; ++i )
-				{
-					FEvent evt = (FEvent)targets[i];
-					
-					FrameRange newFrameRange = evt.FrameRange;
-					if( changedStart )
-					{
-						if( startFrame <= newFrameRange.End )
-							newFrameRange.Start = (int)startFrame;
-					}
-					else if( endFrame >= newFrameRange.Start )
-						newFrameRange.End = (int)endFrame;
-					
-					if( newFrameRange.Length >= evt.GetMinLength() && newFrameRange.Length <= evt.GetMaxLength() )
-					{
-						FSequenceEditorWindow.instance.GetSequenceEditor().MoveEvent( evt, newFrameRange );
-						FEventEditor.FinishMovingEventEditors();
-//						FUtility.Resize( evt, newFrameRange );
-					}
-				}
-			}
+                        FrameRange newFrameRange = evt.FrameRange;
+                        if (changedStart)
+                        {
+                            if (startFrame <= newFrameRange.End)
+                                newFrameRange.Start = (int)startFrame;
+                        }
+                        else if (endFrame >= newFrameRange.Start)
+                            newFrameRange.End = (int)endFrame;
 
-			if( targets.Length == 1 )
-			{
-				EditorGUI.BeginChangeCheck();
-				EditorGUILayout.BeginHorizontal();
-				GUILayout.Space( EditorGUIUtility.labelWidth );
-				float sliderStartFrame = startFrame;
-				float sliderEndFrame = endFrame;
-		        EditorGUILayout.MinMaxSlider( ref sliderStartFrame, ref sliderEndFrame, validRange.Start, validRange.End );
-				EditorGUILayout.EndHorizontal();
-				if( EditorGUI.EndChangeCheck() )
-				{
-					FrameRange newFrameRange = new FrameRange( (int)sliderStartFrame, (int)sliderEndFrame );
-					if( newFrameRange.Length < _evt.GetMinLength() )
-					{
-						if( sliderStartFrame != startFrame ) // changed start
-							newFrameRange.Start = newFrameRange.End - _evt.GetMinLength();
-						else
-							newFrameRange.Length = _evt.GetMinLength();
-					}
+                        if (newFrameRange.Length >= evt.GetMinLength() && newFrameRange.Length <= evt.GetMaxLength())
+                        {
+                            FSequenceEditorWindow.instance.GetSequenceEditor().MoveEvent(evt, newFrameRange);
+                            FEventEditor.FinishMovingEventEditors();
+                            //						FUtility.Resize( evt, newFrameRange );
+                        }
+                    }
+                }
 
-//					FUtility.Resize( _evt, newFrameRange );
-					FSequenceEditorWindow.instance.GetSequenceEditor().MoveEvent( _evt, newFrameRange );
-					FEventEditor.FinishMovingEventEditors();
-				}
-			}
+                if (targets.Length == 1)
+                {
+                    EditorGUI.BeginChangeCheck();
+                    EditorGUILayout.BeginHorizontal();
+                    GUILayout.Space(EditorGUIUtility.labelWidth);
+                    float sliderStartFrame = startFrame;
+                    float sliderEndFrame = endFrame;
+                    EditorGUILayout.MinMaxSlider(ref sliderStartFrame, ref sliderEndFrame, validRange.Start, validRange.End);
+                    EditorGUILayout.EndHorizontal();
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        FrameRange newFrameRange = new FrameRange((int)sliderStartFrame, (int)sliderEndFrame);
+                        if (newFrameRange.Length < _evt.GetMinLength())
+                        {
+                            if (sliderStartFrame != startFrame) // changed start
+                                newFrameRange.Start = newFrameRange.End - _evt.GetMinLength();
+                            else
+                                newFrameRange.Length = _evt.GetMinLength();
+                        }
 
-	        
-			if( _allEventsSameType )
-			{
-				serializedObject.ApplyModifiedProperties();
-				base.OnInspectorGUI();
-			}
-	    }
+                        //					FUtility.Resize( _evt, newFrameRange );
+                        FSequenceEditorWindow.instance.GetSequenceEditor().MoveEvent(_evt, newFrameRange);
+                        FEventEditor.FinishMovingEventEditors();
+                    }
+                }
+            }
 
-		public static void OnInspectorGUIGeneric( List<FEvent> evts )
-		{
-			if( evts.Count == 0 )
-				return;
 
-			bool triggerOnSkipMatch = true;
+            if (_allEventsSameType)
+            {
+                serializedObject.ApplyModifiedProperties();
+                base.OnInspectorGUI();
 
-			int startFrame = evts[0].Start;
-			int endFrame = evts[0].End;
+                serializedObject.Update();
+                foreach (var field in _fields)
+                    EditorGUILayout.PropertyField(field.Property, field.DisplayName);
+                serializedObject.ApplyModifiedProperties();
+            }
+        }
 
-			bool startFrameMatch = true;
-			bool endFrameMatch = true;
 
-			for( int i = 1; i < evts.Count; ++i )
-			{
-				if( evts[i].TriggerOnSkip != evts[0].TriggerOnSkip )
-				{
-					triggerOnSkipMatch = false;
-				}
-				if( evts[i].Start != startFrame )
-				{
-					startFrameMatch = false;
-				}
-				if( evts[i].End != endFrame )
-				{
-					endFrameMatch = false;
-				}
-			}
 
-			EditorGUI.BeginChangeCheck();
-			bool triggerOnSkip = EditorGUILayout.Toggle("跳过触发器", evts[0].TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed" );
-			if( EditorGUI.EndChangeCheck() )
-			{
-				Undo.RecordObjects( evts.ToArray(), "Inspector" );
-				for( int i = 0; i < evts.Count; ++i )
-				{
-					evts[i].TriggerOnSkip = triggerOnSkip;
-					EditorUtility.SetDirty( evts[i] );
-				}
-			}
-			
-//			FrameRange validRange = _evt.GetTrack().GetValidRange( _evt );
-			
-			EditorGUI.BeginChangeCheck();
+        public static void OnInspectorGUIGeneric(List<FEvent> evts)
+        {
+            if (evts.Count == 0)
+                return;
 
-//			foreach( GUIStyle style in GUI.skin.customStyles )
-//			{
-////				if( style.name.ToLower().Contains( "" ) )
-//					Debug.Log( style.name );
-//			}
+            bool triggerOnSkipMatch = true;
 
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.PrefixLabel( "范围" );
-			GUILayout.Label( "开始:", EditorStyles.label );
-			GUI.SetNextControlName( FRAMERANGE_START_FIELD_ID );
-			startFrame = EditorGUILayout.IntField( startFrame, startFrameMatch ? EditorStyles.numberField : "PR TextField" );
-			GUILayout.Label( "结束:", EditorStyles.label );
-			endFrame = EditorGUILayout.IntField( endFrame, endFrameMatch ? EditorStyles.numberField : "PR TextField"  );
-			EditorGUILayout.EndHorizontal();
-			
-			if( EditorGUI.EndChangeCheck() )
-			{
-//				bool changedStart = GUI.GetNameOfFocusedControl() == FRAMERANGE_START_FIELD_ID;
-				
-//				for( int i = 0; i != targets.Length; ++i )
-//				{
-//					FEvent evt = (FEvent)targets[i];
-//					
-//					FrameRange newFrameRange = evt.FrameRange;
-//					if( changedStart )
-//					{
-//						if( startFrame <= newFrameRange.End )
-//							newFrameRange.Start = (int)startFrame;
-//					}
-//					else if( endFrame >= newFrameRange.Start )
-//						newFrameRange.End = (int)endFrame;
-//					
-//					if( newFrameRange.Length >= evt.GetMinLength() && newFrameRange.Length <= evt.GetMaxLength() )
-//					{
-//						FSequenceEditorWindow.instance.GetSequenceEditor().MoveEvent( evt, newFrameRange );
-//						//						FUtility.Resize( evt, newFrameRange );
-//					}
-//				}
-			}
-		}
-	}
+            int startFrame = evts[0].Start;
+            int endFrame = evts[0].End;
+
+            bool startFrameMatch = true;
+            bool endFrameMatch = true;
+
+            for (int i = 1; i < evts.Count; ++i)
+            {
+                if (evts[i].TriggerOnSkip != evts[0].TriggerOnSkip)
+                {
+                    triggerOnSkipMatch = false;
+                }
+                if (evts[i].Start != startFrame)
+                {
+                    startFrameMatch = false;
+                }
+                if (evts[i].End != endFrame)
+                {
+                    endFrameMatch = false;
+                }
+            }
+
+            EditorGUI.BeginChangeCheck();
+            bool triggerOnSkip = EditorGUILayout.Toggle("跳过触发器", evts[0].TriggerOnSkip, triggerOnSkipMatch ? EditorStyles.toggle : "ToggleMixed");
+            if (EditorGUI.EndChangeCheck())
+            {
+                Undo.RecordObjects(evts.ToArray(), "Inspector");
+                for (int i = 0; i < evts.Count; ++i)
+                {
+                    evts[i].TriggerOnSkip = triggerOnSkip;
+                    EditorUtility.SetDirty(evts[i]);
+                }
+            }
+
+            //			FrameRange validRange = _evt.GetTrack().GetValidRange( _evt );
+
+            EditorGUI.BeginChangeCheck();
+
+            //			foreach( GUIStyle style in GUI.skin.customStyles )
+            //			{
+            ////				if( style.name.ToLower().Contains( "" ) )
+            //					Debug.Log( style.name );
+            //			}
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("范围");
+            GUILayout.Label("开始:", EditorStyles.label);
+            GUI.SetNextControlName(FRAMERANGE_START_FIELD_ID);
+            startFrame = EditorGUILayout.IntField(startFrame, startFrameMatch ? EditorStyles.numberField : "PR TextField");
+            GUILayout.Label("结束:", EditorStyles.label);
+            endFrame = EditorGUILayout.IntField(endFrame, endFrameMatch ? EditorStyles.numberField : "PR TextField");
+            EditorGUILayout.EndHorizontal();
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                //				bool changedStart = GUI.GetNameOfFocusedControl() == FRAMERANGE_START_FIELD_ID;
+
+                //				for( int i = 0; i != targets.Length; ++i )
+                //				{
+                //					FEvent evt = (FEvent)targets[i];
+                //					
+                //					FrameRange newFrameRange = evt.FrameRange;
+                //					if( changedStart )
+                //					{
+                //						if( startFrame <= newFrameRange.End )
+                //							newFrameRange.Start = (int)startFrame;
+                //					}
+                //					else if( endFrame >= newFrameRange.Start )
+                //						newFrameRange.End = (int)endFrame;
+                //					
+                //					if( newFrameRange.Length >= evt.GetMinLength() && newFrameRange.Length <= evt.GetMaxLength() )
+                //					{
+                //						FSequenceEditorWindow.instance.GetSequenceEditor().MoveEvent( evt, newFrameRange );
+                //						//						FUtility.Resize( evt, newFrameRange );
+                //					}
+                //				}
+            }
+        }
+    }
 }

@@ -7,8 +7,11 @@ namespace Flux
     public class FBeAttackEffect : FEvent
     {
         [SerializeField, HideInInspector]
+        [FEventField("受击动画")]
         private AnimationClip _beAttackClip;
         [SerializeField, HideInInspector]
-        private int _effectId;
+        [FEventField("特效组ID")]
+        private int _effectGroupId;
+
     }
 }

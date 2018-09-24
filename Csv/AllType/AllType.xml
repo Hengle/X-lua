@@ -1,4 +1,4 @@
-<Configs Namespace = "AllType">
+<Define Namespace = "AllType">
     <Class Name = "AllClass"  Index = "ID" DataPath="Data所有Class类型.xlsx">
         <Const Name = "ConstString" Type = "string" Value = "Hello World" Des = "常量字符串" />
         <Const Name = "ConstFloat" Type = "float" Value = "3.141527" Des = "常量浮点值" />
@@ -34,6 +34,6 @@
         <Const Name = "Brary" Value = "8" Alias="牌库"/>
         <Const Name = "Handack" Value = "9" Alias="手牌攻击"/>
     </Enum>
-</Configs>
+</Define>
 
 

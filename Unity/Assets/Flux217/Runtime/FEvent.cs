@@ -576,18 +576,21 @@ namespace Flux
         // type of track to be used
         public Type trackType;
 
+        public bool isSingleFrame;
+
         //		public object _color = null;
 
 
-        public FEventAttribute(string menu)
-            : this(menu, typeof(FTrack))
+        public FEventAttribute(string menu, bool isSingle = false)
+            : this(menu, typeof(FTrack), isSingle)
         {
         }
 
-        public FEventAttribute(string menu, Type trackType)
+        public FEventAttribute(string menu, Type trackType, bool isSingle = false)
         {
             this.menu = menu;
             this.trackType = trackType;
+            this.isSingleFrame = isSingle;
         }
 
         //		public FEventAttribute( string menu, Color color )

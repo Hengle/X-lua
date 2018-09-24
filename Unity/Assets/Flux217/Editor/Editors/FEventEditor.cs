@@ -60,7 +60,6 @@ namespace FluxEditor
 
         protected virtual void RenderEvent(FrameRange viewRange, FrameRange validKeyframeRange)
         {
-
             bool leftHandleVisible = viewRange.Contains(Evt.Start);
             bool rightHandleVisible = viewRange.Contains(Evt.End);
 

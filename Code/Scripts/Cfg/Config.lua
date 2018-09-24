@@ -3,7 +3,6 @@ local cfgs = {}
 for _, s in ipairs({
 	{ name = 'AllClass', method = 'GetCsvAllTypeAllClass', index = 'ID', output = 'AllType/AllClass.data' },
 	{ name = 'Model', method = 'GetCsvCharacterModel', index = 'Name', output = 'Character/Model.data' },
-	{ name = 'ActorConfig', method = 'GetCsvSkillActorConfig', index = 'ModelName', output = 'Skill/ActorConfig.data' },
 }) do
 	local data = Stream.new(s.output)
 	local cfg = {}

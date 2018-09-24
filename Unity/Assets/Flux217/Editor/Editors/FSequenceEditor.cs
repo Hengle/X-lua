@@ -1837,11 +1837,11 @@ namespace FluxEditor
             //				          "\nisUpdating: " + EditorApplication.isUpdating );
             //			}
 
-            if (!_isPlaying)
-            {
+            if (!_isPlaying && Sequence != null)
                 Sequence.LoopNum = 0;
+
+            if (!_isPlaying)
                 return;
-            }
 
             float delta = (float)((EditorApplication.timeSinceStartup - _timeLastUpdate) * Sequence.Speed);
 

@@ -2,7 +2,7 @@
 @set rootPath=..\..
 
 ConfigGen.exe -optMode all ^
--configDir %rootPath%\Csv ^
+-configXml %rootPath%\Csv\Cfg.xml ^
 -dataDir %rootPath%\GamePlayer\Config ^
 -luaDir %rootPath%\Code\Scripts\Cfg ^
 -codeDir %rootPath%\Unity\Assets\Editor\Code ^

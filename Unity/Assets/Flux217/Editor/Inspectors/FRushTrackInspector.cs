@@ -11,7 +11,7 @@ using FluxEditor;
 
 namespace FluxEditor
 {
-    [CustomEditor(typeof(FRushTrack))]
+    [CustomEditor(typeof(FCharacterTrack))]
     public class FRushTrackInspector : FCharacterTrackInspector
     {
     }

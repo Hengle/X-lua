@@ -1,4 +1,4 @@
-﻿<Configs Namespace = "Cfg">
+﻿<Define Namespace = "Cfg">
 	<Class Name = "Vector2">
 		<Filed Name = "X" Type = "float"/>
 		<Filed Name = "Y" Type = "float"/>		
@@ -8,4 +8,4 @@
 		<Filed Name = "Y" Type = "float"/>		
 		<Filed Name = "Z" Type = "float"/>		
 	</Class>
-</Config>
+</Define>
