@@ -22,6 +22,8 @@ namespace FluxEditor
 
         //	protected SerializedProperty _script;
         protected SerializedProperty _triggerOnSkip;
+        protected SerializedProperty _singleFrame;
+        protected GUIContent _singleFrameUI = new GUIContent("单帧:");
         private List<FieldDraw> _fields = new List<FieldDraw>();
         class FieldDraw
         {
@@ -52,6 +54,7 @@ namespace FluxEditor
             }
 
             //		_script = serializedObject.FindProperty("m_Script");
+            _singleFrame = serializedObject.FindProperty("_singleFrame");
             if (_allEventsSameType)
             {
                 _triggerOnSkip = serializedObject.FindProperty("_triggerOnSkip");
@@ -116,13 +119,11 @@ namespace FluxEditor
 
             //        EditorGUILayout.IntField( "Instance ID", _evt.GetInstanceID() );
 
+            FrameRange validRange = _evt.Track != null ? _evt.Track.GetValidRange(_evt) : new FrameRange(_evt.Start, _evt.End);
             if (!_isSingleFrame)
             {
                 float startFrame = _evt.Start;
                 float endFrame = _evt.End;
-
-                FrameRange validRange = _evt.Track != null ? _evt.Track.GetValidRange(_evt) : new FrameRange(_evt.Start, _evt.End);
-
                 EditorGUI.BeginChangeCheck();
 
                 EditorGUILayout.BeginHorizontal();
@@ -185,6 +186,20 @@ namespace FluxEditor
                         FSequenceEditorWindow.instance.GetSequenceEditor().MoveEvent(_evt, newFrameRange);
                         FEventEditor.FinishMovingEventEditors();
                     }
+                }
+            }
+            else
+            {
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.IntSlider(_singleFrame, validRange.Start + 1, validRange.End, _singleFrameUI);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    _evt.SingleFrame = _singleFrame.intValue;
+                    FrameRange newFrameRange = _evt.FrameRange;
+                    newFrameRange.Start = _evt.SingleFrame - 1;
+                    newFrameRange.End = _evt.SingleFrame;
+                    FSequenceEditorWindow.instance.GetSequenceEditor().MoveEvent(_evt, newFrameRange);
+                    FEventEditor.FinishMovingEventEditors();
                 }
             }
 

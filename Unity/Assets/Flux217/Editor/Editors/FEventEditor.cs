@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using Flux;
-
+using System;
 
 namespace FluxEditor
 {
@@ -12,12 +12,31 @@ namespace FluxEditor
         public FEvent Evt { get { return (FEvent)Obj; } }
 
         private int _mouseOffsetFrames;
+        private bool _isSingleFrame = false;
+        private GUIStyle _singleFrameStyle = null;
 
         protected Rect _eventRect;
 
         public override FSequenceEditor SequenceEditor { get { return TrackEditor != null ? TrackEditor.SequenceEditor : null; } }
 
         public override float Height { get { return FTrackEditor.DEFAULT_TRACK_HEIGHT; } }
+
+        public override void Init(FObject obj, FEditor owner)
+        {
+            base.Init(obj, owner);
+
+            Type evtType = obj.GetType();
+            object[] customAttributes = evtType.GetCustomAttributes(typeof(FEventAttribute), false);
+            if (customAttributes.Length > 0)
+                _isSingleFrame = ((FEventAttribute)customAttributes[0]).isSingleFrame;
+
+            if (_isSingleFrame && Evt.FrameRange.Length != 1)
+            {
+                FrameRange range = Evt.FrameRange;
+                range.Length = 1;
+                Evt.FrameRange = range;
+            }
+        }
 
         public override void Render(Rect rect, float headerWidth)
         {
@@ -59,6 +78,14 @@ namespace FluxEditor
         }
 
         protected virtual void RenderEvent(FrameRange viewRange, FrameRange validKeyframeRange)
+        {
+            if (_isSingleFrame)
+                SingleFrameRender(viewRange, validKeyframeRange);
+            else
+                RangeFrameRender(viewRange, validKeyframeRange);
+        }
+
+        private void RangeFrameRender(FrameRange viewRange, FrameRange validKeyframeRange)
         {
             bool leftHandleVisible = viewRange.Contains(Evt.Start);
             bool rightHandleVisible = viewRange.Contains(Evt.End);
@@ -264,7 +291,109 @@ namespace FluxEditor
                     break;
             }
         }
+        private void SingleFrameRender(FrameRange viewRange, FrameRange validKeyframeRange)
+        {
+            Rect rect = _eventRect;
+            rect.width = 15;
+            rect.x = SequenceEditor.PixelsPerFrame * Evt.Start;
+            FrameRange range = Evt.FrameRange;
+            range.Start = SequenceEditor.GetFrameForX(rect.x);
+            range.End = range.Start + 1 + _mouseOffsetFrames;
+            Evt.FrameRange = range;
+            switch (Event.current.type)
+            {
+                case EventType.Repaint:
+                    {
+                        if (!viewRange.Overlaps(Evt.FrameRange))
+                            break;
 
+                        _mouseOffsetFrames = 0;
+                        if (_singleFrameStyle == null)
+                            _singleFrameStyle = FUtility.GetFluxSkin().GetStyle("SingleFrame");
+
+                        GUIStyle evtStyle = _singleFrameStyle;
+                        GUI.backgroundColor = Color.white;
+                        Rect renderRect = rect;
+                        renderRect.x -= 2.5f;
+                        evtStyle.Draw(renderRect, _isSelected, _isSelected, false, false);
+
+                        string text = Evt.Text;
+                        if (text != null)
+                            GUI.Label(rect, text, GetTextStyle());
+                        break;
+                    }
+                case EventType.MouseDown:
+                    if (EditorGUIUtility.hotControl == 0 && IsSelected && !Event.current.control && !Event.current.shift)
+                    {
+                        Vector2 mousePos = Event.current.mousePosition;
+                        if (Event.current.button == 0)
+                        {
+                            if (rect.Contains(mousePos))
+                            {
+                                EditorGUIUtility.hotControl = GuiId;
+                                _mouseOffsetFrames = SequenceEditor.GetFrameForX(mousePos.x) - Evt.Start;
+
+                                if (IsSelected)
+                                {
+                                    if (Event.current.control)
+                                    {
+                                        SequenceEditor.Deselect(this);
+                                    }
+                                }
+                                else
+                                {
+                                    if (Event.current.shift)
+                                        SequenceEditor.Select(this);
+                                    else if (!Event.current.control)
+                                        SequenceEditor.SelectExclusive(this);
+                                }
+                                Event.current.Use();
+                            }
+                        }
+                        else if (Event.current.button == 1 && rect.Contains(Event.current.mousePosition)) // right click?
+                        {
+                            CreateEventContextMenu().ShowAsContext();
+                            Event.current.Use();
+                        }
+                    }
+                    break;
+
+                case EventType.MouseUp:
+                    if (EditorGUIUtility.hotControl == GuiId)
+                    {
+                        EditorGUIUtility.hotControl = 0;
+                        Event.current.Use();
+                        SequenceEditor.Repaint();
+                        FinishMovingEventEditors();
+                    }
+                    break;
+
+                case EventType.MouseDrag:
+                    if (EditorGUIUtility.hotControl == GuiId)
+                    {
+                        int t = SequenceEditor.GetFrameForX(Event.current.mousePosition.x) - _mouseOffsetFrames;
+
+                        int delta = t - Evt.Start;
+                        if (t < viewRange.Start)
+                            t = viewRange.Start;
+                        else if (t > viewRange.End - 1)
+                            t = viewRange.End - 1;
+                        Evt.SingleFrame = t + 1;
+
+                        SequenceEditor.MoveEvents(delta);
+                        Event.current.Use();
+                    }
+                    break;
+                case EventType.Ignore:
+                    if (EditorGUIUtility.hotControl == GuiId)
+                    {
+                        EditorGUIUtility.hotControl = 0;
+                        SequenceEditor.Repaint();
+                        FinishMovingEventEditors();
+                    }
+                    break;
+            }
+        }
         public virtual void OnEventMoved(FrameRange oldFrameRange)
         {
             AddEventEditorBeingMoved(this, oldFrameRange);

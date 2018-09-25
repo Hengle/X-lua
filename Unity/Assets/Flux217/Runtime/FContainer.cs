@@ -1,108 +1,123 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 
 namespace Flux
 {
-	public class FContainer : FObject {
+    public enum FContainerEnum
+    {
+        FContainer,
+        FSeqContainer,//序列容器
+        FCfgContainer,//基础配置
+    }
 
-		public static readonly Color DEFAULT_COLOR = new Color(0.14f, 0.14f, 0.14f, 0.7f);
+    public class FContainer : FObject
+    {
+        public static readonly Color DEFAULT_COLOR = new Color(0.14f, 0.14f, 0.14f, 0.7f);
 
-		[SerializeField]
+        /// <summary>
+        /// 容器类型,用于区别处理数据
+        /// </summary>
+        [HideInInspector, SerializeField]
+        public FContainerEnum ConatinerType = FContainerEnum.FContainer;
         [HideInInspector]
-		private FSequence _sequence = null;
+        public int ContainerNo = 0;
 
-		[SerializeField]
-		private Color _color;
-		public Color Color { get { return _color; } set { _color = value; } }
+        [SerializeField]
+        [HideInInspector]
+        private FSequence _sequence = null;
 
-		[SerializeField]
-		private List<FTrack> _tracks = new List<FTrack>();
-		public List<FTrack> Tracks { get { return _tracks; } }
+        [SerializeField]
+        [HideInInspector]
+        private Color _color;
+        public Color Color { get { return _color; } set { _color = value; } }
 
-		public override FSequence Sequence { get { return _sequence; } }
-		public override Transform Owner { get { return null; } }
+        [SerializeField]
+        private List<FTrack> _tracks = new List<FTrack>();
+        public List<FTrack> Tracks { get { return _tracks; } }
 
-		public static FContainer Create( Color color )
-		{
-			GameObject go = new GameObject("Default");
-			FContainer container = go.AddComponent<FContainer>();
-			container.Color = color;
+        public override FSequence Sequence { get { return _sequence; } }
+        public override Transform Owner { get { return null; } }
 
-			return container;
-		}
+        public static FContainer Create(Color color)
+        {
+            GameObject go = new GameObject("Default");
+            FContainer container = go.AddComponent<FContainer>();
+            container.Color = color;
 
-		internal void SetSequence( FSequence sequence )
-		{
-			_sequence = sequence;
-			if( _sequence )
-				transform.parent = _sequence.Content;
-			else
-				transform.parent = null;
-		}
+            return container;
+        }
 
-		public override void Init()
-		{
-			foreach( FTrack track in _tracks )
-			{
-				track.Init();
-			}
-		}
+        internal void SetSequence(FSequence sequence)
+        {
+            _sequence = sequence;
+            if (_sequence)
+                transform.parent = _sequence.Content;
+            else
+                transform.parent = null;
+        }
 
-		public override void Stop()
-		{
-			foreach(FTrack track in _tracks )
-			{
-				track.Stop();
-			}
-		}
+        public override void Init()
+        {
+            foreach (FTrack track in _tracks)
+            {
+                track.Init();
+            }
+        }
 
-		public void Resume()
-		{
-			foreach(FTrack track in _tracks )
-			{
-				track.Resume();
-			}
-		}
+        public override void Stop()
+        {
+            foreach (FTrack track in _tracks)
+            {
+                track.Stop();
+            }
+        }
 
-		public void Pause()
-		{
-			foreach(FTrack track in _tracks )
-			{
-				track.Pause();
-			}
-		}
+        public void Resume()
+        {
+            foreach (FTrack track in _tracks)
+            {
+                track.Resume();
+            }
+        }
 
-		public bool IsEmpty()
-		{
-			foreach(FTrack track in _tracks )
-			{
-				if( !track.IsEmpty() )
-				{
-					return false;
-				}
-			}
+        public void Pause()
+        {
+            foreach (FTrack track in _tracks)
+            {
+                track.Pause();
+            }
+        }
 
-			return true;
-		}
+        public bool IsEmpty()
+        {
+            foreach (FTrack track in _tracks)
+            {
+                if (!track.IsEmpty())
+                {
+                    return false;
+                }
+            }
 
-		public void UpdateTracks( int frame, float time )
-		{
-			for( int i = 0; i != _tracks.Count; ++i )
-			{
-				if( !_tracks[i].enabled ) continue;
-				_tracks[i].UpdateEvents( frame, time );
-			}
-		}
+            return true;
+        }
 
-		public void UpdateTracksEditor( int frame, float time )
-		{
-			for( int i = 0; i != _tracks.Count; ++i )
-			{
-				if( !_tracks[i].enabled ) continue;
-				_tracks[i].UpdateEventsEditor( frame, time );
-			}
-		}
+        public void UpdateTracks(int frame, float time)
+        {
+            for (int i = 0; i != _tracks.Count; ++i)
+            {
+                if (!_tracks[i].enabled) continue;
+                _tracks[i].UpdateEvents(frame, time);
+            }
+        }
+
+        public void UpdateTracksEditor(int frame, float time)
+        {
+            for (int i = 0; i != _tracks.Count; ++i)
+            {
+                if (!_tracks[i].enabled) continue;
+                _tracks[i].UpdateEventsEditor(frame, time);
+            }
+        }
 
         public FTrack Add<T>(FrameRange range) where T : FEvent
         {
@@ -119,71 +134,71 @@ namespace Flux
 
         /// @brief Adds new timeline at the end of the list.
         /// @param timeline New timeline.
-        public void Add( FTrack track )
-		{
-			int id = _tracks.Count;
-			
-			_tracks.Add( track );
-			track.SetId( id );
-			
-//			timeline.SetSequence( this );
-			track.SetContainer( this );
-		}
-		
-		/// @brief Removes timeline and updates their ids.
-		/// @param timeline CTimeline to remove.
-		/// @note After calling this function, the ids of the timelines after this
-		/// one in the list will have an id smaller by 1.
-		public void Remove( FTrack track )
-		{
-			for( int i = 0; i != _tracks.Count; ++i )
-			{
-				if( _tracks[i] == track )
-				{
-					Remove( i );
-					break;
-				}
-			}
-		}
-		
-		/// @brief Removes timeline with id.
-		/// @oaram id Id of the CTimeline to remove.
-		/// @note After calling this function, the ids of the timelines after this
-		/// one in the list will have an id smaller by 1.
-		/// @warning Does not check if id is valid (i.e. between -1 & GetTimelines().Count)
-		public void Remove( int id )
-		{
-			FTrack track = _tracks[id];
-			_tracks.RemoveAt( id );
-			track.SetContainer( null );
-			
-			UpdateTrackIds();
-		}
+        public void Add(FTrack track)
+        {
+            int id = _tracks.Count;
 
-		public void Rebuild()
-		{
-			_tracks.Clear();
-			Transform t = transform;
-			for( int i = 0; i != t.childCount; ++i )
-			{
+            _tracks.Add(track);
+            track.SetId(id);
+
+            //			timeline.SetSequence( this );
+            track.SetContainer(this);
+        }
+
+        /// @brief Removes timeline and updates their ids.
+        /// @param timeline CTimeline to remove.
+        /// @note After calling this function, the ids of the timelines after this
+        /// one in the list will have an id smaller by 1.
+        public void Remove(FTrack track)
+        {
+            for (int i = 0; i != _tracks.Count; ++i)
+            {
+                if (_tracks[i] == track)
+                {
+                    Remove(i);
+                    break;
+                }
+            }
+        }
+
+        /// @brief Removes timeline with id.
+        /// @oaram id Id of the CTimeline to remove.
+        /// @note After calling this function, the ids of the timelines after this
+        /// one in the list will have an id smaller by 1.
+        /// @warning Does not check if id is valid (i.e. between -1 & GetTimelines().Count)
+        public void Remove(int id)
+        {
+            FTrack track = _tracks[id];
+            _tracks.RemoveAt(id);
+            track.SetContainer(null);
+
+            UpdateTrackIds();
+        }
+
+        public void Rebuild()
+        {
+            _tracks.Clear();
+            Transform t = transform;
+            for (int i = 0; i != t.childCount; ++i)
+            {
                 FTrack track = t.GetChild(i).GetComponent<FTrack>();
-				if( track != null )
-				{
-					_tracks.Add( track );
+                if (track != null)
+                {
+                    _tracks.Add(track);
 
-					track.SetContainer( this );
-					track.Rebuild();
-				}
-			}
+                    track.SetContainer(this);
+                    track.Rebuild();
+                }
+            }
 
-			UpdateTrackIds();
-		}
+            UpdateTrackIds();
+        }
 
-		// Updates the ids of the tracks
-		private void UpdateTrackIds()
-		{
-			for( int i = 0; i != _tracks.Count; ++i )
-				_tracks[i].SetId( i );
-		}
-	}
+        // Updates the ids of the tracks
+        private void UpdateTrackIds()
+        {
+            for (int i = 0; i != _tracks.Count; ++i)
+                _tracks[i].SetId(i);
+        }
+    }
 }

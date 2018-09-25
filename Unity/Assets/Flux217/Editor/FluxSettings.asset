@@ -25,7 +25,7 @@ MonoBehaviour:
   _defaultContainers:
   - _str: "\u57FA\u7840\u914D\u7F6E"
     _color: {r: 0.442474, g: 0.6838235, b: 0.24637759, a: 0.2509804}
-  - _str: "\u7279\u6548\u7EC4"
+  - _str: "\u5E8F\u5217\u5BB9\u5668"
     _color: {r: 0.526906, g: 0.1868512, b: 0.7058823, a: 0.2509804}
   - _str: "\u65F6\u95F4\u4E8B\u4EF6"
     _color: {r: 0, g: 0.4450812, b: 0.9632353, a: 0.2509804}

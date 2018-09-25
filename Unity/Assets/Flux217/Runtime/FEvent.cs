@@ -190,6 +190,7 @@ namespace Flux
         /// @brief Should this event trigger if you skip it?
         public bool TriggerOnSkip { get { return _triggerOnSkip; } set { _triggerOnSkip = value; } }
 
+        private readonly FrameRange NullRange = new FrameRange(-1, -1);
         [SerializeField]
         [HideInInspector]
         private FrameRange _frameRange;
@@ -201,7 +202,18 @@ namespace Flux
             {
                 FrameRange oldFrameRange = _frameRange;
                 _frameRange = value;
-                OnFrameRangeChanged(oldFrameRange);
+                OnFrameRangeChanged(oldFrameRange, -1);
+            }
+        }
+
+        [SerializeField]
+        [HideInInspector]
+        private int _singleFrame;
+        public int SingleFrame { get { return _singleFrame; }
+            set {
+                int oldFrame = _singleFrame;
+                _singleFrame = value;
+                OnFrameRangeChanged(NullRange, oldFrame);
             }
         }
 
@@ -276,7 +288,7 @@ namespace Flux
         /// 帧范围改变时调用
         /// </summary>
         /// <param name="oldFrameRange">前一个帧范围</param>
-        protected virtual void OnFrameRangeChanged(FrameRange oldFrameRange)
+        protected virtual void OnFrameRangeChanged(FrameRange oldFrameRange, int oldSingleFrame)
         {
         }
 
