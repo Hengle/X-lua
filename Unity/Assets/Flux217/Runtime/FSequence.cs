@@ -38,8 +38,8 @@ namespace Flux
             sequence._content = new GameObject("序列内容").transform;
             sequence._content.hideFlags |= HideFlags.HideInHierarchy;
             sequence._content.parent = sequence.transform;
-
-            sequence.Add(FContainer.Create(FContainer.DEFAULT_COLOR));
+            //-----默认容器
+            //sequence.Add(FContainer.Create(FContainer.DEFAULT_COLOR));
 
             sequence.Version = FUtility.FLUX_VERSION;
 

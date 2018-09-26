@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a488e5e2-4338-4eb4-9ac7-3e3070572b8e" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,26 +21,7 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Global.lua">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1652">
-              <caret line="59" selection-start-line="59" selection-end-line="59" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Common/Easing.lua">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="256" column="42" selection-start-line="256" selection-start-column="42" selection-end-line="256" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -115,7 +97,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="490" />
     <option name="y" value="12" />
-    <option name="width" value="1125" />
+    <option name="width" value="1245" />
     <option name="height" value="1000" />
   </component>
   <component name="ProjectView">
@@ -123,6 +105,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -134,12 +119,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="E:/__Project/qyz/trunk/code/scripts" />
+    <property name="last_opened_file_path" value="E:/TSSJ/code/scripts" />
     <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RecentsManager">
@@ -165,21 +148,51 @@
   <component name="RunManager">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
+      <method>
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+      <method>
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
       <properties />
       <listeners />
-      <method v="2">
+      <method>
         <option name="Make" enabled="true" />
       </method>
     </configuration>
@@ -198,34 +211,34 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="392" y="10" width="900" height="800" extended-state="0" />
+    <frame x="490" y="12" width="1245" height="1000" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2327791" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.20964126" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="LuaCheck" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" visible="true" weight="0.12724552" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" visible="true" weight="0.12641084" />
       <window_info anchor="right" id="Maven Projects" order="7" />
+      <window_info anchor="bottom" id="LuaCheck" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Designer" order="3" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27420667" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.20964126" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -237,6 +250,20 @@
     </ignored-roots>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Global.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1593">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Common/Easing.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6912">
+          <caret line="256" column="42" selection-start-line="256" selection-start-column="42" selection-end-line="256" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Config/CfgManager.lua" />
     <entry file="file://$PROJECT_DIR$/Config/Config.lua" />
     <entry file="jar://$APPLICATION_PLUGINS_DIR$/EmmyLua/lib/EmmyLua-1.2.4.jar!/std/io.lua" />
@@ -368,104 +395,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Global.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1652">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Common/Easing.lua">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="398">
-          <caret line="256" column="42" selection-start-line="256" selection-start-column="42" selection-end-line="256" selection-end-column="42" />
-          <folding>
-            <element signature="e#55#100#0" />
-            <element signature="e#138#540#0" />
-            <element signature="e#294#365#0" />
-            <element signature="e#395#469#0" />
-            <element signature="e#469#473#0" />
-            <element signature="e#518#521#0" />
-            <element signature="e#579#751#0" />
-            <element signature="e#794#843#0" />
-            <element signature="e#887#943#0" />
-            <element signature="e#989#1152#0" />
-            <element signature="e#1038#1042#0" />
-            <element signature="e#1086#1089#0" />
-            <element signature="e#1196#1249#0" />
-            <element signature="e#1294#1367#0" />
-            <element signature="e#1414#1578#0" />
-            <element signature="e#1463#1467#0" />
-            <element signature="e#1515#1518#0" />
-            <element signature="e#1622#1679#0" />
-            <element signature="e#1724#1802#0" />
-            <element signature="e#1849#2022#0" />
-            <element signature="e#1898#1902#0" />
-            <element signature="e#1954#1957#0" />
-            <element signature="e#2066#2127#0" />
-            <element signature="e#2172#2253#0" />
-            <element signature="e#2300#2480#0" />
-            <element signature="e#2349#2353#0" />
-            <element signature="e#2409#2412#0" />
-            <element signature="e#2523#2604#0" />
-            <element signature="e#2648#2723#0" />
-            <element signature="e#2769#2849#0" />
-            <element signature="e#2892#2962#0" />
-            <element signature="e#3006#3078#0" />
-            <element signature="e#3124#3318#0" />
-            <element signature="e#3173#3177#0" />
-            <element signature="e#3242#3245#0" />
-            <element signature="e#3361#3433#0" />
-            <element signature="e#3477#3556#0" />
-            <element signature="e#3602#3797#0" />
-            <element signature="e#3651#3655#0" />
-            <element signature="e#3722#3725#0" />
-            <element signature="e#3843#4274#0" />
-            <element signature="e#3899#3903#0" />
-            <element signature="e#3952#3958#0" />
-            <element signature="e#3978#4063#0" />
-            <element signature="e#4091#4177#0" />
-            <element signature="e#4181#4270#0" />
-            <element signature="e#4319#4406#0" />
-            <element signature="e#4454#4659#0" />
-            <element signature="e#4511#4515#0" />
-            <element signature="e#4575#4579#0" />
-            <element signature="e#4575#4579#0" />
-            <element signature="e#4655#4658#0" />
-            <element signature="e#4702#4807#0" />
-            <element signature="e#4851#4962#0" />
-            <element signature="e#5008#5272#0" />
-            <element signature="e#5083#5171#0" />
-            <element signature="e#5318#5774#0" />
-            <element signature="e#5426#5430#0" />
-            <element signature="e#5455#5458#0" />
-            <element signature="e#5487#5491#0" />
-            <element signature="e#5521#5524#0" />
-            <element signature="e#5565#5603#0" />
-            <element signature="e#5603#5607#0" />
-            <element signature="e#5664#5667#0" />
-            <element signature="e#5821#6269#0" />
-            <element signature="e#5927#5931#0" />
-            <element signature="e#5956#5959#0" />
-            <element signature="e#5988#5992#0" />
-            <element signature="e#6022#6025#0" />
-            <element signature="e#6066#6107#0" />
-            <element signature="e#6107#6111#0" />
-            <element signature="e#6168#6171#0" />
-            <element signature="e#6318#6938#0" />
-            <element signature="e#6424#6428#0" />
-            <element signature="e#6453#6456#0" />
-            <element signature="e#6491#6495#0" />
-            <element signature="e#6525#6528#0" />
-            <element signature="e#6571#6609#0" />
-            <element signature="e#6609#6613#0" />
-            <element signature="e#6670#6673#0" />
-            <element signature="e#6694#6819#0" />
-            <element signature="e#6977#7219#0" />
-            <element signature="e#7018#7022#0" />
-            <element signature="e#7044#7047#0" />
-            <element signature="e#7231#8293#1" />
-          </folding>
+          <caret line="256" column="42" lean-forward="true" selection-start-line="256" selection-start-column="42" selection-end-line="256" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Global.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="670">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
         </state>
       </provider>
     </entry>

@@ -499,7 +499,7 @@ namespace FluxEditor
         {
             Undo.RecordObject(Sequence, null);
 
-            FContainer container = FContainer.Create(containerInfo._color);
+            FContainer container = FContainer.Create(containerInfo._str, containerInfo._color);
             container.gameObject.name = GetUniqueContainerName(containerInfo._str);
             Sequence.Add(container);
             Undo.RegisterCreatedObjectUndo(container.gameObject, "create Container");

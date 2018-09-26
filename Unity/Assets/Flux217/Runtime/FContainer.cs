@@ -8,6 +8,7 @@ namespace Flux
         FContainer,
         FSeqContainer,//序列容器
         FCfgContainer,//基础配置
+        FTimelineContainer,//时间事件
     }
 
     public class FContainer : FObject
@@ -17,10 +18,18 @@ namespace Flux
         /// <summary>
         /// 容器类型,用于区别处理数据
         /// </summary>
-        [HideInInspector, SerializeField]
+        [HideInInspector]
         public FContainerEnum ConatinerType = FContainerEnum.FContainer;
         [HideInInspector]
         public int ContainerNo = 0;
+        static Dictionary<string, FContainerEnum> ContainerMap = new Dictionary<string, FContainerEnum>()
+        {
+            {"Default",  FContainerEnum.FContainer},
+            {"基础配置",  FContainerEnum.FCfgContainer},
+            {"序列容器",  FContainerEnum.FSeqContainer},
+            {"时间事件",  FContainerEnum.FTimelineContainer},
+        };
+
 
         [SerializeField]
         [HideInInspector]
@@ -38,11 +47,12 @@ namespace Flux
         public override FSequence Sequence { get { return _sequence; } }
         public override Transform Owner { get { return null; } }
 
-        public static FContainer Create(Color color)
+        public static FContainer Create(string name, Color color)
         {
-            GameObject go = new GameObject("Default");
+            GameObject go = new GameObject(name);
             FContainer container = go.AddComponent<FContainer>();
             container.Color = color;
+            container.ConatinerType = ContainerMap[name];
 
             return container;
         }
