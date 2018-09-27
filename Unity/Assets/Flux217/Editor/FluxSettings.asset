@@ -28,4 +28,17 @@ MonoBehaviour:
   - _str: "\u5E8F\u5217\u5BB9\u5668"
     _color: {r: 0.526906, g: 0.1868512, b: 0.7058823, a: 0.2509804}
   - _str: "\u65F6\u95F4\u4E8B\u4EF6"
-    _color: {r: 0, g: 0.4450812, b: 0.9632353, a: 0.2509804}
+    _color: {r: 0.83921576, g: 0.47058827, b: 0.23529413, a: 0.7}
+  _containerType:
+  - _type: 1
+    _name: "\u5E8F\u5217\u5BB9\u5668"
+    _list:
+    - Flux.FPlayAnimationEvent
+  - _type: 2
+    _name: "\u57FA\u7840\u914D\u7F6E"
+    _list:
+    - <Flux.FEvent>
+  - _type: 3
+    _name: "\u65F6\u95F4\u4E8B\u4EF6"
+    _list:
+    - Flux.FPlayAnimationEvent

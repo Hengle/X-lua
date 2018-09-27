@@ -72,7 +72,7 @@
 		<Field Name = "SequeueID" Type = "int" Des = "触发序列容器ID" />		
 	</Class>
 	<Class Name = "DynamicHit" Inherit = "StaticHit">跟随对象一起移动			 	
-		<Field Name = "Target" Type = "string" Des = "碰撞体绑定对象路径">	 	
+		<Field Name = "Target" Type = "string" Des = "碰撞体绑定对象路径"/>	 	
 	</Class>
 
 	<!-- 人物/物件模型控制器[与时间相关] -->		 		

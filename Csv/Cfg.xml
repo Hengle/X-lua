@@ -3,6 +3,6 @@
 	<!-- <NoStruct></NoStruct> -->
 	<Include>AllType\AllType.xml</Include>
 	<Include>Model\Model.xml</Include>
-	<!-- <Include>Skill\Skill.xml</Include> -->
+	<Include>Skill\Skill.xml</Include>
 	<!-- <Include>Common\Vector.xml</Include> -->
 </Config>

@@ -9,6 +9,7 @@ namespace Flux
         FSeqContainer,//序列容器
         FCfgContainer,//基础配置
         FTimelineContainer,//时间事件
+        FProgr,//时间事件
     }
 
     public class FContainer : FObject
@@ -22,7 +23,7 @@ namespace Flux
         public FContainerEnum ConatinerType = FContainerEnum.FContainer;
         [HideInInspector]
         public int ContainerNo = 0;
-        static Dictionary<string, FContainerEnum> ContainerMap = new Dictionary<string, FContainerEnum>()
+        public static readonly Dictionary<string, FContainerEnum> ContainerMap = new Dictionary<string, FContainerEnum>()
         {
             {"Default",  FContainerEnum.FContainer},
             {"基础配置",  FContainerEnum.FCfgContainer},

@@ -99,6 +99,8 @@ namespace Flux
 
         public override int GetMaxLength()
         {
+            if (_animationClip == null)
+                return 1;
             if (FUtility.IsAnimationEditable(_animationClip) || _animationClip.isLooping)
                 return base.GetMaxLength();
 

@@ -368,7 +368,6 @@
     <Compile Include="Assets\Flux217\Runtime\Events\Character\FTweenPositionEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\Character\FTweenRotationEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\Character\FTweenScaleEvent.cs" />
-    <Compile Include="Assets\Flux217\Runtime\Events\Config\FBeAttackEffect.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\Config\FHitZone.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\FTweenEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\Particle\FPlayParticleEvent.cs" />

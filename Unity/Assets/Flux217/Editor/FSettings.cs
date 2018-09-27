@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
 
 namespace FluxEditor
 {
@@ -32,6 +33,10 @@ namespace FluxEditor
         private List<FColorSetting> _defaultContainers = new List<FColorSetting>();
         public List<FColorSetting> DefaultContainers { get { return _defaultContainers; } }
 
+        [SerializeField]
+        private List<FContainerSetting> _containerType = new List<FContainerSetting>();
+        public List<FContainerSetting> ContainerType { get { return _containerType; } }
+
         public void Init()
         {
             if (_eventColorsHash == null)
@@ -48,6 +53,40 @@ namespace FluxEditor
                     return; // can't add duplicates!
 
                 _eventColorsHash.Add(colorSetting._str, colorSetting);
+            }
+
+
+            Type containerType = typeof(Flux.FContainerEnum);
+            var fields = Enum.GetValues(containerType);
+            List<FContainerSetting> cset = new List<FContainerSetting>(ContainerType);
+            ContainerType.Clear();
+            for (int i = 0; i < fields.Length; i++)
+            {
+                Flux.FContainerEnum e = (Flux.FContainerEnum)Enum.Parse(containerType, fields.GetValue(i).ToString());
+                if (e == Flux.FContainerEnum.FContainer) continue;
+
+                string title = "-";
+                foreach (var pair in Flux.FContainer.ContainerMap)
+                {
+                    if (pair.Value == e)
+                    {
+                        title = pair.Key;
+                        break;
+                    }
+                }
+                if (title.Equals("-")) continue;
+                 
+                int index = cset.FindIndex(m => m._type == e);
+                if (index < 0)
+                {
+                    FContainerSetting container = new FContainerSetting(e, title, new List<string>());
+                    ContainerType.Add(container);
+                }
+                else
+                {
+                    cset[index]._name = title;
+                    ContainerType.Add(cset[index]);
+                }
             }
         }
 
@@ -73,6 +112,20 @@ namespace FluxEditor
         {
             _str = str;
             _color = color;
+        }
+    }
+    [System.Serializable]
+    public class FContainerSetting
+    {
+        public Flux.FContainerEnum _type;
+        public string _name;
+        public List<string> _list;
+
+        public FContainerSetting(Flux.FContainerEnum type, string name, List<string> list)
+        {
+            _type = type;
+            _name = name;
+            _list = list;
         }
     }
 }

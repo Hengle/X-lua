@@ -100,10 +100,54 @@ namespace FluxEditor
 
             if (Event.current.type == EventType.MouseDown && iconRect.Contains(Event.current.mousePosition))
             {
-                ShowAddTrackMenu();
+                FSettings fSettings = FUtility.GetSettings();
+                FContainerSetting setting = fSettings.ContainerType.Find(c => c._type == Container.ConatinerType);
+                if (setting == null)
+                    ShowAddTrackMenu();
+                else
+                    ShowAddTrackMenuBaseOnType(setting);
             }
         }
 
+        private void ShowAddTrackMenuBaseOnType(FContainerSetting setting)
+        {
+            Event.current.Use();
+            GenericMenu menu = new GenericMenu();
+            
+            System.Reflection.Assembly fluxAssembly = typeof(FEvent).Assembly;
+            List<KeyValuePair<Type, FEventAttribute>> validTypeList = new List<KeyValuePair<Type, FEventAttribute>>();
+            for (int i = 0; i < setting._list.Count; i++)
+            {
+                string t = setting._list[i];
+                if (string.IsNullOrEmpty(t)) continue;
+                Type type = fluxAssembly.GetType(t);
+                if (type == null || !typeof(FEvent).IsAssignableFrom(type))
+                {
+                    Debug.LogErrorFormat("定义{0} 不是事件类型.", t);
+                    continue;
+                }
+
+                object[] attributes = type.GetCustomAttributes(typeof(FEventAttribute), false);
+                if (attributes.Length == 0 || ((FEventAttribute)attributes[0]).menu == null)
+                    continue;
+
+                validTypeList.Add(new KeyValuePair<Type, FEventAttribute>(type, (FEventAttribute)attributes[0]));
+            }
+
+            validTypeList.Sort(delegate (KeyValuePair<Type, FEventAttribute> x, KeyValuePair<Type, FEventAttribute> y)
+            {
+                return x.Value.menu.CompareTo(y.Value.menu);
+            });
+
+            foreach (KeyValuePair<Type, FEventAttribute> kvp in validTypeList)
+            {
+                menu.AddItem(new GUIContent(kvp.Value.menu), false, AddTrackMenu, kvp);
+            }
+
+            menu.ShowAsContext();
+
+        }
+        //--添加所有FTrack
         private void ShowAddTrackMenu()
         {
             Event.current.Use();
@@ -352,5 +396,7 @@ namespace FluxEditor
             isOnHeader = false;
             return null;
         }
+
+
     }
 }
