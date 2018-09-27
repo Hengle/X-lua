@@ -6,10 +6,8 @@ namespace Flux
     public enum FContainerEnum
     {
         FContainer,
-        FSeqContainer,//序列容器
         FCfgContainer,//基础配置
-        FTimelineContainer,//时间事件
-        FProgr,//时间事件
+        FTimelineContainer,//时间事件     
     }
 
     public class FContainer : FObject
@@ -27,7 +25,6 @@ namespace Flux
         {
             {"Default",  FContainerEnum.FContainer},
             {"基础配置",  FContainerEnum.FCfgContainer},
-            {"序列容器",  FContainerEnum.FSeqContainer},
             {"时间事件",  FContainerEnum.FTimelineContainer},
         };
 

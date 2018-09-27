@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
 using Flux;
 
 namespace FluxEditor
 {
 
-	[CustomEditor(typeof(FPlayAudioEvent))]
+	[CustomEditor(typeof(Flux.FPlayAudioEvent), true)]
 	public class FPlayAudioEventInspector : FEventInspector {
 
 		private FPlayAudioEvent _audioEvt = null;
