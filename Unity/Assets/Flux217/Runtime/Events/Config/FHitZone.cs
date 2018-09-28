@@ -4,7 +4,7 @@ using XmlCode.Skill;
 
 namespace Flux
 {
-    [FEvent("基础配置/碰撞区域")]
+    [FEvent("碰撞区域")]
     public class FHitZone : FEvent
     {
         [SerializeField, HideInInspector]
@@ -27,5 +27,18 @@ namespace Flux
         private float _height;
         [SerializeField, HideInInspector]
         private float _angle;
+
+
+        public int ZoneID { get { return _zoneId; } }
+
+        public override string Text
+        {
+            get
+            {
+                return string.Format("区域{0}-{1}", _zoneId, _sharpType);
+            }
+
+            set { }
+        }
     }
 }

@@ -11,10 +11,12 @@ using FluxEditor;
 
 namespace FluxEditor
 {
-    public abstract class FCharacterTrackInspector : FTrackInspector
+    public abstract class FOwnerTrackInspector : FTrackInspector
     {
         private SerializedProperty _owner = null;
         private GUIContent _ownerUI;
+
+        protected virtual string OwnerName { get { return "角色"; } }
 
         public override void OnEnable()
         {
@@ -26,7 +28,7 @@ namespace FluxEditor
                 return;
             }
             _owner = serializedObject.FindProperty("_owner");
-            _ownerUI = new GUIContent("角色");
+            _ownerUI = new GUIContent(OwnerName);
         }
 
         public override void OnInspectorGUI()

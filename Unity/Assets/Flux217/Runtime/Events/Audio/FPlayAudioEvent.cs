@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Flux
 {
-    [FEvent("音效/播放音效")]
+    [FEvent("特效/播放音效")]
     public class FPlayAudioEvent : FEvent
     {
 
@@ -33,6 +33,8 @@ namespace Flux
         public bool SpeedDeterminesPitch { get { return _speedDeterminesPitch; } set { _speedDeterminesPitch = value; } }
 
         private AudioSource _source;
+
+  
 
         protected override void OnTrigger(float timeSinceTrigger)
         {
@@ -113,12 +115,9 @@ namespace Flux
         {
             get
             {
-                return _audioClip == null ? "!Missing!" : _audioClip.name;
+                return _audioClip == null ? "Miss" : _audioClip.name;
             }
-            set
-            {
-
-            }
+            set { }
         }
     }
 

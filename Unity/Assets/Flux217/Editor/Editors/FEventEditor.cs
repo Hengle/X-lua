@@ -127,8 +127,13 @@ namespace FluxEditor
 
                     string text = Evt.Text;
                     if (text != null)
-                        GUI.Label(_eventRect, text, GetTextStyle());
-
+                    {
+                        GUIStyle style = GetTextStyle();
+                        Vector2 size = style.CalcSize(new GUIContent(text));
+                        Rect rect = _eventRect;
+                        rect.size = size;
+                        GUI.Label(rect, text, GetTextStyle());
+                    }
                     break;
 
                 case EventType.MouseDown:
@@ -319,7 +324,12 @@ namespace FluxEditor
 
                         string text = Evt.Text;
                         if (text != null)
+                        {
+                            GUIStyle style = GetTextStyle();
+                            Vector2 size = style.CalcSize(new GUIContent(text));
+                            rect.size = size;
                             GUI.Label(rect, text, GetTextStyle());
+                        }
                         break;
                     }
                 case EventType.MouseDown:

@@ -19,7 +19,7 @@ MonoBehaviour:
   - _str: Flux.FTweenRotationEvent
     _color: {r: 0.83823526, g: 0.47165608, b: 0.23421282, a: 0.8}
   - _str: Flux.FPlayParticleEvent
-    _color: {r: 0.7842822, g: 0.8308824, b: 0.34823745, a: 0.8}
+    _color: {r: 0.60453856, g: 0.34823745, b: 0.8308824, a: 0.8}
   - _str: Flux.FTweenPositionEvent
     _color: {r: 0.83823526, g: 0.47165608, b: 0.23421282, a: 0.8}
   _defaultContainers:
@@ -34,4 +34,10 @@ MonoBehaviour:
     - Flux.FHitZone
   - _type: 2
     _name: "\u65F6\u95F4\u4E8B\u4EF6"
-    _list: []
+    _list:
+    - Flux.FPlaySequenceEvent
+    - Flux.FPlayAnimationEvent
+    - Flux.FGlobalVolumeAudioEvent
+    - Flux.FVolumeAudioEvent
+    - Flux.FPlayParticleEvent
+    - Flux.FPlayAudioEvent

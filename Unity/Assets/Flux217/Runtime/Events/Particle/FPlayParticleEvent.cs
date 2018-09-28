@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Flux
 {
-    [FEvent("粒子系统/播放粒子特效", typeof(FParticleTrack))]
+    [FEvent("特效/播放粒子", typeof(FParticleTrack))]
     public class FPlayParticleEvent : FEvent
     {
 
@@ -25,9 +25,23 @@ namespace Flux
 
         private float _previousSpeed = 0;
 
+        public override string Text
+        {
+            get
+            {
+                return _particleSystem == null ? "Miss" : _particleSystem.name;
+            }
+            set { }
+        }
+
+        public bool HasParticleSystem()
+        {
+            return _particleSystem != null;
+        }
+
         protected override void OnInit()
         {
-            if (_particleSystem != null)
+            if (HasParticleSystem())
             {
                 if (!_particleSystem.isPlaying)//--播放粒子时设置随机种子会报错,但不影响配置
                     _particleSystem.randomSeed = _randomSeed;
@@ -47,27 +61,27 @@ namespace Flux
         protected override void OnTrigger(float timeSinceTrigger)
         {
             //			if( _particleSystem != null && Sequence.IsPlaying && Sequence.IsPlayingForward )
+            if (HasParticleSystem())
             _particleSystem.Play(true);
         }
 
         protected override void OnFinish()
         {
-            if (_particleSystem != null)
+            if (HasParticleSystem())
                 _particleSystem.Stop(true);
         }
 
         protected override void OnStop()
         {
-            if (_particleSystem != null)
-            {
+            if (HasParticleSystem())
                 _particleSystem.Stop(true);
-                //_particleSystem.Clear(true);
-            }
+            //_particleSystem.Clear(true);
+ 
         }
 
         protected override void OnPause()
         {
-            if (_particleSystem != null)
+            if (HasParticleSystem())
                 _particleSystem.Pause();
         }
 
@@ -79,7 +93,7 @@ namespace Flux
 
         protected override void OnUpdateEvent(float timeSinceTrigger)
         {
-            if (_particleSystem == null)
+            if (!HasParticleSystem())
                 return;
             if (!Sequence.IsPlaying || !Sequence.IsPlayingForward)
             {

@@ -92,7 +92,7 @@ namespace FluxEditor
             GUIContent label = new GUIContent(title);
             GUILayout.Label(label);
             if (GUILayout.Button(_plusTexture, GUILayout.Width(40), GUILayout.Height(16)))
-                tracks.Add("<Flux.FEvent>");
+                tracks.Add("Flux.FEvent");
             EditorGUILayout.EndHorizontal();
 
             for (int i = 0; i != tracks.Count; ++i)

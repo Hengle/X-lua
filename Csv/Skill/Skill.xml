@@ -29,15 +29,16 @@
         <Field Name = "SkillRange" Type = "float" Des = "技能作用范围[半径]" />
         <Field Name = "CanShowSkillRange" Type = "bool" Des = "是否显示技能范围" />
         <Field Name = "CanRotate" Type = "bool" Des = "放技能时人是否可以转动" />
-        <Field Name = "CanMove" Type = "bool" Des = "放技能时人是否可以移动" />		
-        <Field Name = "HitZones" Type = "list:HitZone" Des = "碰撞区域定义列表" />
-        <Field Name = "SeqContainers" Type = "list:SeqContainer" Des = "序列容器列表" />
+        <Field Name = "CanMove" Type = "bool" Des = "放技能时人是否可以移动" />	
+		<Field Name = "SequenceDict" Type = "dict:int:Sequence" Des = "序列字典集合"/>
+        <!-- <Field Name = "SeqContainers" Type = "list:SeqContainer" Des = "序列容器列表" /> -->
     </Class>	
 		
 		
-	<!-- 容器 -->	 
-	<Class Name = "SeqContainer">  
-		<Field Name = "Id" Type = "int" Des = "容器ID" />
+	<!-- 序列 -->	 
+	<Class Name = "Sequence">  
+		<Field Name = "Id" Type = "int" Des = "序列ID" />
+		<Field Name = "HitZones" Type = "list:HitZone" Des = "碰撞区域定义列表" />
         <Field Name = "Timelines" Type = "list:Timeline" Des = "时间事件列表" />
     </Class>	 
 

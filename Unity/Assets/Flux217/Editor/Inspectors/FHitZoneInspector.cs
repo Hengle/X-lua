@@ -15,7 +15,6 @@ namespace FluxEditor
         private SerializedProperty _height;
         private SerializedProperty _angle;
 
-        private GUIContent _sharpTypeUI = new GUIContent("碰撞体形状");
         private GUIContent _scaleUI = new GUIContent("缩放");
         private GUIContent _radiusUI = new GUIContent("半径");
         private GUIContent _heightUI = new GUIContent("高度");
@@ -35,29 +34,27 @@ namespace FluxEditor
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-        
-            EditorGUI.BeginChangeCheck();
-            //EditorGUILayout.EnumPopup(_sharpType, _sharpTypeUI);
-            EditorGUILayout.EnumPopup(Enum.ToObject(_sharpType.))
-            if (EditorGUI.EndChangeCheck())
+
+            serializedObject.Update();
+
+            _sharpType.enumValueIndex = EditorGUILayout.Popup("碰撞体形状", _sharpType.enumValueIndex, _sharpType.enumDisplayNames);
+            switch ((HitSharpType)_sharpType.enumValueIndex)
             {
-                switch ((HitSharpType)_sharpType.enumValueIndex)
-                {
-                    case HitSharpType.Cube:
-                        EditorGUILayout.PropertyField(_scale, _scaleUI);
-                        break;
-                    case HitSharpType.Sphere:
-                        EditorGUILayout.PropertyField(_radius, _radiusUI);
-                        break;
-                    case HitSharpType.Cylinder:
-                        EditorGUILayout.PropertyField(_radius, _radiusUI);
-                        EditorGUILayout.PropertyField(_height, _heightUI);
-                        EditorGUILayout.PropertyField(_angle, _angleUI);
-                        break;
-                    default:
-                        break;
-                }
+                case HitSharpType.Cube:
+                    EditorGUILayout.PropertyField(_scale, _scaleUI);
+                    break;
+                case HitSharpType.Sphere:
+                    EditorGUILayout.PropertyField(_radius, _radiusUI);
+                    break;
+                case HitSharpType.Cylinder:
+                    EditorGUILayout.PropertyField(_radius, _radiusUI);
+                    EditorGUILayout.PropertyField(_height, _heightUI);
+                    EditorGUILayout.PropertyField(_angle, _angleUI);
+                    break;
+                default:
+                    break;
             }
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }
