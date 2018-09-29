@@ -197,6 +197,12 @@ namespace FluxEditor
             return _settings;
         }
 
+        public static T[] FindObjects<T>() where T : UnityEngine.Object
+        {
+            T[] objs = GameObject.FindObjectsOfType<T>();
+            return objs;
+        }
+
         #endregion Paths / Resource Loading
 
         #region Events

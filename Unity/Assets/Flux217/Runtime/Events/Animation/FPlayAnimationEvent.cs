@@ -111,7 +111,7 @@ namespace Flux
         {
             get
             {
-                return _animationClip == null ? "!Missing!" : _animationClip.name;
+                return _animationClip == null ? "Miss" : _animationClip.name;
             }
             set
             {

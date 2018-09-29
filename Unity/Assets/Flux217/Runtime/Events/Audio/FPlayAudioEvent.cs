@@ -34,13 +34,11 @@ namespace Flux
 
         private AudioSource _source;
 
-  
+
 
         protected override void OnTrigger(float timeSinceTrigger)
         {
             _source = Owner.GetComponent<AudioSource>();
-            if (_source == null)
-                _source = Owner.gameObject.AddComponent<AudioSource>();
             _source.volume = _volume;
             _source.loop = _loop;
             _source.clip = _audioClip;

@@ -9,7 +9,7 @@ namespace FluxEditor
     public class FSequenceTrackInspector : FTrackInspector
     {
         private SerializedProperty _ownerSequence = null;
-        private GUIContent __ownerSequenceUI = new GUIContent("序列");
+        private GUIContent _ownerSequenceUI = new GUIContent("序列");
 
         private List<FSequence> _sequences;
         private GUIContent[] _sequenceNames;
@@ -27,7 +27,7 @@ namespace FluxEditor
             var sequenceTrack = (FSequenceTrack)target;
             _ownerSequence = serializedObject.FindProperty("_ownerSequence");
 
-            _sequences = new List<FSequence>(GameObject.FindObjectsOfType<FSequence>());
+            _sequences = new List<FSequence>(FUtility.FindObjects<FSequence>());
             _sequences.Remove(sequenceTrack.Sequence);
             _sequences.Sort(delegate (FSequence x, FSequence y) { return x.name.CompareTo(y.name); });
             _selectedSequenceIndex = _sequences.FindIndex((select) => select.name == _ownerSequence.objectReferenceValue.name);
@@ -46,7 +46,7 @@ namespace FluxEditor
             serializedObject.Update();
 
             EditorGUI.BeginChangeCheck();
-            int index = EditorGUILayout.Popup(__ownerSequenceUI, _selectedSequenceIndex, _sequenceNames);
+            int index = EditorGUILayout.Popup(_ownerSequenceUI, _selectedSequenceIndex, _sequenceNames);
             if (EditorGUI.EndChangeCheck())
             {
                 _selectedSequenceIndex = index;

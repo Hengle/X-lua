@@ -8,14 +8,9 @@ namespace FluxEditor
     [CustomEditor(typeof(FTweenEvent<>), true)]
     public class FTweenEventInspector : FEventInspector
     {
-
         protected SerializedProperty _tween;
         protected SerializedProperty _from;
         protected SerializedProperty _to;
-
-        private GUIContent _typeUI;
-        private GUIContent _fromUI;
-        private GUIContent _toUI;
 
         protected override void OnEnable()
         {

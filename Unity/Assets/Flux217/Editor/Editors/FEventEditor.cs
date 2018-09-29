@@ -14,6 +14,7 @@ namespace FluxEditor
         private int _mouseOffsetFrames;
         private bool _isSingleFrame = false;
         private GUIStyle _singleFrameStyle = null;
+        private Vector2 _singleSize;
 
         protected Rect _eventRect;
 
@@ -36,6 +37,12 @@ namespace FluxEditor
                 range.Length = 1;
                 Evt.FrameRange = range;
             }
+
+            if (_singleFrameStyle == null)
+                _singleFrameStyle = FUtility.GetFluxSkin().GetStyle("SingleFrame");
+
+            GUIContent singleWidth = new GUIContent(FUtility.GetFluxTexture("SingleFrame_Active.png"));
+            _singleSize = _singleFrameStyle.CalcSize(singleWidth);
         }
 
         public override void Render(Rect rect, float headerWidth)
@@ -69,6 +76,7 @@ namespace FluxEditor
 
         private int _leftHandleGuiId = 0;
         private int _rightHandleGuiId = 0;
+  
 
         public override void ReserveGuiIds()
         {
@@ -303,7 +311,7 @@ namespace FluxEditor
             rect.x = SequenceEditor.PixelsPerFrame * Evt.Start;
             FrameRange range = Evt.FrameRange;
             range.Start = SequenceEditor.GetFrameForX(rect.x);
-            range.End = range.Start + 1 + _mouseOffsetFrames;
+            range.End = range.Start + 1 + _mouseOffsetFrames + SequenceEditor.GetFrameForX(rect.width);
             Evt.FrameRange = range;
             switch (Event.current.type)
             {
@@ -312,9 +320,7 @@ namespace FluxEditor
                         if (!viewRange.Overlaps(Evt.FrameRange))
                             break;
 
-                        _mouseOffsetFrames = 0;
-                        if (_singleFrameStyle == null)
-                            _singleFrameStyle = FUtility.GetFluxSkin().GetStyle("SingleFrame");
+                        _mouseOffsetFrames = 0;                       
 
                         GUIStyle evtStyle = _singleFrameStyle;
                         GUI.backgroundColor = Color.white;

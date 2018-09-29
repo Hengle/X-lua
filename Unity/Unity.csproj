@@ -13,14 +13,12 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.4.8f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -374,8 +372,8 @@
     <Compile Include="Assets\Flux217\Runtime\Events\Config\FHitZone.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\FPlaySequenceEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\FTweenEvent.cs" />
-    <Compile Include="Assets\Flux217\Runtime\Events\HitCheck\FStaticHit.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\HitCheck\FDynamicHit.cs" />
+    <Compile Include="Assets\Flux217\Runtime\Events\HitCheck\FStaticHit.cs" />
     <Compile Include="Assets\Flux217\Runtime\Events\Particle\FPlayParticleEvent.cs" />
     <Compile Include="Assets\Flux217\Runtime\FContainer.cs" />
     <Compile Include="Assets\Flux217\Runtime\FEasing.cs" />
