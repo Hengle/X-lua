@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Flux
 {
-    [FEvent("特效/音频音量")]
+    [FEvent("播放器/音频音量")]
     public class FVolumeAudioEvent : FTweenEvent<FTweenFloat>
     {
         [SerializeField, HideInInspector]

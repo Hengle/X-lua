@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Flux
 {
-    [FEvent("特效/播放粒子", typeof(FParticleTrack))]
+    [FEvent("播放器/播放粒子特效", typeof(FParticleTrack))]
     public class FPlayParticleEvent : FEvent
     {
 
@@ -19,7 +19,7 @@ namespace Flux
 
         [SerializeField]
         [HideInInspector]
-        private ParticleSystem _particleSystem = null;
+        protected ParticleSystem _particleSystem = null;
 
         private float _previousTimeSinceTrigger = 0;
 

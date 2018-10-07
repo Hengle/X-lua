@@ -17,9 +17,9 @@ namespace XmlCode.Skill
 		/// <summary>
 		public float FadeOutTime;
 		/// <summary>
-		/// 施放相对位置(1 自己 ,2目标)
+		/// 是否相对于自己移动
 		/// <summary>
-		public XmlCode.Skill.RelateType RelateType;
+		public bool IsRelateSelf;
 		/// <summary>
 		/// 特效是否始终跟随目标对象方向变化
 		/// <summary>
@@ -35,7 +35,7 @@ namespace XmlCode.Skill
 		/// <summary>
 		/// 特效结点旋转;特效世界旋转
 		/// <summary>
-		public XmlCode.Vector3 Rotation;
+		public XmlCode.Vector3 EulerAngles;
 		/// <summary>
 		/// 整体缩放大小
 		/// <summary>
@@ -49,11 +49,11 @@ namespace XmlCode.Skill
 		{
 			Write(_1, "Path", this.Path);
 			Write(_1, "FadeOutTime", this.FadeOutTime);
-			Write(_1, "RelateType", (int)this.RelateType);
+			Write(_1, "IsRelateSelf", this.IsRelateSelf);
 			Write(_1, "FollowDir", this.FollowDir);
 			Write(_1, "NodeName", this.NodeName);
 			Write(_1, "Position", this.Position);
-			Write(_1, "Rotation", this.Rotation);
+			Write(_1, "EulerAngles", this.EulerAngles);
 			Write(_1, "Scale", this.Scale);
 			Write(_1, "AlignType", (int)this.AlignType);
 		}
@@ -65,11 +65,11 @@ namespace XmlCode.Skill
 			{
 				case "Path": this.Path = ReadString(_2); break;
 				case "FadeOutTime": this.FadeOutTime = ReadFloat(_2); break;
-				case "RelateType": this.RelateType = (XmlCode.Skill.RelateType)ReadInt(_2); break;
+				case "IsRelateSelf": this.IsRelateSelf = ReadBool(_2); break;
 				case "FollowDir": this.FollowDir = ReadBool(_2); break;
 				case "NodeName": this.NodeName = ReadString(_2); break;
 				case "Position": this.Position = ReadObject<XmlCode.Vector3>(_2, "XmlCode.Vector3"); break;
-				case "Rotation": this.Rotation = ReadObject<XmlCode.Vector3>(_2, "XmlCode.Vector3"); break;
+				case "EulerAngles": this.EulerAngles = ReadObject<XmlCode.Vector3>(_2, "XmlCode.Vector3"); break;
 				case "Scale": this.Scale = ReadObject<XmlCode.Vector3>(_2, "XmlCode.Vector3"); break;
 				case "AlignType": this.AlignType = (XmlCode.Skill.EffectAlignType)ReadInt(_2); break;
 			}

@@ -120,7 +120,7 @@ namespace FluxEditor
 
             _windowRect = new Rect();
 
-            FUtility.LoadPreferences();
+            FUtility.LoadPreferences();  
         }
 
         void OnSelectionChange()

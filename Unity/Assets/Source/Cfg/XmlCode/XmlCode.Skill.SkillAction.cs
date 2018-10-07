@@ -45,13 +45,9 @@ namespace XmlCode.Skill
 		/// <summary>
 		public bool CanMove;
 		/// <summary>
-		/// 碰撞区域定义列表
+		/// 序列字典集合
 		/// <summary>
-		public List<HitZone> HitZones;
-		/// <summary>
-		/// 序列容器列表
-		/// <summary>
-		public List<SeqContainer> SeqContainers;
+		public Dictionary<int, Sequence> SequenceDict;
 
 		public override void Write(TextWriter _1)
 		{
@@ -63,8 +59,7 @@ namespace XmlCode.Skill
 			Write(_1, "CanShowSkillRange", this.CanShowSkillRange);
 			Write(_1, "CanRotate", this.CanRotate);
 			Write(_1, "CanMove", this.CanMove);
-			Write(_1, "HitZones", this.HitZones);
-			Write(_1, "SeqContainers", this.SeqContainers);
+			Write(_1, "SequenceDict", this.SequenceDict);
 		}
 
 		public override void Read(XmlNode _1)
@@ -80,8 +75,7 @@ namespace XmlCode.Skill
 				case "CanShowSkillRange": this.CanShowSkillRange = ReadBool(_2); break;
 				case "CanRotate": this.CanRotate = ReadBool(_2); break;
 				case "CanMove": this.CanMove = ReadBool(_2); break;
-				case "HitZones": GetChilds(_2).ForEach (_3 => this.HitZones.Add(ReadObject<XmlCode.Skill.HitZone>(_3, "XmlCode.Skill.HitZone"))); break;
-				case "SeqContainers": GetChilds(_2).ForEach (_3 => this.SeqContainers.Add(ReadObject<XmlCode.Skill.SeqContainer>(_3, "XmlCode.Skill.SeqContainer"))); break;
+				case "SequenceDict": GetChilds(_2).ForEach (_3 => this.SequenceDict.Add(ReadInt(GetOnlyChild(_3, "Key")), ReadObject<XmlCode.Skill.Sequence>(_3, "XmlCode.Skill.Sequence"))); break;
 			}
 		}
 	}

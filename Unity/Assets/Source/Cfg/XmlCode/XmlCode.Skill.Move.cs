@@ -13,9 +13,9 @@ namespace XmlCode.Skill
 		/// <summary>
 		public XmlCode.Skill.MoveType Type;
 		/// <summary>
-		/// 施放相对位置(1 自己 ,2目标)
+		/// 是否相对于自己移动
 		/// <summary>
-		public XmlCode.Skill.RelateType RelateType;
+		public bool IsRelateSelf;
 		/// <summary>
 		/// 起始位置相对目标偏移
 		/// <summary>
@@ -25,17 +25,17 @@ namespace XmlCode.Skill
 		/// <summary>
 		public float Angle;
 		/// <summary>
-		/// 位移长度
+		/// 位移速度m/s
 		/// <summary>
-		public float Length;
+		public float Speed;
 
 		public override void Write(TextWriter _1)
 		{
 			Write(_1, "Type", (int)this.Type);
-			Write(_1, "RelateType", (int)this.RelateType);
+			Write(_1, "IsRelateSelf", this.IsRelateSelf);
 			Write(_1, "Offset", this.Offset);
 			Write(_1, "Angle", this.Angle);
-			Write(_1, "Length", this.Length);
+			Write(_1, "Speed", this.Speed);
 		}
 
 		public override void Read(XmlNode _1)
@@ -44,10 +44,10 @@ namespace XmlCode.Skill
 			switch (_2.Name)
 			{
 				case "Type": this.Type = (XmlCode.Skill.MoveType)ReadInt(_2); break;
-				case "RelateType": this.RelateType = (XmlCode.Skill.RelateType)ReadInt(_2); break;
+				case "IsRelateSelf": this.IsRelateSelf = ReadBool(_2); break;
 				case "Offset": this.Offset = ReadObject<XmlCode.Vector3>(_2, "XmlCode.Vector3"); break;
 				case "Angle": this.Angle = ReadFloat(_2); break;
-				case "Length": this.Length = ReadFloat(_2); break;
+				case "Speed": this.Speed = ReadFloat(_2); break;
 			}
 		}
 	}

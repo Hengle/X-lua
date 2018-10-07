@@ -48,17 +48,17 @@ namespace Flux
 
         protected override void OnTrigger(float timeSinceTrigger)
         {
-            if (Sequence.IsPlaying && Application.isPlaying && HasSequence())
+            if (Sequence.IsPlaying && /*Application.isPlaying &&*/ HasSequence())
             {
                 _sequence.Play(StartOffset * _sequence.InverseFrameRate + timeSinceTrigger);
             }
         }
 
-        protected override void OnUpdateEvent(float timeSinceTrigger)
-        {
-            if (HasSequence())
-                _sequence.Speed = Mathf.Sign(Sequence.Speed) * Mathf.Abs(_sequence.Speed);
-        }
+        //protected override void OnUpdateEvent(float timeSinceTrigger)
+        //{
+        //    if (HasSequence())
+        //        _sequence.Speed = Mathf.Sign(Sequence.Speed) * Mathf.Abs(_sequence.Speed);
+        //}
 
         //		protected override void OnUpdateEvent( float timeSinceTrigger )
         //		{

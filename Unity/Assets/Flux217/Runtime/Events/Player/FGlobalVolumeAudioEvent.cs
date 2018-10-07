@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Flux
 {
-	[FEvent("特效/全局音频音量")]
+	[FEvent("播放器/全局音频音量")]
 	public class FGlobalVolumeAudioEvent : FTweenEvent<FTweenFloat>
 	{
 		protected override void ApplyProperty( float t )

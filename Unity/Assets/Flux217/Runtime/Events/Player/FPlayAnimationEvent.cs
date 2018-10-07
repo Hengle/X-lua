@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Flux
 {
-    [FEvent("动画/播放动画", typeof(FAnimationTrack))]
+    [FEvent("播放器/播放动画", typeof(FAnimationTrack))]
     public class FPlayAnimationEvent : FEvent
     {
         [HideInInspector]

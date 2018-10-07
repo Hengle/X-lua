@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor;
 
 namespace Flux
 {
@@ -10,7 +11,8 @@ namespace Flux
     {
 
         public const int FLUX_VERSION = 210;
-     
+        public const string ResourceName = "-----Resources-----";
+
         public static bool IsAnimationEditable(AnimationClip clip)
         {
             //return clip == null || ( ((clip.hideFlags & HideFlags.NotEditable) == 0) && !clip.isLooping);
@@ -52,6 +54,33 @@ namespace Flux
                 newKeyframe.tangentMode = curve.keys[i].tangentMode;
                 curve.MoveKey(i, newKeyframe);
             }
+        }
+
+        /// <summary>
+        ///  一般在激活状态下使用
+        ///  资源路径均采用相对路径来处理.
+        ///  保证场景资源与项目资源相对路径一致.
+        /// </summary>
+        public static GameObject FindGameObject(string path)
+        {
+            GameObject resources = GameObject.Find(ResourceName);
+            if (resources == null)
+                resources = new GameObject(ResourceName);
+            GameObject go = GameObject.Find(path);//这里的对象可以是任意节点下的对象
+            if (go == null)
+            {
+                go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (go == null)
+                {
+                    Debug.LogError("资源不存在" + path);
+                    return null;
+                }
+
+                go.transform.parent = resources.transform;
+                go.transform.localPosition = Vector3.zero;
+                go.transform.localEulerAngles = Vector3.zero;
+            }
+            return go;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Flux
         [SerializeField, HideInInspector]
         private HitSharpType _sharpType;
         [SerializeField, HideInInspector]
-        [FEventField("偏移量")]
+        [FEventField("偏移量", "相对偏移量")]
         private Vector3 _offset;
         [SerializeField, HideInInspector]
         [FEventField("最大数量", Tip = "可碰撞到对象的最大数量")]
@@ -30,6 +30,7 @@ namespace Flux
 
 
         public int ZoneID { get { return _zoneId; } }
+        public HitSharpType SharpType { get { return _sharpType; } }
 
         public override string Text
         {

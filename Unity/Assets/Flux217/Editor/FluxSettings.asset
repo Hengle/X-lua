@@ -39,5 +39,9 @@ MonoBehaviour:
     - Flux.FPlayAnimationEvent
     - Flux.FGlobalVolumeAudioEvent
     - Flux.FVolumeAudioEvent
-    - Flux.FPlayParticleEvent
+    - Flux.FSkillEffectEvent
     - Flux.FPlayAudioEvent
+    - Flux.FHitCheck
+    - Flux.FActive
+    - Flux.FReplaceObject
+    - Flux.FMove

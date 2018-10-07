@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Flux
 {
-    [FEvent("特效/播放音效")]
+    [FEvent("播放器/播放音效")]
     public class FPlayAudioEvent : FEvent
     {
 
