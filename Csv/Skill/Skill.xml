@@ -100,7 +100,8 @@
 	    <Field Name = "IsTraceTarget" Type = "bool" Des = "是否追踪目标" />
         <Field Name = "CurveId" Type = "int" Des = "飞行参数ID,数据有配置表" />
         <Field Name = "PassBody" Type = "bool" Des = "是否穿透" />
-        <Field Name = "Offset" Type = "Vector3" Des = "投射起始偏移" />
+        <Field Name = "Position" Type = "Vector3" Des = "投射起始偏移" />
+		<Field Name = "EulerAngles" Type = "Vector3" Des = "投射起始旋转角度" />
         <!-- <Field Name = "CasterBindType" Type = "BindType" Des = "释放者释放绑定位置" /> -->
         <!-- <Field Name = "TargetBindType" Type = "BindType" Des = "被击者受击绑定位置" /> -->
 	</Class>

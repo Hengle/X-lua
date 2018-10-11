@@ -4,7 +4,7 @@ using XmlCode.Skill;
 
 namespace Flux
 {
-    [FEvent("控制器/直线位移")]
+    [FEvent("控制器/投射物体")]
     public class FCastObject : FController
     {
         [SerializeField, HideInInspector]
@@ -29,10 +29,8 @@ namespace Flux
             if (go != null)
             {
                 _targetObj = go.transform;
-                _targetObj.localPosition += _offset;
-                Vector3 eulerAngles = _targetObj.localEulerAngles;
-                eulerAngles.y = _angle;
-                _targetObj.localEulerAngles = eulerAngles;
+                _targetObj.localPosition = _position;
+                _targetObj.localEulerAngles = _eulerAngles;
             }
             _startTime = timeSinceTrigger;
         }
@@ -42,18 +40,7 @@ namespace Flux
             base.OnUpdateEvent(timeSinceTrigger);
 
             if (_targetObj == null) return;
-            float t = timeSinceTrigger - _startTime;
-            Vector3 dir = Vector3.zero;
-            switch (_moveType)
-            {
-                case MoveType.MoveToTarget:
-                    break;
-                case MoveType.MoveInDirection:
-                    dir = _targetObj.forward; 
-                    break;
-                default:
-                    break;
-            }
+
 
         }
 
