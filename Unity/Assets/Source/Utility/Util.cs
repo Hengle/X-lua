@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UObject = UnityEngine.Object;
 
 namespace Game
 {
@@ -162,6 +163,45 @@ namespace Game
             {
                 return Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork;
             }
+        }
+
+        public static GameObject Instantiate(UObject obj, string path)
+        {
+            var gameObj = UObject.Instantiate(obj) as GameObject;
+            if (gameObj != null && path != null)
+            {
+                var mr = gameObj.SetDefaultComponent<ManagedResource>();
+                mr.bundlename = path.Replace(@"\", @"/").ToLower();
+                Game.ResourceManager.Instance.AddRefCount(mr.bundlename);
+
+                var mc = gameObj.GetComponent<MecanimControl>();
+                if (mc != null)
+                {
+                    var mcold = (obj as GameObject).GetComponent<MecanimControl>();
+                    mc.Copy(mcold);
+                }
+            }
+            return gameObj;
+        }
+        public static GameObject Copy(UObject obj)
+        {
+            var gameObj = UObject.Instantiate(obj) as GameObject;
+            if (gameObj != null)
+            {
+                var mr = gameObj.GetComponent<ManagedResource>();
+                if (mr != null)
+                {
+                    Game.ResourceManager.Instance.AddRefCount(mr.bundlename);
+                }
+
+                var mc = gameObj.GetComponent<MecanimControl>();
+                if (mc != null)
+                {
+                    var mcold = (obj as GameObject).GetComponent<MecanimControl>();
+                    mc.Copy(mcold);
+                }
+            }
+            return gameObj;
         }
 
         public static void Log(string str)

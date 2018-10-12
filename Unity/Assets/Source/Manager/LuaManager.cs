@@ -30,11 +30,13 @@ namespace Game
 
         const string _luaMain = "Main";
         LuaEnv _luaEnv;
+        public LuaEnv LuaEnv { get { return _luaEnv; } }
 
         public void Init()
         {
             _luaEnv = new LuaEnv();
             _luaEnv.AddLoader(CustomLoader);
+            LuaHelper.Init();
         }
         public void Dispose()
         {

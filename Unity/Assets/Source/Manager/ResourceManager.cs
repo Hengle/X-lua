@@ -6,6 +6,16 @@ using UnityEngine;
 using XLua;
 using Object = UnityEngine.Object;
 
+public class ManagedResource : MonoBehaviour
+{
+    public string bundlename;
+    public void OnDestroy()
+    {
+        //Util.LogColor("green", "~~~ OnDestroy : " + bundlename);
+        Game.ResourceManager.Instance.RemoveRefCount(bundlename);
+    }
+}
+
 namespace Game
 {
     public enum ResourceLoadType
@@ -248,7 +258,7 @@ namespace Game
 
             return id;
         }
-        private void AddRefCount(string bundlename)
+        public void AddRefCount(string bundlename)
         {
             string[] dependencies = manifest.GetAllDependencies(bundlename);
             if (dependencies != null && dependencies.Length > 0)
@@ -267,7 +277,7 @@ namespace Game
                 }
             }
         }
-        private void RemoveRefCount(string bundlename)
+        public void RemoveRefCount(string bundlename)
         {
             string[] dependencies = manifest.GetAllDependencies(bundlename);
             if (dependencies != null && dependencies.Length > 0)

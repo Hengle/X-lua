@@ -1,4 +1,4 @@
-<Config>
+<Config Root = "Cfg">
 	<!-- <Include></Include> -->
 	<!-- <NoStruct></NoStruct> -->
 	<Include>AllType\AllType.xml</Include>

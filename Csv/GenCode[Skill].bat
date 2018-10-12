@@ -3,5 +3,5 @@
 
 ConfigGen.exe -optMode all ^
 -configXml %rootPath%\Csv\Cfg_Skill.xml ^
--xmlCodeDir %rootPath%\Unity\Assets\Source\Cfg\XmlCode ^
+-xmlCodeDir %rootPath%\Unity\Assets\ActorDesigner\XmlCode ^
 

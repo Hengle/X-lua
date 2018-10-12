@@ -14,7 +14,6 @@ MonoBehaviour:
   BitmapChecker:
     _path: 
     _name: 
-    BitmapPath: 
   RoleMeshChecker:
     _path: Assets/avatar/armour
     _name: 
