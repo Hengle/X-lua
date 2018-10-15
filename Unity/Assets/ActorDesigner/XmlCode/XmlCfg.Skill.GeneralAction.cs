@@ -11,7 +11,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 行为名称
 		/// <summary>
-		public string ActionName;
+		public string ActionName = "";
 		/// <summary>
 		/// 动作来源
 		/// <summary>
@@ -19,19 +19,19 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 其他模型名称,用于套用其他模型动作
 		/// <summary>
-		public string OtherModelName;
+		public string OtherModelName = "";
 		/// <summary>
 		/// 绑定的动作名称
 		/// <summary>
-		public string ActionFile;
+		public string ActionFile = "";
 		/// <summary>
 		/// 前摇动作名称
 		/// <summary>
-		public string PreActionFile;
+		public string PreActionFile = "";
 		/// <summary>
 		/// 后摇动作名称
 		/// <summary>
-		public string PostActionFile;
+		public string PostActionFile = "";
 		/// <summary>
 		/// 动作播放速率
 		/// <summary>
@@ -43,7 +43,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 时间事件列表
 		/// <summary>
-		public List<Timeline> Timelines;
+		public List<Timeline> Timelines = new List<Timeline>();
 
 		public override void Write(TextWriter _1)
 		{

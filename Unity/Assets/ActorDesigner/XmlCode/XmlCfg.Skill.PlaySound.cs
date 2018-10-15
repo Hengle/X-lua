@@ -11,7 +11,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 音效资源路径
 		/// <summary>
-		public string Path;
+		public string Path = "";
 		/// <summary>
 		/// 音量
 		/// <summary>

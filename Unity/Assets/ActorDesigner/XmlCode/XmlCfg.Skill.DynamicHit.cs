@@ -11,7 +11,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 碰撞体绑定对象路径
 		/// <summary>
-		public string Target;
+		public string Target = "";
 
 		public override void Write(TextWriter _1)
 		{

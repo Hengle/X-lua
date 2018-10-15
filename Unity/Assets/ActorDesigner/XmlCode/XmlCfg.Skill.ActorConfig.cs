@@ -11,7 +11,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 模型名称
 		/// <summary>
-		public string ModelName;
+		public string ModelName = "";
 		/// <summary>
 		/// 模型分组类型
 		/// <summary>
@@ -19,15 +19,15 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 基础模型名称
 		/// <summary>
-		public string BaseModelName;
+		public string BaseModelName = "";
 		/// <summary>
 		/// 普通动作
 		/// <summary>
-		public List<GeneralAction> GeneralActions;
+		public List<GeneralAction> GeneralActions = new List<GeneralAction>();
 		/// <summary>
 		/// 技能动作
 		/// <summary>
-		public List<SkillAction> SkillActions;
+		public List<SkillAction> SkillActions = new List<SkillAction>();
 
 		public override void Write(TextWriter _1)
 		{

@@ -15,11 +15,11 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 碰撞区域定义列表
 		/// <summary>
-		public List<HitZone> HitZones;
+		public List<HitZone> HitZones = new List<HitZone>();
 		/// <summary>
 		/// 时间事件列表
 		/// <summary>
-		public List<Timeline> Timelines;
+		public List<Timeline> Timelines = new List<Timeline>();
 
 		public override void Write(TextWriter _1)
 		{

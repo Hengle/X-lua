@@ -11,7 +11,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 粒子资源的路径
 		/// <summary>
-		public string Path;
+		public string Path = "";
 		/// <summary>
 		/// 是否相对于自己移动
 		/// <summary>
@@ -23,7 +23,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 节点名称,如果有配置则绑定到节点局部空间;反之绑定世界空间
 		/// <summary>
-		public string NodeName;
+		public string NodeName = "";
 		/// <summary>
 		/// 特效结点偏移;特效世界偏移
 		/// <summary>

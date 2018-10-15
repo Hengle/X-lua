@@ -10,7 +10,7 @@
 
     public class AssetImporter : OdinMenuEditorWindow
     {
-        [MenuItem("资源管理器/资源导入设置", false, 1)]
+        [MenuItem("Assets/资源导入设置", false, 2001)]
         private static void Open()
         {
             Instance = GetWindow<AssetImporter>("资源导入设置");

@@ -11,7 +11,7 @@
     using XmlCfg.Skill;
     using System.IO;
 
-    [GlobalConfig("ModelEditor/Editor/ActorConfig/Config", UseAsset = true)]
+    [GlobalConfig("ActorDesigner/ModelEditor/Editor", UseAsset = true)]
     internal class ActionHomeConfig : GlobalConfig<ActionHomeConfig>
     {
         /// <summary>
@@ -34,7 +34,7 @@
         [LabelText("Csv存储目录"), PropertyOrder(-99)]
         public string ConfigRelativeDir = "";
         public Dictionary<string, string> CheckResults = new Dictionary<string, string>();
-        public Dictionary<GroupType, List<ModelActionConfigEditor>> ModelGroupDict = new Dictionary<GroupType, List<ModelActionConfigEditor>>();
+        public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict = new Dictionary<GroupType, List<ActorConfigEditor>>();
     }
 
     [Serializable]
@@ -46,7 +46,7 @@
         /// 剪切板
         /// </summary>
         private List<ModelActionEditor> _clipboard = new List<ModelActionEditor>();
-        private Dictionary<string, ModelActionConfigEditor> _modelDict = new Dictionary<string, ModelActionConfigEditor>();
+        private Dictionary<string, ActorConfigEditor> _modelDict = new Dictionary<string, ActorConfigEditor>();
         private ActionHomeConfig _config;
 
         public static HomeConfigPreview Instance
@@ -72,7 +72,7 @@
         [ShowInInspector, ReadOnly, LabelText("Csv存储目录"), PropertyOrder(-99)]
         public string ConfigDir { get { return string.Format("{0}/../{1}/", Application.dataPath, _config.ConfigRelativeDir); } }
 
-        public Dictionary<GroupType, List<ModelActionConfigEditor>> ModelGroupDict
+        public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict
         {
             get
             {
@@ -93,12 +93,12 @@
             string[] files = Directory.GetFiles(ActionConfigPath, "*.xml", SearchOption.TopDirectoryOnly);
             foreach (var path in files)
             {
-                AddModel(new ModelActionConfigEditor(path));
+                var model = new ActorConfigEditor(path);
+                if (model.ActorCfg != null)
+                    AddActor(model);
             }
             foreach (var item in _modelDict)
-            {
                 item.Value.Init();
-            }
 
             Debug.Log("加载所有动作 完毕!");
         }
@@ -106,7 +106,7 @@
         [Button("保存所有配置", ButtonSizes.Large)]
         public void SaveAll()
         {
-            var deletes = new List<ModelActionConfigEditor>();
+            var deletes = new List<ActorConfigEditor>();
             foreach (var group in ModelGroupDict)
             {
                 float count = 0;
@@ -143,9 +143,9 @@
         /// 每个角色只能有一套配置
         /// </summary>
         /// <returns></returns>
-        public void Create(Action<ModelActionConfigEditor> Result)
+        public void Create(Action<ActorConfigEditor> Result)
         {
-            ModelActionConfigEditor model = null;
+            ActorConfigEditor model = null;
             var models = Csv.CfgManager.Model.Keys;
             SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
             {
@@ -155,35 +155,35 @@
                     GroupType = GroupType.None,
                 };
                 string path = string.Format("{0}/{1}.xml", ActionHomeConfig.Instance.ActionConfigPath, name);
-                XmlUtil.Serialize(path, config);
-                model = new ModelActionConfigEditor(path);
+                model = new ActorConfigEditor(path);
+                model.Save();
                 if (Result != null) Result(model);
             });
         }
-        public void AddModel(ModelActionConfigEditor model)
+        public void AddActor(ActorConfigEditor model)
         {
             if (ModelGroupDict.ContainsKey(model.GroupType))
                 ModelGroupDict[model.GroupType].Add(model);
             else
             {
-                ModelGroupDict.Add(model.GroupType, new List<ModelActionConfigEditor>());
+                ModelGroupDict.Add(model.GroupType, new List<ActorConfigEditor>());
                 ModelGroupDict[model.GroupType].Add(model);
             }
             if (!_modelDict.ContainsKey(model.ModelName))
                 _modelDict.Add(model.ModelName, model);
         }
-        public void RemoveModel(ModelActionConfigEditor model)
+        public void RemoveActor(ActorConfigEditor model)
         {
             if (!ModelGroupDict[model.GroupType].Remove(model))
                 Debug.LogErrorFormat("{0} 无法从分组中移除", model.MenuItemName);
             if (_modelDict.ContainsKey(model.ModelName))
                 _modelDict.Remove(model.ModelName);
         }
-        public ModelActionConfigEditor GetModelEditor(string modelName)
+        public ActorConfigEditor GetActorEditor(string modelName)
         {
             return _modelDict[modelName];
         }
-        public List<string> GetAllModelList()
+        public List<string> GetAllActorList()
         {
             return new List<string>(_modelDict.Keys);
         }

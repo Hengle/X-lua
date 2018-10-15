@@ -11,7 +11,7 @@ namespace XmlCfg.Character
 		/// <summary>
 		/// 模型名称
 		/// <summary>
-		public string Name;
+		public string Name = "";
 		/// <summary>
 		/// 模型级别
 		/// <summary>

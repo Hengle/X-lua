@@ -31,9 +31,22 @@ public class XmlUtil
         object result = null;
         if (File.Exists(filePath))
         {
-            using (StreamReader streamReader = new StreamReader(filePath))
+            try
             {
-                result = new XmlSerializer(type).Deserialize(streamReader);
+                using (StreamReader streamReader = new StreamReader(filePath))
+                {
+                    result = new XmlSerializer(type).Deserialize(streamReader);
+                }
+            }
+            catch (Exception e)
+            {
+                string txt = File.ReadAllText(filePath);
+                if (string.IsNullOrEmpty(txt))
+                {
+                    File.Delete(filePath);
+                    UnityEngine.Debug.LogError(filePath + "空文件!");
+                }
+                UnityEngine.Debug.LogErrorFormat("{2}\nActor Xml Exception: {0}\n{1}", e.Message, e.StackTrace, filePath);
             }
         }
         return result;

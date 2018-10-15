@@ -10,7 +10,7 @@
 
     public class AssetRefCounter : OdinMenuEditorWindow
     {
-        [MenuItem("资源管理器/资源引用统计", false, 2)]
+        [MenuItem("Assets/资源引用统计", false, 2002)]
         private static void Open()
         {
             var window = GetWindow<AssetRefCounter>("资源引用统计");

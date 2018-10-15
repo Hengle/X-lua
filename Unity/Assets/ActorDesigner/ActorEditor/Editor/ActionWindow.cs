@@ -8,7 +8,7 @@
 
     internal class ActionWindow : EditorWindow
     {
-        public static void Init(ModelActionConfigEditor modelEditor, ModelActionEditor modelAction, Action<ModelActionEditor> result = null)
+        public static void Init(ActorConfigEditor modelEditor, ModelActionEditor modelAction, Action<ModelActionEditor> result = null)
         {
             var window = GetWindow<ActionWindow>(true, "行为配置窗口", true);
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(400, 250);
@@ -30,7 +30,7 @@
 
             if (modelAction.IsFromOther)
             {
-                window._otherModelEditor = HomeConfigPreview.Instance.GetModelEditor(modelAction.OtherModelName);
+                window._otherModelEditor = HomeConfigPreview.Instance.GetActorEditor(modelAction.OtherModelName);
                 window._actClipList = window._otherModelEditor.GetActionClips();
             }
             else
@@ -58,8 +58,8 @@
         readonly Color _color = new Color(0.3f, 0.8f, 0.8f);
 
         GUIStyle _nameStyle;
-        ModelActionConfigEditor _otherModelEditor;
-        ModelActionConfigEditor _selfModelEditor;
+        ActorConfigEditor _otherModelEditor;
+        ActorConfigEditor _selfModelEditor;
         Action<ModelActionEditor> _result;
 
         ModelActionEditor _modelAction;
@@ -134,12 +134,12 @@
                         GUILayout.Label(_otherModel, EditorStyles.textField);
                         if (GUILayout.Button("修改", GUILayout.Width(45)))
                         {
-                            var list = HomeConfigPreview.Instance.GetAllModelList();
+                            var list = HomeConfigPreview.Instance.GetAllActorList();
                             list.Remove(_selfModelEditor.ModelName);
                             SimplePopupCreator.ShowDialog(list, (name) =>
                             {
                                 _otherModel = name;
-                                _otherModelEditor = HomeConfigPreview.Instance.GetModelEditor(name);
+                                _otherModelEditor = HomeConfigPreview.Instance.GetActorEditor(name);
                                 _actClipList = _otherModelEditor.GetActionClips();
                             });
                         }

@@ -8,12 +8,12 @@
     using Sirenix.Utilities.Editor;
     using Sirenix.OdinInspector.Editor;
 
-    internal class ModelCfgWindow : OdinMenuEditorWindow
+    internal class ActorCfgWindow : OdinMenuEditorWindow
     {
         [MenuItem("Window/Action Designer/Load Action")]
         private static void Open()
         {
-            var window = GetWindow<ModelCfgWindow>("模型配置窗口");
+            var window = GetWindow<ActorCfgWindow>("模型配置窗口");
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
             window.minSize = new Vector2(400, 500);
             ActionHomeConfig.LoadInstanceIfAssetExists();
@@ -61,7 +61,7 @@
                 {
                     HomeConfigPreview.Instance.Create((model) =>
                     {
-                        HomeConfigPreview.Instance.AddModel(model);
+                        HomeConfigPreview.Instance.AddActor(model);
                         MenuTree.AddObjectAtPath(model.MenuItemName, model);
                     });
                 }

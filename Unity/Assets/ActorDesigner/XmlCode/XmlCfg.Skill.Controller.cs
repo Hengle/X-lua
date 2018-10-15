@@ -11,7 +11,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 资源对象路径
 		/// <summary>
-		public string Path;
+		public string Path = "";
 
 		public override void Write(TextWriter _1)
 		{

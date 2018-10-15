@@ -13,12 +13,14 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
     <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.4.8f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -362,21 +364,12 @@
     <Compile Include="Assets\ActorDesigner\Editor\Inspectors\FTweenEventInspector.cs" />
     <Compile Include="Assets\ActorDesigner\Editor\Inspectors\FVolumeAudioEventInspector.cs" />
     <Compile Include="Assets\ActorDesigner\Editor\ISelectableElement.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\ActorConfig\ActionHomeConfig.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\ActorConfig\ActionWindow.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\ActorConfig\ModelActionConfigEditor.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\ActorConfig\ModelActionEditor.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\ActorConfig\ModelCfgWindow.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\ActorConfig\SimplePopupCreator.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\VFXConfig_Timeline\Playable\BasePlayable.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\VFXConfig_Timeline\Playable\BeAttackPlayable.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\VFXConfig_Timeline\Track\BeAttackedTrack.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\VFXConfig_Timeline\Track\ConfigTrack.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\VFXConfig_Timeline\TrackGroup\BaseTrackGroup.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\VFXConfig_Timeline\TrackGroup\ConfigTrackGroup.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\VFXConfig_Timeline\TrackGroup\EffectTrackGroup.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\VFXConfig_Timeline\TrackGroup\TimeEventTrackGroup.cs" />
-    <Compile Include="Assets\ActorDesigner\ModelEditor\Editor\VFXConfig_Timeline\VFXEditor.cs" />
+    <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ActionHomeConfig.cs" />
+    <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ActionWindow.cs" />
+    <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ActorConfigEditor.cs" />
+    <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ModelActionEditor.cs" />
+    <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ActorCfgWindow.cs" />
+    <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\SimplePopupCreator.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasytouchHierachyCallBack.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchInspector.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchMenu.cs" />

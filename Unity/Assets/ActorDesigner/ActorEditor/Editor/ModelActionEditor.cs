@@ -18,7 +18,7 @@
 
         private GeneralAction _modelAction;
         private bool _isSkillAction = false;
-        private ModelActionConfigEditor _modelEditor;
+        private ActorConfigEditor _modelEditor;
 
         [OnInspectorGUI]
         private void OnGUI()
@@ -90,7 +90,7 @@
         }
         public ActionState ActState { get; set; }
         public ModelActionEditor() { }
-        public ModelActionEditor(ModelActionConfigEditor modelEditor, GeneralAction modelAction, bool isSkill)
+        public ModelActionEditor(ActorConfigEditor modelEditor, GeneralAction modelAction, bool isSkill)
         {
             _modelEditor = modelEditor;
             _modelAction = modelAction;

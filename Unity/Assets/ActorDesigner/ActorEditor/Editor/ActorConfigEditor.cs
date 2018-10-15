@@ -12,24 +12,34 @@
     using Sirenix.Utilities.Editor;
 
     [Serializable]
-    public class ModelActionConfigEditor
+    public class ActorConfigEditor
     {
-        public ModelActionConfigEditor() { }
-        public ModelActionConfigEditor(string path)
-        {
+        public ActorConfig ActorCfg { get { return _actorCfg; } }
+        public ActorConfigEditor() { }
+        public ActorConfigEditor(string path)
+        {           
             _path = path;
-            _modelActionCfg = XmlUtil.Deserialize(path, typeof(ActorConfig)) as ActorConfig;
-            foreach (var item in _modelActionCfg.GeneralActions)
+            _actorCfg = new ActorConfig();
+            if (!File.Exists(path))
             {
-                var action = new ModelActionEditor(this, item, false);
-                action.ActState = ModelActionEditor.ActionState.New;
-                ModelActions.Add(action);
+                File.Create(path);
+                _actorCfg.SaveAConfig(path);
             }
-            foreach (var item in _modelActionCfg.SkillActions)
+            _actorCfg.LoadAConfig(path);
+            if (_actorCfg != null)
             {
-                var action = new ModelActionEditor(this, item, true);
-                action.ActState = ModelActionEditor.ActionState.New;
-                SkillActions.Add(action);
+                foreach (var item in _actorCfg.GeneralActions)
+                {
+                    var action = new ModelActionEditor(this, item, false);
+                    action.ActState = ModelActionEditor.ActionState.New;
+                    ModelActions.Add(action);
+                }
+                foreach (var item in _actorCfg.SkillActions)
+                {
+                    var action = new ModelActionEditor(this, item, true);
+                    action.ActState = ModelActionEditor.ActionState.New;
+                    SkillActions.Add(action);
+                }
             }
         }
         public void Init()
@@ -42,7 +52,7 @@
             return _actClips;
         }
 
-        private ActorConfig _modelActionCfg;
+        private ActorConfig _actorCfg;
         private string _path;
         private string[] _actClips = new string[] { "idel", "run", "attack" };
 
@@ -53,19 +63,24 @@
         [VerticalGroup("BaseGroup/Info"), CustomValueDrawer("DrawGroupType")]
         public GroupType GroupType
         {
-            get { return _modelActionCfg.GroupType; }
+            get
+            {
+                if (_actorCfg == null)
+                    return GroupType.None;
+                return _actorCfg.GroupType;
+            }
             set
             {
-                ModelCfgWindow window = ModelCfgWindow.GetWindow<ModelCfgWindow>();
+                ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
                 OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
                 if (item != null)
                 {
-                    ModelActionConfigEditor model = item.ObjectInstance as ModelActionConfigEditor;
-                    HomeConfigPreview.Instance.RemoveModel(model);
+                    ActorConfigEditor model = item.ObjectInstance as ActorConfigEditor;
+                    HomeConfigPreview.Instance.RemoveActor(model);
                     item.Parent.ChildMenuItems.Remove(item);
 
-                    _modelActionCfg.GroupType = value;
-                    HomeConfigPreview.Instance.AddModel(model);
+                    _actorCfg.GroupType = value;
+                    HomeConfigPreview.Instance.AddActor(model);
                     var group = window.MenuTree.GetMenuItem(Group);
                     group.ChildMenuItems.Add(item);
                     item.MenuTree.Selection.Clear();
@@ -79,13 +94,13 @@
         {
             get
             {
-                return ActionHomeConfig.MenuItems[_modelActionCfg.GroupType];
+                return ActionHomeConfig.MenuItems[_actorCfg.GroupType];
             }
         }
         [VerticalGroup("BaseGroup/Info"), LabelText("模型名称"), InlineButton("ModifyModelName", "更换")]
-        public string ModelName { get { return _modelActionCfg.ModelName; } set { } }
+        public string ModelName { get { return _actorCfg == null ? "" : _actorCfg.ModelName; } set { } }
         [VerticalGroup("BaseGroup/Info"), LabelText("继承模型"), InlineButton("ModifyBaseName", "更换")]
-        public string BaseName { get { return _modelActionCfg.BaseModelName; } set { } }
+        public string BaseName { get { return _actorCfg == null ? "" : _actorCfg.BaseModelName; } set { } }
 
 
 
@@ -124,13 +139,13 @@
         [ButtonGroup("Button"), Button("保存文件", ButtonSizes.Large)]
         public void Save()
         {
-            _modelActionCfg.GeneralActions.Clear();
-            _modelActionCfg.SkillActions.Clear();
+            _actorCfg.GeneralActions.Clear();
+            _actorCfg.SkillActions.Clear();
             foreach (var item in ModelActions)
-                _modelActionCfg.GeneralActions.Add(item.ModelAction);
+                _actorCfg.GeneralActions.Add(item.ModelAction);
             foreach (var item in SkillActions)
-                _modelActionCfg.SkillActions.Add(item.ModelAction as SkillAction);
-            XmlUtil.Serialize(_path, _modelActionCfg);
+                _actorCfg.SkillActions.Add(item.ModelAction as SkillAction);
+            _actorCfg.SaveAConfig(_path);
         }
         [ButtonGroup("Button"), Button("删除文件", ButtonSizes.Large)]
         public void Delete()
@@ -140,12 +155,12 @@
                 if (File.Exists(_path))
                     File.Delete(_path);
 
-                ModelCfgWindow window = ModelCfgWindow.GetWindow<ModelCfgWindow>();
+                ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
                 OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
                 if (item != null && item.ObjectInstance != null)
                 {
-                    ModelActionConfigEditor model = item.ObjectInstance as ModelActionConfigEditor;
-                    HomeConfigPreview.Instance.RemoveModel(model);
+                    ActorConfigEditor model = item.ObjectInstance as ActorConfigEditor;
+                    HomeConfigPreview.Instance.RemoveActor(model);
                     item.Parent.ChildMenuItems.Remove(item);
                     item.MenuTree.Selection.Clear();
                     item.Parent.Select();
@@ -165,9 +180,9 @@
             models.Remove(ModelName);
             SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
             {
-                _modelActionCfg.ModelName = name;
+                _actorCfg.ModelName = name;
 
-                ModelCfgWindow window = ModelCfgWindow.GetWindow<ModelCfgWindow>();
+                ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
                 OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
                 item.Name = name;
                 item.SearchString = name;
@@ -175,17 +190,17 @@
         }
         private void ModifyBaseName()
         {
-            List<string> models = HomeConfigPreview.Instance.GetAllModelList();
+            List<string> models = HomeConfigPreview.Instance.GetAllActorList();
             models.Remove(ModelName);
             SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
             {
-                _modelActionCfg.BaseModelName = name;
+                _actorCfg.BaseModelName = name;
                 AddBaseModelAction(name);
             });
         }
         private void AddBaseModelAction(string name)
         {
-            var baseModel = HomeConfigPreview.Instance.GetModelEditor(name);
+            var baseModel = HomeConfigPreview.Instance.GetActorEditor(name);
             var modelDict = GetModelActionDict();
             foreach (var item in baseModel.ModelActions)
             {

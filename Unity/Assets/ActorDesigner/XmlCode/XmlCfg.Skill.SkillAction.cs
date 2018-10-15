@@ -47,7 +47,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 序列字典集合
 		/// <summary>
-		public Dictionary<int, Sequence> SequenceDict;
+		public Dictionary<int, Sequence> SequenceDict = new Dictionary<int, Sequence>();
 
 		public override void Write(TextWriter _1)
 		{

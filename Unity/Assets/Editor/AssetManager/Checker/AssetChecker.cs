@@ -9,7 +9,7 @@
 
     public class AssetChecker : OdinMenuEditorWindow
     {
-        [MenuItem("资源管理器/资源检查器", false, 3)]
+        [MenuItem("Assets/资源检查器", false, 2000)]
         private static void Open()
         {
             var window = GetWindow<AssetChecker>("资源检查器");

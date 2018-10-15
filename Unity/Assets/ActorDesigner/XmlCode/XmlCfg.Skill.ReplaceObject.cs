@@ -11,7 +11,7 @@ namespace XmlCfg.Skill
 		/// <summary>
 		/// 新对象
 		/// <summary>
-		public string NewObject;
+		public string NewObject = "";
 		/// <summary>
 		/// 相对位置
 		/// <summary>
