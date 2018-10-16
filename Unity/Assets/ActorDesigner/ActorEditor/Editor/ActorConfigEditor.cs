@@ -152,21 +152,26 @@
         [OnInspectorGUI, PropertyOrder(-100)]
         protected void OnInspectorGUI()
         {
-            EditorGUI.BeginChangeCheck();
-            var groupType = (GroupType)EditorGUILayout.Popup("分组类型", (int)GroupType, ActionHomeConfig.MenuItemNames);
-            if (EditorGUI.EndChangeCheck())
-                GroupType = groupType;
+            SirenixEditorGUI.BeginBox();
+            {
+                EditorGUI.BeginChangeCheck();
+                var groupType = (GroupType)EditorGUILayout.Popup("分组类型", (int)GroupType, ActionHomeConfig.MenuItemNames);
+                if (EditorGUI.EndChangeCheck())
+                    GroupType = groupType;
 
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("模型名称", ModelName, SirenixGUIStyles.BoxContainer);
-            if (GUILayout.Button("更换"))
-                ModifyModelName();
-            EditorGUILayout.EndHorizontal();
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("继承模型", BaseName, SirenixGUIStyles.BoxContainer);
-            if (GUILayout.Button("更换"))
-                ModifyBaseName();
-            EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("模型名称", ModelName, SirenixGUIStyles.BoxContainer);
+                if (GUILayout.Button("更换", GUILayout.Width(60)))
+                    ModifyModelName();
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("继承模型", BaseName, SirenixGUIStyles.BoxContainer);
+                if (GUILayout.Button("更换", GUILayout.Width(60)))
+                    ModifyBaseName();
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.Space();
+            }
+            SirenixEditorGUI.EndBox();
         }
 
         [ButtonGroup("Button"), Button("复制", ButtonSizes.Large)]

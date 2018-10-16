@@ -1,6 +1,6 @@
 <Root type ="ActorConfig">
 <ModelName>卓洛</ModelName>
-<GroupType>0</GroupType>
+<GroupType>1</GroupType>
 <BaseModelName></BaseModelName>
 <GeneralActions>
 </GeneralActions>
