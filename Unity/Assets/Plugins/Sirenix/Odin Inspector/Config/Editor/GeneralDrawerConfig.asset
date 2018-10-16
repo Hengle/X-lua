@@ -11,18 +11,3 @@ MonoBehaviour:
   m_Script: {fileID: -645759843, guid: a4865f1ab4504ed8a368670db22f409c, type: 3}
   m_Name: GeneralDrawerConfig
   m_EditorClassIdentifier: 
-  showMonoScriptInEditor: 1
-  expandFoldoutByDefault: 1
-  hideFoldoutWhileEmpty: 1
-  openListsByDefault: 1
-  showItemCount: 1
-  numberOfItemsPrPage: 15
-  hidePagingWhileCollapsed: 1
-  hidePagingWhileOnlyOnePage: 1
-  showExpandButton: 1
-  quaternionDrawMode: 0
-  showPrefabModificationsDisabledMessage: 1
-  maxRecursiveDrawDepth: 10
-  showIndexLabels: 0
-  squareUnityObjectFieldHeight: 50
-  squareUnityObjectAlignment: 2

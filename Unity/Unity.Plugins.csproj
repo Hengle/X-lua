@@ -250,32 +250,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\ContextExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\CustomDrawerExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\CustomGroupExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\GenericDrawerExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\GenericMenuExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\HealthBarExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\MinesweeperExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\PriorityExamples.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\ReflectionExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\StringMemberHelperExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Custom Drawer Examples\Scripts\ValidationExample.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\Character.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterAlignment.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterEquipment.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterOverview.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Character\CharacterStats.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\Armor.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\ConsumableItem.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\EquipableItem.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\Item.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\ItemTypes.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Items\WeaponItem.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\ItemSlot.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\RequirementList.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\StatType.cs" />
-    <Compile Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Scripts\Misc\StatValue.cs" />
     <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\VectorIntFormatters.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -296,11 +270,10 @@
     <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.xml" />
     <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.xml" />
     <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.xml" />
-    <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.xml" />
     <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.xml" />
     <None Include="Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.xml" />
     <None Include="Assets\Plugins\Sirenix\Assemblies\link.xml" />
-    <None Include="Assets\Plugins\Sirenix\Demos\Sample - RPG Editor\Icons\icons_by_ravenmore.txt" />
+    <None Include="Assets\Plugins\Sirenix\Readme.txt" />
     <None Include="Assets\Resources\launcher.txt" />
     <None Include="Assets\XLua\CHANGELOG.txt" />
     <None Include="Assets\XLua\Gen\link.xml" />

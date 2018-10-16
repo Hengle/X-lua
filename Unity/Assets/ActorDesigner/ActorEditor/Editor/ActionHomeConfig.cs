@@ -26,6 +26,10 @@
             {GroupType.NPC, "NPC" },
         };
         public static string[] MenuItemNames = { "主页", "基础类型", "玩家", "怪物", "NPC" };
+       
+        public Dictionary<string, string> CheckResults = new Dictionary<string, string>();
+        public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict = new Dictionary<GroupType, List<ActorConfigEditor>>();
+
 
         [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
         [LabelText("Xml存储目录"), PropertyOrder(-100)]
@@ -33,22 +37,18 @@
         [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
         [LabelText("Csv存储目录"), PropertyOrder(-99)]
         public string ConfigRelativeDir = "";
-        public Dictionary<string, string> CheckResults = new Dictionary<string, string>();
-        public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict = new Dictionary<GroupType, List<ActorConfigEditor>>();
+        [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
+        [LabelText("角色资源目录"), PropertyOrder(-98)]
+        public string RoleRelativeDir = "";
+        [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
+        [LabelText("碰撞体资源目录"), PropertyOrder(-98)]
+        public string ColliderRelativeDir = "";
     }
 
     [Serializable]
     internal class HomeConfigPreview
     {
         private static HomeConfigPreview _instance;
-
-        /// <summary>
-        /// 剪切板
-        /// </summary>
-        private List<ModelActionEditor> _clipboard = new List<ModelActionEditor>();
-        private Dictionary<string, ActorConfigEditor> _modelDict = new Dictionary<string, ActorConfigEditor>();
-        private ActionHomeConfig _config;
-
         public static HomeConfigPreview Instance
         {
             get
@@ -58,20 +58,24 @@
                 return _instance;
             }
         }
+        private ActionHomeConfig _config;
+        
+        public GameObject Self { get; private set; }
+        public GameObject Target { get; private set; }
+        public GameObject Collider { get; private set; }
 
+
+        /// <summary>
+        /// 剪切板
+        /// </summary>
+        private List<ModelActionEditor> _clipboard = new List<ModelActionEditor>();
+        private Dictionary<string, ActorConfigEditor> _modelDict = new Dictionary<string, ActorConfigEditor>();
+        
         public void Init()
         {
             _config = ActionHomeConfig.Instance;
             LoadAll();
-        }
-
-        [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
-        [ShowInInspector, ReadOnly, LabelText("Xml存储目录"), PropertyOrder(-100)]
-        public string ActionConfigPath { get { return string.Format("{0}/../{1}/", Application.dataPath, _config.ActionConfigPath); } }
-        [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
-        [ShowInInspector, ReadOnly, LabelText("Csv存储目录"), PropertyOrder(-99)]
-        public string ConfigDir { get { return string.Format("{0}/../{1}/", Application.dataPath, _config.ConfigRelativeDir); } }
-
+        }        
         public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict
         {
             get
@@ -80,9 +84,113 @@
                     Init();
                 return _config.ModelGroupDict;
             }
+        }    
+        ///// <summary>
+        ///// 检查配置
+        ///// </summary>
+        //[OnInspectorGUI, Title("动作配置校验结果", bold: true)]
+        //public void CheckError()
+        //{
+        //    for (int i = 0; i < 5; i++)
+        //    {
+
+        //        SirenixEditorGUI.ErrorMessageBox("OnInspectorGUI Message Error");
+        //    }
+        //}
+
+        /// <summary>
+        /// 创建角色动作行为配置文本
+        /// 每个角色只能有一套配置
+        /// </summary>
+        /// <returns></returns>
+        public void Create(Action<ActorConfigEditor> Result)
+        {
+            ActorConfigEditor model = null;
+            var models = Csv.CfgManager.Model.Keys;
+            SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
+            {
+                var config = new ActorConfig()
+                {
+                    ModelName = name,
+                    GroupType = GroupType.None,
+                };
+                string path = string.Format("{0}/{1}.xml", ActionHomeConfig.Instance.ActionConfigPath, name);
+                model = new ActorConfigEditor(path, config);
+                model.Save();
+                if (Result != null) Result(model);
+            });
+        }
+        public void AddActor(ActorConfigEditor model)
+        {
+            if (ModelGroupDict.ContainsKey(model.GroupType))
+                ModelGroupDict[model.GroupType].Add(model);
+            else
+            {
+                ModelGroupDict.Add(model.GroupType, new List<ActorConfigEditor>());
+                ModelGroupDict[model.GroupType].Add(model);
+            }
+            if (!_modelDict.ContainsKey(model.ModelName))
+                _modelDict.Add(model.ModelName, model);
+        }
+        public void RemoveActor(ActorConfigEditor model)
+        {
+            if (!ModelGroupDict.ContainsKey(model.GroupType))
+            {
+                Debug.LogError("未定义组类型 " + model.GroupType);
+                return;
+            }
+            if (!ModelGroupDict[model.GroupType].Remove(model))
+                Debug.LogErrorFormat("{0} 无法从分组中移除", model.MenuItemName);
+            if (_modelDict.ContainsKey(model.ModelName))
+                _modelDict.Remove(model.ModelName);
+        }
+        public ActorConfigEditor GetActorEditor(string modelName)
+        {
+            return _modelDict[modelName];
+        }
+        public List<string> GetAllActorList()
+        {
+            return new List<string>(_modelDict.Keys);
+        }
+
+        public void UpdateClipbord(List<ModelActionEditor> editors)
+        {
+            _clipboard = editors;
+        }
+        public void Destroy()
+        {
+            //保存所有配置
+            SaveAll();
+            ClearAll();
+
+            _instance = null;
+        }
+        private void ClearAll()
+        {
+            ModelGroupDict.Clear();
+            CfgManager.Clear();
+            _clipboard.Clear();
+            _modelDict.Clear();
+        }
+
+        //-- 加载角色行为时加载角色和行为碰撞
+        public void LoadSelf()
+        {
+
+        }
+        public void LoadCollider()
+        {
+
         }
 
 
+        #region 界面设计        
+        [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
+        [ShowInInspector, ReadOnly, LabelText("Xml存储目录"), PropertyOrder(-100)]
+        private string ActionConfigPath { get { return string.Format("{0}/../{1}/", Application.dataPath, _config.ActionConfigPath); } }
+        [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
+        [ShowInInspector, ReadOnly, LabelText("Csv存储目录"), PropertyOrder(-99)]
+        private string ConfigDir { get { return string.Format("{0}/../{1}/", Application.dataPath, _config.ConfigRelativeDir); } }
         [ButtonGroup("Config/Btns")]
         [Button("加载所有动作", ButtonSizes.Large)]
         public void LoadAll()
@@ -123,91 +231,24 @@
                 deletes[i].Delete();
             EditorUtility.ClearProgressBar();
             Debug.Log("所有配置保存完毕~~");
-        }
+        }       
 
-        /// <summary>
-        /// 检查配置
-        /// </summary>
-        [OnInspectorGUI, Title("动作配置校验结果", bold: true)]
-        public void CheckError()
+        [Title("功能分区"), OnInspectorGUI]
+        private void SelectTarget()
         {
-            for (int i = 0; i < 5; i++)
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("设置受击对象"))
             {
-
-                SirenixEditorGUI.ErrorMessageBox("OnInspectorGUI Message Error");
-            }
-        }
-
-        /// <summary>
-        /// 创建角色动作行为配置文本
-        /// 每个角色只能有一套配置
-        /// </summary>
-        /// <returns></returns>
-        public void Create(Action<ActorConfigEditor> Result)
-        {
-            ActorConfigEditor model = null;
-            var models = Csv.CfgManager.Model.Keys;
-            SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
-            {
-                var config = new ActorConfig()
+                string targetName = "";
+                SimplePopupCreator.ShowDialog(new List<string>(CfgManager.Model.Keys), (name) =>
                 {
-                    ModelName = name,
-                    GroupType = GroupType.None,
-                };
-                string path = string.Format("{0}/{1}.xml", ActionHomeConfig.Instance.ActionConfigPath, name);
-                model = new ActorConfigEditor(path);
-                model.Save();
-                if (Result != null) Result(model);
-            });
-        }
-        public void AddActor(ActorConfigEditor model)
-        {
-            if (ModelGroupDict.ContainsKey(model.GroupType))
-                ModelGroupDict[model.GroupType].Add(model);
-            else
-            {
-                ModelGroupDict.Add(model.GroupType, new List<ActorConfigEditor>());
-                ModelGroupDict[model.GroupType].Add(model);
+                    targetName = name;
+                    Target = AssetDatabase.LoadAssetAtPath<GameObject>("");
+                });
+                EditorGUILayout.SelectableLabel(targetName);
             }
-            if (!_modelDict.ContainsKey(model.ModelName))
-                _modelDict.Add(model.ModelName, model);
+            EditorGUILayout.EndHorizontal();
         }
-        public void RemoveActor(ActorConfigEditor model)
-        {
-            if (!ModelGroupDict[model.GroupType].Remove(model))
-                Debug.LogErrorFormat("{0} 无法从分组中移除", model.MenuItemName);
-            if (_modelDict.ContainsKey(model.ModelName))
-                _modelDict.Remove(model.ModelName);
-        }
-        public ActorConfigEditor GetActorEditor(string modelName)
-        {
-            return _modelDict[modelName];
-        }
-        public List<string> GetAllActorList()
-        {
-            return new List<string>(_modelDict.Keys);
-        }
-
-
-        public void UpdateClipbord(List<ModelActionEditor> editors)
-        {
-            _clipboard = editors;
-        }
-        public void Destroy()
-        {
-            //保存所有配置
-            SaveAll();
-            ClearAll();
-
-            _instance = null;
-        }
-
-        private void ClearAll()
-        {
-            ModelGroupDict.Clear();
-            CfgManager.Clear();
-            _clipboard.Clear();
-            _modelDict.Clear();
-        }
+        #endregion
     }
 }

@@ -21,8 +21,9 @@
         }
 
         ModelActionEditor _modelAction;
-        GUIContent _createConfig = new GUIContent("创建动作配置");
+        GUIContent _createConfig = new GUIContent("创建角色");
         Rect _windowRect = new Rect(100, 100, 200, 200);
+   
         protected override OdinMenuTree BuildMenuTree()
         {
             OdinMenuTree tree = new OdinMenuTree(supportsMultiSelect: false);
@@ -47,6 +48,8 @@
 
         protected override void OnBeginDrawEditors()
         {
+            if (MenuTree == null) return;
+
             var selected = this.MenuTree.Selection.FirstOrDefault();
             var toolbarHeight = this.MenuTree.Config.SearchToolbarHeight;
 
@@ -54,7 +57,10 @@
             {
                 if (selected != null)
                 {
-                    GUILayout.Label(selected.Name);
+                    var old = GUI.color;
+                    GUI.color = Color.cyan;
+                    GUILayout.Label(selected.Name, SirenixGUIStyles.BoldLabel);
+                    GUI.color = old;
                 }
 
                 if (SirenixEditorGUI.ToolbarButton(_createConfig))
@@ -81,5 +87,6 @@
 
             Debug.Log("[模型配置窗口]关闭~~");
         }
+
     }
 }
