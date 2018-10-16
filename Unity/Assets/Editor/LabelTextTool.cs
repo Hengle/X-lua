@@ -146,4 +146,6 @@ public class LabelTextTool : EditorWindow
         if (!string.IsNullOrEmpty(log))
             Debug.LogError(log);
     }
+
+
 }

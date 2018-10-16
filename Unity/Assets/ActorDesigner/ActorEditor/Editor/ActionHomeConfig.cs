@@ -185,10 +185,10 @@
 
 
         #region 界面设计        
-        [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
+        [FolderPath(RequireExistingPath = true), BoxGroup("Config", showLabel: false)]
         [ShowInInspector, ReadOnly, LabelText("Xml存储目录"), PropertyOrder(-100)]
         private string ActionConfigPath { get { return string.Format("{0}/../{1}/", Application.dataPath, _config.ActionConfigPath); } }
-        [FolderPath(RequireValidPath = true), BoxGroup("Config", showLabel: false)]
+        [FolderPath(RequireExistingPath = true), BoxGroup("Config", showLabel: false)]
         [ShowInInspector, ReadOnly, LabelText("Csv存储目录"), PropertyOrder(-99)]
         private string ConfigDir { get { return string.Format("{0}/../{1}/", Application.dataPath, _config.ConfigRelativeDir); } }
         [ButtonGroup("Config/Btns")]

@@ -55,6 +55,37 @@
 
         public string Path { get { return _path; } }
         public string MenuItemName { get { return string.Format("{0}/{1}", ActionHomeConfig.MenuItems[GroupType], ModelName); } }
+        public GroupType GroupType
+        {
+            get
+            {
+                if (_actorCfg == null)
+                    return GroupType.None;
+                return _actorCfg.GroupType;
+            }
+            set
+            {
+                ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
+                OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
+                if (item != null)
+                {
+                    ActorConfigEditor model = item.Value as ActorConfigEditor;
+                    HomeConfigPreview.Instance.RemoveActor(model);
+                    item.Parent.ChildMenuItems.Remove(item);
+
+                    _actorCfg.GroupType = value;
+                    HomeConfigPreview.Instance.AddActor(model);
+                    var group = window.MenuTree.GetMenuItem(Group);
+                    group.ChildMenuItems.Add(item);
+                    item.MenuTree.Selection.Clear();
+                    item.Select();
+                    item.MenuTree.UpdateMenuTree();
+                    item.MenuTree.DrawMenuTree();
+                }
+            }
+        }
+        public string ModelName { get { return _actorCfg == null ? "" : _actorCfg.ModelName; } set { } }
+        public string BaseName { get { return _actorCfg == null ? "" : _actorCfg.BaseModelName; } set { } }
         public string Group
         {
             get
@@ -113,45 +144,30 @@
                 pairs.Add(item.ActionName, item);
             }
             return pairs;
-        }    
-
-
-        #region 界面字段
-        [BoxGroup("BaseGroup", showLabel: false, order: -100)]
-        [VerticalGroup("BaseGroup/Info"), CustomValueDrawer("DrawGroupType")]
-        public GroupType GroupType
-        {
-            get
-            {
-                if (_actorCfg == null)
-                    return GroupType.None;
-                return _actorCfg.GroupType;
-            }
-            set
-            {
-                ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
-                OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
-                if (item != null)
-                {
-                    ActorConfigEditor model = item.ObjectInstance as ActorConfigEditor;
-                    HomeConfigPreview.Instance.RemoveActor(model);
-                    item.Parent.ChildMenuItems.Remove(item);
-
-                    _actorCfg.GroupType = value;
-                    HomeConfigPreview.Instance.AddActor(model);
-                    var group = window.MenuTree.GetMenuItem(Group);
-                    group.ChildMenuItems.Add(item);
-                    item.MenuTree.Selection.Clear();
-                    item.Select();
-                    item.MenuTree.UpdateMenuTree();
-                    item.MenuTree.DrawMenuTree();
-                }
-            }
         }
-        [VerticalGroup("BaseGroup/Info"), LabelText("模型名称"), InlineButton("ModifyModelName", "更换")]
-        public string ModelName { get { return _actorCfg == null ? "" : _actorCfg.ModelName; } set { } }
-        [VerticalGroup("BaseGroup/Info"), LabelText("继承模型"), InlineButton("ModifyBaseName", "更换")]
-        public string BaseName { get { return _actorCfg == null ? "" : _actorCfg.BaseModelName; } set { } }
+
+
+
+        #region 界面设计       
+        [OnInspectorGUI, PropertyOrder(-100)]
+        protected void OnInspectorGUI()
+        {
+            EditorGUI.BeginChangeCheck();
+            var groupType = (GroupType)EditorGUILayout.Popup("分组类型", (int)GroupType, ActionHomeConfig.MenuItemNames);
+            if (EditorGUI.EndChangeCheck())
+                GroupType = groupType;
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("模型名称", ModelName, SirenixGUIStyles.BoxContainer);
+            if (GUILayout.Button("更换"))
+                ModifyModelName();
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("继承模型", BaseName, SirenixGUIStyles.BoxContainer);
+            if (GUILayout.Button("更换"))
+                ModifyBaseName();
+            EditorGUILayout.EndHorizontal();
+        }
 
         [ButtonGroup("Button"), Button("复制", ButtonSizes.Large)]
         private void CopyActions()
@@ -241,11 +257,6 @@
             GUILayout.Label("操作", SirenixGUIStyles.LabelCentered, GUILayout.ExpandWidth(true));
             SirenixEditorGUI.EndHorizontalToolbar();
         }
-        private static GroupType DrawGroupType(GroupType type, GUIContent content)
-        {
-            return (GroupType)EditorGUILayout.Popup(content.text, (int)type, ActionHomeConfig.MenuItemNames);
-        }
-
         private void ModifyModelName()
         {
             var models = new List<string>(Csv.CfgManager.Model.Keys);
