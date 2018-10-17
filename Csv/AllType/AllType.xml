@@ -22,6 +22,13 @@
         <Field Name = "Var2" Type = "float" Des = "Var2" />
     </Class>
 	
+	<Class Name = "M1" Inherit = "SingleClass">
+		<Field Name = "V3" Type = "long" Des = "继承1"/>
+	</Class>
+	<Class Name = "M2" Inherit = "SingleClass">
+		<Field Name = "V4" Type = "bool" Des = "继承2"/>
+	</Class>
+	
     <Enum Name="CardElement">
         <Const Name = "Attack" Value = "0" Alias="攻击"/>
         <Const Name = "Extract" Value = "1" Alias="抽牌"/>

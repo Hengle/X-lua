@@ -1,10 +1,8 @@
 using System;
-using System.IO;
-using System.Linq;
-using System.Xml;
 using System.Collections.Generic;
+using Cfg;
 
-namespace XmlCfg.Skill
+namespace Cfg.Character
 {
 	public enum GroupType
 	{

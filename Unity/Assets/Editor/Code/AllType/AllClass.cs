@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Csv;
+using Cfg;
 
-namespace Csv.AllType
+namespace Cfg.AllType
 {
 	public  class AllClass : CfgObject
 	{
@@ -41,7 +41,7 @@ namespace Csv.AllType
 		/// <summary>
 		/// 类类型
 		/// <summary>
-		public Csv.AllType.SingleClass VarClass;
+		public Cfg.AllType.SingleClass VarClass;
 		/// <summary>
 		/// 字符串列表
 		/// <summary>

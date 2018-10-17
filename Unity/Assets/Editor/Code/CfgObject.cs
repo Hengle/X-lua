@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Csv;
-namespace Csv
+using Cfg;
+namespace Cfg
 {
 	public abstract class CfgObject
 	{

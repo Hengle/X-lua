@@ -2,7 +2,6 @@
 {
     using System;
     using System.IO;
-    using XmlCfg.Skill;
     using Sirenix.OdinInspector;
     using System.Collections.Generic;
     using Sirenix.OdinInspector.Editor;
@@ -10,6 +9,8 @@
     using UnityEditor;
     using UnityEngine;
     using Sirenix.Utilities.Editor;
+    using XmlCfg.Skill;
+    using Csv.Character;
 
     [Serializable]
     public class ActorConfigEditor
@@ -23,6 +24,7 @@
             _actorCfg = cfg != null ? cfg : new ActorConfig();
             if (File.Exists(path))
                 _actorCfg.LoadAConfig(path);
+            _model = Csv.CfgManager.Model[_actorCfg.ModelName];
             if (_actorCfg != null)
             {
                 foreach (var item in _actorCfg.GeneralActions)
@@ -50,6 +52,7 @@
         }
 
         private ActorConfig _actorCfg;
+        private Model _model;
         private string _path;
         private string[] _actClips = new string[] { "idel", "run", "attack" };
 
@@ -61,28 +64,28 @@
             {
                 if (_actorCfg == null)
                     return GroupType.None;
-                return _actorCfg.GroupType;
+                return _model.GroupType;
             }
-            set
-            {
-                ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
-                OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
-                if (item != null)
-                {
-                    ActorConfigEditor model = item.Value as ActorConfigEditor;
-                    HomeConfigPreview.Instance.RemoveActor(model);
-                    item.Parent.ChildMenuItems.Remove(item);
+            //set
+            //{
+            //    ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
+            //    OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
+            //    if (item != null)
+            //    {
+            //        ActorConfigEditor model = item.Value as ActorConfigEditor;
+            //        HomeConfigPreview.Instance.RemoveActor(model);
+            //        item.Parent.ChildMenuItems.Remove(item);
 
-                    _actorCfg.GroupType = value;
-                    HomeConfigPreview.Instance.AddActor(model);
-                    var group = window.MenuTree.GetMenuItem(Group);
-                    group.ChildMenuItems.Add(item);
-                    item.MenuTree.Selection.Clear();
-                    item.Select();
-                    item.MenuTree.UpdateMenuTree();
-                    item.MenuTree.DrawMenuTree();
-                }
-            }
+            //        _actorCfg.GroupType = value;
+            //        HomeConfigPreview.Instance.AddActor(model);
+            //        var group = window.MenuTree.GetMenuItem(Group);
+            //        group.ChildMenuItems.Add(item);
+            //        item.MenuTree.Selection.Clear();
+            //        item.Select();
+            //        item.MenuTree.UpdateMenuTree();
+            //        item.MenuTree.DrawMenuTree();
+            //    }
+            //}
         }
         public string ModelName { get { return _actorCfg == null ? "" : _actorCfg.ModelName; } set { } }
         public string BaseName { get { return _actorCfg == null ? "" : _actorCfg.BaseModelName; } set { } }
@@ -90,7 +93,7 @@
         {
             get
             {
-                return ActionHomeConfig.MenuItems[_actorCfg.GroupType];
+                return ActionHomeConfig.MenuItems[_model.GroupType];
             }
         }
         private void AddBaseModelAction(string name)
@@ -154,10 +157,10 @@
         {
             SirenixEditorGUI.BeginBox();
             {
-                EditorGUI.BeginChangeCheck();
-                var groupType = (GroupType)EditorGUILayout.Popup("分组类型", (int)GroupType, ActionHomeConfig.MenuItemNames);
-                if (EditorGUI.EndChangeCheck())
-                    GroupType = groupType;
+                //EditorGUI.BeginChangeCheck();
+                //var groupType = (GroupType)EditorGUILayout.Popup("分组类型", (int)GroupType, ActionHomeConfig.MenuItemNames);
+                //if (EditorGUI.EndChangeCheck())
+                //    GroupType = groupType;
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("模型名称", ModelName, SirenixGUIStyles.BoxContainer);

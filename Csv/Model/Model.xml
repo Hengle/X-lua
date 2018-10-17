@@ -1,6 +1,15 @@
 <Define Namespace = "Character">
 	<Class Name="Model" Index="Name" DataPath="Model.xlsx">
 		<Field Name="Name" Type="string" Des = "模型名称" />
+		<Field Name = "GroupType" Type = "GroupType" Des = "模型分组类型" />
 		<Field Name="Level" Type="int" Des = "模型级别" />
 	</Class>
+	
+	<Enum Name="GroupType">
+        <Const Name = "None" Value ="0" Alias = "临时组" Des="临时组"/>
+        <Const Name = "Base" Value ="1" Alias = "基础类型" Des="基础类型"/>
+        <Const Name = "Player" Value ="2" Alias = "玩家" Des="玩家"/>
+        <Const Name = "Monster" Value ="3" Alias = "怪物" Des="怪物"/>
+        <Const Name = "NPC" Value ="4" Alias = "NPC" Des="NPC"/>
+	</Enum>
 </Define>

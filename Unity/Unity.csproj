@@ -304,6 +304,7 @@
     <Compile Include="Assets\ActorDesigner\Runtime\Tracks\FParticleTrack.cs" />
     <Compile Include="Assets\ActorDesigner\Runtime\Tracks\FSequenceTrack.cs" />
     <Compile Include="Assets\ActorDesigner\Runtime\Tracks\FTransformTrack.cs" />
+    <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Character.GroupType.cs" />
     <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Character.Model.cs" />
     <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Skill.ActionSourceType.cs" />
     <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Skill.Active.cs" />
@@ -317,7 +318,6 @@
     <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Skill.DynamicHit.cs" />
     <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Skill.EffectAlignType.cs" />
     <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Skill.GeneralAction.cs" />
-    <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Skill.GroupType.cs" />
     <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Skill.HitSharpType.cs" />
     <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Skill.HitZone.cs" />
     <Compile Include="Assets\ActorDesigner\XmlCode\XmlCfg.Skill.LockObjectType.cs" />

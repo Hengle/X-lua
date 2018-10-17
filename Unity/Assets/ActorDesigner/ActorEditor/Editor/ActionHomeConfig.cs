@@ -1,6 +1,5 @@
 ﻿namespace CS.ActorConfig
 {
-    using Csv;
     using System;
     using UnityEngine;
     using UnityEditor;
@@ -10,6 +9,7 @@
     using System.Collections.Generic;
     using XmlCfg.Skill;
     using System.IO;
+    using XmlCfg.Character;
 
     [GlobalConfig("ActorDesigner/ModelEditor/Editor", UseAsset = true)]
     internal class ActionHomeConfig : GlobalConfig<ActionHomeConfig>
@@ -26,7 +26,7 @@
             {GroupType.NPC, "NPC" },
         };
         public static string[] MenuItemNames = { "主页", "基础类型", "玩家", "怪物", "NPC" };
-       
+
         public Dictionary<string, string> CheckResults = new Dictionary<string, string>();
         public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict = new Dictionary<GroupType, List<ActorConfigEditor>>();
 
@@ -59,7 +59,7 @@
             }
         }
         private ActionHomeConfig _config;
-        
+
         public GameObject Self { get; private set; }
         public GameObject Target { get; private set; }
         public GameObject Collider { get; private set; }
@@ -70,12 +70,12 @@
         /// </summary>
         private List<ModelActionEditor> _clipboard = new List<ModelActionEditor>();
         private Dictionary<string, ActorConfigEditor> _modelDict = new Dictionary<string, ActorConfigEditor>();
-        
+
         public void Init()
         {
             _config = ActionHomeConfig.Instance;
             LoadAll();
-        }        
+        }
         public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict
         {
             get
@@ -84,7 +84,7 @@
                     Init();
                 return _config.ModelGroupDict;
             }
-        }    
+        }
         ///// <summary>
         ///// 检查配置
         ///// </summary>
@@ -109,11 +109,7 @@
             var models = Csv.CfgManager.Model.Keys;
             SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
             {
-                var config = new ActorConfig()
-                {
-                    ModelName = name,
-                    GroupType = GroupType.None,
-                };
+                var config = new ActorConfig() { ModelName = name };
                 string path = string.Format("{0}/{1}.xml", ActionHomeConfig.Instance.ActionConfigPath, name);
                 model = new ActorConfigEditor(path, config);
                 model.Save();
@@ -214,24 +210,19 @@
         [Button("保存所有配置", ButtonSizes.Large)]
         public void SaveAll()
         {
-            var deletes = new List<ActorConfigEditor>();
             foreach (var group in ModelGroupDict)
             {
                 float count = 0;
                 foreach (var cfg in group.Value)
                 {
-                    if (group.Key == GroupType.None)
-                        deletes.Add(cfg);
-                    else
+                    if (group.Key != GroupType.None)
                         cfg.Save();
                     EditorUtility.DisplayProgressBar("导出所有配置>" + cfg.Group, cfg.Path, count / group.Value.Count);
                 }
             }
-            for (int i = 0; i < deletes.Count; i++)
-                deletes[i].Delete();
             EditorUtility.ClearProgressBar();
             Debug.Log("所有配置保存完毕~~");
-        }       
+        }
 
         [Title("功能分区"), OnInspectorGUI]
         private void SelectTarget()

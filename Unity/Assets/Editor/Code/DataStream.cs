@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.IO;
 using System.Reflection;
-namespace Csv
+namespace Cfg
 {
 	public  class DataStream
 	{
@@ -49,7 +49,7 @@ namespace Csv
 		/// <summary>
 		public CfgObject GetObject(string fullName)
 		{
-			Type type = Type.GetType("Csv." + fullName);
+			Type type = Type.GetType("Cfg." + fullName);
 			if (type == null)
 			{
 				UnityEngine.Debug.LogErrorFormat("DataStream 解析{0}类型失败!", fullName);

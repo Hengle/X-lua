@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Csv;
+using Cfg;
 
-namespace Csv.AllType
+namespace Cfg.AllType
 {
 	public enum CardElement
 	{

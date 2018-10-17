@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Csv;
+using Cfg;
 
-namespace Csv.Character
+namespace Cfg.Character
 {
 	public  class Model : CfgObject
 	{
@@ -11,6 +11,10 @@ namespace Csv.Character
 		/// <summary>
 		public readonly string Name;
 		/// <summary>
+		/// 模型分组类型
+		/// <summary>
+		public readonly int GroupType;
+		/// <summary>
 		/// 模型级别
 		/// <summary>
 		public readonly int Level;
@@ -18,6 +22,7 @@ namespace Csv.Character
 		public Model(DataStream data)
 		{
 			this.Name = data.GetString();
+			this.GroupType = data.GetInt();
 			this.Level = data.GetInt();
 		}
 	}

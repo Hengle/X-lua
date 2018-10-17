@@ -7,6 +7,7 @@
     using Sirenix.Utilities;
     using Sirenix.Utilities.Editor;
     using Sirenix.OdinInspector.Editor;
+    using XmlCfg.Character;
 
     internal class ActorCfgWindow : OdinMenuEditorWindow
     {
