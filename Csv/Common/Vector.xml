@@ -1,11 +1,11 @@
 ﻿<Define Namespace = "">
 	<Class Name = "Vector2">
-		<Filed Name = "X" Type = "float"/>
-		<Filed Name = "Y" Type = "float"/>		
+		<Field Name = "X" Type = "float"/>
+		<Field Name = "Y" Type = "float"/>		
 	</Class>
 	<Class Name = "Vector3">
-		<Filed Name = "X" Type = "float"/>
-		<Filed Name = "Y" Type = "float"/>		
-		<Filed Name = "Z" Type = "float"/>		
+		<Field Name = "X" Type = "float"/>
+		<Field Name = "Y" Type = "float"/>		
+		<Field Name = "Z" Type = "float"/>		
 	</Class>
 </Define>

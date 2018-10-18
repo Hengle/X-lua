@@ -1,13 +1,12 @@
 ﻿namespace CS.ActorConfig
 {
-    using XmlCfg.Skill;
     using UnityEngine;
     using UnityEditor;
     using System.Linq;
     using Sirenix.Utilities;
     using Sirenix.Utilities.Editor;
     using Sirenix.OdinInspector.Editor;
-    using XmlCfg.Character;
+    using Cfg.Character;
 
     internal class ActorCfgWindow : OdinMenuEditorWindow
     {
@@ -18,12 +17,11 @@
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
             window.minSize = new Vector2(400, 500);
             ActionHomeConfig.LoadInstanceIfAssetExists();
-            HomeConfigPreview.Instance.Init();
+            HomeConfigPreview.Instance.LoadAll();
         }
 
-        ModelActionEditor _modelAction;
-        GUIContent _createConfig = new GUIContent("创建角色");
         Rect _windowRect = new Rect(100, 100, 200, 200);
+        //GUIContent _createConfig = new GUIContent("创建角色");
    
         protected override OdinMenuTree BuildMenuTree()
         {
@@ -64,14 +62,14 @@
                     GUI.color = old;
                 }
 
-                if (SirenixEditorGUI.ToolbarButton(_createConfig))
-                {
-                    HomeConfigPreview.Instance.Create((model) =>
-                    {
-                        HomeConfigPreview.Instance.AddActor(model);
-                        MenuTree.AddObjectAtPath(model.MenuItemName, model);
-                    });
-                }
+                //if (SirenixEditorGUI.ToolbarButton(_createConfig))
+                //{
+                //    HomeConfigPreview.Instance.Create((model) =>
+                //    {
+                //        HomeConfigPreview.Instance.AddActor(model);
+                //        MenuTree.AddObjectAtPath(model.MenuItemName, model);
+                //    });
+                //}
             }
             SirenixEditorGUI.EndHorizontalToolbar();
         }

@@ -10,7 +10,8 @@
     using UnityEngine;
     using Sirenix.Utilities.Editor;
     using XmlCfg.Skill;
-    using Csv.Character;
+    using Cfg.Character;
+    using Cfg;
 
     [Serializable]
     public class ActorConfigEditor
@@ -24,7 +25,8 @@
             _actorCfg = cfg != null ? cfg : new ActorConfig();
             if (File.Exists(path))
                 _actorCfg.LoadAConfig(path);
-            _model = Csv.CfgManager.Model[_actorCfg.ModelName];
+            if (CfgManager.Model.ContainsKey(_actorCfg.ModelName))
+                _model = CfgManager.Model[_actorCfg.ModelName];
             if (_actorCfg != null)
             {
                 foreach (var item in _actorCfg.GeneralActions)
@@ -62,9 +64,9 @@
         {
             get
             {
-                if (_actorCfg == null)
+                if (_model == null)
                     return GroupType.None;
-                return _model.GroupType;
+                return (GroupType)_model.GroupType;
             }
             //set
             //{
@@ -93,7 +95,7 @@
         {
             get
             {
-                return ActionHomeConfig.MenuItems[_model.GroupType];
+                return ActionHomeConfig.MenuItems[(GroupType)_model.GroupType];
             }
         }
         private void AddBaseModelAction(string name)
@@ -267,7 +269,7 @@
         }
         private void ModifyModelName()
         {
-            var models = new List<string>(Csv.CfgManager.Model.Keys);
+            var models = new List<string>(CfgManager.Model.Keys);
             models.Remove(ModelName);
             SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
             {
