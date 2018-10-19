@@ -20,9 +20,22 @@
             HomeConfigPreview.Instance.LoadAll();
         }
 
+
         Rect _windowRect = new Rect(100, 100, 200, 200);
         //GUIContent _createConfig = new GUIContent("创建角色");
-   
+        ActorConfigEditor _actor;
+
+        public void RefreshTree()
+        {
+            if (MenuTree == null) return;
+            foreach (var group in HomeConfigPreview.Instance.ModelGroupDict)
+            {
+                foreach (var item in group.Value)
+                {
+                    MenuTree.Add(item.MenuItemName, item);
+                }
+            }
+        }
         protected override OdinMenuTree BuildMenuTree()
         {
             OdinMenuTree tree = new OdinMenuTree(supportsMultiSelect: false);

@@ -66,7 +66,9 @@ function Stream:GetCfgCharacterModel()
 	setmetatable(o, Cfg.Character.Model)
 	o.Name = self:GetString()
 	o.GroupType = self:GetInt()
-	o.Level = self:GetInt()
+	o.ModelPath = self:GetString()
+	o.AvatarPath = self:GetString()
+	o.ModelScale = self:GetFloat()
 	return o
 end
 meta= {}

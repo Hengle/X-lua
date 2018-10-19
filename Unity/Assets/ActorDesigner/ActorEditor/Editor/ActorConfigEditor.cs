@@ -159,19 +159,14 @@
         {
             SirenixEditorGUI.BeginBox();
             {
-                //EditorGUI.BeginChangeCheck();
-                //var groupType = (GroupType)EditorGUILayout.Popup("分组类型", (int)GroupType, ActionHomeConfig.MenuItemNames);
-                //if (EditorGUI.EndChangeCheck())
-                //    GroupType = groupType;
-
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("模型名称", ModelName, SirenixGUIStyles.BoxContainer);
-                if (GUILayout.Button("更换", GUILayout.Width(60)))
+                EditorGUILayout.LabelField("模型名称:", ModelName);
+                if (GUILayout.Button("更换", GUILayout.Width(100)))
                     ModifyModelName();
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("继承模型", BaseName, SirenixGUIStyles.BoxContainer);
-                if (GUILayout.Button("更换", GUILayout.Width(60)))
+                EditorGUILayout.LabelField("继承模型:", BaseName);
+                if (GUILayout.Button("更换", GUILayout.Width(100)))
                     ModifyBaseName();
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.Space();

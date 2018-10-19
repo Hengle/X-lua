@@ -39,7 +39,10 @@
         public string ConfigRelativeDir = "";
         [FolderPath(RequireExistingPath = true), BoxGroup("Config", showLabel: false)]
         [LabelText("角色资源目录"), PropertyOrder(-98)]
-        public string RoleRelativeDir = "";
+        public string CharacterRelativeDir = "";
+        [FolderPath(RequireExistingPath = true), BoxGroup("Config", showLabel: false)]
+        [LabelText("外貌资源目录"), PropertyOrder(-98)]
+        public string AvatarRelativeDir = "";
         [FolderPath(RequireExistingPath = true), BoxGroup("Config", showLabel: false)]
         [LabelText("碰撞体资源目录"), PropertyOrder(-98)]
         public string ColliderRelativeDir = "";
@@ -71,28 +74,39 @@
         [Button("加载所有动作", ButtonSizes.Large)]
         public void LoadAll()
         {
-            _config = ActionHomeConfig.Instance;
             ClearAll();
+
+            _config = ActionHomeConfig.Instance;
             CfgManager.ConfigDir = ConfigDir;
             CfgManager.LoadAll();
+
+            EUtil.GetAssetsInSubFolderRecursively(_config.CharacterRelativeDir, "*.prefab", ref _allCharacter);
+            EUtil.GetAssetsInSubFolderRecursively(_config.AvatarRelativeDir, "*.prefab", ref _allCharacter);
+
+            foreach (var model in CfgManager.Model)
+            {
+                var modelName = model.Key;
+                string path = string.Format("{0}/{1}.xml", ActionConfigPath, modelName);
+                if (!File.Exists(path))
+                {
+                    var config = new ActorConfig() { ModelName = modelName };
+                    string savePath = string.Format("{0}/{1}.xml", ActionHomeConfig.Instance.ActionConfigPath, modelName);
+                    var actor = new ActorConfigEditor(savePath, config);
+                    actor.Save();
+                    Debug.LogFormat("<color=orange>新建Actor - {0}</color>", modelName);
+                }
+            }
             string[] files = Directory.GetFiles(ActionConfigPath, "*.xml", SearchOption.TopDirectoryOnly);
             foreach (var path in files)
             {
                 var actor = new ActorConfigEditor(path);
-                var modelName = Path.GetFileNameWithoutExtension(path);
-                if (actor.ActorCfg == null && CfgManager.Model.ContainsKey(modelName))
-                {
-                    var config = new ActorConfig() { ModelName = modelName };
-                    string savePath = string.Format("{0}/{1}.xml", ActionHomeConfig.Instance.ActionConfigPath, modelName);
-                    actor = new ActorConfigEditor(savePath, config);
-                    actor.Save();
-                    Debug.LogFormat("<color=orange>新建Actor - {0}</color>", modelName);
-                }
                 AddActor(actor);
             }
             foreach (var item in _modelDict)
                 item.Value.Init();
 
+            var window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
+            window.RefreshTree();
             Debug.Log("加载所有动作 完毕!");
         }
         [ButtonGroup("Config/Btns")]
@@ -113,7 +127,7 @@
             Debug.Log("所有配置保存完毕~~");
         }
 
-        [Title("功能分区"), OnInspectorGUI]
+        [Title("辅助功能区"), OnInspectorGUI]
         private void SelectTarget()
         {
             EditorGUILayout.BeginHorizontal();
@@ -123,7 +137,7 @@
                 SimplePopupCreator.ShowDialog(new List<string>(CfgManager.Model.Keys), (name) =>
                 {
                     targetName = name;
-                    Target = AssetDatabase.LoadAssetAtPath<GameObject>("");
+                    Target = LoadModel(name);
                 });
                 EditorGUILayout.SelectableLabel(targetName);
             }
@@ -145,6 +159,9 @@
         /// 模型分组信息 key-分组类型 value-模型行为编辑器
         /// </summary>
         private Dictionary<GroupType, List<ActorConfigEditor>> _modelGroupDict = new Dictionary<GroupType, List<ActorConfigEditor>>();
+        private Dictionary<string, string> _allCharacter = new Dictionary<string, string>();
+        private Dictionary<string, string> _allAvatar = new Dictionary<string, string>();
+
         public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict
         {
             get
@@ -156,26 +173,7 @@
         }
         public GameObject Self { get; private set; }
         public GameObject Target { get; private set; }
-        public GameObject Collider { get; private set; }
 
-
-        /// <summary>
-        /// 创建角色动作行为配置文本
-        /// 每个角色只能有一套配置
-        /// </summary>
-        /// <returns></returns>
-        private void Create()
-        {
-            ActorConfigEditor model = null;
-            var models = CfgManager.Model.Keys;
-            SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
-            {
-                var config = new ActorConfig() { ModelName = name };
-                string path = string.Format("{0}/{1}.xml", ActionHomeConfig.Instance.ActionConfigPath, name);
-                model = new ActorConfigEditor(path, config);
-                model.Save();
-            });
-        }
         public void AddActor(ActorConfigEditor model)
         {
             if (ModelGroupDict.ContainsKey(model.GroupType))
@@ -209,10 +207,25 @@
             return new List<string>(_modelDict.Keys);
         }
 
-        public void UpdateClipbord(List<ModelActionEditor> editors)
+        //-- 加载角色行为时加载资源
+        public GameObject LoadModel(string modelName)
         {
-            _clipboard = editors;
+            if (!_allCharacter.ContainsKey(modelName))
+            {
+                Debug.LogErrorFormat("[加载]{0}模型不存在", modelName);
+                return GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            }
+            string path = EUtil.FilePath2UnityPath(_allCharacter[modelName]);
+            GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            return model;
         }
+        public GameObject LoadCollider(string collider)
+        {
+            string path = string.Format("{0}/{1}.fbx", _config.ColliderRelativeDir, collider);
+            GameObject col = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            return col;
+        }
+
         public void Destroy()
         {
             //保存所有配置
@@ -227,29 +240,32 @@
             CfgManager.Clear();
             _clipboard.Clear();
             _modelDict.Clear();
+            _allCharacter.Clear();
+            _allAvatar.Clear();
         }
-        ///// <summary>
-        ///// 检查配置
-        ///// </summary>
-        //[OnInspectorGUI, Title("动作配置校验结果", bold: true)]
-        //public void CheckError()
-        //{
-        //    for (int i = 0; i < 5; i++)
-        //    {
 
-        //        SirenixEditorGUI.ErrorMessageBox("OnInspectorGUI Message Error");
-        //    }
-        //}
 
-        //-- 加载角色行为时加载角色和行为碰撞
-        public void LoadSelf()
+
+        public void UpdateClipbord(List<ModelActionEditor> editors)
         {
-
+            _clipboard = editors;
         }
-        public void LoadCollider()
+        /// <summary>
+        /// 创建角色动作行为配置文本
+        /// 每个角色只能有一套配置
+        /// </summary>
+        /// <returns></returns>
+        private void Create()
         {
-
+            ActorConfigEditor model = null;
+            var models = CfgManager.Model.Keys;
+            SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
+            {
+                var config = new ActorConfig() { ModelName = name };
+                string path = string.Format("{0}/{1}.xml", ActionHomeConfig.Instance.ActionConfigPath, name);
+                model = new ActorConfigEditor(path, config);
+                model.Save();
+            });
         }
-
     }
 }

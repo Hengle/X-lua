@@ -404,6 +404,7 @@
     <Compile Include="Assets\Editor\AssetManager\Importer\TextureImportSetting.cs" />
     <Compile Include="Assets\Editor\AssetManager\RefCounter\AssetRefCounter.cs" />
     <Compile Include="Assets\Editor\AssetManager\RefCounter\RefCounterConfig.cs" />
+    <Compile Include="Assets\Editor\EUtil.cs" />
     <Compile Include="Assets\Editor\Export\ExportResource.All.cs" />
     <Compile Include="Assets\Editor\Export\ExportResource.AnimationClip.cs" />
     <Compile Include="Assets\Editor\Export\ExportResource.Audio.cs" />

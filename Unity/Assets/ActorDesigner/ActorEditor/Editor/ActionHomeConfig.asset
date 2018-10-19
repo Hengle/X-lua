@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Name: ActionHomeConfig
   m_EditorClassIdentifier: Assembly-CSharp-Editor:CS.ModelAction:ActionHomeConfig
   ActionConfigPath: ../Csv/Skill/ActorCfg
-  ConfigRelativeDir: ../GamePlayer/Config
+  ConfigRelativeDir: ../GamePlayer/Config/Csv
+  CharacterRelativeDir: 
+  AvatarRelativeDir: 
+  ColliderRelativeDir: Assets/ActorDesigner/ActorEditor/Resource

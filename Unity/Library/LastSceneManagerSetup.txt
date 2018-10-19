@@ -1,4 +1,1 @@
-sceneSetups:
-- path: Assets/Plugins/Sirenix/Demos/Custom Drawers/Custom Drawers.unity
-  isLoaded: 1
-  isActive: 1
+sceneSetups: []

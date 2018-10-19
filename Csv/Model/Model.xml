@@ -1,8 +1,10 @@
 <Define Namespace = "Character">
 	<Class Name="Model" Index="Name" DataPath="Model.xlsx">
 		<Field Name="Name" Type="string" Des = "模型名称" />
-		<Field Name = "GroupType" Type = "GroupType" Des = "模型分组类型" />
-		<Field Name="Level" Type="int" Des = "模型级别" />
+		<Field Name ="GroupType" Type = "GroupType" Des = "模型分组类型" />
+		<Field Name="ModelPath" Type="string" Des = "模型路径" />
+		<Field Name="AvatarPath" Type="string" Des = "Avatar路径"/>		
+		<Field Name="ModelScale" Type="float" Des = "模型缩放"/>		
 	</Class>
 	
 	<Enum Name="GroupType">

@@ -15,15 +15,25 @@ namespace Cfg.Character
 		/// <summary>
 		public readonly int GroupType;
 		/// <summary>
-		/// 模型级别
+		/// 模型路径
 		/// <summary>
-		public readonly int Level;
+		public readonly string ModelPath;
+		/// <summary>
+		/// Avatar路径
+		/// <summary>
+		public readonly string AvatarPath;
+		/// <summary>
+		/// 模型缩放
+		/// <summary>
+		public readonly float ModelScale;
 
 		public Model(DataStream data)
 		{
 			this.Name = data.GetString();
 			this.GroupType = data.GetInt();
-			this.Level = data.GetInt();
+			this.ModelPath = data.GetString();
+			this.AvatarPath = data.GetString();
+			this.ModelScale = data.GetFloat();
 		}
 	}
 }
