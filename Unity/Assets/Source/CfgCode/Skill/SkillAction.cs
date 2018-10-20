@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class SkillAction : Cfg.Skill.GeneralAction
+	public class SkillAction : Cfg.Skill.GeneralAction
 	{
 		/// <summary>
 		/// 默认后续技能使用期限,用于单个技能多段输出

@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class SphereZone : Cfg.Skill.HitZone
+	public class SphereZone : Cfg.Skill.HitZone
 	{
 		/// <summary>
 		/// 球半径

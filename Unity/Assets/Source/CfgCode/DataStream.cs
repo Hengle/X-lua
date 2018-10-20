@@ -4,14 +4,14 @@ using System.IO;
 using System.Reflection;
 namespace Cfg
 {
-	public  class DataStream
+	public class DataStream
 	{
 		public DataStream(string path, Encoding encoding)
 		{
 			_rows = File.ReadAllLines(path, encoding);
 			_rIndex = _cIndex = 0;
 			if (_rows.Length > 0)
-			_columns = _rows[_rIndex].Split("▃".ToCharArray(),  StringSplitOptions.RemoveEmptyEntries);
+			_columns = _rows[_rIndex].Split("▃".ToCharArray());
 		}
 
 		public int Count { get { return _rows.Length; } }
@@ -68,7 +68,7 @@ namespace Cfg
 			if (_rIndex >= _rows.Length) return;
 			_rIndex++;
 			_cIndex = 0;
-			_columns = _rows[_rIndex].Split("▃".ToCharArray(),  StringSplitOptions.RemoveEmptyEntries);
+			_columns = _rows[_rIndex].Split("▃".ToCharArray());
 		}
 
 		private string Next()

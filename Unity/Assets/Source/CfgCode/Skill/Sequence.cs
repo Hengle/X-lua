@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class Sequence : CfgObject
+	public class Sequence : CfgObject
 	{
 		/// <summary>
 		/// 序列ID

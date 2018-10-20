@@ -9,7 +9,7 @@
 
     <Class Name = "GeneralAction">行为不触发碰撞效果
         <Field Name = "ActionName" Type = "string" Des = "行为名称" />
-        <Field Name = "IsFromOther" Type = "bool" Des = "动作来源" />
+        <!-- <Field Name = "IsFromOther" Type = "bool" Des = "动作来源" /> -->
         <Field Name = "OtherModelName" Type = "string" Des = "其他模型名称,用于套用其他模型动作" />
         <Field Name = "ActionFile" Type = "string" Des = "绑定的动作名称" />
         <Field Name = "PreActionFile" Type = "string" Des = "前摇动作名称" />

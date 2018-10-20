@@ -92,7 +92,6 @@ function Stream:GetCfgSkillGeneralAction()
 	local o = {}
 	setmetatable(o, Cfg.Skill.GeneralAction)
 	o.ActionName = self:GetString()
-	o.IsFromOther = self:GetBool()
 	o.OtherModelName = self:GetString()
 	o.ActionFile = self:GetString()
 	o.PreActionFile = self:GetString()

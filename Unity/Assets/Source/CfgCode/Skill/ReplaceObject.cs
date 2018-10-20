@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class ReplaceObject : Cfg.Skill.Controller
+	public class ReplaceObject : Cfg.Skill.Controller
 	{
 		/// <summary>
 		/// 新对象

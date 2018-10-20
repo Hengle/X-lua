@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class Move : Cfg.Skill.Controller
+	public class Move : Cfg.Skill.Controller
 	{
 		/// <summary>
 		/// 移动方式:0向目标移动 1按指定方向移动

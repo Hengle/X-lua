@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.AllType
 {
-	public  class M2 : Cfg.AllType.SingleClass
+	public class M2 : Cfg.AllType.SingleClass
 	{
 		/// <summary>
 		/// 继承2

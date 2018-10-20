@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class DynamicHit : Cfg.Skill.StaticHit
+	public class DynamicHit : Cfg.Skill.StaticHit
 	{
 		/// <summary>
 		/// 碰撞体绑定对象路径

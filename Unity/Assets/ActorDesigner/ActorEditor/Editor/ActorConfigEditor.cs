@@ -48,15 +48,25 @@
             if (string.IsNullOrEmpty(BaseName)) return;
             AddBaseModelAction(BaseName);
         }
-        public string[] GetActionClips()
+        public List<string> GetActionClips()
         {
-            return _actClips;
+            var clips = HomeConfig.Instance.AllCharacterClips;
+            string assetName = _model.ModelPath;
+            if (clips.ContainsKey(assetName))
+            {
+                if (_clips == null)
+                    _clips = new List<string>(clips[assetName].Keys);
+                return _clips;
+            }
+            else Debug.LogErrorFormat("{0} 模型资源不存在!", assetName);
+            return _emptyClips;
         }
 
+        private static readonly List<string> _emptyClips = new List<string>();
         private ActorConfig _actorCfg;
         private Model _model;
         private string _path;
-        private string[] _actClips = new string[] { "idel", "run", "attack" };
+        private List<string> _clips;
 
         public string Path { get { return _path; } }
         public string MenuItemName { get { return string.Format("{0}/{1}", ActionHomeConfig.MenuItems[GroupType], ModelName); } }
@@ -100,7 +110,7 @@
         }
         private void AddBaseModelAction(string name)
         {
-            var baseModel = HomeConfigPreview.Instance.GetActorEditor(name);
+            var baseModel = HomeConfig.Instance.GetActorEditor(name);
             var modelDict = GetModelActionDict();
             foreach (var item in baseModel.ModelActions)
             {
@@ -160,16 +170,15 @@
             SirenixEditorGUI.BeginBox();
             {
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("模型名称:", ModelName);
-                if (GUILayout.Button("更换", GUILayout.Width(100)))
-                    ModifyModelName();
+                {
+                    EditorGUILayout.BeginVertical();
+                    EditorGUILayout.LabelField("模型名称:", ModelName);
+                    EditorGUILayout.LabelField("继承模型:", BaseName);
+                    EditorGUILayout.EndVertical();
+                    if (GUILayout.Button("更换继承", GUILayout.Height(EditorGUIUtility.singleLineHeight * 2)))
+                        ModifyBaseName();
+                }
                 EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("继承模型:", BaseName);
-                if (GUILayout.Button("更换", GUILayout.Width(100)))
-                    ModifyBaseName();
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.Space();
             }
             SirenixEditorGUI.EndBox();
         }
@@ -229,7 +238,7 @@
                 if (item != null && item.ObjectInstance != null)
                 {
                     ActorConfigEditor model = item.ObjectInstance as ActorConfigEditor;
-                    HomeConfigPreview.Instance.RemoveActor(model);
+                    HomeConfig.Instance.RemoveActor(model);
                     item.Parent.ChildMenuItems.Remove(item);
                     item.MenuTree.Selection.Clear();
                     item.Parent.Select();
@@ -278,7 +287,7 @@
         }
         private void ModifyBaseName()
         {
-            List<string> models = HomeConfigPreview.Instance.GetAllActorList();
+            List<string> models = HomeConfig.Instance.GetAllActorList();
             models.Remove(ModelName);
             SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
             {

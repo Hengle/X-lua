@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 namespace Cfg
 {
-	public  class CfgManager
+	public class CfgManager
 	{
 		/// <summary>
 		/// 配置文件文件夹路径

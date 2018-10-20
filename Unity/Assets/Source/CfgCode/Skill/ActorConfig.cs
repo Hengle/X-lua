@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class ActorConfig : CfgObject
+	public class ActorConfig : CfgObject
 	{
 		/// <summary>
 		/// 模型名称

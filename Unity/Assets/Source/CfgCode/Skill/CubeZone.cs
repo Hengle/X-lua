@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class CubeZone : Cfg.Skill.HitZone
+	public class CubeZone : Cfg.Skill.HitZone
 	{
 		/// <summary>
 		/// 方盒缩放大小

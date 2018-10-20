@@ -116,19 +116,10 @@
 
         public GeneralAction ModelAction { get { return _modelAction; } }
         public string ActionName { get { return string.IsNullOrEmpty(_modelAction.ActionName) ? string.Empty : _modelAction.ActionName; } set { _modelAction.ActionName = value; } }
-        public bool IsFromOther { get { return _modelAction.IsFromOther; } set { _modelAction.IsFromOther = value; } }
+        public bool IsFromOther { get { return string.IsNullOrEmpty(_modelAction.OtherModelName); } }
         public string OtherModelName { get { return string.IsNullOrEmpty(_modelAction.OtherModelName) ? string.Empty : _modelAction.OtherModelName; } set { _modelAction.OtherModelName = value; } }
         public string ActionClip { get { return string.IsNullOrEmpty(_modelAction.ActionFile) ? string.Empty : _modelAction.ActionFile; } set { _modelAction.ActionFile = value; } }
         public bool IsSelected { get; set; }
         public bool IsSkillAction { get { return _isSkillAction; } }
-
-
-        private string DrawName(string name, GUIContent content)
-        {
-            List<string> array = new List<string> { "跑", "站立", "攻击" };
-            int index = array.FindIndex(a => a == name);
-            index = EditorGUILayout.Popup("", 0, array.ToArray());
-            return array[index];
-        }
     }
 }

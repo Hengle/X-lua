@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class Controller : Cfg.Skill.Timeline
+	public class Controller : Cfg.Skill.Timeline
 	{
 		/// <summary>
 		/// 资源对象路径

@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class CastObject : Cfg.Skill.Controller
+	public class CastObject : Cfg.Skill.Controller
 	{
 		/// <summary>
 		/// 是否追踪目标

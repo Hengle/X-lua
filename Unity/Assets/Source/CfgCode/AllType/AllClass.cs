@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.AllType
 {
-	public  class AllClass : CfgObject
+	public class AllClass : CfgObject
 	{
 		/// <summary>
 		/// 常量字符串

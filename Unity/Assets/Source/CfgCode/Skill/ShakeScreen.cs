@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class ShakeScreen : Cfg.Skill.Timeline
+	public class ShakeScreen : Cfg.Skill.Timeline
 	{
 		/// <summary>
 		/// 震屏方式:0水平 1垂直 2混合

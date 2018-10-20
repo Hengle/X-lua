@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg
 {
-	public  class Vector3 : CfgObject
+	public class Vector3 : CfgObject
 	{
 		/// <summary>
 		/// 

@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class StaticHit : Cfg.Skill.Timeline
+	public class StaticHit : Cfg.Skill.Timeline
 	{
 		/// <summary>
 		/// 碰撞区域

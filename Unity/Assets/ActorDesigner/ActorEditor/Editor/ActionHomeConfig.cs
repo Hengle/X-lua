@@ -41,23 +41,26 @@
         [LabelText("角色资源目录"), PropertyOrder(-98)]
         public string CharacterRelativeDir = "";
         [FolderPath(RequireExistingPath = true), BoxGroup("Config", showLabel: false)]
-        [LabelText("外貌资源目录"), PropertyOrder(-98)]
+        [LabelText("Avatar资源目录"), PropertyOrder(-98)]
         public string AvatarRelativeDir = "";
+        [FolderPath(RequireExistingPath = true), BoxGroup("Config", showLabel: false)]
+        [LabelText("特效资源目录"), PropertyOrder(-98)]
+        public string EffectRelativeDir = "";
         [FolderPath(RequireExistingPath = true), BoxGroup("Config", showLabel: false)]
         [LabelText("碰撞体资源目录"), PropertyOrder(-98)]
         public string ColliderRelativeDir = "";
     }
 
     [Serializable]
-    internal class HomeConfigPreview
+    internal class HomeConfig
     {
-        private static HomeConfigPreview _instance;
-        public static HomeConfigPreview Instance
+        private static HomeConfig _instance;
+        public static HomeConfig Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new HomeConfigPreview();
+                    _instance = new HomeConfig();
                 return _instance;
             }
         }
@@ -80,9 +83,19 @@
             CfgManager.ConfigDir = ConfigDir;
             CfgManager.LoadAll();
 
-            EUtil.GetAssetsInSubFolderRecursively(_config.CharacterRelativeDir, "*.prefab", ref _allCharacter);
-            EUtil.GetAssetsInSubFolderRecursively(_config.AvatarRelativeDir, "*.prefab", ref _allCharacter);
+            //--初始化资源路径
+            EUtil.GetAssetsInSubFolderRecursively(_config.CharacterRelativeDir, "*.prefab", ref AllCharacter);
+            EUtil.GetAssetsInSubFolderRecursively(_config.AvatarRelativeDir, "*.prefab", ref AllAvatar);
+            EUtil.GetAssetsInSubFolderRecursively(_config.EffectRelativeDir, "*.prefab", ref AllEffects);
+            foreach (var item in AllCharacter)
+            {
+                string searchDir = item.Value.Substring(0, item.Value.LastIndexOf(@"/prefab")) + "/clips";
+                var selfClips = new Dictionary<string, string>();
+                EUtil.GetAssetsInSubFolderRecursively(searchDir, "*.anim", ref selfClips);
+                AllCharacterClips[item.Key] = selfClips;
+            }
 
+            //--加载行为配置
             foreach (var model in CfgManager.Model)
             {
                 var modelName = model.Key;
@@ -159,8 +172,6 @@
         /// 模型分组信息 key-分组类型 value-模型行为编辑器
         /// </summary>
         private Dictionary<GroupType, List<ActorConfigEditor>> _modelGroupDict = new Dictionary<GroupType, List<ActorConfigEditor>>();
-        private Dictionary<string, string> _allCharacter = new Dictionary<string, string>();
-        private Dictionary<string, string> _allAvatar = new Dictionary<string, string>();
 
         public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict
         {
@@ -171,6 +182,10 @@
                 return _modelGroupDict;
             }
         }
+        public Dictionary<string, Dictionary<string, string>> AllCharacterClips = new Dictionary<string, Dictionary<string, string>>();
+        public Dictionary<string, string> AllCharacter = new Dictionary<string, string>();
+        public Dictionary<string, string> AllAvatar = new Dictionary<string, string>();
+        public Dictionary<string, string> AllEffects = new Dictionary<string, string>();
         public GameObject Self { get; private set; }
         public GameObject Target { get; private set; }
 
@@ -210,12 +225,12 @@
         //-- 加载角色行为时加载资源
         public GameObject LoadModel(string modelName)
         {
-            if (!_allCharacter.ContainsKey(modelName))
+            if (!AllCharacter.ContainsKey(modelName))
             {
                 Debug.LogErrorFormat("[加载]{0}模型不存在", modelName);
                 return GameObject.CreatePrimitive(PrimitiveType.Sphere);
             }
-            string path = EUtil.FilePath2UnityPath(_allCharacter[modelName]);
+            string path = EUtil.FilePath2UnityPath(AllCharacter[modelName]);
             GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             return model;
         }
@@ -226,22 +241,24 @@
             return col;
         }
 
+
         public void Destroy()
         {
             //保存所有配置
             SaveAll();
             ClearAll();
-
             _instance = null;
         }
         private void ClearAll()
         {
-            ModelGroupDict.Clear();
+            _modelGroupDict.Clear();
             CfgManager.Clear();
             _clipboard.Clear();
             _modelDict.Clear();
-            _allCharacter.Clear();
-            _allAvatar.Clear();
+            AllCharacter.Clear();
+            AllAvatar.Clear();
+            AllCharacterClips.Clear();
+            AllEffects.Clear();
         }
 
 

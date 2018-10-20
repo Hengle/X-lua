@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Character
 {
-	public  class Model : CfgObject
+	public class Model : CfgObject
 	{
 		/// <summary>
 		/// 模型名称

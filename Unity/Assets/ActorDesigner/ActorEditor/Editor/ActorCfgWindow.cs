@@ -17,7 +17,7 @@
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
             window.minSize = new Vector2(400, 500);
             ActionHomeConfig.LoadInstanceIfAssetExists();
-            HomeConfigPreview.Instance.LoadAll();
+            HomeConfig.Instance.LoadAll();
         }
 
 
@@ -28,7 +28,7 @@
         public void RefreshTree()
         {
             if (MenuTree == null) return;
-            foreach (var group in HomeConfigPreview.Instance.ModelGroupDict)
+            foreach (var group in HomeConfig.Instance.ModelGroupDict)
             {
                 foreach (var item in group.Value)
                 {
@@ -45,9 +45,9 @@
                 if (item.Key != GroupType.None)
                     tree.Add(item.Value, null, EditorIcons.Table);
                 else
-                    tree.Add("主页", HomeConfigPreview.Instance, EditorIcons.House);
+                    tree.Add("主页", HomeConfig.Instance, EditorIcons.House);
             }
-            foreach (var group in HomeConfigPreview.Instance.ModelGroupDict)
+            foreach (var group in HomeConfig.Instance.ModelGroupDict)
             {
                 foreach (var item in group.Value)
                 {
@@ -74,15 +74,6 @@
                     GUILayout.Label(selected.Name, SirenixGUIStyles.BoldLabel);
                     GUI.color = old;
                 }
-
-                //if (SirenixEditorGUI.ToolbarButton(_createConfig))
-                //{
-                //    HomeConfigPreview.Instance.Create((model) =>
-                //    {
-                //        HomeConfigPreview.Instance.AddActor(model);
-                //        MenuTree.AddObjectAtPath(model.MenuItemName, model);
-                //    });
-                //}
             }
             SirenixEditorGUI.EndHorizontalToolbar();
         }
@@ -91,7 +82,7 @@
         {
             base.OnDestroy();
 
-            HomeConfigPreview.Instance.Destroy();
+            HomeConfig.Instance.Destroy();
 
             EditorUtility.UnloadUnusedAssetsImmediate(true);
             EditorUtility.ClearProgressBar();

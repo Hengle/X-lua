@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class Timeline : CfgObject
+	public class Timeline : CfgObject
 	{
 		/// <summary>
 		/// 起始帧

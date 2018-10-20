@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class PlayParticle : Cfg.Skill.Timeline
+	public class PlayParticle : Cfg.Skill.Timeline
 	{
 		/// <summary>
 		/// 粒子资源的路径

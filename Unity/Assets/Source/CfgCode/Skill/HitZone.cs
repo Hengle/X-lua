@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class HitZone : CfgObject
+	public class HitZone : CfgObject
 	{
 		/// <summary>
 		/// 打击区域id

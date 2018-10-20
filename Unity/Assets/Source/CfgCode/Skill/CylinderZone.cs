@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class CylinderZone : Cfg.Skill.HitZone
+	public class CylinderZone : Cfg.Skill.HitZone
 	{
 		/// <summary>
 		/// 圆半径

@@ -4,16 +4,12 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class GeneralAction : CfgObject
+	public class GeneralAction : CfgObject
 	{
 		/// <summary>
 		/// 行为名称
 		/// <summary>
 		public readonly string ActionName;
-		/// <summary>
-		/// 动作来源
-		/// <summary>
-		public readonly bool IsFromOther;
 		/// <summary>
 		/// 其他模型名称,用于套用其他模型动作
 		/// <summary>
@@ -46,7 +42,6 @@ namespace Cfg.Skill
 		public GeneralAction(DataStream data)
 		{
 			this.ActionName = data.GetString();
-			this.IsFromOther = data.GetBool();
 			this.OtherModelName = data.GetString();
 			this.ActionFile = data.GetString();
 			this.PreActionFile = data.GetString();

@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class Buff : Cfg.Skill.PlayParticle
+	public class Buff : Cfg.Skill.PlayParticle
 	{
 		/// <summary>
 		/// Buff参数集合ID

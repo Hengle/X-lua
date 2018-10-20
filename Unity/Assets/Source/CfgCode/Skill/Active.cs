@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class Active : Cfg.Skill.Controller
+	public class Active : Cfg.Skill.Controller
 	{
 		/// <summary>
 		/// 对象激活隐藏控制

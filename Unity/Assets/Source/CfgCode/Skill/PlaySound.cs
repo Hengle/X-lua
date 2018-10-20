@@ -4,7 +4,7 @@ using Cfg;
 
 namespace Cfg.Skill
 {
-	public  class PlaySound : Cfg.Skill.Timeline
+	public class PlaySound : Cfg.Skill.Timeline
 	{
 		/// <summary>
 		/// 音效资源路径
