@@ -33,7 +33,7 @@
                 {
                     var action = new ModelActionEditor(this, item, false);
                     action.ActState = ModelActionEditor.ActionState.New;
-                    ModelActions.Add(action);
+                    GeneralActions.Add(action);
                 }
                 foreach (var item in _actorCfg.SkillActions)
                 {
@@ -111,8 +111,8 @@
         private void AddBaseModelAction(string name)
         {
             var baseModel = HomeConfig.Instance.GetActorEditor(name);
-            var modelDict = GetModelActionDict();
-            foreach (var item in baseModel.ModelActions)
+            var modelDict = GetGeneralActionDict();
+            foreach (var item in baseModel.GeneralActions)
             {
                 if (modelDict.ContainsKey(item.ActionName))
                 {
@@ -123,10 +123,10 @@
                 {
                     var action = new ModelActionEditor(item);
                     action.ActState = ModelActionEditor.ActionState.Inherit;
-                    ModelActions.Add(action);
+                    GeneralActions.Add(action);
                 }
             }
-            var skillDict = GetModelActionDict();
+            var skillDict = GetSkillActionDict();
             foreach (var item in baseModel.SkillActions)
             {
                 if (skillDict.ContainsKey(item.ActionName))
@@ -142,10 +142,10 @@
                 }
             }
         }
-        Dictionary<string, ModelActionEditor> GetModelActionDict()
+        Dictionary<string, ModelActionEditor> GetGeneralActionDict()
         {
             var pairs = new Dictionary<string, ModelActionEditor>();
-            foreach (var item in ModelActions)
+            foreach (var item in GeneralActions)
             {
                 pairs.Add(item.ActionName, item);
             }
@@ -172,10 +172,10 @@
                 EditorGUILayout.BeginHorizontal();
                 {
                     EditorGUILayout.BeginVertical();
-                    EditorGUILayout.LabelField("模型名称:", ModelName);
-                    EditorGUILayout.LabelField("继承模型:", BaseName);
+                    EditorGUILayout.LabelField("模型名称:", ModelName, SirenixGUIStyles.MessageBox);
+                    EditorGUILayout.LabelField("继承模型:", BaseName, SirenixGUIStyles.MessageBox);
                     EditorGUILayout.EndVertical();
-                    if (GUILayout.Button("更换继承", GUILayout.Height(EditorGUIUtility.singleLineHeight * 2)))
+                    if (GUILayout.Button("更换继承", GUILayout.Height(EditorGUIUtility.singleLineHeight * 2 + 10)))
                         ModifyBaseName();
                 }
                 EditorGUILayout.EndHorizontal();
@@ -187,7 +187,7 @@
         private void CopyActions()
         {
             List<ModelActionEditor> copy = new List<ModelActionEditor>();
-            foreach (var item in ModelActions)
+            foreach (var item in GeneralActions)
                 if (item.IsSelected) copy.Add(item);
             foreach (var item in SkillActions)
                 if (item.IsSelected) copy.Add(item);
@@ -204,7 +204,7 @@
                     if (item.IsSkillAction)
                         SkillActions.Add(item);
                     else
-                        ModelActions.Add(item);
+                        GeneralActions.Add(item);
                     item.IsSelected = false;
                 }
                 Clipboard.Clear();
@@ -219,7 +219,7 @@
         {
             _actorCfg.GeneralActions.Clear();
             _actorCfg.SkillActions.Clear();
-            foreach (var item in ModelActions)
+            foreach (var item in GeneralActions)
                 _actorCfg.GeneralActions.Add(item.ModelAction);
             foreach (var item in SkillActions)
                 _actorCfg.SkillActions.Add(item.ModelAction as SkillAction);
@@ -252,7 +252,7 @@
         private void OnModelActionsHeader() { OnHeaderGUI(); }
         [LabelText(" "), Space(-5f), PropertyOrder(15)]
         [ListDrawerSettings(OnTitleBarGUI = "OnGUIModelAction", CustomAddFunction = "CreateModelAction")]
-        public List<ModelActionEditor> ModelActions = new List<ModelActionEditor>();
+        public List<ModelActionEditor> GeneralActions = new List<ModelActionEditor>();
         [Title("技能动作列表", bold: true), OnInspectorGUI, PropertyOrder(20)]
         private void OnSkillActionsHeader() { OnHeaderGUI(); }
         [LabelText(" "), Space(-5f), PropertyOrder(25)]
@@ -302,17 +302,17 @@
         {
             var action = new ModelActionEditor(this, new GeneralAction(), false);
             action.ActState = ModelActionEditor.ActionState.New;
-            ActionWindow.Init(this, action, (act) => ModelActions.Add(act));
+            ActionWindow.Init(this, action, (act) => GeneralActions.Add(act));
         }
         private void CreateSkillAction()
         {
             var action = new ModelActionEditor(this, new SkillAction(), true);
             action.ActState = ModelActionEditor.ActionState.New;
-            ActionWindow.Init(this, action, (act) => ModelActions.Add(act));
+            ActionWindow.Init(this, action, (act) => GeneralActions.Add(act));
         }
         private void OnGUIModelAction()
         {
-            OnTitleBarGUI(ModelActions, ref _isSelected_Model);
+            OnTitleBarGUI(GeneralActions, ref _isSelected_Model);
         }
         private void OnGUISkilllAction()
         {

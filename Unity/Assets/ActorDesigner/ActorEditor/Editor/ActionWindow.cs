@@ -34,8 +34,6 @@
                 window.LoadOtherAction(modelAction.OtherModelName);
         }
 
-        readonly Color _color = new Color(0.3f, 0.8f, 0.8f);
-
         GUIStyle _nameStyle;
         ActorConfigEditor _otherActorEditor;
         ActorConfigEditor _selfActorEditor;
@@ -90,53 +88,30 @@
 
                 EditorGUILayout.BeginHorizontal();
                 {
-                    GUIHelper.PushColor(_color);
-                    GUILayout.Label("其他角色", SirenixGUIStyles.BoldLabel, GUILayout.Width(148));
+                    GUILayout.Label("其他角色", SirenixGUIStyles.BoldLabel, GUILayout.Width(142));
                     GUILayout.Label(_otherModelName, EditorStyles.textField);
-                    if (GUILayout.Button("修改", GUILayout.Width(45)))
+                    if (GUILayout.Button("修改", EditorStyles.miniButton, GUILayout.Width(45)))
                     {
                         var list = HomeConfig.Instance.GetAllActorList();
                         list.Remove(_selfActorEditor.ModelName);
                         SimplePopupCreator.ShowDialog(list, (name) => LoadOtherAction(name));
                     }
-                    if (GUILayout.Button("X", GUILayout.Width(20), GUILayout.Height(EditorGUIUtility.singleLineHeight)))
+                    if (GUILayout.Button("X", EditorStyles.miniButton, GUILayout.Width(20), GUILayout.Height(EditorGUIUtility.singleLineHeight)))
                     {
                         LoadSelfAction();
                     }
-                    GUIHelper.PopColor();
                 }
                 EditorGUILayout.EndHorizontal();
 
-                //EditorGUILayout.BeginHorizontal();
-                //{
-                //    GUILayout.Label("动画来源", GUILayout.Width(145));
-                //    if (GUILayout.Button("自己", IsFromOther ? SirenixGUIStyles.ButtonLeft : SirenixGUIStyles.ButtonLeftSelected))
-                //    {
-                //        _clipName = string.Empty;
-                //        _otherModel = string.Empty;
-                //        _actClipList = _selfModelEditor.GetActionClips();
-                //    }
-                //    GUILayout.Button("其他", IsFromOther ? SirenixGUIStyles.ButtonRightSelected : SirenixGUIStyles.ButtonRight);
-                //}
-                //EditorGUILayout.EndHorizontal();
-
-                if (IsFromOther)
-                    GUIHelper.PushGUIEnabled(!string.IsNullOrEmpty(_otherModelName));
                 EditorGUILayout.BeginHorizontal();
                 {
-                    GUILayout.Label("动画文件");
+                    GUILayout.Label("动画文件", SirenixGUIStyles.BoldLabel, GUILayout.Width(142));
                     if (GUILayout.Button(_clipName, SirenixGUIStyles.Popup))
-                        SimplePopupCreator.ShowDialog(_actClipList, (name) =>
-                        {
-                            _clipName = name;
-                        });
-                    if (GUILayout.Button("X", GUILayout.Width(20), GUILayout.Height(EditorGUIUtility.singleLineHeight)))
+                        SimplePopupCreator.ShowDialog(_actClipList, (name) => _clipName = name);
+                    if (GUILayout.Button("X", EditorStyles.miniButton, GUILayout.Width(20), GUILayout.Height(EditorGUIUtility.singleLineHeight)))
                         _clipName = string.Empty;
                 }
                 EditorGUILayout.EndHorizontal();
-                if (IsFromOther)
-                    GUIHelper.PopGUIEnabled();
-
 
                 GUILayout.FlexibleSpace();
                 EditorGUILayout.BeginHorizontal();
@@ -149,27 +124,10 @@
 
                         bool hasSame = false;
                         if (!_modelAction.IsSkillAction)
-                        {
-                            foreach (var item in _selfActorEditor.ModelActions)
-                            {
-                                if (item.ActionName.Equals(_actionName))
-                                {
-                                    hasSame = true;
-                                    break;
-                                }
-                            }
-                        }
+                            hasSame = _selfActorEditor.GeneralActions.Exists(a => a.ActionName.Equals(_actionName));
                         else
-                        {
-                            foreach (var item in _selfActorEditor.SkillActions)
-                            {
-                                if (item.ActionName.Equals(_actionName))
-                                {
-                                    hasSame = true;
-                                    break;
-                                }
-                            }
-                        }
+                            hasSame = _selfActorEditor.SkillActions.Exists(a => a.ActionName.Equals(_actionName));
+
                         if (!hasSame)
                         {
                             if (_result != null) _result(_modelAction);
