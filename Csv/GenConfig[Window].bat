@@ -5,7 +5,7 @@ ConfigGen.exe -optMode all ^
 -configXml %rootPath%\Csv\Cfg.xml ^
 -dataDir %rootPath%\GamePlayer\Config\Csv ^
 -luaDir %rootPath%\Code\Scripts\Cfg ^
--codeDir %rootPath%\Unity\Assets\Source\CfgCode
+-codeDir %rootPath%\Unity\Assets\Source\Config\Csv
 
 
 

@@ -7,18 +7,29 @@
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEditor;
+    using Flux;
 
     [Serializable]
     public class ModelActionEditor
     {
+        public enum ActionState
+        {
+            New,
+            Inherit,
+            Override,
+        }
         public const int INHERIT_WIDTH = 50;
         public const int ACT_NAME_WIDTH = 100;
         public const int ACT_SRC_WIDTH = 100;
         public const int ACT_CLIP_WIDTH = 100;
 
-        private GeneralAction _modelAction;
-        private bool _isSkillAction = false;
-        private ActorConfigEditor _modelEditor;
+        [HideInInspector]
+        public readonly GeneralAction ModelAction;
+        [HideInInspector]
+        public readonly bool IsSkillAction = false;
+
+        private ActorConfigEditor _actorEditor;
+     
 
         [OnInspectorGUI]
         private void OnGUI()
@@ -54,9 +65,10 @@
             GUIHelper.PushGUIPositionOffset(Vector2.up * -4f);
             if (GUILayout.Button("加载", SirenixGUIStyles.ButtonLeft))
             {
-                LoadTimeline();
+                LoadSequence();
             }
-            if (GUILayout.Button("修改", SirenixGUIStyles.ButtonRight))
+            bool canOverride = ActState == ActionState.Inherit;
+            if (GUILayout.Button(canOverride? "重写" : "修改", SirenixGUIStyles.ButtonRight))
             {
                 Modifier();
             }
@@ -70,38 +82,67 @@
             if (isSelected)
                 GUIHelper.PopColor();
             GUIHelper.PopGUIPositionOffset();
+            if (ActState != ActionState.Inherit)
+            {
+                if (SirenixEditorGUI.IconButton(EditorIcons.X))
+                {
+                    if (ActState == ActionState.Override)
+                    {
+                        ActState = ActionState.Inherit;
+                        var baseEditor = HomeConfig.Instance.GetActorEditor(_actorEditor.BaseName);
+                        ModelActionEditor action = null;
+                        if (IsSkillAction)
+                            action = baseEditor.SkillActions.Find(a => a.ActionName.Equals(ActionName));
+                        else
+                            action = baseEditor.GeneralActions.Find(a => a.ActionName.Equals(ActionName));
+                        OtherModelName = action.OtherModelName;
+                        ActionClip = action.ActionClip;
+                    }
+                    else
+                    {
+                        if (IsSkillAction)
+                            _actorEditor.SkillActions.Remove(this);
+                        else
+                            _actorEditor.GeneralActions.Remove(this);
+                    }
+                }
+            }
+            else
+            {
+                GUILayout.Label("", GUILayout.Width(18), GUILayout.Height(18));
+            }
 
             EditorGUILayout.EndHorizontal();
         }
-        private void LoadTimeline()
+        private void LoadSequence()
         {
-
+            HomeConfig.Instance.OpenSequence(_actorEditor, this);
         }
         private void Modifier()
         {
-            ActionWindow.Init(_modelEditor, this);
+            ActionWindow.Init(_actorEditor, this, false, (a) =>
+            {
+                if (a.ActState == ActionState.Inherit)
+                    a.ActState = ActionState.Override;
+                OnCfgChange();
+            });
         }
 
-        public enum ActionState
-        {
-            New,
-            Inherit,
-            Override,
-        }
         public ActionState ActState { get; set; }
         public ModelActionEditor() { }
-        public ModelActionEditor(ActorConfigEditor modelEditor, GeneralAction modelAction, bool isSkill)
+        public ModelActionEditor(ActorConfigEditor actorEditor, GeneralAction modelAction, bool isSkill)
         {
-            _modelEditor = modelEditor;
-            _modelAction = modelAction;
-            _isSkillAction = isSkill;
+            ModelAction = modelAction;
+            IsSkillAction = isSkill;
+
+            _actorEditor = actorEditor;
         }
-        public ModelActionEditor(ModelActionEditor actionEditor)
+        public void ResetActorEditor(ActorConfigEditor actorEditor)
         {
-            _modelEditor = actionEditor._modelEditor;
-            _modelAction = actionEditor._modelAction;
-            _isSkillAction = actionEditor._isSkillAction;
+            _actorEditor = actorEditor;
+            OnCfgChange();
         }
+
         public override bool Equals(object obj)
         {
             ModelActionEditor other = obj as ModelActionEditor;
@@ -114,12 +155,18 @@
             return result;
         }
 
-        public GeneralAction ModelAction { get { return _modelAction; } }
-        public string ActionName { get { return string.IsNullOrEmpty(_modelAction.ActionName) ? string.Empty : _modelAction.ActionName; } set { _modelAction.ActionName = value; } }
-        public bool IsFromOther { get { return string.IsNullOrEmpty(_modelAction.OtherModelName); } }
-        public string OtherModelName { get { return string.IsNullOrEmpty(_modelAction.OtherModelName) ? string.Empty : _modelAction.OtherModelName; } set { _modelAction.OtherModelName = value; } }
-        public string ActionClip { get { return string.IsNullOrEmpty(_modelAction.ActionFile) ? string.Empty : _modelAction.ActionFile; } set { _modelAction.ActionFile = value; } }
+        public bool IsFromOther { get { return !string.IsNullOrEmpty(ModelAction.OtherModelName); } }
+        [OnValueChanged("OnCfgChange")]
+        public string ActionName { get { return string.IsNullOrEmpty(ModelAction.ActionName) ? string.Empty : ModelAction.ActionName; } set { ModelAction.ActionName = value; } }        
+        [OnValueChanged("OnCfgChange")]
+        public string OtherModelName { get { return string.IsNullOrEmpty(ModelAction.OtherModelName) ? string.Empty : ModelAction.OtherModelName; } set { ModelAction.OtherModelName = value; } }
+        [OnValueChanged("OnCfgChange")]
+        public string ActionClip { get { return string.IsNullOrEmpty(ModelAction.ActionClip) ? string.Empty : ModelAction.ActionClip; } set { ModelAction.ActionClip = value; } }
         public bool IsSelected { get; set; }
-        public bool IsSkillAction { get { return _isSkillAction; } }
+
+        private void OnCfgChange()
+        {
+            _actorEditor.OnCfgChange();
+        }
     }
 }

@@ -10,7 +10,7 @@
 
     internal class ActionWindow : OdinEditorWindow
     {
-        public static void Init(ActorConfigEditor actorEditor, ModelActionEditor modelAction, Action<ModelActionEditor> result = null)
+        public static void Init(ActorConfigEditor actorEditor, ModelActionEditor modelAction, bool isAddAction, Action<ModelActionEditor> result = null)
         {
             var window = GetWindow<ActionWindow>(true, "行为配置窗口", true);
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(400, 250);
@@ -22,6 +22,7 @@
             window._nameStyle.fontStyle = FontStyle.Bold;
             window._nameStyle.normal.textColor = Color.white;
 
+            window._isAddAction = isAddAction;
             window._selfActorEditor = actorEditor;
             window._modelAction = modelAction;
             window._actionName = modelAction.ActionName;
@@ -43,6 +44,7 @@
         string _actionName = string.Empty;
         string _clipName = string.Empty;
         string _otherModelName = string.Empty;
+        bool _isAddAction = false;
         List<string> _actClipList;
         bool IsFromOther { get { return _modelAction.IsFromOther; } }
 
@@ -74,23 +76,16 @@
                 SirenixEditorGUI.BeginBoxHeader();
                 GUILayout.Label(_selfActorEditor.ModelName, _nameStyle);
                 SirenixEditorGUI.EndBoxHeader();
-                switch (_modelAction.ActState)
-                {
-                    case ModelActionEditor.ActionState.New:
-                        _actionName = EditorGUILayout.TextField("动作行为", _actionName);
-                        break;
-                    case ModelActionEditor.ActionState.Inherit:
-                    case ModelActionEditor.ActionState.Override:
-                        GUILayout.Label("动作行为");
-                        GUILayout.Label(_actionName, EditorStyles.textField, GUILayout.Width(EditorGUIUtility.fieldWidth));
-                        break;
-                }
+                bool isNew = _modelAction.ActState == ModelActionEditor.ActionState.New;
+                if (!isNew) GUIHelper.PushGUIEnabled(false);
+                _actionName = EditorGUILayout.TextField("动作行为", _actionName);
+                if (!isNew) GUIHelper.PushGUIEnabled(true);
+
 
                 EditorGUILayout.BeginHorizontal();
                 {
                     GUILayout.Label("其他角色", SirenixGUIStyles.BoldLabel, GUILayout.Width(142));
-                    GUILayout.Label(_otherModelName, EditorStyles.textField);
-                    if (GUILayout.Button("修改", EditorStyles.miniButton, GUILayout.Width(45)))
+                    if (GUILayout.Button(_otherModelName, EditorStyles.textField))
                     {
                         var list = HomeConfig.Instance.GetAllActorList();
                         list.Remove(_selfActorEditor.ModelName);
@@ -118,24 +113,35 @@
                 {
                     if (GUILayout.Button("修改行为", GUILayout.Height(50)))
                     {
-                        _modelAction.ActionName = _actionName;
-                        _modelAction.ActionClip = _clipName;
-                        _modelAction.OtherModelName = _otherModelName;
-
-                        bool hasSame = false;
-                        if (!_modelAction.IsSkillAction)
-                            hasSame = _selfActorEditor.GeneralActions.Exists(a => a.ActionName.Equals(_actionName));
-                        else
-                            hasSame = _selfActorEditor.SkillActions.Exists(a => a.ActionName.Equals(_actionName));
-
-                        if (!hasSame)
+                        if (_isAddAction)
                         {
-                            if (_result != null) _result(_modelAction);
-                            Close();
+                            bool hasSame = false;
+                            if (!_modelAction.IsSkillAction)
+                                hasSame = _selfActorEditor.GeneralActions.Exists(a => a.ActionName.Equals(_actionName));
+                            else
+                                hasSame = _selfActorEditor.SkillActions.Exists(a => a.ActionName.Equals(_actionName));
+
+                            if (!hasSame)
+                            {
+                                _modelAction.ActionName = _actionName;
+                                _modelAction.ActionClip = _clipName;
+                                _modelAction.OtherModelName = _otherModelName;
+                                _selfActorEditor.SetChildAction(_modelAction);
+                                if (_result != null) _result(_modelAction);
+                                Close();
+                            }
+                            else
+                            {
+                                EditorUtility.DisplayDialog("动作配置错误", "动作名重复,请重新配置!!!", "确定");
+                            }
                         }
                         else
                         {
-                            EditorUtility.DisplayDialog("动作配置错误", "动作名重复,请重新配置!!!", "确定");
+                            _modelAction.ActionName = _actionName;
+                            _modelAction.ActionClip = _clipName;
+                            _modelAction.OtherModelName = _otherModelName;
+                            if (_result != null) _result(_modelAction);
+                            Close();
                         }
                     }
                 }

@@ -7,6 +7,7 @@
     using Sirenix.Utilities.Editor;
     using Sirenix.OdinInspector.Editor;
     using Cfg.Character;
+    using System.Collections.Generic;
 
     internal class ActorCfgWindow : OdinMenuEditorWindow
     {
@@ -17,13 +18,13 @@
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
             window.minSize = new Vector2(400, 500);
             ActionHomeConfig.LoadInstanceIfAssetExists();
-            HomeConfig.Instance.LoadAll();
+            HomeConfig.Instance.LoadAll();            
         }
 
 
         Rect _windowRect = new Rect(100, 100, 200, 200);
-        //GUIContent _createConfig = new GUIContent("创建角色");
         ActorConfigEditor _actor;
+        List<OdinMenuItem> _currentItems = new List<OdinMenuItem>();
 
         public void RefreshTree()
         {
@@ -55,7 +56,19 @@
                 }
             }
 
+            tree.Selection.SelectionChanged += OnMenuItemChange;
             return tree;
+        }
+
+        protected void OnMenuItemChange(SelectionChangedType state)
+        {
+            foreach (var item in _currentItems)
+            {
+                if (item.Value is ActorConfigEditor)
+                    (item.Value as ActorConfigEditor).ReselectedState();
+            }
+            _currentItems.Clear();
+            _currentItems.AddRange(MenuTree.Selection);
         }
 
         protected override void OnBeginDrawEditors()
@@ -74,20 +87,24 @@
                     GUILayout.Label(selected.Name, SirenixGUIStyles.BoldLabel);
                     GUI.color = old;
                 }
+                if (SirenixEditorGUI.ToolbarButton("检查"))
+                {
+                    HomeConfig.Instance.CheckAll();
+                }
             }
             SirenixEditorGUI.EndHorizontalToolbar();
         }
-
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
             HomeConfig.Instance.Destroy();
 
+            Clipboard.Clear();
             EditorUtility.UnloadUnusedAssetsImmediate(true);
             EditorUtility.ClearProgressBar();
             AssetDatabase.Refresh();
-
+           
             Debug.Log("[模型配置窗口]关闭~~");
         }
 

@@ -1,7 +1,21 @@
-<Root type ="ActorConfig">
+<Root Type ="ActorConfig">
 <ModelName>七号</ModelName>
-<BaseModelName></BaseModelName>
+<BaseModelName>NPC模型</BaseModelName>
 <GeneralActions>
+<Pair>
+<Key>走</Key>
+<Value Type ="GeneralAction">
+<ActionName>走</ActionName>
+<OtherModelName></OtherModelName>
+<ActionClip>walk</ActionClip>
+<PreActionFile></PreActionFile>
+<PostActionFile></PostActionFile>
+<ActionSpeed>0</ActionSpeed>
+<LoopTimes>0</LoopTimes>
+<Timelines>
+</Timelines>
+</Value>
+</Pair>
 </GeneralActions>
 <SkillActions>
 </SkillActions>

@@ -3,15 +3,15 @@
     <Class Name = "ActorConfig"  Index = "ModelName" DataPath="ActorCfg">
         <Field Name = "ModelName" Type = "string" Des = "模型名称" />        
         <Field Name = "BaseModelName" Type = "string" Des = "基础模型名称"/>
-        <Field Name = "GeneralActions" Type = "list:GeneralAction" Des = "普通动作" />
-        <Field Name = "SkillActions" Type = "list:SkillAction" Des = "技能动作"/>
+        <Field Name = "GeneralActions" Type = "dict:string:GeneralAction" Des = "普通动作" />
+        <Field Name = "SkillActions" Type = "dict:string:SkillAction" Des = "技能动作"/>
     </Class>
 
     <Class Name = "GeneralAction">行为不触发碰撞效果
         <Field Name = "ActionName" Type = "string" Des = "行为名称" />
         <!-- <Field Name = "IsFromOther" Type = "bool" Des = "动作来源" /> -->
         <Field Name = "OtherModelName" Type = "string" Des = "其他模型名称,用于套用其他模型动作" />
-        <Field Name = "ActionFile" Type = "string" Des = "绑定的动作名称" />
+        <Field Name = "ActionClip" Type = "string" Des = "绑定的动作名称" />
         <Field Name = "PreActionFile" Type = "string" Des = "前摇动作名称" />
         <Field Name = "PostActionFile" Type = "string" Des = "后摇动作名称" />
         <Field Name = "ActionSpeed" Type = "float" Des = "动作播放速率" />

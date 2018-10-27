@@ -16,9 +16,21 @@
     [Serializable]
     public class ActorConfigEditor
     {
+        private static readonly List<string> _emptyClips = new List<string>();
+
+        private ActorConfig _actorCfg;
+        private string _path;
+        private Model _model;
+        private List<string> _clips;
+        private Dictionary<string, ActorConfigEditor> _childActor = new Dictionary<string, ActorConfigEditor>();
+        private bool _clearAllSelected = false;
+
+
+
+
+        public bool IsDirty { get; private set; }
         public ActorConfig ActorCfg { get { return _actorCfg; } }
         public ActorConfigEditor() { }
-
         public ActorConfigEditor(string path, ActorConfig cfg = null)
         {
             _path = path;
@@ -31,22 +43,30 @@
             {
                 foreach (var item in _actorCfg.GeneralActions)
                 {
-                    var action = new ModelActionEditor(this, item, false);
+                    var action = new ModelActionEditor(this, item.Value, false);
                     action.ActState = ModelActionEditor.ActionState.New;
                     GeneralActions.Add(action);
                 }
                 foreach (var item in _actorCfg.SkillActions)
                 {
-                    var action = new ModelActionEditor(this, item, true);
+                    var action = new ModelActionEditor(this, item.Value, true);
                     action.ActState = ModelActionEditor.ActionState.New;
                     SkillActions.Add(action);
                 }
             }
         }
-        public void Init()
+        public void InitBaseModelAction()
         {
-            if (string.IsNullOrEmpty(BaseName)) return;
-            AddBaseModelAction(BaseName);
+            string name = BaseName;
+            if (string.IsNullOrEmpty(name))
+            {
+                RemoveAllBaseAction();
+                return;
+            }
+
+            //--配置基类模型行为
+            var baseModel = HomeConfig.Instance.GetActorEditor(name);
+            baseModel.AddChildActor(this);
         }
         public List<string> GetActionClips()
         {
@@ -58,15 +78,49 @@
                     _clips = new List<string>(clips[assetName].Keys);
                 return _clips;
             }
-            else Debug.LogErrorFormat("{0} 模型资源不存在!", assetName);
+            else Debug.LogErrorFormat("[获取Clips]{0} 模型资源不存在!", assetName);
             return _emptyClips;
         }
+        /// <summary>
+        /// 重置旋转状态
+        /// </summary>
+        public void ReselectedState()
+        {
+            foreach (var item in GeneralActions)
+                item.IsSelected = false;
+            foreach (var item in SkillActions)
+                item.IsSelected = false;
+            _clearAllSelected = true;
+        }
+        public void SetChildAction(ModelActionEditor action)
+        {
+            foreach (var item in _childActor)
+            {
+                ActorConfigEditor actor = item.Value;
+                List<ModelActionEditor> list = null;
+                if (action.IsSkillAction)
+                    list = actor.SkillActions;
+                else
+                    list = actor.GeneralActions;
 
-        private static readonly List<string> _emptyClips = new List<string>();
-        private ActorConfig _actorCfg;
-        private Model _model;
-        private string _path;
-        private List<string> _clips;
+                int index = list.FindIndex(s => s.ActionName.Equals(action.ActionName));
+                if (index == -1)
+                {
+                    ModelActionEditor add = Clipboard.Paste<ModelActionEditor>();
+                    add.ActState = ModelActionEditor.ActionState.New;
+                    list.Add(add);
+                    continue;
+                }
+
+                if (list[index].ActState == ModelActionEditor.ActionState.Override)
+                    continue;
+
+                Clipboard.Copy(action, CopyModes.DeepCopy);
+                ModelActionEditor temp = Clipboard.Paste<ModelActionEditor>();
+                temp.ResetActorEditor(actor);
+                list[index] = temp;
+            }
+        }
 
         public string Path { get { return _path; } }
         public string MenuItemName { get { return string.Format("{0}/{1}", ActionHomeConfig.MenuItems[GroupType], ModelName); } }
@@ -100,6 +154,7 @@
             //}
         }
         public string ModelName { get { return _actorCfg == null ? "" : _actorCfg.ModelName; } set { } }
+        [OnValueChanged("OnCfgChange", true)]
         public string BaseName { get { return _actorCfg == null ? "" : _actorCfg.BaseModelName; } set { } }
         public string Group
         {
@@ -108,40 +163,7 @@
                 return ActionHomeConfig.MenuItems[(GroupType)_model.GroupType];
             }
         }
-        private void AddBaseModelAction(string name)
-        {
-            var baseModel = HomeConfig.Instance.GetActorEditor(name);
-            var modelDict = GetGeneralActionDict();
-            foreach (var item in baseModel.GeneralActions)
-            {
-                if (modelDict.ContainsKey(item.ActionName))
-                {
-                    modelDict[item.ActionName].ActState = modelDict[item.ActionName].Equals(item) ?
-                        ModelActionEditor.ActionState.Inherit : ModelActionEditor.ActionState.Override;
-                }
-                else
-                {
-                    var action = new ModelActionEditor(item);
-                    action.ActState = ModelActionEditor.ActionState.Inherit;
-                    GeneralActions.Add(action);
-                }
-            }
-            var skillDict = GetSkillActionDict();
-            foreach (var item in baseModel.SkillActions)
-            {
-                if (skillDict.ContainsKey(item.ActionName))
-                {
-                    skillDict[item.ActionName].ActState = skillDict[item.ActionName].Equals(item) ?
-                        ModelActionEditor.ActionState.Inherit : ModelActionEditor.ActionState.Override;
-                }
-                else
-                {
-                    var action = new ModelActionEditor(item);
-                    action.ActState = ModelActionEditor.ActionState.Inherit;
-                    SkillActions.Add(action);
-                }
-            }
-        }
+
         Dictionary<string, ModelActionEditor> GetGeneralActionDict()
         {
             var pairs = new Dictionary<string, ModelActionEditor>();
@@ -160,7 +182,90 @@
             }
             return pairs;
         }
-
+        void AddChildActor(ActorConfigEditor childCfg)
+        {
+            var modelDict = childCfg.GetGeneralActionDict();
+            foreach (var item in GeneralActions)
+            {
+                if (modelDict.ContainsKey(item.ActionName))
+                {
+                    modelDict[item.ActionName].ActState = ModelActionEditor.ActionState.Override;
+                }
+                else
+                {
+                    Clipboard.Copy(item, CopyModes.DeepCopy);
+                    ModelActionEditor action = Clipboard.Paste<ModelActionEditor>();
+                    action.ActState = ModelActionEditor.ActionState.Inherit;
+                    childCfg.GeneralActions.Add(action);
+                    action.ResetActorEditor(childCfg);
+                }
+            }
+            var skillDict = childCfg.GetSkillActionDict();
+            foreach (var item in SkillActions)
+            {
+                if (skillDict.ContainsKey(item.ActionName))
+                {
+                    skillDict[item.ActionName].ActState = ModelActionEditor.ActionState.Override;
+                }
+                else
+                {
+                    Clipboard.Copy(item, CopyModes.DeepCopy);
+                    ModelActionEditor action = Clipboard.Paste<ModelActionEditor>();
+                    action.ActState = ModelActionEditor.ActionState.Inherit;
+                    childCfg.SkillActions.Add(action);
+                    action.ResetActorEditor(childCfg);
+                }
+            }
+            if (!_childActor.ContainsKey(childCfg.ModelName))
+                _childActor.Add(childCfg.ModelName, childCfg);
+        }
+        void RemoveChildActor(ActorConfigEditor childCfg)
+        {
+            childCfg.RemoveAllBaseAction();
+            if (_childActor.ContainsKey(childCfg.ModelName))
+                _childActor.Remove(childCfg.ModelName);
+        }
+        void RemoveAllBaseAction()
+        {
+            var array = GeneralActions.ToArray();
+            GeneralActions.Clear();
+            foreach (var item in array)
+            {
+                switch (item.ActState)
+                {
+                    case ModelActionEditor.ActionState.New:
+                        GeneralActions.Add(item);
+                        break;
+                    case ModelActionEditor.ActionState.Inherit:
+                        break;
+                    case ModelActionEditor.ActionState.Override:
+                        item.ActState = ModelActionEditor.ActionState.New;
+                        GeneralActions.Add(item);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            array = SkillActions.ToArray();
+            SkillActions.Clear();
+            foreach (var item in array)
+            {
+                switch (item.ActState)
+                {
+                    case ModelActionEditor.ActionState.New:
+                        SkillActions.Add(item);
+                        break;
+                    case ModelActionEditor.ActionState.Inherit:
+                        break;
+                    case ModelActionEditor.ActionState.Override:
+                        item.ActState = ModelActionEditor.ActionState.New;
+                        SkillActions.Add(item);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
 
         #region 界面设计       
@@ -196,18 +301,27 @@
         [ButtonGroup("Button"), Button("粘贴", ButtonSizes.Large)]
         private void PasteActions()
         {
+            var generalDict = GetGeneralActionDict();
+            var skillDict = GetSkillActionDict();
             List<ModelActionEditor> paste = new List<ModelActionEditor>();
             if (Clipboard.TryPaste(out paste))
             {
                 foreach (var item in paste)
                 {
+                    if (skillDict.ContainsKey(item.ActionName)
+                        || generalDict.ContainsKey(item.ActionName))
+                    {
+                        Debug.LogFormat("<color=orange>[粘贴行为]{0} 行为重复!</color>", item.ActionName);
+                        continue;
+                    }
+
                     if (item.IsSkillAction)
                         SkillActions.Add(item);
                     else
                         GeneralActions.Add(item);
+                    item.ResetActorEditor(this);
                     item.IsSelected = false;
                 }
-                Clipboard.Clear();
             }
             else
             {
@@ -217,12 +331,23 @@
         [ButtonGroup("Button"), Button("保存文件", ButtonSizes.Large)]
         public void Save()
         {
+            if (!IsDirty) return;
+            IsDirty = false;
+
             _actorCfg.GeneralActions.Clear();
             _actorCfg.SkillActions.Clear();
             foreach (var item in GeneralActions)
-                _actorCfg.GeneralActions.Add(item.ModelAction);
+            {
+                if (item.ActState == ModelActionEditor.ActionState.Inherit) continue;
+                var action = item.ModelAction;
+                _actorCfg.GeneralActions.Add(action.ActionName, action);
+            }
             foreach (var item in SkillActions)
-                _actorCfg.SkillActions.Add(item.ModelAction as SkillAction);
+            {
+                if (item.ActState == ModelActionEditor.ActionState.Inherit) continue;
+                var action = item.ModelAction as SkillAction;
+                _actorCfg.SkillActions.Add(action.ActionName, action);
+            }
             _actorCfg.SaveAConfig(_path);
         }
         [ButtonGroup("Button"), Button("删除文件", ButtonSizes.Large)]
@@ -235,9 +360,9 @@
 
                 ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
                 OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
-                if (item != null && item.ObjectInstance != null)
+                if (item != null && item.Value != null)
                 {
-                    ActorConfigEditor model = item.ObjectInstance as ActorConfigEditor;
+                    ActorConfigEditor model = item.Value as ActorConfigEditor;
                     HomeConfig.Instance.RemoveActor(model);
                     item.Parent.ChildMenuItems.Remove(item);
                     item.MenuTree.Selection.Clear();
@@ -250,13 +375,16 @@
 
         [Title("普通动作列表", bold: true), OnInspectorGUI, PropertyOrder(10)]
         private void OnModelActionsHeader() { OnHeaderGUI(); }
+
         [LabelText(" "), Space(-5f), PropertyOrder(15)]
-        [ListDrawerSettings(OnTitleBarGUI = "OnGUIModelAction", CustomAddFunction = "CreateModelAction")]
+        [ListDrawerSettings(OnTitleBarGUI = "OnGUIGeneralAction", CustomAddFunction = "CreateGeneralAction", HideRemoveButton = true)]
         public List<ModelActionEditor> GeneralActions = new List<ModelActionEditor>();
+
         [Title("技能动作列表", bold: true), OnInspectorGUI, PropertyOrder(20)]
         private void OnSkillActionsHeader() { OnHeaderGUI(); }
+
         [LabelText(" "), Space(-5f), PropertyOrder(25)]
-        [ListDrawerSettings(OnTitleBarGUI = "OnGUISkilllAction", CustomAddFunction = "CreateSkillAction")]
+        [ListDrawerSettings(OnTitleBarGUI = "OnGUISkilllAction", CustomAddFunction = "CreateSkillAction", HideRemoveButton = true)]
         public List<ModelActionEditor> SkillActions = new List<ModelActionEditor>();
 
 
@@ -288,29 +416,62 @@
         private void ModifyBaseName()
         {
             List<string> models = HomeConfig.Instance.GetAllActorList();
+            string none = "-----None-----";
+            models.Insert(0, none);
             models.Remove(ModelName);
             SimplePopupCreator.ShowDialog(new List<string>(models), (name) =>
             {
+                if (name.Equals(none)) name = "";
+                string old = _actorCfg.BaseModelName;
                 _actorCfg.BaseModelName = name;
-                AddBaseModelAction(name);
+                bool oldEmpty = string.IsNullOrEmpty(old);
+                bool newEmpty = string.IsNullOrEmpty(name);
+                if (!oldEmpty)
+                {
+                    var oldBase = HomeConfig.Instance.GetActorEditor(old);
+                    if (!newEmpty && !old.Equals(name))
+                    {//--修改继承
+                        oldBase.RemoveChildActor(this);
+                        var newBase = HomeConfig.Instance.GetActorEditor(name);
+                        newBase.AddChildActor(this);
+                    }
+                    else if (newEmpty)
+                    { //--移除继承
+                        oldBase.RemoveChildActor(this);
+                    }
+                }
+                else if (!newEmpty)
+                {
+                    //--添加继承
+                    var newBase = HomeConfig.Instance.GetActorEditor(name);
+                    newBase.AddChildActor(this);
+                }
             });
         }
 
         bool _isSelected_Model = false;
         bool _isSelected_Skill = false;
-        private void CreateModelAction()
+        private void CreateGeneralAction()
         {
             var action = new ModelActionEditor(this, new GeneralAction(), false);
             action.ActState = ModelActionEditor.ActionState.New;
-            ActionWindow.Init(this, action, (act) => GeneralActions.Add(act));
+            ActionWindow.Init(this, action, true, (act) =>
+            {
+                GeneralActions.Add(act);
+                OnCfgChange();
+            });
         }
         private void CreateSkillAction()
         {
             var action = new ModelActionEditor(this, new SkillAction(), true);
             action.ActState = ModelActionEditor.ActionState.New;
-            ActionWindow.Init(this, action, (act) => GeneralActions.Add(act));
+            ActionWindow.Init(this, action, true, (act) =>
+            {
+                SkillActions.Add(act);
+                OnCfgChange();
+            });
         }
-        private void OnGUIModelAction()
+        private void OnGUIGeneralAction()
         {
             OnTitleBarGUI(GeneralActions, ref _isSelected_Model);
         }
@@ -327,6 +488,17 @@
                 foreach (var item in actionEditors)
                     item.IsSelected = state;
             }
+            if (_clearAllSelected)
+            {
+                _clearAllSelected = false;
+                state = false;
+            }
+        }
+        public void OnCfgChange()
+        {
+            if (!HomeConfig.Instance.IsInit) return;
+
+            IsDirty = true;
         }
         #endregion
 

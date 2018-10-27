@@ -1,6 +1,6 @@
-<Root type ="ActorConfig">
+<Root Type ="ActorConfig">
 <ModelName>天音</ModelName>
-<BaseModelName>玩家模型</BaseModelName>
+<BaseModelName></BaseModelName>
 <GeneralActions>
 </GeneralActions>
 <SkillActions>

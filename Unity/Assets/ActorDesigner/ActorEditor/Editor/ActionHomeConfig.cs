@@ -11,6 +11,8 @@
     using XmlCfg.Skill;
     using Cfg.Character;
     using Cfg;
+    using Vec3 = UnityEngine.Vector3;
+    using Flux;
 
     [GlobalConfig("ActorDesigner/ModelEditor/Editor", UseAsset = true)]
     internal class ActionHomeConfig : GlobalConfig<ActionHomeConfig>
@@ -83,6 +85,7 @@
             CfgManager.ConfigDir = ConfigDir;
             CfgManager.LoadAll();
 
+
             //--初始化资源路径
             EUtil.GetAssetsInSubFolderRecursively(_config.CharacterRelativeDir, "*.prefab", ref AllCharacter);
             EUtil.GetAssetsInSubFolderRecursively(_config.AvatarRelativeDir, "*.prefab", ref AllAvatar);
@@ -94,6 +97,14 @@
                 EUtil.GetAssetsInSubFolderRecursively(searchDir, "*.anim", ref selfClips);
                 AllCharacterClips[item.Key] = selfClips;
             }
+
+            //--初始化资源
+            SequenceRoot = CreateGameObject("---行为序列---");
+            RuntimeAssetRoot = CreateGameObject("---运行时资源---");
+
+            Characters = CreateGameObject("Characters", "/---运行时资源---/");
+            Effects = CreateGameObject("Effects", "/---运行时资源---/");
+            Others = CreateGameObject("Others", "/---运行时资源---/");
 
             //--加载行为配置
             foreach (var model in CfgManager.Model)
@@ -109,6 +120,7 @@
                     Debug.LogFormat("<color=orange>新建Actor - {0}</color>", modelName);
                 }
             }
+
             string[] files = Directory.GetFiles(ActionConfigPath, "*.xml", SearchOption.TopDirectoryOnly);
             foreach (var path in files)
             {
@@ -116,10 +128,11 @@
                 AddActor(actor);
             }
             foreach (var item in _modelDict)
-                item.Value.Init();
+                item.Value.InitBaseModelAction();
 
             var window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
             window.RefreshTree();
+            IsInit = true;
             Debug.Log("加载所有动作 完毕!");
         }
         [ButtonGroup("Config/Btns")]
@@ -131,8 +144,16 @@
                 float count = 0;
                 foreach (var cfg in group.Value)
                 {
-                    if (group.Key != GroupType.None)
-                        cfg.Save();
+                    try
+                    {
+                        if (group.Key != GroupType.None)
+                            cfg.Save();
+                    }
+                    catch (Exception)
+                    {
+                        Debug.LogErrorFormat("{0} 数据异常,无法正常存储!", cfg.ModelName);
+                    }
+
                     EditorUtility.DisplayProgressBar("导出所有配置>" + cfg.Group, cfg.Path, count / group.Value.Count);
                 }
             }
@@ -140,24 +161,74 @@
             Debug.Log("所有配置保存完毕~~");
         }
 
-        [Title("辅助功能区"), OnInspectorGUI]
-        private void SelectTarget()
+
+
+        [Title("辅助功能区"), OnInspectorGUI, PropertyOrder(0)]
+        void OnGUI_Func()
         {
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("设置受击对象"))
+            GUIHelper.PushGUIPositionOffset(UnityEngine.Vector2.up * -2);
+            if (GUILayout.Button("设置受击对象", GUILayout.Width(150)))
             {
-                string targetName = "";
                 SimplePopupCreator.ShowDialog(new List<string>(CfgManager.Model.Keys), (name) =>
                 {
-                    targetName = name;
-                    Target = LoadModel(name);
+                    _targetDisplayName = name;
+                    LoadTarget(name);
                 });
-                EditorGUILayout.SelectableLabel(targetName);
             }
+            GUIHelper.PopGUIPositionOffset();
+            EditorGUILayout.LabelField(_targetDisplayName, EditorStyles.textArea);
             EditorGUILayout.EndHorizontal();
         }
-        #endregion
 
+        private string _targetDisplayName = "";
+        [HorizontalGroup("Separator", Order = 100)]
+        [BoxGroup("Separator/Left", ShowLabel = false), SerializeField]
+        [LabelText("显示打击框"), OnValueChanged("OnShowHitBox")]
+        public bool _showHitBox = false;
+        [BoxGroup("Separator/Left", ShowLabel = false), SerializeField]
+        [LabelText("显示碰撞体"), OnValueChanged("OnShowCollider")]
+        private bool _showCollider = false;
+        [BoxGroup("Separator/Right", ShowLabel = false), SerializeField]
+        [LabelText("显示攻击范围"), OnValueChanged("OnShowAttackRange")]
+        private bool _showAttackRange = false;
+        [BoxGroup("Separator/Right", ShowLabel = false), SerializeField]
+        [LabelText("显示受击对象"), OnValueChanged("OnShowTarget")]
+        private bool _showTarget = false;
+
+        [Button("LoadAsset", ButtonSizes.Large)]
+        void LoadAssetByPath()
+        {
+            _targetCollider = LoadCollider(_charColliderName);
+            var collider = PrefabUtility.InstantiatePrefab(_targetCollider) as GameObject;
+            collider.transform.parent = RuntimeAssetRoot.transform;
+            Debug.LogError(collider.name);
+        }
+
+        private void OnShowHitBox()
+        {
+            if (_showHitBox)
+            {
+
+            }
+        }
+        private void OnShowCollider()
+        {
+            if (_targetCollider != null)
+                _targetCollider.SetActive(_showCollider);
+        }
+        private void OnShowAttackRange()
+        {
+            if (_attackRangeOb != null)
+                _attackRangeOb.SetActive(_showAttackRange);
+        }
+        private void OnShowTarget()
+        {
+            if (Target != null)
+                Target.gameObject.SetActive(_showTarget);
+        }
+
+        #endregion
 
 
         /// <summary>
@@ -173,6 +244,7 @@
         /// </summary>
         private Dictionary<GroupType, List<ActorConfigEditor>> _modelGroupDict = new Dictionary<GroupType, List<ActorConfigEditor>>();
 
+        public bool IsInit { get; private set; }
         public Dictionary<GroupType, List<ActorConfigEditor>> ModelGroupDict
         {
             get
@@ -186,8 +258,6 @@
         public Dictionary<string, string> AllCharacter = new Dictionary<string, string>();
         public Dictionary<string, string> AllAvatar = new Dictionary<string, string>();
         public Dictionary<string, string> AllEffects = new Dictionary<string, string>();
-        public GameObject Self { get; private set; }
-        public GameObject Target { get; private set; }
 
         public void AddActor(ActorConfigEditor model)
         {
@@ -215,33 +285,15 @@
         }
         public ActorConfigEditor GetActorEditor(string modelName)
         {
-            return _modelDict[modelName];
+            if (_modelDict.ContainsKey(modelName))
+                return _modelDict[modelName];
+            Debug.LogErrorFormat("[读取配置]{0} 模型配置不存在!", modelName);
+            return null;
         }
         public List<string> GetAllActorList()
         {
             return new List<string>(_modelDict.Keys);
         }
-
-        //-- 加载角色行为时加载资源
-        public GameObject LoadModel(string modelName)
-        {
-            if (!AllCharacter.ContainsKey(modelName))
-            {
-                Debug.LogErrorFormat("[加载]{0}模型不存在", modelName);
-                return GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            }
-            string path = EUtil.FilePath2UnityPath(AllCharacter[modelName]);
-            GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            return model;
-        }
-        public GameObject LoadCollider(string collider)
-        {
-            string path = string.Format("{0}/{1}.fbx", _config.ColliderRelativeDir, collider);
-            GameObject col = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            return col;
-        }
-
-
         public void Destroy()
         {
             //保存所有配置
@@ -251,6 +303,7 @@
         }
         private void ClearAll()
         {
+            IsInit = false;
             _modelGroupDict.Clear();
             CfgManager.Clear();
             _clipboard.Clear();
@@ -259,10 +312,197 @@
             AllAvatar.Clear();
             AllCharacterClips.Clear();
             AllEffects.Clear();
+            UnityEngine.Object.DestroyImmediate(SequenceRoot);
+            UnityEngine.Object.DestroyImmediate(RuntimeAssetRoot);
+            Resources.UnloadUnusedAssets();
         }
 
 
 
+        #region 辅助功能区
+        public GameObject SequenceRoot { get; private set; }
+        public GameObject RuntimeAssetRoot { get; private set; }
+        public GameObject Characters { get; private set; }
+        public GameObject Effects { get; private set; }
+        public GameObject Others { get; private set; }
+        public GameObject Self { get; private set; }
+        public GameObject Target { get; set; }
+        public bool ShowHitBox { get { return _showHitBox; } }
+        public bool ShowCollider { get { return _showCollider; } }
+        public bool ShowAttackRange { get { return _showAttackRange; } }
+        public bool ShowTarget { get { return _showTarget; } }
+        public float AttackRange
+        {
+            get { return _attackRange; }
+            set
+            {
+                _attackRange = value;
+                LoadAttackRange();
+            }
+        }
+
+
+        private string _charColliderName = "cylinder360";
+        private string _attackRangeObName = "攻击区域";
+        private GameObject _targetCollider;
+        private FSequence _sequence;
+        private GameObject _attackRangeOb;
+        private float _attackRange = 1;
+        private List<GameObject> _hitBoxs = new List<GameObject>();
+
+
+        public void OpenSequence(ActorConfigEditor actor, ModelActionEditor action)
+        {
+            LoadSelf(actor.ModelName);
+            string targetName = _targetDisplayName;
+            if (string.IsNullOrEmpty(targetName))
+                targetName = actor.ModelName;
+            LoadTarget(targetName);
+            //_sequence = FSequence.CreateSequence(SequenceRoot);
+
+
+            //FluxEditor.FSequenceEditorWindow.Open(_sequence);
+        }
+        public void CloseSequence()
+        {
+            var seq = SequenceRoot.GetComponent<FSequence>();
+            UnityEngine.Object.DestroyImmediate(seq);
+            foreach (var item in _hitBoxs)
+                UnityEngine.Object.DestroyImmediate(item);
+            _hitBoxs.Clear();
+        }
+
+
+        //-- 加载角色行为时加载资源
+        private void LoadSelf(string name)
+        {
+            string modelName = CfgManager.Model[name].ModelPath;
+            if (Self != null && Self.name.Equals(modelName))
+                return;
+
+            if (Self != null)
+                UnityEngine.Object.Destroy(Self);
+            Self = LoadModel(name);
+            Self.transform.parent = Characters.transform;
+            Self.transform.position = Vec3.forward * 10;
+            Self.transform.forward = -Vec3.forward;
+            //if (_showCollider)
+            //{
+            //    var ctrl = Self.GetComponent<CharacterController>();
+            //    if (ctrl != null)
+            //    {
+            //        var collider = LoadCollider(_charColliderName);
+            //        collider.transform.localScale = Vec3.one * ctrl.radius;
+            //    }
+            //}
+        }
+        private void LoadTarget(string name)
+        {
+            string modelName = CfgManager.Model[name].ModelPath;
+            if (Target != null && Target.name.Equals(modelName))
+                return;
+
+            if (Target != null)
+                UnityEngine.Object.Destroy(Target);
+            Target = LoadModel(name);
+            Target.transform.parent = Characters.transform;
+            Target.transform.position = Vec3.forward * -10;
+            Target.transform.forward = Vec3.forward;
+            var render = Target.GetComponent<Renderer>();
+            if (render != null)
+            {
+                var collider = LoadCollider(_charColliderName);
+                collider.SetActive(_showCollider);
+                Bounds bounds = render.bounds;
+                float size = Mathf.Max(bounds.extents.x, bounds.extents.z);
+                collider.transform.localScale = Vec3.one * size;
+            }
+            else
+            {
+                Debug.LogErrorFormat("{0} 角色没有渲染组件!", Target.name);
+            }
+        }
+        private void LoadAttackRange()
+        {
+            var attackRange = Self.transform.Find(_attackRangeObName);
+            GizmosCircle circle = null;
+            if (attackRange == null)
+            {
+                _attackRangeOb = CreateGameObject(_attackRangeObName);
+                _attackRangeOb.transform.parent = Self.transform;
+                circle = _attackRangeOb.AddComponent<GizmosCircle>();
+            }
+            else
+            {
+                circle = _attackRangeOb.GetComponent<GizmosCircle>();
+            }
+            circle.m_Radius = AttackRange;
+            _attackRangeOb.SetActive(_showAttackRange);
+        }
+        /// <summary>
+        /// 加载模型
+        /// </summary>
+        /// <param name="name">模型中文名</param>
+        /// <returns></returns>
+        private GameObject LoadModel(string name)
+        {
+            string modelName = CfgManager.Model[name].AvatarPath;
+            string path = "";
+            if (!AllAvatar.ContainsKey(modelName))
+            {
+                Debug.LogErrorFormat("[加载]{0} 模型不存在", modelName);
+                return null;
+            }
+            else
+                path = EUtil.FilePath2UnityPath(AllAvatar[modelName]);
+            if (string.IsNullOrEmpty(modelName))
+            {
+                modelName = CfgManager.Model[name].ModelPath;
+                if (!AllCharacter.ContainsKey(modelName))
+                {
+                    Debug.LogErrorFormat("[加载]{0} 模型不存在", modelName);
+                    return null;
+                }
+                else
+                    path = EUtil.FilePath2UnityPath(AllCharacter[modelName]);
+            }
+            GameObject model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            return PrefabUtility.InstantiatePrefab(model) as GameObject;
+        }
+        private GameObject CreateGameObject(string name, string relPath = "/")
+        {
+            string path = relPath + name;
+            GameObject go = GameObject.Find(path);
+            if (go == null)
+                go = new GameObject(name);
+            GameObject parent = GameObject.Find(relPath);
+            if (parent != null)
+            {
+                go.transform.parent = parent.transform;
+                go.transform.localPosition = Vec3.zero;
+                go.transform.localEulerAngles = Vec3.zero;
+            }
+            return go;
+        }
+        public GameObject LoadCollider(string collider)
+        {
+            string path = string.Format("{0}/{1}.fbx", _config.ColliderRelativeDir, collider);
+            GameObject col = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            return PrefabUtility.InstantiatePrefab(col) as GameObject;
+        }
+        #endregion
+
+
+
+
+
+        public void CheckAll()
+        {
+            foreach (var item in _modelDict)
+            {
+                Debug.LogErrorFormat("{0} : Is dirty>{1}", item.Key, item.Value.IsDirty);
+            }
+        }
         public void UpdateClipbord(List<ModelActionEditor> editors)
         {
             _clipboard = editors;

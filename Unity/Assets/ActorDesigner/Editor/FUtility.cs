@@ -108,7 +108,7 @@ namespace FluxEditor
 
         public static string FindFluxDirectory()
         {
-            string[] directories = Directory.GetDirectories("Assets", "Flux217", SearchOption.AllDirectories);
+            string[] directories = Directory.GetDirectories("Assets", "ActorDesigner", SearchOption.AllDirectories);
             return directories.Length > 0 ? directories[0] : string.Empty;
         }
 
