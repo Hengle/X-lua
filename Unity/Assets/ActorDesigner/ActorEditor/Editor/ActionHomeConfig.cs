@@ -116,7 +116,7 @@
                     var config = new ActorConfig() { ModelName = modelName };
                     string savePath = string.Format("{0}/{1}.xml", ActionHomeConfig.Instance.ActionConfigPath, modelName);
                     var actor = new ActorConfigEditor(savePath, config);
-                    actor.Save();
+                    actor.Save(true);
                     Debug.LogFormat("<color=orange>新建Actor - {0}</color>", modelName);
                 }
             }
@@ -408,13 +408,12 @@
             Target.transform.parent = Characters.transform;
             Target.transform.position = Vec3.forward * -10;
             Target.transform.forward = Vec3.forward;
-            var render = Target.GetComponent<Renderer>();
-            if (render != null)
+            var cap = Target.GetComponent<CapsuleCollider>();
+            if (cap != null)
             {
                 var collider = LoadCollider(_charColliderName);
                 collider.SetActive(_showCollider);
-                Bounds bounds = render.bounds;
-                float size = Mathf.Max(bounds.extents.x, bounds.extents.z);
+                float size = cap.radius;
                 collider.transform.localScale = Vec3.one * size;
             }
             else
@@ -448,12 +447,7 @@
         {
             string modelName = CfgManager.Model[name].AvatarPath;
             string path = "";
-            if (!AllAvatar.ContainsKey(modelName))
-            {
-                Debug.LogErrorFormat("[加载]{0} 模型不存在", modelName);
-                return null;
-            }
-            else
+            if (AllAvatar.ContainsKey(modelName))
                 path = EUtil.FilePath2UnityPath(AllAvatar[modelName]);
             if (string.IsNullOrEmpty(modelName))
             {

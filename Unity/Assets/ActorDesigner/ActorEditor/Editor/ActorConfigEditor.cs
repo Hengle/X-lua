@@ -329,9 +329,9 @@
             }
         }
         [ButtonGroup("Button"), Button("保存文件", ButtonSizes.Large)]
-        public void Save()
+        public void Save(bool resave = false)
         {
-            if (!IsDirty) return;
+            if (!IsDirty && !resave) return;
             IsDirty = false;
 
             _actorCfg.GeneralActions.Clear();

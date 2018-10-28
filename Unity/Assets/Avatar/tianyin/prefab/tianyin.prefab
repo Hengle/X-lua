@@ -339,7 +339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 405804}
   m_Layer: 0
-  m_Name: tianyin_10010
+  m_Name: tianyin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
