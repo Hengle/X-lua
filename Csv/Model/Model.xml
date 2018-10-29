@@ -11,7 +11,9 @@
 		<Field Name="Name" Type="string" Des = "模型名称" />
 		<Field Name ="GroupType" Type = "GroupType" Des = "模型分组类型" />
 		<Field Name="ModelPath" Type="string" Des = "模型路径" />
-		<Field Name="AvatarPath" Type="string" Des = "Avatar路径"/>		
+		<Field Name="AvatarPath" Type="string" Des = "Avatar路径"/>
+		<Field Name="BodyRadius" Type="float" Des = "碰撞体半径"/>
+		<Field Name="BodyHeight" Type="float" Des = "碰撞体高度"/>		
 		<Field Name="ModelScale" Type="float" Des = "模型缩放"/>		
 	</Class>		
 </Define>

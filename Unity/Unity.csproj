@@ -257,6 +257,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ActorDesigner\ActorEditor\GizmosCircle.cs" />
+    <Compile Include="Assets\ActorDesigner\ActorEditor\SelfRange.cs" />
     <Compile Include="Assets\ActorDesigner\Extensions\PlayMaker\FluxEaseSpeed.cs" />
     <Compile Include="Assets\ActorDesigner\Extensions\PlayMaker\FluxPauseSequence.cs" />
     <Compile Include="Assets\ActorDesigner\Extensions\PlayMaker\FluxPlaySequence.cs" />

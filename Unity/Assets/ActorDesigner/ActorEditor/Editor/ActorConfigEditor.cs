@@ -25,11 +25,53 @@
         private Dictionary<string, ActorConfigEditor> _childActor = new Dictionary<string, ActorConfigEditor>();
         private bool _clearAllSelected = false;
 
-
-
-
         public bool IsDirty { get; private set; }
-        public ActorConfig ActorCfg { get { return _actorCfg; } }
+        public string CharacterPath { get { return HomeConfig.Instance.GetCharacterPath(_model.ModelPath); } }
+        public string AvatarPath { get { return HomeConfig.Instance.GetAvatarPath(_model.AvatarPath); } }
+        public float ModelScale { get { return _model.ModelScale; } }
+        public string Path { get { return _path; } }
+        public string MenuItemName { get { return string.Format("{0}/{1}", ActionHomeConfig.MenuItems[GroupType], ModelName); } }
+        public GroupType GroupType
+        {
+            get
+            {
+                if (_model == null)
+                    return GroupType.None;
+                return (GroupType)_model.GroupType;
+            }
+            //set
+            //{
+            //    ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
+            //    OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
+            //    if (item != null)
+            //    {
+            //        ActorConfigEditor model = item.Value as ActorConfigEditor;
+            //        HomeConfigPreview.Instance.RemoveActor(model);
+            //        item.Parent.ChildMenuItems.Remove(item);
+
+            //        _actorCfg.GroupType = value;
+            //        HomeConfigPreview.Instance.AddActor(model);
+            //        var group = window.MenuTree.GetMenuItem(Group);
+            //        group.ChildMenuItems.Add(item);
+            //        item.MenuTree.Selection.Clear();
+            //        item.Select();
+            //        item.MenuTree.UpdateMenuTree();
+            //        item.MenuTree.DrawMenuTree();
+            //    }
+            //}
+        }
+        public string ModelName { get { return _actorCfg == null ? "" : _actorCfg.ModelName; } set { } }
+        [OnValueChanged("OnCfgChange", true)]
+        public string BaseName { get { return _actorCfg == null ? "" : _actorCfg.BaseModelName; } set { } }
+        public string Group
+        {
+            get
+            {
+                return ActionHomeConfig.MenuItems[(GroupType)_model.GroupType];
+            }
+        }
+
+
         public ActorConfigEditor() { }
         public ActorConfigEditor(string path, ActorConfig cfg = null)
         {
@@ -119,48 +161,6 @@
                 ModelActionEditor temp = Clipboard.Paste<ModelActionEditor>();
                 temp.ResetActorEditor(actor);
                 list[index] = temp;
-            }
-        }
-
-        public string Path { get { return _path; } }
-        public string MenuItemName { get { return string.Format("{0}/{1}", ActionHomeConfig.MenuItems[GroupType], ModelName); } }
-        public GroupType GroupType
-        {
-            get
-            {
-                if (_model == null)
-                    return GroupType.None;
-                return (GroupType)_model.GroupType;
-            }
-            //set
-            //{
-            //    ActorCfgWindow window = ActorCfgWindow.GetWindow<ActorCfgWindow>();
-            //    OdinMenuItem item = window.MenuTree.Selection.FirstOrDefault();
-            //    if (item != null)
-            //    {
-            //        ActorConfigEditor model = item.Value as ActorConfigEditor;
-            //        HomeConfigPreview.Instance.RemoveActor(model);
-            //        item.Parent.ChildMenuItems.Remove(item);
-
-            //        _actorCfg.GroupType = value;
-            //        HomeConfigPreview.Instance.AddActor(model);
-            //        var group = window.MenuTree.GetMenuItem(Group);
-            //        group.ChildMenuItems.Add(item);
-            //        item.MenuTree.Selection.Clear();
-            //        item.Select();
-            //        item.MenuTree.UpdateMenuTree();
-            //        item.MenuTree.DrawMenuTree();
-            //    }
-            //}
-        }
-        public string ModelName { get { return _actorCfg == null ? "" : _actorCfg.ModelName; } set { } }
-        [OnValueChanged("OnCfgChange", true)]
-        public string BaseName { get { return _actorCfg == null ? "" : _actorCfg.BaseModelName; } set { } }
-        public string Group
-        {
-            get
-            {
-                return ActionHomeConfig.MenuItems[(GroupType)_model.GroupType];
             }
         }
 

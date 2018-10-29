@@ -69,6 +69,8 @@ function Stream:GetCfgCharacterModel()
 	o.GroupType = self:GetInt()
 	o.ModelPath = self:GetString()
 	o.AvatarPath = self:GetString()
+	o.BodyRadius = self:GetFloat()
+	o.BodyHeight = self:GetFloat()
 	o.ModelScale = self:GetFloat()
 	return o
 end

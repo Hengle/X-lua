@@ -319,6 +319,7 @@
     <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ActionWindow.cs" />
     <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ActorCfgWindow.cs" />
     <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ActorConfigEditor.cs" />
+    <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ActorHelper.cs" />
     <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\ModelActionEditor.cs" />
     <Compile Include="Assets\ActorDesigner\ActorEditor\Editor\SimplePopupCreator.cs" />
     <Compile Include="Assets\ActorDesigner\Editor\AnimatorWindowProxy.cs" />
