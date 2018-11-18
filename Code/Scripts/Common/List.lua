@@ -7,14 +7,14 @@ local setmetatable = setmetatable
 ---@class List
 local List = Class:new()
 
-function List:__new()
+function List:ctor()
     self.length = 0
     self._prev = self
     self._next = self
 end
 
 function List:clear()
-    self.__new()
+    self.ctor()
 end
 
 function List:push(value)

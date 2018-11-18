@@ -15,7 +15,7 @@ local Timer = Timer
 local mt = { __index = Timer }
 
 --unscaled false 采用deltaTime计时，true 采用 unscaledDeltaTime计时
-function Timer:__new(func, duration, loop, unscaled)
+function Timer:ctor(func, duration, loop, unscaled)
     unscaled = unscaled or false and true
     loop = loop or 1
     return setmetatable({ func = func, duration = duration, time = duration, loop = loop, unscaled = unscaled, running = false }, mt)
@@ -77,7 +77,7 @@ FrameTimer = Class:new()
 local FrameTimer = FrameTimer
 local mt2 = { __index = FrameTimer }
 
-function FrameTimer:__new(func, count, loop)
+function FrameTimer:ctor(func, count, loop)
     local c = Time.frameCount + count
     loop = loop or 1
     return setmetatable({ func = func, loop = loop, duration = count, count = c, running = false }, mt2)
@@ -132,7 +132,7 @@ CoTimer = Class:new()
 local CoTimer = CoTimer
 local mt3 = { __index = CoTimer }
 
-function CoTimer:__new(func, duration, loop)
+function CoTimer:ctor(func, duration, loop)
     loop = loop or 1
     return setmetatable({ duration = duration, loop = loop, func = func, time = duration, running = false }, mt3)
 end

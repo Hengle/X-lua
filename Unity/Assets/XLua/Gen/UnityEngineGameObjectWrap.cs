@@ -29,12 +29,12 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetComponents", _m_GetComponents);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetComponentsInChildren", _m_GetComponentsInChildren);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetComponentsInParent", _m_GetComponentsInParent);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetActive", _m_SetActive);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CompareTag", _m_CompareTag);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SendMessageUpwards", _m_SendMessageUpwards);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SendMessage", _m_SendMessage);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "BroadcastMessage", _m_BroadcastMessage);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddComponent", _m_AddComponent);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetActive", _m_SetActive);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CompareTag", _m_CompareTag);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "transform", _g_get_transform);
@@ -56,8 +56,8 @@ namespace XLua.CSObjectWrap
 
 		    Utils.BeginClassRegister(type, L, __CreateInstance, 6, 0, 0);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "CreatePrimitive", _m_CreatePrimitive_xlua_st_);
-            Utils.RegisterFunc(L, Utils.CLS_IDX, "FindGameObjectWithTag", _m_FindGameObjectWithTag_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "FindWithTag", _m_FindWithTag_xlua_st_);
+            Utils.RegisterFunc(L, Utils.CLS_IDX, "FindGameObjectWithTag", _m_FindGameObjectWithTag_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "FindGameObjectsWithTag", _m_FindGameObjectsWithTag_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "Find", _m_Find_xlua_st_);
             
@@ -398,6 +398,260 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_FindWithTag_xlua_st_(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+            
+                
+                {
+                    string _tag = LuaAPI.lua_tostring(L, 1);
+                    
+                        UnityEngine.GameObject gen_ret = UnityEngine.GameObject.FindWithTag( _tag );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_SendMessageUpwards(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.GameObject gen_to_be_invoked = (UnityEngine.GameObject)translator.FastGetCSObj(L, 1);
+            
+            
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    
+                    gen_to_be_invoked.SendMessageUpwards( _methodName );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 3)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    UnityEngine.SendMessageOptions _options;translator.Get(L, 3, out _options);
+                    
+                    gen_to_be_invoked.SendMessageUpwards( _methodName, _options );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    object _value = translator.GetObject(L, 3, typeof(object));
+                    
+                    gen_to_be_invoked.SendMessageUpwards( _methodName, _value );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 4&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 4)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    object _value = translator.GetObject(L, 3, typeof(object));
+                    UnityEngine.SendMessageOptions _options;translator.Get(L, 4, out _options);
+                    
+                    gen_to_be_invoked.SendMessageUpwards( _methodName, _value, _options );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.GameObject.SendMessageUpwards!");
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_SendMessage(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.GameObject gen_to_be_invoked = (UnityEngine.GameObject)translator.FastGetCSObj(L, 1);
+            
+            
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    
+                    gen_to_be_invoked.SendMessage( _methodName );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 3)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    UnityEngine.SendMessageOptions _options;translator.Get(L, 3, out _options);
+                    
+                    gen_to_be_invoked.SendMessage( _methodName, _options );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    object _value = translator.GetObject(L, 3, typeof(object));
+                    
+                    gen_to_be_invoked.SendMessage( _methodName, _value );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 4&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 4)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    object _value = translator.GetObject(L, 3, typeof(object));
+                    UnityEngine.SendMessageOptions _options;translator.Get(L, 4, out _options);
+                    
+                    gen_to_be_invoked.SendMessage( _methodName, _value, _options );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.GameObject.SendMessage!");
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_BroadcastMessage(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.GameObject gen_to_be_invoked = (UnityEngine.GameObject)translator.FastGetCSObj(L, 1);
+            
+            
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    
+                    gen_to_be_invoked.BroadcastMessage( _methodName );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 3)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    UnityEngine.SendMessageOptions _options;translator.Get(L, 3, out _options);
+                    
+                    gen_to_be_invoked.BroadcastMessage( _methodName, _options );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    object _parameter = translator.GetObject(L, 3, typeof(object));
+                    
+                    gen_to_be_invoked.BroadcastMessage( _methodName, _parameter );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 4&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 4)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    object _parameter = translator.GetObject(L, 3, typeof(object));
+                    UnityEngine.SendMessageOptions _options;translator.Get(L, 4, out _options);
+                    
+                    gen_to_be_invoked.BroadcastMessage( _methodName, _parameter, _options );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.GameObject.BroadcastMessage!");
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_AddComponent(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.GameObject gen_to_be_invoked = (UnityEngine.GameObject)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    System.Type _componentType = (System.Type)translator.GetObject(L, 2, typeof(System.Type));
+                    
+                        UnityEngine.Component gen_ret = gen_to_be_invoked.AddComponent( _componentType );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_SetActive(RealStatePtr L)
         {
 		    try {
@@ -482,33 +736,6 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_FindWithTag_xlua_st_(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-            
-                
-                {
-                    string _tag = LuaAPI.lua_tostring(L, 1);
-                    
-                        UnityEngine.GameObject gen_ret = UnityEngine.GameObject.FindWithTag( _tag );
-                        translator.Push(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_FindGameObjectsWithTag_xlua_st_(RealStatePtr L)
         {
 		    try {
@@ -522,233 +749,6 @@ namespace XLua.CSObjectWrap
                     string _tag = LuaAPI.lua_tostring(L, 1);
                     
                         UnityEngine.GameObject[] gen_ret = UnityEngine.GameObject.FindGameObjectsWithTag( _tag );
-                        translator.Push(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_SendMessageUpwards(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.GameObject gen_to_be_invoked = (UnityEngine.GameObject)translator.FastGetCSObj(L, 1);
-            
-            
-			    int gen_param_count = LuaAPI.lua_gettop(L);
-            
-                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    
-                    gen_to_be_invoked.SendMessageUpwards( _methodName );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    object _value = translator.GetObject(L, 3, typeof(object));
-                    
-                    gen_to_be_invoked.SendMessageUpwards( _methodName, _value );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 3)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    UnityEngine.SendMessageOptions _options;translator.Get(L, 3, out _options);
-                    
-                    gen_to_be_invoked.SendMessageUpwards( _methodName, _options );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 4&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 4)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    object _value = translator.GetObject(L, 3, typeof(object));
-                    UnityEngine.SendMessageOptions _options;translator.Get(L, 4, out _options);
-                    
-                    gen_to_be_invoked.SendMessageUpwards( _methodName, _value, _options );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.GameObject.SendMessageUpwards!");
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_SendMessage(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.GameObject gen_to_be_invoked = (UnityEngine.GameObject)translator.FastGetCSObj(L, 1);
-            
-            
-			    int gen_param_count = LuaAPI.lua_gettop(L);
-            
-                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    
-                    gen_to_be_invoked.SendMessage( _methodName );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    object _value = translator.GetObject(L, 3, typeof(object));
-                    
-                    gen_to_be_invoked.SendMessage( _methodName, _value );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 3)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    UnityEngine.SendMessageOptions _options;translator.Get(L, 3, out _options);
-                    
-                    gen_to_be_invoked.SendMessage( _methodName, _options );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 4&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 4)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    object _value = translator.GetObject(L, 3, typeof(object));
-                    UnityEngine.SendMessageOptions _options;translator.Get(L, 4, out _options);
-                    
-                    gen_to_be_invoked.SendMessage( _methodName, _value, _options );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.GameObject.SendMessage!");
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_BroadcastMessage(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.GameObject gen_to_be_invoked = (UnityEngine.GameObject)translator.FastGetCSObj(L, 1);
-            
-            
-			    int gen_param_count = LuaAPI.lua_gettop(L);
-            
-                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    
-                    gen_to_be_invoked.BroadcastMessage( _methodName );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    object _parameter = translator.GetObject(L, 3, typeof(object));
-                    
-                    gen_to_be_invoked.BroadcastMessage( _methodName, _parameter );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 3)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    UnityEngine.SendMessageOptions _options;translator.Get(L, 3, out _options);
-                    
-                    gen_to_be_invoked.BroadcastMessage( _methodName, _options );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 4&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<object>(L, 3)&& translator.Assignable<UnityEngine.SendMessageOptions>(L, 4)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    object _parameter = translator.GetObject(L, 3, typeof(object));
-                    UnityEngine.SendMessageOptions _options;translator.Get(L, 4, out _options);
-                    
-                    gen_to_be_invoked.BroadcastMessage( _methodName, _parameter, _options );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.GameObject.BroadcastMessage!");
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_AddComponent(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.GameObject gen_to_be_invoked = (UnityEngine.GameObject)translator.FastGetCSObj(L, 1);
-            
-            
-                
-                {
-                    System.Type _componentType = (System.Type)translator.GetObject(L, 2, typeof(System.Type));
-                    
-                        UnityEngine.Component gen_ret = gen_to_be_invoked.AddComponent( _componentType );
                         translator.Push(L, gen_ret);
                     
                     

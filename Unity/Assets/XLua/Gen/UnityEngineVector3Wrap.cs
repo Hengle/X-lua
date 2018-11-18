@@ -52,7 +52,7 @@ namespace XLua.CSObjectWrap
 			Utils.EndObjectRegister(type, L, translator, __CSIndexer, __NewIndexer,
 			    null, null, null);
 
-		    Utils.BeginClassRegister(type, L, __CreateInstance, 25, 10, 0);
+		    Utils.BeginClassRegister(type, L, __CreateInstance, 26, 10, 0);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "Slerp", _m_Slerp_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "SlerpUnclamped", _m_SlerpUnclamped_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "OrthoNormalize", _m_OrthoNormalize_xlua_st_);
@@ -79,6 +79,7 @@ namespace XLua.CSObjectWrap
             
 			
             Utils.RegisterObject(L, translator, Utils.CLS_IDX, "kEpsilon", UnityEngine.Vector3.kEpsilon);
+            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "kEpsilonNormalSqrt", UnityEngine.Vector3.kEpsilonNormalSqrt);
             
 			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "zero", _g_get_zero);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "one", _g_get_one);
@@ -818,9 +819,24 @@ namespace XLua.CSObjectWrap
                 UnityEngine.Vector3 gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
             
             
-                
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 2&& translator.Assignable<object>(L, 2)) 
                 {
                     object _other = translator.GetObject(L, 2, typeof(object));
+                    
+                        bool gen_ret = gen_to_be_invoked.Equals( _other );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                        translator.UpdateUnityEngineVector3(L, 1, gen_to_be_invoked);
+                    
+                    
+                    return 1;
+                }
+                if(gen_param_count == 2&& translator.Assignable<UnityEngine.Vector3>(L, 2)) 
+                {
+                    UnityEngine.Vector3 _other;translator.Get(L, 2, out _other);
                     
                         bool gen_ret = gen_to_be_invoked.Equals( _other );
                         LuaAPI.lua_pushboolean(L, gen_ret);
@@ -835,6 +851,8 @@ namespace XLua.CSObjectWrap
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Vector3.Equals!");
             
         }
         

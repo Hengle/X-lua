@@ -24,9 +24,9 @@ namespace XLua.CSObjectWrap
 			Utils.BeginObjectRegister(type, L, translator, 6, 7, 5, 2);
 			Utils.RegisterFunc(L, Utils.OBJ_META_IDX, "__add", __AddMeta);
             Utils.RegisterFunc(L, Utils.OBJ_META_IDX, "__sub", __SubMeta);
-            Utils.RegisterFunc(L, Utils.OBJ_META_IDX, "__unm", __UnmMeta);
             Utils.RegisterFunc(L, Utils.OBJ_META_IDX, "__mul", __MulMeta);
             Utils.RegisterFunc(L, Utils.OBJ_META_IDX, "__div", __DivMeta);
+            Utils.RegisterFunc(L, Utils.OBJ_META_IDX, "__unm", __UnmMeta);
             Utils.RegisterFunc(L, Utils.OBJ_META_IDX, "__eq", __EqMeta);
             
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Set", _m_Set);
@@ -51,12 +51,13 @@ namespace XLua.CSObjectWrap
 			Utils.EndObjectRegister(type, L, translator, __CSIndexer, __NewIndexer,
 			    null, null, null);
 
-		    Utils.BeginClassRegister(type, L, __CreateInstance, 16, 8, 0);
+		    Utils.BeginClassRegister(type, L, __CreateInstance, 18, 8, 0);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "Lerp", _m_Lerp_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "LerpUnclamped", _m_LerpUnclamped_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "MoveTowards", _m_MoveTowards_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "Scale", _m_Scale_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "Reflect", _m_Reflect_xlua_st_);
+            Utils.RegisterFunc(L, Utils.CLS_IDX, "Perpendicular", _m_Perpendicular_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "Dot", _m_Dot_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "Angle", _m_Angle_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "SignedAngle", _m_SignedAngle_xlua_st_);
@@ -69,6 +70,7 @@ namespace XLua.CSObjectWrap
             
 			
             Utils.RegisterObject(L, translator, Utils.CLS_IDX, "kEpsilon", UnityEngine.Vector2.kEpsilon);
+            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "kEpsilonNormalSqrt", UnityEngine.Vector2.kEpsilonNormalSqrt);
             
 			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "zero", _g_get_zero);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "one", _g_get_one);
@@ -224,26 +226,22 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int __UnmMeta(RealStatePtr L)
-        {
-            
-			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            try {
-                UnityEngine.Vector2 rightside;translator.Get(L, 1, out rightside);
-                translator.PushUnityEngineVector2(L, - rightside);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int __MulMeta(RealStatePtr L)
         {
             
 			try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+			
+				if (translator.Assignable<UnityEngine.Vector2>(L, 1) && translator.Assignable<UnityEngine.Vector2>(L, 2))
+				{
+					UnityEngine.Vector2 leftside;translator.Get(L, 1, out leftside);
+					UnityEngine.Vector2 rightside;translator.Get(L, 2, out rightside);
+					
+					translator.PushUnityEngineVector2(L, leftside * rightside);
+					
+					return 1;
+				}
             
 			
 				if (translator.Assignable<UnityEngine.Vector2>(L, 1) && LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 2))
@@ -283,6 +281,17 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
             
 			
+				if (translator.Assignable<UnityEngine.Vector2>(L, 1) && translator.Assignable<UnityEngine.Vector2>(L, 2))
+				{
+					UnityEngine.Vector2 leftside;translator.Get(L, 1, out leftside);
+					UnityEngine.Vector2 rightside;translator.Get(L, 2, out rightside);
+					
+					translator.PushUnityEngineVector2(L, leftside / rightside);
+					
+					return 1;
+				}
+            
+			
 				if (translator.Assignable<UnityEngine.Vector2>(L, 1) && LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 2))
 				{
 					UnityEngine.Vector2 leftside;translator.Get(L, 1, out leftside);
@@ -298,6 +307,21 @@ namespace XLua.CSObjectWrap
 				return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
 			}
             return LuaAPI.luaL_error(L, "invalid arguments to right hand of / operator, need UnityEngine.Vector2!");
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int __UnmMeta(RealStatePtr L)
+        {
+            
+			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            try {
+                UnityEngine.Vector2 rightside;translator.Get(L, 1, out rightside);
+                translator.PushUnityEngineVector2(L, - rightside);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
             
         }
         
@@ -622,9 +646,24 @@ namespace XLua.CSObjectWrap
                 UnityEngine.Vector2 gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
             
             
-                
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 2&& translator.Assignable<object>(L, 2)) 
                 {
                     object _other = translator.GetObject(L, 2, typeof(object));
+                    
+                        bool gen_ret = gen_to_be_invoked.Equals( _other );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                        translator.UpdateUnityEngineVector2(L, 1, gen_to_be_invoked);
+                    
+                    
+                    return 1;
+                }
+                if(gen_param_count == 2&& translator.Assignable<UnityEngine.Vector2>(L, 2)) 
+                {
+                    UnityEngine.Vector2 _other;translator.Get(L, 2, out _other);
                     
                         bool gen_ret = gen_to_be_invoked.Equals( _other );
                         LuaAPI.lua_pushboolean(L, gen_ret);
@@ -639,6 +678,8 @@ namespace XLua.CSObjectWrap
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Vector2.Equals!");
             
         }
         
@@ -657,6 +698,33 @@ namespace XLua.CSObjectWrap
                     UnityEngine.Vector2 _inNormal;translator.Get(L, 2, out _inNormal);
                     
                         UnityEngine.Vector2 gen_ret = UnityEngine.Vector2.Reflect( _inDirection, _inNormal );
+                        translator.PushUnityEngineVector2(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_Perpendicular_xlua_st_(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+            
+                
+                {
+                    UnityEngine.Vector2 _inDirection;translator.Get(L, 1, out _inDirection);
+                    
+                        UnityEngine.Vector2 gen_ret = UnityEngine.Vector2.Perpendicular( _inDirection );
                         translator.PushUnityEngineVector2(L, gen_ret);
                     
                     
@@ -932,7 +1000,44 @@ namespace XLua.CSObjectWrap
             
             
             
-                
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 4&& translator.Assignable<UnityEngine.Vector2>(L, 1)&& translator.Assignable<UnityEngine.Vector2>(L, 2)&& translator.Assignable<UnityEngine.Vector2>(L, 3)&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 4)) 
+                {
+                    UnityEngine.Vector2 _current;translator.Get(L, 1, out _current);
+                    UnityEngine.Vector2 _target;translator.Get(L, 2, out _target);
+                    UnityEngine.Vector2 _currentVelocity;translator.Get(L, 3, out _currentVelocity);
+                    float _smoothTime = (float)LuaAPI.lua_tonumber(L, 4);
+                    
+                        UnityEngine.Vector2 gen_ret = UnityEngine.Vector2.SmoothDamp( _current, _target, ref _currentVelocity, _smoothTime );
+                        translator.PushUnityEngineVector2(L, gen_ret);
+                    translator.PushUnityEngineVector2(L, _currentVelocity);
+                        translator.UpdateUnityEngineVector2(L, 3, _currentVelocity);
+                        
+                    
+                    
+                    
+                    return 2;
+                }
+                if(gen_param_count == 5&& translator.Assignable<UnityEngine.Vector2>(L, 1)&& translator.Assignable<UnityEngine.Vector2>(L, 2)&& translator.Assignable<UnityEngine.Vector2>(L, 3)&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 4)&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 5)) 
+                {
+                    UnityEngine.Vector2 _current;translator.Get(L, 1, out _current);
+                    UnityEngine.Vector2 _target;translator.Get(L, 2, out _target);
+                    UnityEngine.Vector2 _currentVelocity;translator.Get(L, 3, out _currentVelocity);
+                    float _smoothTime = (float)LuaAPI.lua_tonumber(L, 4);
+                    float _maxSpeed = (float)LuaAPI.lua_tonumber(L, 5);
+                    
+                        UnityEngine.Vector2 gen_ret = UnityEngine.Vector2.SmoothDamp( _current, _target, ref _currentVelocity, _smoothTime, _maxSpeed );
+                        translator.PushUnityEngineVector2(L, gen_ret);
+                    translator.PushUnityEngineVector2(L, _currentVelocity);
+                        translator.UpdateUnityEngineVector2(L, 3, _currentVelocity);
+                        
+                    
+                    
+                    
+                    return 2;
+                }
+                if(gen_param_count == 6&& translator.Assignable<UnityEngine.Vector2>(L, 1)&& translator.Assignable<UnityEngine.Vector2>(L, 2)&& translator.Assignable<UnityEngine.Vector2>(L, 3)&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 4)&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 5)&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 6)) 
                 {
                     UnityEngine.Vector2 _current;translator.Get(L, 1, out _current);
                     UnityEngine.Vector2 _target;translator.Get(L, 2, out _target);
@@ -955,6 +1060,8 @@ namespace XLua.CSObjectWrap
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Vector2.SmoothDamp!");
             
         }
         

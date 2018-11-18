@@ -40,22 +40,9 @@ namespace Game
         }
 
 
-        GameObject _dlgRes;
-        Slider _progress;
-        Text _status;
         Dictionary<string, string> _launcher = new Dictionary<string, string>();
-
         public void Init()
         {
-            var canvas = GameObject.Find("/UIRoot/Canvas/").transform;
-            var prafab = Resources.Load<GameObject>("DlgResource");
-            _dlgRes = GameObject.Instantiate(prafab) as GameObject;
-            _dlgRes.transform.parent = canvas;
-            _dlgRes.transform.localPosition = Vector3.zero;
-            _dlgRes.transform.localScale = Vector3.one;
-            _progress = _dlgRes.transform.Find("Slider_Progress").GetComponent<Slider>();
-            _status = _dlgRes.transform.Find("Text_Status").GetComponent<Text>();
-
             TextAsset text = (TextAsset)Resources.Load("launcher", typeof(TextAsset));
             if (null != text)
             {
@@ -74,10 +61,6 @@ namespace Game
         }
         public void Dispose()
         {
-            _progress = null;
-            _status = null;
-            _dlgRes = null;
-            _launcher.Clear();
             _instance = null;
             Resources.UnloadUnusedAssets();
         }
@@ -88,12 +71,11 @@ namespace Game
             while (!Interface.Instance.IsSDKFinished())
             {
                 yield return new WaitForEndOfFrame();
-                _progress.value = 0.6f;
+                
             }
-            _progress.value = 0.8f;
             //获取设备内存大小,如果不足,则提示内存不足.
             long memorysize = Interface.Instance.GetMemInfo();
-            _progress.value = 1f;
+         
 #if UNITY_ANDROID
             if (memorysize < 1500000)
             {
@@ -172,16 +154,15 @@ namespace Game
         public void StartGame()
         {
             //GameObject.Destroy(_dlgRes);
-            LuaManager.Instance.Start();
+            LuaManager.Instance.SetLuaDirAndMain(AppConst.LuaDir, AppConst.LuaMain);
+            LuaManager.Instance.StartGame();
 
-            _progress.value = 1f;
-            _status.text = "开始游戏";
+            UpdateManager.Instance.SetProgressValue("开始游戏", 1f);
         }
 
         void RefreshLaunch(LaunchState state, float value)
         {
-            _progress.value = value;
-            _status.text = _launcher[state.ToString()];
+            UpdateManager.Instance.SetProgressValue(_launcher[state.ToString()], value);
         }
     }
 }

@@ -21,11 +21,12 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(UnityEngine.MeshRenderer);
-			Utils.BeginObjectRegister(type, L, translator, 0, 0, 1, 1);
+			Utils.BeginObjectRegister(type, L, translator, 0, 0, 2, 1);
 			
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "additionalVertexStreams", _g_get_additionalVertexStreams);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "subMeshStartIndex", _g_get_subMeshStartIndex);
             
 			Utils.RegisterFunc(L, Utils.SETTER_IDX, "additionalVertexStreams", _s_set_additionalVertexStreams);
             
@@ -84,6 +85,20 @@ namespace XLua.CSObjectWrap
 			
                 UnityEngine.MeshRenderer gen_to_be_invoked = (UnityEngine.MeshRenderer)translator.FastGetCSObj(L, 1);
                 translator.Push(L, gen_to_be_invoked.additionalVertexStreams);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_subMeshStartIndex(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                UnityEngine.MeshRenderer gen_to_be_invoked = (UnityEngine.MeshRenderer)translator.FastGetCSObj(L, 1);
+                LuaAPI.xlua_pushinteger(L, gen_to_be_invoked.subMeshStartIndex);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }

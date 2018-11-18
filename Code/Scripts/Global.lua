@@ -1,40 +1,95 @@
-Shader = CS.UnityEngine.Shader
-Animator = CS.UnityEngine.Animator
-Animation = CS.UnityEngine.Animation
-AnimationClip = CS.UnityEngine.AnimationClip
-AnimationEvent = CS.UnityEngine.AnimationEvent
-AnimationState = CS.UnityEngine.AnimationState
-AudioClip = CS.UnityEngine.AudioClip
-AudioSource = CS.UnityEngine.AudioSource
-Physics = CS.UnityEngine.Physics
-GameObject = CS.UnityEngine.GameObject
-Transform = CS.UnityEngine.Transform
-Application = CS.UnityEngine.Application
-SystemInfo = CS.UnityEngine.SystemInfo
-Screen = CS.UnityEngine.Screen
-Camera = CS.UnityEngine.Camera
-Material = CS.UnityEngine.Material
-Renderer = CS.UnityEngine.Renderer
-WWW = CS.UnityEngine.WWW
-Input = CS.UnityEngine.Input
-KeyCode = CS.UnityEngine.KeyCode
-CharacterController = CS.UnityEngine.CharacterController
-SkinnedMeshRenderer = CS.UnityEngine.SkinnedMeshRenderer
+UnityEngine = CS.UnityEngine
+Shader = UnityEngine.Shader
+Animator = UnityEngine.Animator
+Animation = UnityEngine.Animation
+AnimationClip = UnityEngine.AnimationClip
+AnimationEvent = UnityEngine.AnimationEvent
+AnimationState = UnityEngine.AnimationState
+AudioClip = UnityEngine.AudioClip
+AudioSource = UnityEngine.AudioSource
+Physics = UnityEngine.Physics
+GameObject = UnityEngine.GameObject
+Transform = UnityEngine.Transform
+Application = UnityEngine.Application
+SystemInfo = UnityEngine.SystemInfo
+Screen = UnityEngine.Screen
+Camera = UnityEngine.Camera
+Material = UnityEngine.Material
+Renderer = UnityEngine.Renderer
+WWW = UnityEngine.WWW
+Input = UnityEngine.Input
+KeyCode = UnityEngine.KeyCode
+CharacterController = UnityEngine.CharacterController
+SkinnedMeshRenderer = UnityEngine.SkinnedMeshRenderer
 
-CSUtil = CS.Game.Util
-AppConst = CS.Game.AppConst
-LuaHelper = CS.Game.LuaHelper
-Interface = CS.Game.Platform.Interface
-ResMgr = CS.Game.ResourceManager.Instance
-SoundMgr = CS.Game.SoundManager.Instance
-NetworkMgr = CS.Game.NetworkManager.Instance
-EasyTouch = CS.HedgehogTeam.EasyTouch.EasyTouch
-Gesture = CS.HedgehogTeam.EasyTouch.Gesture
-ECTInput = CS.HedgehogTeam.EasyTouch.ECTInput
+FairyGUI = CS.FairyGUI
+EventContext  = FairyGUI.EventContext
+EventListener = FairyGUI.EventListener
+EventDispatcher = FairyGUI.EventDispatcher
+InputEvent = FairyGUI.InputEvent
+NTexture = FairyGUI.NTexture
+Container = FairyGUI.Container
+Image = FairyGUI.Image
+Stage = FairyGUI.Stage
+Controller = FairyGUI.Controller
+---@type FairyGUI.GObject
+GObject = FairyGUI.GObject
+---@type FairyGUI.GGraph
+GGraph = FairyGUI.GGraph
+---@type FairyGUI.GGroup
+GGroup = FairyGUI.GGroup
+---@type FairyGUI.GImage
+GImage = FairyGUI.GImage
+---@type FairyGUI.GLoader
+GLoader = FairyGUI.GLoader
+PlayState = FairyGUI.PlayState
+GMovieClip = FairyGUI.GMovieClip
+TextFormat = FairyGUI.TextFormat
+---@type FairyGUI.GTextField
+GTextField = FairyGUI.GTextField
+GRichTextField = FairyGUI.GRichTextField
+GTextInput = FairyGUI.GTextInput
+---@type FairyGUI.GComponent
+GComponent = FairyGUI.GComponent
+---@type FairyGUI.GList
+GList = FairyGUI.GList
+---@type FairyGUI.GRoot
+GRoot = FairyGUI.GRoot
+---@type FairyGUI.GLabel
+GLabel = FairyGUI.GLabel
+---@type FairyGUI.GButton
+GButton = FairyGUI.GButton
+GComboBox = FairyGUI.GComboBox
+GProgressBar = FairyGUI.GProgressBar
+GSlider = FairyGUI.GSlider
+PopupMenu = FairyGUI.PopupMenu
+ScrollPane = FairyGUI.ScrollPane
+Transition = FairyGUI.Transition
+---@type FairyGUI.UIPackage
+UIPackage = FairyGUI.UIPackage
+---@type FairyGUI.Window
+Window = FairyGUI.Window
+GObjectPool = FairyGUI.GObjectPool
+Relations = FairyGUI.Relations
+RelationType = FairyGUI.RelationType
+UIPanel = FairyGUI.UIPanel
+UIPainter = FairyGUI.UIPainter
+TypingEffect = FairyGUI.TypingEffect
+
+Game = CS.Game
+CSUtil = Game.Util
+AppConst = Game.AppConst
+LuaHelper = Game.LuaHelper
+Interface = Game.Platform.Interface
+ResMgr = Game.ResourceManager.Instance
+SoundMgr = Game.SoundManager.Instance
+NetworkMgr = Game.NetworkManager.Instance
 
 local require = require
 require 'System.string'
 require 'System.table'
+require 'System.coroutine'
+
 
 Mathf		= require "UnityEngine.Mathf"
 Vector3 	= require "UnityEngine.Vector3"
@@ -50,10 +105,10 @@ LayerMask	= require "UnityEngine.LayerMask"
 Plane		= require "UnityEngine.Plane"
 Time		= require "UnityEngine.Time"
 
-Profiler = require 'System.profiler'
-Memory = require 'System.memory'
+Profiler = require 'xlua.profiler'
+Memory = require 'xlua.memory'
 
-require 'System.coroutine'
+
 require "Local"
 -----------------------------------------------------------
 require 'Function'

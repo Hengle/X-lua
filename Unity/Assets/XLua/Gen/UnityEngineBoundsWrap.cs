@@ -24,17 +24,17 @@ namespace XLua.CSObjectWrap
 			Utils.BeginObjectRegister(type, L, translator, 1, 11, 5, 5);
 			Utils.RegisterFunc(L, Utils.OBJ_META_IDX, "__eq", __EqMeta);
             
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Contains", _m_Contains);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SqrDistance", _m_SqrDistance);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "IntersectRay", _m_IntersectRay);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ClosestPoint", _m_ClosestPoint);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetHashCode", _m_GetHashCode);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Equals", _m_Equals);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetMinMax", _m_SetMinMax);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Encapsulate", _m_Encapsulate);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Expand", _m_Expand);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Intersects", _m_Intersects);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "IntersectRay", _m_IntersectRay);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ToString", _m_ToString);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Contains", _m_Contains);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SqrDistance", _m_SqrDistance);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ClosestPoint", _m_ClosestPoint);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "center", _g_get_center);
@@ -128,150 +128,6 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_Contains(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.Bounds gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
-            
-            
-                
-                {
-                    UnityEngine.Vector3 _point;translator.Get(L, 2, out _point);
-                    
-                        bool gen_ret = gen_to_be_invoked.Contains( _point );
-                        LuaAPI.lua_pushboolean(L, gen_ret);
-                    
-                    
-                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_SqrDistance(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.Bounds gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
-            
-            
-                
-                {
-                    UnityEngine.Vector3 _point;translator.Get(L, 2, out _point);
-                    
-                        float gen_ret = gen_to_be_invoked.SqrDistance( _point );
-                        LuaAPI.lua_pushnumber(L, gen_ret);
-                    
-                    
-                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_IntersectRay(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.Bounds gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
-            
-            
-			    int gen_param_count = LuaAPI.lua_gettop(L);
-            
-                if(gen_param_count == 2&& translator.Assignable<UnityEngine.Ray>(L, 2)) 
-                {
-                    UnityEngine.Ray _ray;translator.Get(L, 2, out _ray);
-                    
-                        bool gen_ret = gen_to_be_invoked.IntersectRay( _ray );
-                        LuaAPI.lua_pushboolean(L, gen_ret);
-                    
-                    
-                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
-                    
-                    
-                    return 1;
-                }
-                if(gen_param_count == 2&& translator.Assignable<UnityEngine.Ray>(L, 2)) 
-                {
-                    UnityEngine.Ray _ray;translator.Get(L, 2, out _ray);
-                    float _distance;
-                    
-                        bool gen_ret = gen_to_be_invoked.IntersectRay( _ray, out _distance );
-                        LuaAPI.lua_pushboolean(L, gen_ret);
-                    LuaAPI.lua_pushnumber(L, _distance);
-                        
-                    
-                    
-                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
-                    
-                    
-                    return 2;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Bounds.IntersectRay!");
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_ClosestPoint(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.Bounds gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
-            
-            
-                
-                {
-                    UnityEngine.Vector3 _point;translator.Get(L, 2, out _point);
-                    
-                        UnityEngine.Vector3 gen_ret = gen_to_be_invoked.ClosestPoint( _point );
-                        translator.PushUnityEngineVector3(L, gen_ret);
-                    
-                    
-                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_GetHashCode(RealStatePtr L)
         {
 		    try {
@@ -312,9 +168,24 @@ namespace XLua.CSObjectWrap
                 UnityEngine.Bounds gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
             
             
-                
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 2&& translator.Assignable<object>(L, 2)) 
                 {
                     object _other = translator.GetObject(L, 2, typeof(object));
+                    
+                        bool gen_ret = gen_to_be_invoked.Equals( _other );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
+                    
+                    
+                    return 1;
+                }
+                if(gen_param_count == 2&& translator.Assignable<UnityEngine.Bounds>(L, 2)) 
+                {
+                    UnityEngine.Bounds _other;translator.Get(L, 2, out _other);
                     
                         bool gen_ret = gen_to_be_invoked.Equals( _other );
                         LuaAPI.lua_pushboolean(L, gen_ret);
@@ -329,6 +200,8 @@ namespace XLua.CSObjectWrap
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Bounds.Equals!");
             
         }
         
@@ -487,6 +360,57 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_IntersectRay(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.Bounds gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
+            
+            
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 2&& translator.Assignable<UnityEngine.Ray>(L, 2)) 
+                {
+                    UnityEngine.Ray _ray;translator.Get(L, 2, out _ray);
+                    
+                        bool gen_ret = gen_to_be_invoked.IntersectRay( _ray );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
+                    
+                    
+                    return 1;
+                }
+                if(gen_param_count == 2&& translator.Assignable<UnityEngine.Ray>(L, 2)) 
+                {
+                    UnityEngine.Ray _ray;translator.Get(L, 2, out _ray);
+                    float _distance;
+                    
+                        bool gen_ret = gen_to_be_invoked.IntersectRay( _ray, out _distance );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    LuaAPI.lua_pushnumber(L, _distance);
+                        
+                    
+                    
+                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
+                    
+                    
+                    return 2;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Bounds.IntersectRay!");
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_ToString(RealStatePtr L)
         {
 		    try {
@@ -530,6 +454,99 @@ namespace XLua.CSObjectWrap
             }
             
             return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Bounds.ToString!");
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_Contains(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.Bounds gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
+            
+            
+                
+                {
+                    UnityEngine.Vector3 _point;translator.Get(L, 2, out _point);
+                    
+                        bool gen_ret = gen_to_be_invoked.Contains( _point );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_SqrDistance(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.Bounds gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
+            
+            
+                
+                {
+                    UnityEngine.Vector3 _point;translator.Get(L, 2, out _point);
+                    
+                        float gen_ret = gen_to_be_invoked.SqrDistance( _point );
+                        LuaAPI.lua_pushnumber(L, gen_ret);
+                    
+                    
+                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_ClosestPoint(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.Bounds gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
+            
+            
+                
+                {
+                    UnityEngine.Vector3 _point;translator.Get(L, 2, out _point);
+                    
+                        UnityEngine.Vector3 gen_ret = gen_to_be_invoked.ClosestPoint( _point );
+                        translator.PushUnityEngineVector3(L, gen_ret);
+                    
+                    
+                        translator.UpdateUnityEngineBounds(L, 1, gen_to_be_invoked);
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
             
         }
         

@@ -21,13 +21,15 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(Game.ResourceManager);
-			Utils.BeginObjectRegister(type, L, translator, 0, 11, 1, 1);
+			Utils.BeginObjectRegister(type, L, translator, 0, 13, 1, 1);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Init", _m_Init);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Start", _m_Start);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "IsLoading", _m_IsLoading);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "RemoveTask", _m_RemoveTask);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddTask", _m_AddTask);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddRefCount", _m_AddRefCount);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "RemoveRefCount", _m_RemoveRefCount);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetResPath", _m_GetResPath);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CleanupMemoryInterval", _m_CleanupMemoryInterval);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CleanupMemoryNow", _m_CleanupMemoryNow);
@@ -249,6 +251,62 @@ namespace XLua.CSObjectWrap
             }
             
             return LuaAPI.luaL_error(L, "invalid arguments to Game.ResourceManager.AddTask!");
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_AddRefCount(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                Game.ResourceManager gen_to_be_invoked = (Game.ResourceManager)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    string _bundlename = LuaAPI.lua_tostring(L, 2);
+                    
+                    gen_to_be_invoked.AddRefCount( _bundlename );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_RemoveRefCount(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                Game.ResourceManager gen_to_be_invoked = (Game.ResourceManager)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    string _bundlename = LuaAPI.lua_tostring(L, 2);
+                    
+                    gen_to_be_invoked.RemoveRefCount( _bundlename );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
             
         }
         

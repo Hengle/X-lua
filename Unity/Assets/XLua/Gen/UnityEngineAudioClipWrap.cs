@@ -58,24 +58,7 @@ namespace XLua.CSObjectWrap
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int __CreateInstance(RealStatePtr L)
         {
-            
-			try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-				if(LuaAPI.lua_gettop(L) == 1)
-				{
-					
-					UnityEngine.AudioClip gen_ret = new UnityEngine.AudioClip();
-					translator.Push(L, gen_ret);
-                    
-					return 1;
-				}
-				
-			}
-			catch(System.Exception gen_e) {
-				return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-			}
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.AudioClip constructor!");
-            
+            return LuaAPI.luaL_error(L, "UnityEngine.AudioClip does not have a constructor!");
         }
         
 		

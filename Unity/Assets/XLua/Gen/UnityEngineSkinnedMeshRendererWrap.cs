@@ -28,18 +28,18 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "BakeMesh", _m_BakeMesh);
 			
 			
-			Utils.RegisterFunc(L, Utils.GETTER_IDX, "bones", _g_get_bones);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "quality", _g_get_quality);
+			Utils.RegisterFunc(L, Utils.GETTER_IDX, "quality", _g_get_quality);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "updateWhenOffscreen", _g_get_updateWhenOffscreen);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "rootBone", _g_get_rootBone);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "bones", _g_get_bones);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "sharedMesh", _g_get_sharedMesh);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "skinnedMotionVectors", _g_get_skinnedMotionVectors);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "localBounds", _g_get_localBounds);
             
-			Utils.RegisterFunc(L, Utils.SETTER_IDX, "bones", _s_set_bones);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "quality", _s_set_quality);
+			Utils.RegisterFunc(L, Utils.SETTER_IDX, "quality", _s_set_quality);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "updateWhenOffscreen", _s_set_updateWhenOffscreen);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "rootBone", _s_set_rootBone);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "bones", _s_set_bones);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "sharedMesh", _s_set_sharedMesh);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "skinnedMotionVectors", _s_set_skinnedMotionVectors);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "localBounds", _s_set_localBounds);
@@ -178,20 +178,6 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_bones(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                UnityEngine.SkinnedMeshRenderer gen_to_be_invoked = (UnityEngine.SkinnedMeshRenderer)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.bones);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_quality(RealStatePtr L)
         {
 		    try {
@@ -227,6 +213,20 @@ namespace XLua.CSObjectWrap
 			
                 UnityEngine.SkinnedMeshRenderer gen_to_be_invoked = (UnityEngine.SkinnedMeshRenderer)translator.FastGetCSObj(L, 1);
                 translator.Push(L, gen_to_be_invoked.rootBone);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_bones(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                UnityEngine.SkinnedMeshRenderer gen_to_be_invoked = (UnityEngine.SkinnedMeshRenderer)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.bones);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -278,21 +278,6 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_bones(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                UnityEngine.SkinnedMeshRenderer gen_to_be_invoked = (UnityEngine.SkinnedMeshRenderer)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.bones = (UnityEngine.Transform[])translator.GetObject(L, 2, typeof(UnityEngine.Transform[]));
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _s_set_quality(RealStatePtr L)
         {
 		    try {
@@ -331,6 +316,21 @@ namespace XLua.CSObjectWrap
 			
                 UnityEngine.SkinnedMeshRenderer gen_to_be_invoked = (UnityEngine.SkinnedMeshRenderer)translator.FastGetCSObj(L, 1);
                 gen_to_be_invoked.rootBone = (UnityEngine.Transform)translator.GetObject(L, 2, typeof(UnityEngine.Transform));
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_bones(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                UnityEngine.SkinnedMeshRenderer gen_to_be_invoked = (UnityEngine.SkinnedMeshRenderer)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.bones = (UnityEngine.Transform[])translator.GetObject(L, 2, typeof(UnityEngine.Transform[]));
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

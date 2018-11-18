@@ -21,7 +21,7 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(UnityEngine.Animator);
-			Utils.BeginObjectRegister(type, L, translator, 0, 54, 43, 19);
+			Utils.BeginObjectRegister(type, L, translator, 0, 54, 44, 20);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetFloat", _m_GetFloat);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetFloat", _m_SetFloat);
@@ -56,8 +56,8 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetNextAnimatorStateInfo", _m_GetNextAnimatorStateInfo);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetAnimatorTransitionInfo", _m_GetAnimatorTransitionInfo);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetCurrentAnimatorClipInfoCount", _m_GetCurrentAnimatorClipInfoCount);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetCurrentAnimatorClipInfo", _m_GetCurrentAnimatorClipInfo);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetNextAnimatorClipInfoCount", _m_GetNextAnimatorClipInfoCount);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetCurrentAnimatorClipInfo", _m_GetCurrentAnimatorClipInfo);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetNextAnimatorClipInfo", _m_GetNextAnimatorClipInfo);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "IsInTransition", _m_IsInTransition);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetParameter", _m_GetParameter);
@@ -122,6 +122,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "rightFeetBottomHeight", _g_get_rightFeetBottomHeight);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "logWarnings", _g_get_logWarnings);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "fireEvents", _g_get_fireEvents);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "keepAnimatorControllerStateOnDisable", _g_get_keepAnimatorControllerStateOnDisable);
             
 			Utils.RegisterFunc(L, Utils.SETTER_IDX, "rootPosition", _s_set_rootPosition);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "rootRotation", _s_set_rootRotation);
@@ -142,6 +143,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "layersAffectMassCenter", _s_set_layersAffectMassCenter);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "logWarnings", _s_set_logWarnings);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "fireEvents", _s_set_fireEvents);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "keepAnimatorControllerStateOnDisable", _s_set_keepAnimatorControllerStateOnDisable);
             
 			
 			Utils.EndObjectRegister(type, L, translator, null, null,
@@ -1356,6 +1358,35 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_GetNextAnimatorClipInfoCount(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.Animator gen_to_be_invoked = (UnityEngine.Animator)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    int _layerIndex = LuaAPI.xlua_tointeger(L, 2);
+                    
+                        int gen_ret = gen_to_be_invoked.GetNextAnimatorClipInfoCount( _layerIndex );
+                        LuaAPI.xlua_pushinteger(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_GetCurrentAnimatorClipInfo(RealStatePtr L)
         {
 		    try {
@@ -1396,35 +1427,6 @@ namespace XLua.CSObjectWrap
             }
             
             return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Animator.GetCurrentAnimatorClipInfo!");
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_GetNextAnimatorClipInfoCount(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.Animator gen_to_be_invoked = (UnityEngine.Animator)translator.FastGetCSObj(L, 1);
-            
-            
-                
-                {
-                    int _layerIndex = LuaAPI.xlua_tointeger(L, 2);
-                    
-                        int gen_ret = gen_to_be_invoked.GetNextAnimatorClipInfoCount( _layerIndex );
-                        LuaAPI.xlua_pushinteger(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
             
         }
         
@@ -2951,6 +2953,20 @@ namespace XLua.CSObjectWrap
             return 1;
         }
         
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_keepAnimatorControllerStateOnDisable(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                UnityEngine.Animator gen_to_be_invoked = (UnityEngine.Animator)translator.FastGetCSObj(L, 1);
+                LuaAPI.lua_pushboolean(L, gen_to_be_invoked.keepAnimatorControllerStateOnDisable);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -3237,6 +3253,21 @@ namespace XLua.CSObjectWrap
 			
                 UnityEngine.Animator gen_to_be_invoked = (UnityEngine.Animator)translator.FastGetCSObj(L, 1);
                 gen_to_be_invoked.fireEvents = LuaAPI.lua_toboolean(L, 2);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_keepAnimatorControllerStateOnDisable(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                UnityEngine.Animator gen_to_be_invoked = (UnityEngine.Animator)translator.FastGetCSObj(L, 1);
+                gen_to_be_invoked.keepAnimatorControllerStateOnDisable = LuaAPI.lua_toboolean(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

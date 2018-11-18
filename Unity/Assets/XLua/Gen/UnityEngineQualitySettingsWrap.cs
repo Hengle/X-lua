@@ -31,20 +31,15 @@ namespace XLua.CSObjectWrap
 			Utils.EndObjectRegister(type, L, translator, null, null,
 			    null, null, null);
 
-		    Utils.BeginClassRegister(type, L, __CreateInstance, 5, 29, 26);
-			Utils.RegisterFunc(L, Utils.CLS_IDX, "GetQualityLevel", _m_GetQualityLevel_xlua_st_);
-            Utils.RegisterFunc(L, Utils.CLS_IDX, "SetQualityLevel", _m_SetQualityLevel_xlua_st_);
-            Utils.RegisterFunc(L, Utils.CLS_IDX, "IncreaseLevel", _m_IncreaseLevel_xlua_st_);
+		    Utils.BeginClassRegister(type, L, __CreateInstance, 5, 35, 32);
+			Utils.RegisterFunc(L, Utils.CLS_IDX, "IncreaseLevel", _m_IncreaseLevel_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "DecreaseLevel", _m_DecreaseLevel_xlua_st_);
+            Utils.RegisterFunc(L, Utils.CLS_IDX, "SetQualityLevel", _m_SetQualityLevel_xlua_st_);
+            Utils.RegisterFunc(L, Utils.CLS_IDX, "GetQualityLevel", _m_GetQualityLevel_xlua_st_);
             
 			
             
-			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "names", _g_get_names);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "shadowCascade4Split", _g_get_shadowCascade4Split);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "anisotropicFiltering", _g_get_anisotropicFiltering);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "maxQueuedFrames", _g_get_maxQueuedFrames);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "blendWeights", _g_get_blendWeights);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "pixelLightCount", _g_get_pixelLightCount);
+			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "pixelLightCount", _g_get_pixelLightCount);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "shadows", _g_get_shadows);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "shadowProjection", _g_get_shadowProjection);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "shadowCascades", _g_get_shadowCascades);
@@ -53,7 +48,9 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "shadowmaskMode", _g_get_shadowmaskMode);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "shadowNearPlaneOffset", _g_get_shadowNearPlaneOffset);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "shadowCascade2Split", _g_get_shadowCascade2Split);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "shadowCascade4Split", _g_get_shadowCascade4Split);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "lodBias", _g_get_lodBias);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "anisotropicFiltering", _g_get_anisotropicFiltering);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "masterTextureLimit", _g_get_masterTextureLimit);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "maximumLODLevel", _g_get_maximumLODLevel);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "particleRaycastBudget", _g_get_particleRaycastBudget);
@@ -66,14 +63,19 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "realtimeReflectionProbes", _g_get_realtimeReflectionProbes);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "billboardsFaceCameraPosition", _g_get_billboardsFaceCameraPosition);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "resolutionScalingFixedDPIFactor", _g_get_resolutionScalingFixedDPIFactor);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "blendWeights", _g_get_blendWeights);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "streamingMipmapsActive", _g_get_streamingMipmapsActive);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "streamingMipmapsMemoryBudget", _g_get_streamingMipmapsMemoryBudget);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "streamingMipmapsRenderersPerFrame", _g_get_streamingMipmapsRenderersPerFrame);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "streamingMipmapsMaxLevelReduction", _g_get_streamingMipmapsMaxLevelReduction);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "streamingMipmapsAddAllCameras", _g_get_streamingMipmapsAddAllCameras);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "streamingMipmapsMaxFileIORequests", _g_get_streamingMipmapsMaxFileIORequests);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "maxQueuedFrames", _g_get_maxQueuedFrames);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "names", _g_get_names);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "desiredColorSpace", _g_get_desiredColorSpace);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "activeColorSpace", _g_get_activeColorSpace);
             
-			Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "shadowCascade4Split", _s_set_shadowCascade4Split);
-            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "anisotropicFiltering", _s_set_anisotropicFiltering);
-            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "maxQueuedFrames", _s_set_maxQueuedFrames);
-            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "blendWeights", _s_set_blendWeights);
-            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "pixelLightCount", _s_set_pixelLightCount);
+			Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "pixelLightCount", _s_set_pixelLightCount);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "shadows", _s_set_shadows);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "shadowProjection", _s_set_shadowProjection);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "shadowCascades", _s_set_shadowCascades);
@@ -82,7 +84,9 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "shadowmaskMode", _s_set_shadowmaskMode);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "shadowNearPlaneOffset", _s_set_shadowNearPlaneOffset);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "shadowCascade2Split", _s_set_shadowCascade2Split);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "shadowCascade4Split", _s_set_shadowCascade4Split);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "lodBias", _s_set_lodBias);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "anisotropicFiltering", _s_set_anisotropicFiltering);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "masterTextureLimit", _s_set_masterTextureLimit);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "maximumLODLevel", _s_set_maximumLODLevel);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "particleRaycastBudget", _s_set_particleRaycastBudget);
@@ -95,6 +99,14 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "realtimeReflectionProbes", _s_set_realtimeReflectionProbes);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "billboardsFaceCameraPosition", _s_set_billboardsFaceCameraPosition);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "resolutionScalingFixedDPIFactor", _s_set_resolutionScalingFixedDPIFactor);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "blendWeights", _s_set_blendWeights);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "streamingMipmapsActive", _s_set_streamingMipmapsActive);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "streamingMipmapsMemoryBudget", _s_set_streamingMipmapsMemoryBudget);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "streamingMipmapsRenderersPerFrame", _s_set_streamingMipmapsRenderersPerFrame);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "streamingMipmapsMaxLevelReduction", _s_set_streamingMipmapsMaxLevelReduction);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "streamingMipmapsAddAllCameras", _s_set_streamingMipmapsAddAllCameras);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "streamingMipmapsMaxFileIORequests", _s_set_streamingMipmapsMaxFileIORequests);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "maxQueuedFrames", _s_set_maxQueuedFrames);
             
 			
 			Utils.EndClassRegister(type, L, translator);
@@ -103,24 +115,7 @@ namespace XLua.CSObjectWrap
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int __CreateInstance(RealStatePtr L)
         {
-            
-			try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-				if(LuaAPI.lua_gettop(L) == 1)
-				{
-					
-					UnityEngine.QualitySettings gen_ret = new UnityEngine.QualitySettings();
-					translator.Push(L, gen_ret);
-                    
-					return 1;
-				}
-				
-			}
-			catch(System.Exception gen_e) {
-				return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-			}
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.QualitySettings constructor!");
-            
+            return LuaAPI.luaL_error(L, "UnityEngine.QualitySettings does not have a constructor!");
         }
         
 		
@@ -129,69 +124,6 @@ namespace XLua.CSObjectWrap
         
         
         
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_GetQualityLevel_xlua_st_(RealStatePtr L)
-        {
-		    try {
-            
-            
-            
-                
-                {
-                    
-                        int gen_ret = UnityEngine.QualitySettings.GetQualityLevel(  );
-                        LuaAPI.xlua_pushinteger(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_SetQualityLevel_xlua_st_(RealStatePtr L)
-        {
-		    try {
-            
-            
-            
-			    int gen_param_count = LuaAPI.lua_gettop(L);
-            
-                if(gen_param_count == 1&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 1)) 
-                {
-                    int _index = LuaAPI.xlua_tointeger(L, 1);
-                    
-                    UnityEngine.QualitySettings.SetQualityLevel( _index );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 2&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 1)&& LuaTypes.LUA_TBOOLEAN == LuaAPI.lua_type(L, 2)) 
-                {
-                    int _index = LuaAPI.xlua_tointeger(L, 1);
-                    bool _applyExpensiveChanges = LuaAPI.lua_toboolean(L, 2);
-                    
-                    UnityEngine.QualitySettings.SetQualityLevel( _index, _applyExpensiveChanges );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.QualitySettings.SetQualityLevel!");
-            
-        }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_IncreaseLevel_xlua_st_(RealStatePtr L)
@@ -267,68 +199,71 @@ namespace XLua.CSObjectWrap
             
         }
         
-        
-        
-        
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_names(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.Push(L, UnityEngine.QualitySettings.names);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_shadowCascade4Split(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.PushUnityEngineVector3(L, UnityEngine.QualitySettings.shadowCascade4Split);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_anisotropicFiltering(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.Push(L, UnityEngine.QualitySettings.anisotropicFiltering);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_maxQueuedFrames(RealStatePtr L)
+        static int _m_SetQualityLevel_xlua_st_(RealStatePtr L)
         {
 		    try {
             
-			    LuaAPI.xlua_pushinteger(L, UnityEngine.QualitySettings.maxQueuedFrames);
+            
+            
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 1&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 1)) 
+                {
+                    int _index = LuaAPI.xlua_tointeger(L, 1);
+                    
+                    UnityEngine.QualitySettings.SetQualityLevel( _index );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 2&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 1)&& LuaTypes.LUA_TBOOLEAN == LuaAPI.lua_type(L, 2)) 
+                {
+                    int _index = LuaAPI.xlua_tointeger(L, 1);
+                    bool _applyExpensiveChanges = LuaAPI.lua_toboolean(L, 2);
+                    
+                    UnityEngine.QualitySettings.SetQualityLevel( _index, _applyExpensiveChanges );
+                    
+                    
+                    
+                    return 0;
+                }
+                
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
-            return 1;
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.QualitySettings.SetQualityLevel!");
+            
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_blendWeights(RealStatePtr L)
+        static int _m_GetQualityLevel_xlua_st_(RealStatePtr L)
         {
 		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.PushUnityEngineBlendWeights(L, UnityEngine.QualitySettings.blendWeights);
+            
+            
+            
+                
+                {
+                    
+                        int gen_ret = UnityEngine.QualitySettings.GetQualityLevel(  );
+                        LuaAPI.xlua_pushinteger(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
-            return 1;
+            
         }
+        
+        
+        
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_pixelLightCount(RealStatePtr L)
@@ -439,11 +374,35 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_shadowCascade4Split(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    translator.PushUnityEngineVector3(L, UnityEngine.QualitySettings.shadowCascade4Split);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_lodBias(RealStatePtr L)
         {
 		    try {
             
 			    LuaAPI.lua_pushnumber(L, UnityEngine.QualitySettings.lodBias);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_anisotropicFiltering(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    translator.Push(L, UnityEngine.QualitySettings.anisotropicFiltering);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -595,6 +554,114 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_blendWeights(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    translator.PushUnityEngineBlendWeights(L, UnityEngine.QualitySettings.blendWeights);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_streamingMipmapsActive(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.lua_pushboolean(L, UnityEngine.QualitySettings.streamingMipmapsActive);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_streamingMipmapsMemoryBudget(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.lua_pushnumber(L, UnityEngine.QualitySettings.streamingMipmapsMemoryBudget);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_streamingMipmapsRenderersPerFrame(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.xlua_pushinteger(L, UnityEngine.QualitySettings.streamingMipmapsRenderersPerFrame);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_streamingMipmapsMaxLevelReduction(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.xlua_pushinteger(L, UnityEngine.QualitySettings.streamingMipmapsMaxLevelReduction);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_streamingMipmapsAddAllCameras(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.lua_pushboolean(L, UnityEngine.QualitySettings.streamingMipmapsAddAllCameras);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_streamingMipmapsMaxFileIORequests(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.xlua_pushinteger(L, UnityEngine.QualitySettings.streamingMipmapsMaxFileIORequests);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_maxQueuedFrames(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.xlua_pushinteger(L, UnityEngine.QualitySettings.maxQueuedFrames);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_names(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    translator.Push(L, UnityEngine.QualitySettings.names);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_desiredColorSpace(RealStatePtr L)
         {
 		    try {
@@ -619,61 +686,6 @@ namespace XLua.CSObjectWrap
         }
         
         
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_shadowCascade4Split(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			UnityEngine.Vector3 gen_value;translator.Get(L, 1, out gen_value);
-				UnityEngine.QualitySettings.shadowCascade4Split = gen_value;
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_anisotropicFiltering(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			UnityEngine.AnisotropicFiltering gen_value;translator.Get(L, 1, out gen_value);
-				UnityEngine.QualitySettings.anisotropicFiltering = gen_value;
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_maxQueuedFrames(RealStatePtr L)
-        {
-		    try {
-                
-			    UnityEngine.QualitySettings.maxQueuedFrames = LuaAPI.xlua_tointeger(L, 1);
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_blendWeights(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			UnityEngine.BlendWeights gen_value;translator.Get(L, 1, out gen_value);
-				UnityEngine.QualitySettings.blendWeights = gen_value;
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _s_set_pixelLightCount(RealStatePtr L)
@@ -797,11 +809,39 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_shadowCascade4Split(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			UnityEngine.Vector3 gen_value;translator.Get(L, 1, out gen_value);
+				UnityEngine.QualitySettings.shadowCascade4Split = gen_value;
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _s_set_lodBias(RealStatePtr L)
         {
 		    try {
                 
 			    UnityEngine.QualitySettings.lodBias = (float)LuaAPI.lua_tonumber(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_anisotropicFiltering(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			UnityEngine.AnisotropicFiltering gen_value;translator.Get(L, 1, out gen_value);
+				UnityEngine.QualitySettings.anisotropicFiltering = gen_value;
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
@@ -958,6 +998,111 @@ namespace XLua.CSObjectWrap
 		    try {
                 
 			    UnityEngine.QualitySettings.resolutionScalingFixedDPIFactor = (float)LuaAPI.lua_tonumber(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_blendWeights(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			UnityEngine.BlendWeights gen_value;translator.Get(L, 1, out gen_value);
+				UnityEngine.QualitySettings.blendWeights = gen_value;
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_streamingMipmapsActive(RealStatePtr L)
+        {
+		    try {
+                
+			    UnityEngine.QualitySettings.streamingMipmapsActive = LuaAPI.lua_toboolean(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_streamingMipmapsMemoryBudget(RealStatePtr L)
+        {
+		    try {
+                
+			    UnityEngine.QualitySettings.streamingMipmapsMemoryBudget = (float)LuaAPI.lua_tonumber(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_streamingMipmapsRenderersPerFrame(RealStatePtr L)
+        {
+		    try {
+                
+			    UnityEngine.QualitySettings.streamingMipmapsRenderersPerFrame = LuaAPI.xlua_tointeger(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_streamingMipmapsMaxLevelReduction(RealStatePtr L)
+        {
+		    try {
+                
+			    UnityEngine.QualitySettings.streamingMipmapsMaxLevelReduction = LuaAPI.xlua_tointeger(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_streamingMipmapsAddAllCameras(RealStatePtr L)
+        {
+		    try {
+                
+			    UnityEngine.QualitySettings.streamingMipmapsAddAllCameras = LuaAPI.lua_toboolean(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_streamingMipmapsMaxFileIORequests(RealStatePtr L)
+        {
+		    try {
+                
+			    UnityEngine.QualitySettings.streamingMipmapsMaxFileIORequests = LuaAPI.xlua_tointeger(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_maxQueuedFrames(RealStatePtr L)
+        {
+		    try {
+                
+			    UnityEngine.QualitySettings.maxQueuedFrames = LuaAPI.xlua_tointeger(L, 1);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

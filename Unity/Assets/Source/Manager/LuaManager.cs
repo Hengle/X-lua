@@ -21,17 +21,12 @@ namespace Game
         static LuaManager _instance;
         protected LuaManager() { }
 
-        //lua逻辑代码目录
-#if UNITY_EDITOR
-        string LUA_DIR { get { return Util.DataPath + "../Code/Scripts"; } }
-#else
-        string LUA_DIR { get { return Util.DataPath + "Scripts"; } }
-#endif
+        private LuaEnv _luaEnv;
+        private string _luaDir = "?";
+        private string _luaMain = "?";
+        private XLuaDelegate _luaDelegate;
 
-        const string _luaMain = "Main";
-        LuaEnv _luaEnv;
         public LuaEnv LuaEnv { get { return _luaEnv; } }
-
         public void Init()
         {
             _luaEnv = new LuaEnv();
@@ -44,6 +39,7 @@ namespace Game
             {
                 try
                 {
+                    _luaDelegate.Dispose();
                     _luaEnv.Dispose();
                     _luaEnv = null;
                     _instance = null;
@@ -54,21 +50,17 @@ namespace Game
                 }
             }
         }
-
+        public void SetLuaDirAndMain(string dir, string main)
+        {
+            _luaDir = dir;
+            _luaMain = main;
+        }
         private byte[] CustomLoader(ref string filePath)
         {
-            string fullPath = string.Format("{0}/{1}.lua", LUA_DIR, filePath.Replace(".", "/"));
+            string fullPath = string.Format("{0}/{1}.lua", _luaDir, filePath.Replace(".", "/"));
             if (File.Exists(fullPath))
                 return File.ReadAllBytes(fullPath);
             return null;
-        }
-        public void Start()
-        {
-            _luaEnv.DoString(string.Format("require '{0}'", _luaMain), _luaMain);
-            _luaEnv.DoString(string.Format("{0}.Init()", _luaMain), _luaMain);
-            Main.Instance.Updater += _luaEnv.Global.GetInPath<UpdateFunc>(_luaMain + ".Update");
-            Main.Instance.LateUpdater += _luaEnv.Global.GetInPath<LateUpdateFunc>(_luaMain + ".LateUpdate");
-            Main.Instance.FixedUpdater += _luaEnv.Global.GetInPath<FixedUpdateFunc>(_luaMain + ".FixedUpdate");
         }
 
         public void Tick()
@@ -78,6 +70,17 @@ namespace Game
                 _luaEnv.GC();
                 _luaEnv.FullGc();
             }
+        }
+        public void StartGame()
+        {
+            _luaEnv.DoString(string.Format("require '{0}'", _luaMain), _luaMain);
+            _luaEnv.DoString(string.Format("{0}.Init()", _luaMain), _luaMain);
+            
+            var main = Main.Instance.gameObject;
+            _luaDelegate = main.GetComponent<XLuaDelegate>();
+            if (_luaDelegate == null)
+                _luaDelegate = main.AddComponent<XLuaDelegate>();
+            _luaDelegate.Init(_luaEnv);          
         }
     }
 }

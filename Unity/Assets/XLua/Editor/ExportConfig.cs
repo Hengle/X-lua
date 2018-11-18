@@ -18,6 +18,14 @@ using Game;
 
 public static class ExportConfig
 {
+    [CSharpCallLua]
+    public static List<Type> LuaDelegates = new List<Type>()
+    {
+        typeof(Action),
+        typeof(Action<float>),
+        typeof(Action<float, float>),
+    };
+
     [LuaCallCSharp]
     public static List<Type> LuaCallCSharp = new List<Type>()
     {

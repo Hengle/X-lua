@@ -23,10 +23,12 @@ print = function(...)
         Debug.Log(concat(args, '\t'))
     end
 end
-local color = "yellow"
+
+local DEFAULT_LOG_COLOR = "yellow"
+local color = DEFAULT_LOG_COLOR
 local dump_level = 3
 --输出黄色日志-无格式
-function printcolor(...)
+local function printwitchcolor(...)
     if not Local.LogManager then
         return
     end
@@ -41,6 +43,14 @@ function printcolor(...)
     else
         Debug.Log(log);
     end
+end
+function printcolor(c, ...)
+    color = c
+    printwitchcolor(...)
+    color = DEFAULT_LOG_COLOR
+end
+function printyellow(...)
+    printcolor("yellow", ...)
 end
 function printt(t, des)
     if not Local.LogManager then
@@ -73,36 +83,21 @@ function Log(...)
     if not Local.LogManager then
         return
     end
-    local str = format(...)
-    if Local.LogTraceback then
-        Debug.Log(str .. "\r\n" .. traceback());
-    else
-        Debug.Log(str);
-    end
+    Debug.Log(format(...))-- or "Log Nil"
 end
 --错误日志--
 function LogError(...)
     if not Local.LogManager then
         return
     end
-    local str = format(...)
-    if Local.LogTraceback then
-        Debug.LogError(str .. "\r\n" .. traceback());
-    else
-        Debug.LogError(str)
-    end
+    Debug.LogError(format(...))-- or "LogError Nil"
 end
 --警告日志--
 function LogWarning(...)
     if not Local.LogManager then
         return
     end
-    local str = format(...)
-    if Local.LogTraceback then
-        Debug.LogWarning(str .. "\r\n" .. traceback());
-    else
-        Debug.LogWarning(str)
-    end
+    Debug.LogWarning(format(...))-- or "LogWarning Nil"
 end
 ---@param a 判定条件
 ---@param b true返回b

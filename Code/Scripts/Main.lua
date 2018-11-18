@@ -22,23 +22,30 @@ end
 
 function Main.Init()
     InitModule()
-    print('lua framework init successful.')
+    printcolor("orange", 'lua framework init successful.')
+
+    local demo = require "UIExample.UIDemo"
+    Util.Myxpcall(demo.Init, demo)
 end
 
 --逻辑update
-function Main.Update(deltaTime, unscaledDeltaTime)
+function Update(deltaTime, unscaledDeltaTime)
     Time:SetDeltaTime(deltaTime, unscaledDeltaTime)
     gameEvent.UpdateEvent:Trigger()
 end
-function Main.LateUpdate()
+function LateUpdate()
     gameEvent.LateUpdateEvent:Trigger()
 end
 --物理update
-function Main.FixedUpdate(fixedDeltaTime)
+function FixedUpdate(fixedDeltaTime)
     Time:SetFixedDelta(fixedDeltaTime)
     gameEvent.FixedUpdateEvent:Trigger()
 end
 
+function OnDestroy()
+    local demo = require "UIExample.UIDemo"
+    demo:OnDestroy()
+end
 
 --------------------------------------------------------
 ---------------------- 测试 ----------------------------

@@ -23,10 +23,10 @@ namespace XLua.CSObjectWrap
 			System.Type type = typeof(UnityEngine.MonoBehaviour);
 			Utils.BeginObjectRegister(type, L, translator, 0, 7, 1, 1);
 			
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "IsInvoking", _m_IsInvoking);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CancelInvoke", _m_CancelInvoke);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Invoke", _m_Invoke);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "InvokeRepeating", _m_InvokeRepeating);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CancelInvoke", _m_CancelInvoke);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "IsInvoking", _m_IsInvoking);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StartCoroutine", _m_StartCoroutine);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StopCoroutine", _m_StopCoroutine);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StopAllCoroutines", _m_StopAllCoroutines);
@@ -80,6 +80,90 @@ namespace XLua.CSObjectWrap
         
         
         
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_IsInvoking(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.MonoBehaviour gen_to_be_invoked = (UnityEngine.MonoBehaviour)translator.FastGetCSObj(L, 1);
+            
+            
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 1) 
+                {
+                    
+                        bool gen_ret = gen_to_be_invoked.IsInvoking(  );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    
+                        bool gen_ret = gen_to_be_invoked.IsInvoking( _methodName );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.MonoBehaviour.IsInvoking!");
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_CancelInvoke(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.MonoBehaviour gen_to_be_invoked = (UnityEngine.MonoBehaviour)translator.FastGetCSObj(L, 1);
+            
+            
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 1) 
+                {
+                    
+                    gen_to_be_invoked.CancelInvoke(  );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    
+                    gen_to_be_invoked.CancelInvoke( _methodName );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.MonoBehaviour.CancelInvoke!");
+            
+        }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_Invoke(RealStatePtr L)
@@ -141,90 +225,6 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_CancelInvoke(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.MonoBehaviour gen_to_be_invoked = (UnityEngine.MonoBehaviour)translator.FastGetCSObj(L, 1);
-            
-            
-			    int gen_param_count = LuaAPI.lua_gettop(L);
-            
-                if(gen_param_count == 1) 
-                {
-                    
-                    gen_to_be_invoked.CancelInvoke(  );
-                    
-                    
-                    
-                    return 0;
-                }
-                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    
-                    gen_to_be_invoked.CancelInvoke( _methodName );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.MonoBehaviour.CancelInvoke!");
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_IsInvoking(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                UnityEngine.MonoBehaviour gen_to_be_invoked = (UnityEngine.MonoBehaviour)translator.FastGetCSObj(L, 1);
-            
-            
-			    int gen_param_count = LuaAPI.lua_gettop(L);
-            
-                if(gen_param_count == 1) 
-                {
-                    
-                        bool gen_ret = gen_to_be_invoked.IsInvoking(  );
-                        LuaAPI.lua_pushboolean(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    
-                        bool gen_ret = gen_to_be_invoked.IsInvoking( _methodName );
-                        LuaAPI.lua_pushboolean(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.MonoBehaviour.IsInvoking!");
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_StartCoroutine(RealStatePtr L)
         {
 		    try {
@@ -237,22 +237,22 @@ namespace XLua.CSObjectWrap
             
 			    int gen_param_count = LuaAPI.lua_gettop(L);
             
-                if(gen_param_count == 2&& translator.Assignable<System.Collections.IEnumerator>(L, 2)) 
+                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
                 {
-                    System.Collections.IEnumerator _routine = (System.Collections.IEnumerator)translator.GetObject(L, 2, typeof(System.Collections.IEnumerator));
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
                     
-                        UnityEngine.Coroutine gen_ret = gen_to_be_invoked.StartCoroutine( _routine );
+                        UnityEngine.Coroutine gen_ret = gen_to_be_invoked.StartCoroutine( _methodName );
                         translator.Push(L, gen_ret);
                     
                     
                     
                     return 1;
                 }
-                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
+                if(gen_param_count == 2&& translator.Assignable<System.Collections.IEnumerator>(L, 2)) 
                 {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    System.Collections.IEnumerator _routine = (System.Collections.IEnumerator)translator.GetObject(L, 2, typeof(System.Collections.IEnumerator));
                     
-                        UnityEngine.Coroutine gen_ret = gen_to_be_invoked.StartCoroutine( _methodName );
+                        UnityEngine.Coroutine gen_ret = gen_to_be_invoked.StartCoroutine( _routine );
                         translator.Push(L, gen_ret);
                     
                     
@@ -293,16 +293,6 @@ namespace XLua.CSObjectWrap
             
 			    int gen_param_count = LuaAPI.lua_gettop(L);
             
-                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
-                {
-                    string _methodName = LuaAPI.lua_tostring(L, 2);
-                    
-                    gen_to_be_invoked.StopCoroutine( _methodName );
-                    
-                    
-                    
-                    return 0;
-                }
                 if(gen_param_count == 2&& translator.Assignable<System.Collections.IEnumerator>(L, 2)) 
                 {
                     System.Collections.IEnumerator _routine = (System.Collections.IEnumerator)translator.GetObject(L, 2, typeof(System.Collections.IEnumerator));
@@ -318,6 +308,16 @@ namespace XLua.CSObjectWrap
                     UnityEngine.Coroutine _routine = (UnityEngine.Coroutine)translator.GetObject(L, 2, typeof(UnityEngine.Coroutine));
                     
                     gen_to_be_invoked.StopCoroutine( _routine );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
+                {
+                    string _methodName = LuaAPI.lua_tostring(L, 2);
+                    
+                    gen_to_be_invoked.StopCoroutine( _methodName );
                     
                     
                     

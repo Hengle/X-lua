@@ -31,15 +31,12 @@ namespace XLua.CSObjectWrap
 			Utils.EndObjectRegister(type, L, translator, null, null,
 			    null, null, null);
 
-		    Utils.BeginClassRegister(type, L, __CreateInstance, 2, 13, 7);
+		    Utils.BeginClassRegister(type, L, __CreateInstance, 2, 14, 8);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "SetResolution", _m_SetResolution_xlua_st_);
             
 			
             
-			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "resolutions", _g_get_resolutions);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "currentResolution", _g_get_currentResolution);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "fullScreen", _g_get_fullScreen);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "width", _g_get_width);
+			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "width", _g_get_width);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "height", _g_get_height);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "dpi", _g_get_dpi);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "orientation", _g_get_orientation);
@@ -48,15 +45,20 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "autorotateToPortraitUpsideDown", _g_get_autorotateToPortraitUpsideDown);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "autorotateToLandscapeLeft", _g_get_autorotateToLandscapeLeft);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "autorotateToLandscapeRight", _g_get_autorotateToLandscapeRight);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "currentResolution", _g_get_currentResolution);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "fullScreen", _g_get_fullScreen);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "fullScreenMode", _g_get_fullScreenMode);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "safeArea", _g_get_safeArea);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "resolutions", _g_get_resolutions);
             
-			Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "fullScreen", _s_set_fullScreen);
-            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "orientation", _s_set_orientation);
+			Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "orientation", _s_set_orientation);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "sleepTimeout", _s_set_sleepTimeout);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "autorotateToPortrait", _s_set_autorotateToPortrait);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "autorotateToPortraitUpsideDown", _s_set_autorotateToPortraitUpsideDown);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "autorotateToLandscapeLeft", _s_set_autorotateToLandscapeLeft);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "autorotateToLandscapeRight", _s_set_autorotateToLandscapeRight);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "fullScreen", _s_set_fullScreen);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "fullScreenMode", _s_set_fullScreenMode);
             
 			
 			Utils.EndClassRegister(type, L, translator);
@@ -97,6 +99,8 @@ namespace XLua.CSObjectWrap
         {
 		    try {
             
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
             
             
 			    int gen_param_count = LuaAPI.lua_gettop(L);
@@ -126,6 +130,31 @@ namespace XLua.CSObjectWrap
                     
                     return 0;
                 }
+                if(gen_param_count == 3&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 1)&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 2)&& translator.Assignable<UnityEngine.FullScreenMode>(L, 3)) 
+                {
+                    int _width = LuaAPI.xlua_tointeger(L, 1);
+                    int _height = LuaAPI.xlua_tointeger(L, 2);
+                    UnityEngine.FullScreenMode _fullscreenMode;translator.Get(L, 3, out _fullscreenMode);
+                    
+                    UnityEngine.Screen.SetResolution( _width, _height, _fullscreenMode );
+                    
+                    
+                    
+                    return 0;
+                }
+                if(gen_param_count == 4&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 1)&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 2)&& translator.Assignable<UnityEngine.FullScreenMode>(L, 3)&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 4)) 
+                {
+                    int _width = LuaAPI.xlua_tointeger(L, 1);
+                    int _height = LuaAPI.xlua_tointeger(L, 2);
+                    UnityEngine.FullScreenMode _fullscreenMode;translator.Get(L, 3, out _fullscreenMode);
+                    int _preferredRefreshRate = LuaAPI.xlua_tointeger(L, 4);
+                    
+                    UnityEngine.Screen.SetResolution( _width, _height, _fullscreenMode, _preferredRefreshRate );
+                    
+                    
+                    
+                    return 0;
+                }
                 
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
@@ -137,42 +166,6 @@ namespace XLua.CSObjectWrap
         
         
         
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_resolutions(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.Push(L, UnityEngine.Screen.resolutions);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_currentResolution(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.Push(L, UnityEngine.Screen.currentResolution);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_fullScreen(RealStatePtr L)
-        {
-		    try {
-            
-			    LuaAPI.lua_pushboolean(L, UnityEngine.Screen.fullScreen);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_width(RealStatePtr L)
@@ -283,6 +276,42 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_currentResolution(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    translator.Push(L, UnityEngine.Screen.currentResolution);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_fullScreen(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.lua_pushboolean(L, UnityEngine.Screen.fullScreen);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_fullScreenMode(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    translator.Push(L, UnityEngine.Screen.fullScreenMode);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_safeArea(RealStatePtr L)
         {
 		    try {
@@ -294,20 +323,19 @@ namespace XLua.CSObjectWrap
             return 1;
         }
         
-        
-        
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_fullScreen(RealStatePtr L)
+        static int _g_get_resolutions(RealStatePtr L)
         {
 		    try {
-                
-			    UnityEngine.Screen.fullScreen = LuaAPI.lua_toboolean(L, 1);
-            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    translator.Push(L, UnityEngine.Screen.resolutions);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
-            return 0;
+            return 1;
         }
+        
+        
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _s_set_orientation(RealStatePtr L)
@@ -381,6 +409,33 @@ namespace XLua.CSObjectWrap
 		    try {
                 
 			    UnityEngine.Screen.autorotateToLandscapeRight = LuaAPI.lua_toboolean(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_fullScreen(RealStatePtr L)
+        {
+		    try {
+                
+			    UnityEngine.Screen.fullScreen = LuaAPI.lua_toboolean(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_fullScreenMode(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			UnityEngine.FullScreenMode gen_value;translator.Get(L, 1, out gen_value);
+				UnityEngine.Screen.fullScreenMode = gen_value;
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

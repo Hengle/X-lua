@@ -33,9 +33,7 @@ namespace XLua.CSObjectWrap
 
 		    Utils.BeginClassRegister(type, L, __CreateInstance, 19, 29, 3);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "Quit", _m_Quit_xlua_st_);
-            Utils.RegisterFunc(L, Utils.CLS_IDX, "CancelQuit", _m_CancelQuit_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "Unload", _m_Unload_xlua_st_);
-            Utils.RegisterFunc(L, Utils.CLS_IDX, "GetStreamProgressForLevel", _m_GetStreamProgressForLevel_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "CanStreamedLevelBeLoaded", _m_CanStreamedLevelBeLoaded_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "GetBuildTags", _m_GetBuildTags_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "SetBuildTags", _m_SetBuildTags_xlua_st_);
@@ -51,17 +49,18 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "logMessageReceived", _e_logMessageReceived);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "logMessageReceivedThreaded", _e_logMessageReceivedThreaded);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "onBeforeRender", _e_onBeforeRender);
+			Utils.RegisterFunc(L, Utils.CLS_IDX, "wantsToQuit", _e_wantsToQuit);
+			Utils.RegisterFunc(L, Utils.CLS_IDX, "quitting", _e_quitting);
 			
             
-			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "streamedBytes", _g_get_streamedBytes);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "isPlaying", _g_get_isPlaying);
+			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "isPlaying", _g_get_isPlaying);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "isFocused", _g_get_isFocused);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "isEditor", _g_get_isEditor);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "platform", _g_get_platform);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "buildGUID", _g_get_buildGUID);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "isMobilePlatform", _g_get_isMobilePlatform);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "isConsolePlatform", _g_get_isConsolePlatform);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "runInBackground", _g_get_runInBackground);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "isBatchMode", _g_get_isBatchMode);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "dataPath", _g_get_dataPath);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "streamingAssetsPath", _g_get_streamingAssetsPath);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "persistentDataPath", _g_get_persistentDataPath);
@@ -82,6 +81,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "internetReachability", _g_get_internetReachability);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "genuine", _g_get_genuine);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "genuineCheckAvailable", _g_get_genuineCheckAvailable);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "isEditor", _g_get_isEditor);
             
 			Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "runInBackground", _s_set_runInBackground);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "targetFrameRate", _s_set_targetFrameRate);
@@ -145,29 +145,6 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_CancelQuit_xlua_st_(RealStatePtr L)
-        {
-		    try {
-            
-            
-            
-                
-                {
-                    
-                    UnityEngine.Application.CancelQuit(  );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _m_Unload_xlua_st_(RealStatePtr L)
         {
 		    try {
@@ -187,46 +164,6 @@ namespace XLua.CSObjectWrap
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_GetStreamProgressForLevel_xlua_st_(RealStatePtr L)
-        {
-		    try {
-            
-            
-            
-			    int gen_param_count = LuaAPI.lua_gettop(L);
-            
-                if(gen_param_count == 1&& LuaTypes.LUA_TNUMBER == LuaAPI.lua_type(L, 1)) 
-                {
-                    int _levelIndex = LuaAPI.xlua_tointeger(L, 1);
-                    
-                        float gen_ret = UnityEngine.Application.GetStreamProgressForLevel( _levelIndex );
-                        LuaAPI.lua_pushnumber(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                if(gen_param_count == 1&& (LuaAPI.lua_isnil(L, 1) || LuaAPI.lua_type(L, 1) == LuaTypes.LUA_TSTRING)) 
-                {
-                    string _levelName = LuaAPI.lua_tostring(L, 1);
-                    
-                        float gen_ret = UnityEngine.Application.GetStreamProgressForLevel( _levelName );
-                        LuaAPI.lua_pushnumber(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Application.GetStreamProgressForLevel!");
             
         }
         
@@ -509,18 +446,6 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_streamedBytes(RealStatePtr L)
-        {
-		    try {
-            
-			    LuaAPI.xlua_pushinteger(L, UnityEngine.Application.streamedBytes);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_isPlaying(RealStatePtr L)
         {
 		    try {
@@ -538,18 +463,6 @@ namespace XLua.CSObjectWrap
 		    try {
             
 			    LuaAPI.lua_pushboolean(L, UnityEngine.Application.isFocused);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_isEditor(RealStatePtr L)
-        {
-		    try {
-            
-			    LuaAPI.lua_pushboolean(L, UnityEngine.Application.isEditor);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -610,6 +523,18 @@ namespace XLua.CSObjectWrap
 		    try {
             
 			    LuaAPI.lua_pushboolean(L, UnityEngine.Application.runInBackground);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_isBatchMode(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.lua_pushboolean(L, UnityEngine.Application.isBatchMode);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -856,6 +781,18 @@ namespace XLua.CSObjectWrap
             return 1;
         }
         
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_isEditor(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.lua_pushboolean(L, UnityEngine.Application.isEditor);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -1016,6 +953,64 @@ namespace XLua.CSObjectWrap
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
 			return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Application.onBeforeRender!");
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _e_wantsToQuit(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+                System.Func<bool> gen_delegate = translator.GetDelegate<System.Func<bool>>(L, 2);
+                if (gen_delegate == null) {
+                    return LuaAPI.luaL_error(L, "#2 need System.Func<bool>!");
+                }
+                
+				
+				if (gen_param_count == 2 && LuaAPI.xlua_is_eq_str(L, 1, "+")) {
+					UnityEngine.Application.wantsToQuit += gen_delegate;
+					return 0;
+				} 
+				
+				
+				if (gen_param_count == 2 && LuaAPI.xlua_is_eq_str(L, 1, "-")) {
+					UnityEngine.Application.wantsToQuit -= gen_delegate;
+					return 0;
+				} 
+				
+			} catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+			return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Application.wantsToQuit!");
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _e_quitting(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+                System.Action gen_delegate = translator.GetDelegate<System.Action>(L, 2);
+                if (gen_delegate == null) {
+                    return LuaAPI.luaL_error(L, "#2 need System.Action!");
+                }
+                
+				
+				if (gen_param_count == 2 && LuaAPI.xlua_is_eq_str(L, 1, "+")) {
+					UnityEngine.Application.quitting += gen_delegate;
+					return 0;
+				} 
+				
+				
+				if (gen_param_count == 2 && LuaAPI.xlua_is_eq_str(L, 1, "-")) {
+					UnityEngine.Application.quitting -= gen_delegate;
+					return 0;
+				} 
+				
+			} catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+			return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Application.quitting!");
         }
         
     }

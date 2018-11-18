@@ -7,51 +7,69 @@ public partial class ExportResource
     //上述资源,在每次打包UI时,需要重新打包
     //Android 平台特效有待继续处理
 
-    static string uiPrefabsFolder = "Assets/Interface/Prefabs";
-    static string atlasAssetFolder = "Assets/Interface/Atlas";
-    static Dictionary<string, string> assetAtlas = new Dictionary<string, string>();
-    static Dictionary<string, string> assetFonts = new Dictionary<string, string>();
-    static Dictionary<string, string> assetUIs = new Dictionary<string, string>();
+    //-----问题
+    //1.界面图集
+    //2.界面描述
+    //3.界面字体(艺术字和动态字体)
+    //4.音频                              -另作处理
+    //5.动态加载图片(大图)                -另作处理
+    //6.2D特效/3D特效?麻烦!!
+
+    static string guiFolder = "Assets/Interface/GUI";
+    static string atlasFolder = "Assets/Interface/Atlas";
+    static Dictionary<string, string> assetFonts = new Dictionary<string, string>()
+    { {"Assets/Interface/Font/HYQiHei-55JW.otf", "ui/dlgfont.ui"} };//Unity资源路径 -> Bundle资源路径
+
+    //rgb:atlas0.png        -RGB通道贴图
+    //a:atlas0!a.png        -A通道贴图
+    //des:fui.bytes         -UI描述文件
+    static void SetAtlasPackage(string srcFolder, string dstFolder)
+    {
+        SetAssetBundleName(PackageBundleName(srcFolder, "*_fui.bytes", dstFolder, "_fui.bundle"));
+        SetAssetBundleName(PackageBundleName(srcFolder, "*_atlas0.png", dstFolder, "_atlas0.bundle"));
+        SetAssetBundleName(PackageBundleName(srcFolder, "*_atlas0!a.png", dstFolder, "_atlas0!a.bundle"));
+    }
+    static Dictionary<string, string> GetGUIPackage(string srcFolder, string dstFolder)
+    {
+        return PackageBundleName(srcFolder, "*_fui.bytes", dstFolder, "_fui.bundle");
+    }
+    static Dictionary<string, string> PackageBundleName(string srcFolder, string searchPattern, string dstFolder, string end)
+    {
+        Dictionary<string, string> assets = new Dictionary<string, string>();
+        GetAssetsRecursively(srcFolder, searchPattern, dstFolder, null, ref assets);
+        Dictionary<string, string> result = new Dictionary<string, string>();
+        foreach (var item in assets)
+        {
+            int index = item.Value.LastIndexOf(end);
+            result.Add(item.Key, item.Value.Substring(0, index));
+        }
+        return result;
+    }
 
     static void ExportSelectedUIs(BuildTarget target)
     {
         UnityEngine.Object[] selection = Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.DeepAssets);
         if (selection.Length > 0)
         {
-            assetAtlas.Clear();
-            GetAssetsRecursively(atlasAssetFolder, "*.spriteatlas", "ui/atlas/", null, ref assetAtlas);
-            SetAssetBundleName(assetAtlas);
+            SetAtlasPackage(atlasFolder, "ui/atlas/");
 
-            GetUIPrefabAssets();
+            var assetUIs = GetGUIPackage(guiFolder, "ui/");
             var assets = GetSelectedAssets(assetUIs, selection);
 
-            CombineAssets(new Dictionary<string, string>[] { assetFonts, assetUIs }, ref assets);
-            SetAssetBundleName(assets, new string[] { EXT_PNG, EXT_TGA, }, DEPTEX_FOLDER);
-            SetAssetBundleName(assets, new string[] { EXT_SHADER }, SHADER_FOLDER);
-            SetAssetBundleName(assets, new string[] { EXT_OGG, EXT_MP3 }, AUDIO_FOLDER);
+            CombineAssets(new Dictionary<string, string>[] { assetFonts }, ref assets);
+            SetAssetBundleName(assets);
 
             BuildAssetBundles(target);
         }
     }
     static void ExportAllUIs(BuildTarget target)
     {
-        assetAtlas.Clear();
-        GetAssetsRecursively(atlasAssetFolder, "*.spriteatlas", "ui/atlas/", null, ref assetAtlas);
-        SetAssetBundleName(assetAtlas);
-
-        GetUIPrefabAssets();
-
+        SetAtlasPackage(atlasFolder, "ui/atlas/");
+        var assetUIs = GetGUIPackage(guiFolder, "ui/");
         CombineAssets(new Dictionary<string, string>[] { assetFonts }, ref assetUIs);
-        SetAssetBundleName(assetUIs, new string[] { EXT_PNG, EXT_TGA, }, DEPTEX_FOLDER);        
-        SetAssetBundleName(assetUIs, new string[] { EXT_SHADER }, SHADER_FOLDER);
-        SetAssetBundleName(assetUIs, new string[] { EXT_OGG, EXT_MP3 }, AUDIO_FOLDER);
+        SetAssetBundleName(assetUIs);
 
         BuildAssetBundles(target);
-    }
-    static void GetUIPrefabAssets()
-    {
-        assetUIs.Clear();
-        GetAssetsRecursively(uiPrefabsFolder, "*.prefab", "ui/", null, ref assetUIs);
     }
     static void CombineAssets(Dictionary<string, string>[] dics, ref Dictionary<string, string> assets)
     {

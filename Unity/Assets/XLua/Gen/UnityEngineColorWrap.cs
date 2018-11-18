@@ -418,9 +418,24 @@ namespace XLua.CSObjectWrap
                 UnityEngine.Color gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
             
             
-                
+			    int gen_param_count = LuaAPI.lua_gettop(L);
+            
+                if(gen_param_count == 2&& translator.Assignable<object>(L, 2)) 
                 {
                     object _other = translator.GetObject(L, 2, typeof(object));
+                    
+                        bool gen_ret = gen_to_be_invoked.Equals( _other );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                        translator.UpdateUnityEngineColor(L, 1, gen_to_be_invoked);
+                    
+                    
+                    return 1;
+                }
+                if(gen_param_count == 2&& translator.Assignable<UnityEngine.Color>(L, 2)) 
+                {
+                    UnityEngine.Color _other;translator.Get(L, 2, out _other);
                     
                         bool gen_ret = gen_to_be_invoked.Equals( _other );
                         LuaAPI.lua_pushboolean(L, gen_ret);
@@ -435,6 +450,8 @@ namespace XLua.CSObjectWrap
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
+            
+            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.Color.Equals!");
             
         }
         

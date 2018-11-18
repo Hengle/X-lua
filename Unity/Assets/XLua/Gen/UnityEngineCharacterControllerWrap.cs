@@ -27,8 +27,8 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Move", _m_Move);
 			
 			
-			Utils.RegisterFunc(L, Utils.GETTER_IDX, "isGrounded", _g_get_isGrounded);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "velocity", _g_get_velocity);
+			Utils.RegisterFunc(L, Utils.GETTER_IDX, "velocity", _g_get_velocity);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "isGrounded", _g_get_isGrounded);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "collisionFlags", _g_get_collisionFlags);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "radius", _g_get_radius);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "height", _g_get_height);
@@ -156,20 +156,6 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_isGrounded(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                UnityEngine.CharacterController gen_to_be_invoked = (UnityEngine.CharacterController)translator.FastGetCSObj(L, 1);
-                LuaAPI.lua_pushboolean(L, gen_to_be_invoked.isGrounded);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_velocity(RealStatePtr L)
         {
 		    try {
@@ -177,6 +163,20 @@ namespace XLua.CSObjectWrap
 			
                 UnityEngine.CharacterController gen_to_be_invoked = (UnityEngine.CharacterController)translator.FastGetCSObj(L, 1);
                 translator.PushUnityEngineVector3(L, gen_to_be_invoked.velocity);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_isGrounded(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                UnityEngine.CharacterController gen_to_be_invoked = (UnityEngine.CharacterController)translator.FastGetCSObj(L, 1);
+                LuaAPI.lua_pushboolean(L, gen_to_be_invoked.isGrounded);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }

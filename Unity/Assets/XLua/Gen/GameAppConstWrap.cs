@@ -31,15 +31,15 @@ namespace XLua.CSObjectWrap
 			Utils.EndObjectRegister(type, L, translator, null, null,
 			    null, null, null);
 
-		    Utils.BeginClassRegister(type, L, __CreateInstance, 5, 0, 0);
+		    Utils.BeginClassRegister(type, L, __CreateInstance, 4, 1, 0);
 			
 			
-            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "DebugMode", Game.AppConst.DebugMode);
-            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "EnableProfile", Game.AppConst.EnableProfile);
             Utils.RegisterObject(L, translator, Utils.CLS_IDX, "FrameRate", Game.AppConst.FrameRate);
             Utils.RegisterObject(L, translator, Utils.CLS_IDX, "Resolution", Game.AppConst.Resolution);
+            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "LuaMain", Game.AppConst.LuaMain);
             
-			
+			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "LuaDir", _g_get_LuaDir);
+            
 			
 			
 			Utils.EndClassRegister(type, L, translator);
@@ -77,6 +77,18 @@ namespace XLua.CSObjectWrap
         
         
         
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_LuaDir(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.lua_pushstring(L, Game.AppConst.LuaDir);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
         
         
         

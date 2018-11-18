@@ -8,7 +8,7 @@ local Class = Class
 local Util = Util
 local Event = Class:new()
 
-function Event:__new(name)
+function Event:ctor(name)
     self.name = name or "__unknown__"
     self.eventMap = {}
     self.statusMap = {}

@@ -26,39 +26,38 @@ local MAX_HIDE_VIEW_NUM = 0
 local UI_LOAD_TYPE = CS.Game.ResourceLoadType.LoadBundleFromFile -- www方式加载
 
 local NeedRefresh               --是否需要刷新
+
 local OnShow                    --页面显示回调
 local OnHide                    --页面隐藏回调
-local ShowLoading               --显示加载中提示
-local HideLoading               --隐藏加载中提示
-local ShowLoadedView            --显示已经加载的页面 用于弹出堆栈 或者tab页切换
-local HideLoadedView            --隐藏已经加载的页面 用于弹出堆栈 或者tab页切换
+
 local OnShowTab                 --显示Tab页
 local OnHideTab                 --隐藏Tab页
-local CallBackDestroyAllDlgs   --销毁所有界面回调事件
 
---[[
+local CallBackDestroyAllDlgs    --销毁所有界面回调事件
+
+--[[        界面相关数据
     filename                -- 文件名[小写]
     status                  -- 加载状态[加载成功/加载中]
     loaded                  -- 是否已被加载
     gameObject              -- 界面游戏对象
 
-    isDialog                -- 是否为窗口
+
     dialogViewName          -- 是带dlgdialog的窗口?
-
-    tabs                    --
-    initedTabs              -- tabName,true
-    tabIndex                --
-    tabGroupStates          -- tabIndex,map{tabName,isShow}
-
     hideTime                -- 最后隐藏时刻
     isShow                  -- 是否已显示
     needRefresh             -- 是否需要刷新
     refreshParams           -- 刷新界面时所带参数
+
+    isDialog                -- 是否为tab组窗口[tab组嵌套,可形成递归,树形结构]
+    initedTabs              -- tabName,true:切页是否已初始化
+    tabIndex                -- 切页索引
+    tabs                    -- 切页数组
+    tabGroupStates          -- tabIndex,map{tabName,isShow}切页数组状态
 --]]
 ---@type Stack
 local _dialogStack = nil
 local _dialogConfigs = nil
-local _views = {}
+local _views = {}               --  viewName:相对UI目录
 local _isLocked = false
 local _uiRoot = nil
 local _playingParticleSystems = {}
@@ -70,20 +69,28 @@ UIShowType = {
     Default                 = 0, --默认策略显示
     ShowImmediate           = 1, --直接调用show
     Refresh                 = 2, --强制调用show
-    RefreshAndShowImmediate = 3, -- bit.bor(UIShowType.ShowImmediate,UIShowType.Refresh)
+    RefreshAndShowImmediate = 3, --bit.bor(UIShowType.ShowImmediate,UIShowType.Refresh)
     DestroyWhenHide         = 4, --Hide时释放资源
 }
 
+--[[
+    Tab切页默认成员
+        ShowTab(params)
+        HideTab(params)
+
+
+--]]
+
 --显示已经加载的页面 用于弹出堆栈 或者tab页切换
-ShowLoadedView = function(viewName)
+local function ShowLoadedView(viewName)
     if Local.LogModuals.UIManager then
-        print("ShowLoadedView ==>>", viewName)
+        print("[UIManager]ShowLoadedView: ", viewName)
     end
     local data = this.GetViewData(viewName)
     local params = data.params
     if not data.isShow and this.HasScript(viewName) then
         if this.IsUIShowType(viewName, UIShowType.Refresh) then
-            if (this.HasMethod(viewName, "ShowTab")) and not this.IsUIShowType(viewName, UIShowType.ShowImmediate) then
+            if this.HasMethod(viewName, "ShowTab") and not this.IsUIShowType(viewName, UIShowType.ShowImmediate) then
                 this.Call(viewName, "ShowTab", params)
             else
                 this.Show(viewName, params)
@@ -97,7 +104,7 @@ ShowLoadedView = function(viewName)
     if data.isDialog then
         this.RefreshDlgdialog(viewName, data.tabIndex)
         data.dialogViewName = viewName
-        local tabGroup = this.gettabgroup(viewName, data.tabIndex)
+        local tabGroup = this.GetTabGroup(viewName, data.tabIndex)
         if tabGroup then
             for tabName, isShow in pairs(data.tabGroupStates[data.tabIndex]) do
                 if isShow then
@@ -110,7 +117,7 @@ ShowLoadedView = function(viewName)
     end
 end
 --隐藏已经加载的页面 用于弹出堆栈 或者tab页切换
-HideLoadedView = function(viewName)
+local function HideLoadedView(viewName)
     if Local.LogModuals.UIManager then
         print("HideLoadedView ==>>", viewName)
     end
@@ -130,7 +137,7 @@ HideLoadedView = function(viewName)
     end
 
     if data.isDialog then
-        local tabGroup = this.gettabgroup(viewName, data.tabIndex)
+        local tabGroup = this.GetTabGroup(viewName, data.tabIndex)
         if tabGroup then
             for tabName, isShow in pairs(data.tabGroupStates[data.tabIndex]) do
                 if isShow then
@@ -140,6 +147,32 @@ HideLoadedView = function(viewName)
         end
     end
 end
+--显示加载中提示!
+local function ShowLoading(beginTime, endTime)
+    if _isLocked == true then
+        return
+    end
+    if Local.LogModuals.UIManager then
+        print("ShowLoading ==>>")
+    end
+    local params = { beginTime = ConditionOp(beginTime, beginTime, 0.5), endTime = ConditionOp(endTime, endTime, 3) }
+    if this.IsShow("dlgopenloading") then
+        this.Refresh("dlgopenloading", params)
+    else
+        this.Show("dlgopenloading", params)
+    end
+end
+--隐藏加载中提示!
+local function HideLoading()
+    if _isLocked == true then
+        return
+    end
+    if Local.LogModuals.UIManager then
+        print("HideLoading ==>>")
+    end
+    this.Hide("dlgopenloading")
+end
+
 
 function UIManager.Init()
     _uiRoot = FindObj("/UIRoot/UICamera")
@@ -202,6 +235,16 @@ function UIManager.LateUpdate()
     --late_updateCharacterInfoOnUI()
 end
 
+function UIManager.SecondUpdate(now)
+    this.UnloadExpireView(now)
+    for viewName, info in pairs(_views) do
+        if info.isShow and this.HasMethod(viewName, "SecondUpdate") then
+            this.Call(viewName, "SecondUpdate", now)
+        end
+    end
+end
+
+
 function UIManager.UnloadExpireView(now)
     local unshowViewNum = 0
     local toDestroyViewName
@@ -219,38 +262,11 @@ function UIManager.UnloadExpireView(now)
         Destroy(toDestroyViewName)
     end
 end
---未实现
-function UIManager.SecondUpdate(now)
-    this.UnloadExpireView(now)
-    for viewName, info in pairs(_views) do
-        if info.isShow and this.HasMethod(viewName, "SecondUpdate") then
-            this.Call(viewName, "SecondUpdate", now)
-        end
-    end
-end
 
 function UIManager.GetViewData(viewName)
     local data = _views[viewName]
     if not data then
-        data = {
-            filename       = nil,
-            status         = nil,
-            loaded         = nil,
-            gameObject     = nil,
-
-            isDialog       = nil,
-            dialogViewName = nil,
-
-            tabGroup       = nil,
-            isInitedTabs   = nil,
-            tabIndex       = nil,
-            tabGroupStates = nil,
-
-            hideTime       = nil,
-            isShow         = nil,
-            needRefresh    = nil,
-            refreshParams  = nil,
-        }
+        data = {}
         local _, fileName = match(viewName, "^(.*)%.(.*)$")
         data.fileName = ConditionOp(fileName, fileName, viewName)
         _views[viewName] = data
@@ -338,7 +354,7 @@ end
 
 function UIManager.GetUIShowType(viewName)
     local uishowtype = UIShowType.Default
-    if (this.HasMethod(viewName, "UIShowType")) then
+    if this.HasMethod(viewName, "UIShowType") then
         uishowtype = this.CallWithReturn(viewName, "UIShowType")
     end
     return uishowtype
@@ -348,7 +364,7 @@ function UIManager.IsUIShowType(viewName, uiShowType)
     local viewUIShowType = this.GetUIShowType(viewName)
     return uiShowType & viewUIShowType > 0
 end
-
+---获取所有显示的窗口
 function UIManager.GetDlgsShow()
     local list = {}
     for name, data in pairs(_views) do
@@ -380,13 +396,14 @@ function UIManager.IsInStack(viewName)
     return false
 end
 
+---遮罩层功能?
 function UIManager.SetLock(lock)
     _isLocked = lock
 end
-
 function UIManager.GetIsLock()
     return _isLocked
 end
+
 
 ------------------------------------------------------------------
 ---普通窗口操作方法
@@ -639,10 +656,6 @@ function UIManager.DestroyAllDlgs()
     end
 end
 
-function UIManager.OnLogout()
-    this.HideAll()
-end
-
 --Tab类型界面控制
 function UIManager.ShowTab(tabName, params)
     if _dialogStack:Count() > 0 then
@@ -729,6 +742,20 @@ function UIManager.HideTabByIndex(viewName, tabIndex)
     --NoviceGuideTrigger.HideDialog(viewName)
 end
 
+------------------------------------------------------------------
+---下面是公用弹窗的用法
+------------------------------------------------------------------
+
+--local function ShowAlertDlg(params)
+--    local InfoManager = require "assistant.infomanager"
+--    if isLocked == true then
+--        return InfoManager.AddInfo(params)
+--    end
+--    return InfoManager.ShowInfo(params)
+--end
+
+
+
 
 
 ------------------------------------------------------------------
@@ -753,13 +780,6 @@ function UIManager.HideMainCityDlgs()
         if this.IsShow(dlg) then
             this.Hide(dlg)
         end
-    end
-end
-
-function UIManager.BeforeShowDialog()
-    if this.IsShow("dlgjoystick") then
-        --Game.JoyStickManager.singleton:Reset()
-        printcolor("---------------DlgJoystick 界面未完成")
     end
 end
 
@@ -863,7 +883,6 @@ function UIManager.Hidedialog(viewName, isImmediate)
     --local NoviceGuideTrigger = require "noviceguide.noviceguide_trigger"
     --NoviceGuideTrigger.HideDialog(viewName)
 end
-
 function UIManager.CurrentDialogName()
     if _dialogStack:Count() == 0 then
         return "Stack Is Empty!"
@@ -871,7 +890,6 @@ function UIManager.CurrentDialogName()
         return _dialogStack:Peek()
     end
 end
-
 function UIManager.CloseAllDialog()
     if _dialogStack:Count() > 0 then
         local lastViewName = _dialogStack:Peek()
@@ -885,43 +903,6 @@ function UIManager.CloseAllDialog()
         this.Hide("dlgdialog")
     end
 end
-
-------------------------------------------------------------------
----下面是公用弹窗的用法
-------------------------------------------------------------------
-ShowLoading = function(beginTime, endTime)
-    if _isLocked == true then
-        return
-    end
-    if Local.LogModuals.UIManager then
-        print("ShowLoading ==>>")
-    end
-    local params = { beginTime = ConditionOp(beginTime, beginTime, 0.5), endTime = ConditionOp(endTime, endTime, 3) }
-    if this.IsShow("dlgopenloading") then
-        this.Refresh("dlgopenloading", params)
-    else
-        this.Show("dlgopenloading", params)
-    end
-end
-HideLoading = function()
-    if _isLocked == true then
-        return
-    end
-    if Local.LogModuals.UIManager then
-        print("HideLoading ==>>")
-    end
-    this.Hide("dlgopenloading")
-end
---local function ShowAlertDlg(params)
---    local InfoManager = require "assistant.infomanager"
---    if isLocked == true then
---        return InfoManager.AddInfo(params)
---    end
---    return InfoManager.ShowInfo(params)
---end
-
-
-
 
 ------------------------------------------------------------------
 ---UI粒子系统操作方法

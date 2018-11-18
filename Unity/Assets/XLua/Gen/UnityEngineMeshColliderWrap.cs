@@ -27,14 +27,14 @@ namespace XLua.CSObjectWrap
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "sharedMesh", _g_get_sharedMesh);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "convex", _g_get_convex);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "cookingOptions", _g_get_cookingOptions);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "inflateMesh", _g_get_inflateMesh);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "cookingOptions", _g_get_cookingOptions);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "skinWidth", _g_get_skinWidth);
             
 			Utils.RegisterFunc(L, Utils.SETTER_IDX, "sharedMesh", _s_set_sharedMesh);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "convex", _s_set_convex);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "cookingOptions", _s_set_cookingOptions);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "inflateMesh", _s_set_inflateMesh);
+            Utils.RegisterFunc(L, Utils.SETTER_IDX, "cookingOptions", _s_set_cookingOptions);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "skinWidth", _s_set_skinWidth);
             
 			
@@ -113,20 +113,6 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_cookingOptions(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                UnityEngine.MeshCollider gen_to_be_invoked = (UnityEngine.MeshCollider)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.cookingOptions);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_inflateMesh(RealStatePtr L)
         {
 		    try {
@@ -134,6 +120,20 @@ namespace XLua.CSObjectWrap
 			
                 UnityEngine.MeshCollider gen_to_be_invoked = (UnityEngine.MeshCollider)translator.FastGetCSObj(L, 1);
                 LuaAPI.lua_pushboolean(L, gen_to_be_invoked.inflateMesh);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_cookingOptions(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                UnityEngine.MeshCollider gen_to_be_invoked = (UnityEngine.MeshCollider)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.cookingOptions);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }
@@ -187,14 +187,13 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_cookingOptions(RealStatePtr L)
+        static int _s_set_inflateMesh(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 UnityEngine.MeshCollider gen_to_be_invoked = (UnityEngine.MeshCollider)translator.FastGetCSObj(L, 1);
-                UnityEngine.MeshColliderCookingOptions gen_value;translator.Get(L, 2, out gen_value);
-				gen_to_be_invoked.cookingOptions = gen_value;
+                gen_to_be_invoked.inflateMesh = LuaAPI.lua_toboolean(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
@@ -203,13 +202,14 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_inflateMesh(RealStatePtr L)
+        static int _s_set_cookingOptions(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 UnityEngine.MeshCollider gen_to_be_invoked = (UnityEngine.MeshCollider)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.inflateMesh = LuaAPI.lua_toboolean(L, 2);
+                UnityEngine.MeshColliderCookingOptions gen_value;translator.Get(L, 2, out gen_value);
+				gen_to_be_invoked.cookingOptions = gen_value;
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

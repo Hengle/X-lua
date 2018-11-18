@@ -35,9 +35,7 @@ namespace XLua.CSObjectWrap
 			
 			
             
-			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "ambientProbe", _g_get_ambientProbe);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "customReflection", _g_get_customReflection);
-            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "fog", _g_get_fog);
+			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "fog", _g_get_fog);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "fogStartDistance", _g_get_fogStartDistance);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "fogEndDistance", _g_get_fogEndDistance);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "fogMode", _g_get_fogMode);
@@ -52,6 +50,8 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "subtractiveShadowColor", _g_get_subtractiveShadowColor);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "skybox", _g_get_skybox);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "sun", _g_get_sun);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "ambientProbe", _g_get_ambientProbe);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "customReflection", _g_get_customReflection);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "reflectionIntensity", _g_get_reflectionIntensity);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "reflectionBounces", _g_get_reflectionBounces);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "defaultReflectionMode", _g_get_defaultReflectionMode);
@@ -60,9 +60,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "flareStrength", _g_get_flareStrength);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "flareFadeSpeed", _g_get_flareFadeSpeed);
             
-			Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "ambientProbe", _s_set_ambientProbe);
-            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "customReflection", _s_set_customReflection);
-            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "fog", _s_set_fog);
+			Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "fog", _s_set_fog);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "fogStartDistance", _s_set_fogStartDistance);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "fogEndDistance", _s_set_fogEndDistance);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "fogMode", _s_set_fogMode);
@@ -77,6 +75,8 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "subtractiveShadowColor", _s_set_subtractiveShadowColor);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "skybox", _s_set_skybox);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "sun", _s_set_sun);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "ambientProbe", _s_set_ambientProbe);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "customReflection", _s_set_customReflection);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "reflectionIntensity", _s_set_reflectionIntensity);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "reflectionBounces", _s_set_reflectionBounces);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "defaultReflectionMode", _s_set_defaultReflectionMode);
@@ -92,24 +92,7 @@ namespace XLua.CSObjectWrap
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int __CreateInstance(RealStatePtr L)
         {
-            
-			try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-				if(LuaAPI.lua_gettop(L) == 1)
-				{
-					
-					UnityEngine.RenderSettings gen_ret = new UnityEngine.RenderSettings();
-					translator.Push(L, gen_ret);
-                    
-					return 1;
-				}
-				
-			}
-			catch(System.Exception gen_e) {
-				return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-			}
-            return LuaAPI.luaL_error(L, "invalid arguments to UnityEngine.RenderSettings constructor!");
-            
+            return LuaAPI.luaL_error(L, "UnityEngine.RenderSettings does not have a constructor!");
         }
         
 		
@@ -121,30 +104,6 @@ namespace XLua.CSObjectWrap
         
         
         
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_ambientProbe(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.Push(L, UnityEngine.RenderSettings.ambientProbe);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_customReflection(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.Push(L, UnityEngine.RenderSettings.customReflection);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_fog(RealStatePtr L)
@@ -327,6 +286,30 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_ambientProbe(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    translator.Push(L, UnityEngine.RenderSettings.ambientProbe);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_customReflection(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    translator.Push(L, UnityEngine.RenderSettings.customReflection);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_reflectionIntensity(RealStatePtr L)
         {
 		    try {
@@ -411,33 +394,6 @@ namespace XLua.CSObjectWrap
         }
         
         
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_ambientProbe(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			UnityEngine.Rendering.SphericalHarmonicsL2 gen_value;translator.Get(L, 1, out gen_value);
-				UnityEngine.RenderSettings.ambientProbe = gen_value;
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_customReflection(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    UnityEngine.RenderSettings.customReflection = (UnityEngine.Cubemap)translator.GetObject(L, 1, typeof(UnityEngine.Cubemap));
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _s_set_fog(RealStatePtr L)
@@ -635,6 +591,33 @@ namespace XLua.CSObjectWrap
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			    UnityEngine.RenderSettings.sun = (UnityEngine.Light)translator.GetObject(L, 1, typeof(UnityEngine.Light));
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_ambientProbe(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			UnityEngine.Rendering.SphericalHarmonicsL2 gen_value;translator.Get(L, 1, out gen_value);
+				UnityEngine.RenderSettings.ambientProbe = gen_value;
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_customReflection(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			    UnityEngine.RenderSettings.customReflection = (UnityEngine.Cubemap)translator.GetObject(L, 1, typeof(UnityEngine.Cubemap));
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

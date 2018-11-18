@@ -31,12 +31,14 @@ namespace XLua.CSObjectWrap
 			Utils.EndObjectRegister(type, L, translator, null, null,
 			    null, null, null);
 
-		    Utils.BeginClassRegister(type, L, __CreateInstance, 13, 4, 0);
+		    Utils.BeginClassRegister(type, L, __CreateInstance, 15, 4, 0);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "md5", _m_md5_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "md5file", _m_md5file_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "StandardlizePath", _m_StandardlizePath_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "SetResolution", _m_SetResolution_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "ClearChild", _m_ClearChild_xlua_st_);
+            Utils.RegisterFunc(L, Utils.CLS_IDX, "Instantiate", _m_Instantiate_xlua_st_);
+            Utils.RegisterFunc(L, Utils.CLS_IDX, "Copy", _m_Copy_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "Log", _m_Log_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "LogWarning", _m_LogWarning_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "LogError", _m_LogError_xlua_st_);
@@ -204,6 +206,61 @@ namespace XLua.CSObjectWrap
                     
                     
                     return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_Instantiate_xlua_st_(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+            
+                
+                {
+                    UnityEngine.Object _obj = (UnityEngine.Object)translator.GetObject(L, 1, typeof(UnityEngine.Object));
+                    string _path = LuaAPI.lua_tostring(L, 2);
+                    
+                        UnityEngine.GameObject gen_ret = Game.Util.Instantiate( _obj, _path );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_Copy_xlua_st_(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+            
+                
+                {
+                    UnityEngine.Object _obj = (UnityEngine.Object)translator.GetObject(L, 1, typeof(UnityEngine.Object));
+                    
+                        UnityEngine.GameObject gen_ret = Game.Util.Copy( _obj );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
                 }
                 
             } catch(System.Exception gen_e) {
