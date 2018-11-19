@@ -36,7 +36,7 @@
 		
 	<!-- 序列 -->	 
 	<Class Name = "Sequence">  
-		<Field Name = "Id" Type = "int" Des = "序列ID" />
+		<Field Name = "Id" Type = "string" Des = "序列ID" />
 		<Field Name = "HitZones" Type = "list:HitZone" Des = "碰撞区域定义列表" />
         <Field Name = "Timelines" Type = "list:Timeline" Des = "时间事件列表" />
     </Class>	 
