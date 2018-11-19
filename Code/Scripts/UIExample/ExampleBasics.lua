@@ -4,8 +4,8 @@ local ExampleBasics = {}
 local root = nil
 
 function ExampleBasics:Init()
-    local package = UIPackage.CreateObject("DlgBasics", "DlgBasics")
-    root = GRoot.inst:AddChild(package).asCom
+    local dlg = UIPackage.CreateObject("DlgBasics", "DlgBasics")
+    root = GRoot.inst:AddChild(dlg).asCom
     ExampleBasics:Show(root)
 end
 
