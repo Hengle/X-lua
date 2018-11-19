@@ -22,17 +22,18 @@ namespace Game
         protected LuaManager() { }
 
         private LuaEnv _luaEnv;
-        private string _luaDir = "?";
-        private string _luaMain = "?";
+        private List<string> _searchPaths = new List<string>();
         private XLuaDelegate _luaDelegate;
 
         public LuaEnv LuaEnv { get { return _luaEnv; } }
+        [DoNotGen]
         public void Init()
         {
             _luaEnv = new LuaEnv();
             _luaEnv.AddLoader(CustomLoader);
             LuaHelper.Init();
         }
+        [DoNotGen]
         public void Dispose()
         {
             if (_luaEnv != null)
@@ -46,20 +47,25 @@ namespace Game
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(string.Format("xLua exception : {0}\n {1}", e.Message, e.StackTrace));
+                    Debug.LogError(string.Format("xlua exception : {0}\n {1}", e.Message, e.StackTrace));
                 }
             }
         }
-        public void SetLuaDirAndMain(string dir, string main)
+        [DoNotGen]
+        public void AddLuaSearchPath(string path)
         {
-            _luaDir = dir;
-            _luaMain = main;
+            _searchPaths.Add(path);
         }
         private byte[] CustomLoader(ref string filePath)
         {
-            string fullPath = string.Format("{0}/{1}.lua", _luaDir, filePath.Replace(".", "/"));
-            if (File.Exists(fullPath))
-                return File.ReadAllBytes(fullPath);
+            for (int i = 0; i < _searchPaths.Count; i++)
+            {
+                string dir = _searchPaths[i];
+                string fullPath = string.Format("{0}/{1}.lua", dir, filePath.Replace(".", "/"));
+                if (File.Exists(fullPath))
+                    return File.ReadAllBytes(fullPath);
+            }
+           
             return null;
         }
 
@@ -73,14 +79,15 @@ namespace Game
         }
         public void StartGame()
         {
-            _luaEnv.DoString(string.Format("require '{0}'", _luaMain), _luaMain);
-            _luaEnv.DoString(string.Format("{0}.Init()", _luaMain), _luaMain);
-            
+            _luaEnv.DoString("require 'Main'", "Main", _luaEnv.Global);
+            _luaEnv.DoString("Main.Init()", "Main", _luaEnv.Global);
+
             var main = Main.Instance.gameObject;
             _luaDelegate = main.GetComponent<XLuaDelegate>();
             if (_luaDelegate == null)
                 _luaDelegate = main.AddComponent<XLuaDelegate>();
-            _luaDelegate.Init(_luaEnv);          
+            _luaDelegate.Init(_luaEnv);
         }
     }
+
 }

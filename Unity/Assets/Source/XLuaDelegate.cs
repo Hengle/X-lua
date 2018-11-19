@@ -14,6 +14,7 @@ namespace Game
         Action<float> luaFixedUpdate;
         Action luaDestroy;
 
+        [DoNotGen]
         public void Init(LuaEnv luaEnv)
         {
             luaUpdate += luaEnv.Global.Get<Action<float, float>>("Update");
@@ -22,13 +23,16 @@ namespace Game
             luaDestroy += luaEnv.Global.Get<Action>("OnDestroy");
         }
 
+        [DoNotGen]
         public void Dispose()
         {
+            if (luaDestroy != null)
+                luaDestroy();
+
             luaUpdate = null;
             luaLateUpdate = null;
             luaFixedUpdate = null;
             luaDestroy = null;
-            Destroy(this);
         }
 
         void Update()
@@ -49,12 +53,6 @@ namespace Game
         {
             if (luaUpdate != null)
                 luaFixedUpdate(Time.fixedDeltaTime);
-        }
-
-        void OnDestroy()
-        {
-            if (luaDestroy != null)
-                luaDestroy();
         }
     }
 }

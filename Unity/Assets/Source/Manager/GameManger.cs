@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using Game.Platform;
+using XLua;
 
 namespace Game
 {
@@ -41,6 +42,7 @@ namespace Game
 
 
         Dictionary<string, string> _launcher = new Dictionary<string, string>();
+        [DoNotGen]
         public void Init()
         {
             TextAsset text = (TextAsset)Resources.Load("launcher", typeof(TextAsset));
@@ -59,6 +61,7 @@ namespace Game
                 }
             }
         }
+        [DoNotGen]
         public void Dispose()
         {
             _instance = null;
@@ -154,7 +157,7 @@ namespace Game
         public void StartGame()
         {
             //GameObject.Destroy(_dlgRes);
-            LuaManager.Instance.SetLuaDirAndMain(AppConst.LuaDir, AppConst.LuaMain);
+            LuaManager.Instance.AddLuaSearchPath(AppConst.LuaDir);
             LuaManager.Instance.StartGame();
 
             UpdateManager.Instance.SetProgressValue("开始游戏", 1f);

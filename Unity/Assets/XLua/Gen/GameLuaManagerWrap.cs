@@ -25,7 +25,7 @@ namespace XLua.CSObjectWrap
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Init", _m_Init);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Dispose", _m_Dispose);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetLuaDirAndMain", _m_SetLuaDirAndMain);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddLuaSearchPath", _m_AddLuaSearchPath);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Tick", _m_Tick);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StartGame", _m_StartGame);
 			
@@ -116,7 +116,7 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_SetLuaDirAndMain(RealStatePtr L)
+        static int _m_AddLuaSearchPath(RealStatePtr L)
         {
 		    try {
             
@@ -128,10 +128,9 @@ namespace XLua.CSObjectWrap
             
                 
                 {
-                    string _dir = LuaAPI.lua_tostring(L, 2);
-                    string _main = LuaAPI.lua_tostring(L, 3);
+                    string _path = LuaAPI.lua_tostring(L, 2);
                     
-                    gen_to_be_invoked.SetLuaDirAndMain( _dir, _main );
+                    gen_to_be_invoked.AddLuaSearchPath( _path );
                     
                     
                     

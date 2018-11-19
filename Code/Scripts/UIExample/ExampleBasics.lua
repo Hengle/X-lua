@@ -31,9 +31,6 @@ end
 
 function ExampleBasics:OnDestroy()
     root:Dispose()
-    local util = require 'xlua.util'
-    util.print_func_ref_by_csharp()
-    printyellow("---------------")
 end
 
 return ExampleBasics

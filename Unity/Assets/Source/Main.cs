@@ -51,7 +51,7 @@ namespace Game
             GameManager.Instance.StartGame();
         }
 
-        void OnApplicationQuit()
+        void OnDestroy()
         {
             for (int i = 0; i < _managers.Count; i++)
                 _managers[i].Dispose();
