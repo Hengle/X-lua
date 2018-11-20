@@ -1,134 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
 <packageDescription id="gxzp6q7w" jpegQuality="80" compressPNG="true">
   <resources>
-    <image id="a98g2" name="BMFontTest_atlas.png" path="/font/"/>
-    <font id="a98g3" name="HitNumber.fnt" path="/font/"/>
-    <image id="a98g4" name="10_png.png" path="/images/"/>
-    <image id="a98g5" name="22.png" path="/images/"/>
-    <image id="a98g6" name="6_png.png" path="/images/"/>
-    <image id="a98g7" name="8_png.png" path="/images/"/>
-    <image id="a98g8" name="9_png.png" path="/images/"/>
-    <image id="a98g9" name="a18_png.png" path="/images/"/>
-    <image id="a98ga" name="a1_png.png" path="/images/"/>
-    <image id="a98gb" name="a2_png.png" path="/images/"/>
-    <image id="a98gc" name="a3_png.png" path="/images/"/>
-    <image id="a98gd" name="a4_png.png" path="/images/"/>
-    <image id="a98ge" name="a8_png.png" path="/images/"/>
-    <image id="a98gf" name="angry_smile_png.png" path="/images/"/>
-    <image id="a98gg" name="b1.png" path="/images/"/>
-    <image id="a98gh" name="b1.png.jpg" path="/images/"/>
-    <image id="a98gi" name="b12_png.png" path="/images/"/>
-    <image id="a98gj" name="b13_png.png" path="/images/"/>
-    <image id="a98gk" name="b2.png" path="/images/"/>
-    <image id="a98gl" name="b2.png.jpg" path="/images/"/>
-    <image id="a98gm" name="b3.png" path="/images/"/>
-    <image id="a98gn" name="b3.png.jpg" path="/images/"/>
-    <image id="a98go" name="b4.png" path="/images/"/>
-    <image id="a98gp" name="b4.png.jpg" path="/images/"/>
-    <image id="a98gq" name="b5.png" path="/images/"/>
-    <image id="a98gr" name="b5_png.png" path="/images/"/>
-    <image id="a98gs" name="b6_png.png" path="/images/"/>
-    <image id="a98gt" name="b7(2)_png.png" path="/images/"/>
-    <image id="a98gu" name="b7_png.png" path="/images/"/>
-    <image id="a98gv" name="back btn.png" path="/images/"/>
-    <image id="a98gw" name="background.png" path="/images/"/>
-    <image id="a98gx" name="c1_png.png" path="/images/"/>
-    <image id="a98gy" name="c2_png.png" path="/images/"/>
-    <image id="a98gz" name="c3_png.png" path="/images/"/>
-    <image id="a98g10" name="caiji.png" path="/images/"/>
-    <image id="a98g11" name="caiji2.png" path="/images/"/>
-    <image id="a98g12" name="change.png" path="/images/"/>
-    <image id="a98g13" name="close_png.png" path="/images/"/>
-    <image id="a98g14" name="full bar.png" path="/images/"/>
-    <image id="a98g15" name="grid_header_png.png" path="/images/"/>
-    <movieclip id="a98g16" name="gz.jta" path="/images/"/>
-    <image id="a98g17" name="h0.png" path="/images/"/>
-    <image id="a98g18" name="h1.png" path="/images/"/>
-    <image id="a98g19" name="h2.png" path="/images/"/>
-    <image id="a98g1a" name="h3.png" path="/images/"/>
-    <image id="a98g1b" name="h4.png" path="/images/"/>
-    <image id="a98g1c" name="h5.png" path="/images/"/>
-    <image id="a98g1d" name="h6.png" path="/images/"/>
-    <image id="a98g1e" name="h7.png" path="/images/"/>
-    <image id="a98g1f" name="h8.png" path="/images/"/>
-    <image id="a98g1g" name="h9.png" path="/images/"/>
-    <image id="a98g1h" name="huawen1_png.png" path="/images/"/>
-    <image id="a98g1i" name="huawen2_png.png" path="/images/"/>
-    <image id="a98g1j" name="i256.png" path="/images/"/>
-    <image id="a98g1k" name="k0.png" path="/images/"/>
-    <image id="a98g1l" name="k1.png" path="/images/"/>
-    <image id="a98g1m" name="k10.png" path="/images/"/>
-    <image id="a98g1n" name="k11.png" path="/images/"/>
-    <image id="a98g1o" name="k12.png" path="/images/"/>
-    <image id="a98g1p" name="k13.png" path="/images/"/>
-    <image id="a98g1q" name="k14.png" path="/images/"/>
-    <image id="a98g1r" name="k16.jpg" path="/images/"/>
-    <image id="a98g1s" name="k17.png" path="/images/"/>
-    <image id="a98g1t" name="k18.png" path="/images/"/>
-    <image id="a98g1u" name="k19.png" path="/images/"/>
-    <image id="a98g1v" name="k2.png" path="/images/"/>
-    <image id="a98g1w" name="k20.png" path="/images/"/>
-    <image id="a98g1x" name="k21.png" path="/images/"/>
-    <image id="a98g1y" name="k22.png" path="/images/"/>
-    <image id="a98g1z" name="k23.png" path="/images/"/>
-    <image id="a98g20" name="k24.png" path="/images/"/>
-    <image id="a98g21" name="k25.png" path="/images/"/>
-    <image id="a98g22" name="k26.png" path="/images/"/>
-    <image id="a98g23" name="k27.png" path="/images/"/>
-    <image id="a98g24" name="k28.png" path="/images/"/>
-    <image id="a98g25" name="k29.png" path="/images/"/>
-    <image id="a98g26" name="k3.png" path="/images/"/>
-    <image id="a98g27" name="k30.png" path="/images/"/>
-    <image id="a98g28" name="k31.png" path="/images/"/>
-    <image id="a98g29" name="k32.png" path="/images/"/>
-    <image id="a98g2a" name="k33.png" path="/images/"/>
-    <image id="a98g2b" name="k34.png" path="/images/"/>
-    <image id="a98g2c" name="k35.png" path="/images/"/>
-    <image id="a98g2d" name="k36.png" path="/images/"/>
-    <image id="a98g2e" name="k4.png" path="/images/"/>
-    <image id="a98g2f" name="k5.png" path="/images/"/>
-    <image id="a98g2g" name="k6.png" path="/images/"/>
-    <image id="a98g2h" name="k7.png" path="/images/"/>
-    <image id="a98g2i" name="k8.png" path="/images/"/>
-    <image id="a98g2j" name="k9.png" path="/images/"/>
-    <image id="a98g2k" name="loading.png.jpg" path="/images/"/>
-    <image id="a98g2l" name="long_dead2_png.png" path="/images/"/>
-    <image id="a98g2m" name="long_dead_png.png" path="/images/"/>
-    <movieclip id="a98g2n" name="nlge1k.jta" path="/images/"/>
-    <image id="a98g2o" name="p10_png.png" path="/images/"/>
-    <image id="a98g2p" name="p11_png.png" path="/images/"/>
-    <image id="a98g2q" name="p12_png.png" path="/images/"/>
-    <image id="a98g2r" name="p13_png.png" path="/images/"/>
-    <image id="a98g2s" name="p14_png.png" path="/images/"/>
-    <image id="a98g2t" name="p15_png.png" path="/images/"/>
-    <image id="a98g2u" name="p16_png.png" path="/images/"/>
-    <image id="a98g2v" name="p1_png.png" path="/images/"/>
-    <image id="a98g2w" name="p2_png.png" path="/images/"/>
-    <image id="a98g2x" name="p3_png.png" path="/images/"/>
-    <image id="a98g2y" name="p8_png.png" path="/images/"/>
-    <image id="a98g2z" name="p9_png.png" path="/images/"/>
-    <movieclip id="a98g30" name="pet.jta" path="/images/"/>
-    <image id="a98g31" name="pic.png" path="/images/"/>
-    <image id="a98g32" name="plus_smile_png.png" path="/images/"/>
-    <swf id="a98g33" name="qtm01d.swf" path="/images/"/>
-    <image id="a98g34" name="r3.png" path="/images/"/>
-    <image id="a98g35" name="r4.png" path="/images/"/>
-    <image id="a98g36" name="s1.png.jpg" path="/images/"/>
-    <image id="a98g37" name="s10.png.jpg" path="/images/"/>
-    <image id="a98g38" name="s2.png.jpg" path="/images/"/>
-    <image id="a98g39" name="s3.png.jpg" path="/images/"/>
-    <image id="a98g3a" name="s4.png.jpg" path="/images/"/>
-    <image id="a98g3b" name="s5.png.jpg" path="/images/"/>
-    <image id="a98g3c" name="s6.png.jpg" path="/images/"/>
-    <image id="a98g3d" name="s7.png.jpg" path="/images/"/>
-    <image id="a98g3e" name="s8.png.jpg" path="/images/"/>
-    <image id="a98g3f" name="s9.png.jpg" path="/images/"/>
-    <image id="a98g3g" name="Shape 1 copy 4.png" path="/images/"/>
-    <image id="a98g3h" name="start.png" path="/images/"/>
-    <image id="a98g3i" name="VIP_png.png" path="/images/"/>
-    <image id="a98g3j" name="VtSeperator.jpg" path="/images/"/>
-    <sound id="a98g3s" name="click.wav" path="/sound/"/>
-    <sound id="a98g3t" name="tabswitch.wav" path="/sound/"/>
+    <component id="gjac66" name="Button.xml" path="/components/"/>
+    <image id="gjac67" name="b7_png.png" path="/images/" scale="9grid" scale9grid="8,7,66,14"/>
+    <image id="gjac68" name="b5_png.png" path="/images/" scale="9grid" scale9grid="12,7,61,14"/>
+    <image id="gjac69" name="b6_png.png" path="/images/" scale="9grid" scale9grid="9,5,66,16"/>
+    <component id="gjac6a" name="Button2.xml" path="/components/"/>
+    <component id="gjac6b" name="Button3.xml" path="/components/"/>
+    <component id="gjac6c" name="Button4.xml" path="/components/"/>
+    <image id="gjac6d" name="k20.png" path="/images/"/>
+    <image id="gjac6e" name="k26.png" path="/images/"/>
+    <image id="gjac6f" name="k25.png" path="/images/"/>
+    <image id="gjac6g" name="b1.png" path="/images/"/>
+    <component id="gjac6h" name="Button5.xml" path="/components/"/>
+    <image id="gjac6i" name="VIP_png.png" path="/images/"/>
+    <component id="gjac6j" name="Button6.xml" path="/components/"/>
+    <image id="gjac6k" name="k5.png" path="/images/"/>
+    <image id="gjac6l" name="k3.png" path="/images/" scale="9grid" scale9grid="16,9,32,6"/>
+    <image id="gjac6m" name="k6.png" path="/images/" scale="9grid" scale9grid="16,11,32,7"/>
+    <image id="gjac6n" name="k4.png" path="/images/"/>
+    <component id="gjac6o" name="Button7.xml" path="/components/"/>
+    <image id="gjac6p" name="k9.png" path="/images/"/>
+    <image id="gjac6q" name="k8.png" path="/images/"/>
+    <component id="gjac6r" name="Button8.xml" path="/components/"/>
+    <image id="gjac6s" name="k11.png" path="/images/"/>
+    <image id="gjac6t" name="k10.png" path="/images/"/>
+    <component id="gjac6u" name="Button9.xml" path="/components/"/>
+    <image id="gjac6v" name="k14.png" path="/images/" scale="9grid" scale9grid="40,13,80,26"/>
+    <image id="gjac6w" name="k12.png" path="/images/" scale="9grid" scale9grid="40,19,80,18"/>
+    <image id="gjac6x" name="k13.png" path="/images/" scale="9grid" scale9grid="40,13,80,26"/>
+    <component id="gjac6y" name="Checkbox.xml" path="/components/"/>
+    <image id="gjac6z" name="b4.png.jpg" path="/images/"/>
+    <image id="gjac70" name="b1.png.jpg" path="/images/"/>
+    <image id="gjac71" name="b3.png.jpg" path="/images/"/>
+    <image id="gjac72" name="b2.png.jpg" path="/images/"/>
+    <component id="gjac73" name="OnOffButton.xml" path="/components/"/>
+    <image id="gjac74" name="b12_png.png" path="/images/"/>
+    <image id="gjac75" name="b13_png.png" path="/images/"/>
+    <component id="gjac76" name="RadioButton.xml" path="/components/"/>
+    <image id="gjac77" name="a1_png.png" path="/images/"/>
+    <image id="gjac78" name="a3_png.png" path="/images/"/>
+    <image id="gjac79" name="a2_png.png" path="/images/"/>
+    <image id="gjac7a" name="a4_png.png" path="/images/"/>
+    <component id="gjac7b" name="Button10.xml" path="/components/"/>
+    <image id="gjac7c" name="b4.png" path="/images/" scale="9grid" scale9grid="40,17,80,34"/>
+    <image id="gjac7d" name="b5.png" path="/images/" scale="9grid" scale9grid="40,17,80,34"/>
+    <component id="gjac7e" name="Component1.xml" path="/components/"/>
+    <image id="gjac7f" name="change.png" path="/images/" scale="tile"/>
+    <component id="gjac7g" name="Component7.xml" path="/components/"/>
+    <component id="gjac7h" name="Component2.xml" path="/components/"/>
+    <component id="gjac7i" name="Component8.xml" path="/components/"/>
+    <component id="gjac7j" name="Component9.xml" path="/components/"/>
+    <component id="gjac7k" name="Component10.xml" path="/components/"/>
+    <component id="gjac7l" name="WindowFrame.xml" path="/components/"/>
+    <image id="gjac7m" name="6_png.png" path="/images/" scale="9grid" scale9grid="40,40,80,142"/>
+    <component id="gjac7n" name="WindowCloseButton.xml" path="/components/"/>
+    <image id="gjac7o" name="10_png.png" path="/images/"/>
+    <image id="gjac7p" name="9_png.png" path="/images/"/>
+    <image id="gjac7q" name="8_png.png" path="/images/"/>
+    <component id="gjac7r" name="Component3.xml" path="/components/"/>
+    <component id="gjac7s" name="ComboBox.xml" path="/components/"/>
+    <image id="gjac7t" name="c1_png.png" path="/images/" scale="9grid" scale9grid="7,5,73,10"/>
+    <image id="gjac7u" name="c3_png.png" path="/images/" scale="9grid" scale9grid="11,5,71,10"/>
+    <image id="gjac7v" name="c2_png.png" path="/images/" scale="9grid" scale9grid="8,5,73,10"/>
+    <image id="gjac7w" name="b7(2)_png.png" path="/images/"/>
+    <component id="gjac7x" name="ComboBoxPopup.xml" path="/components/"/>
+    <image id="gjac7y" name="p1_png.png" path="/images/" scale="9grid" scale9grid="7,4,144,49"/>
+    <component id="gjac7z" name="ComboBoxItem.xml" path="/components/"/>
+    <component id="gjac80" name="Dropdown.xml" path="/components/"/>
+    <component id="gjac81" name="Button15.xml" path="/components/"/>
+    <image id="gjac82" name="k30.png" path="/images/" scale="9grid" scale9grid="33,10,57,20"/>
+    <image id="gjac83" name="k28.png" path="/images/" scale="9grid" scale9grid="33,10,55,20"/>
+    <image id="gjac84" name="k31.png" path="/images/" scale="9grid" scale9grid="33,10,55,20"/>
+    <image id="gjac85" name="k29.png" path="/images/" scale="9grid" scale9grid="33,10,53,20"/>
+    <component id="gjac86" name="Dropdown2.xml" path="/components/"/>
+    <image id="gjac87" name="k32.png" path="/images/" scale="9grid" scale9grid="26,11,52,22"/>
+    <component id="gjac88" name="Button14.xml" path="/components/"/>
+    <image id="gjac89" name="k23.png" path="/images/" scale="9grid" scale9grid="26,10,52,20"/>
+    <image id="gjac8a" name="k21.png" path="/images/" scale="9grid" scale9grid="11,7,82,26"/>
+    <image id="gjac8b" name="k24.png" path="/images/" scale="9grid" scale9grid="26,10,52,20"/>
+    <image id="gjac8c" name="k22.png" path="/images/" scale="9grid" scale9grid="26,10,52,20"/>
+    <component id="gjac8d" name="Slider_HZ.xml" path="/components/"/>
+    <image id="gjac8e" name="p10_png.png" path="/images/"/>
+    <image id="gjac8f" name="p11_png.png" path="/images/"/>
+    <component id="gjac8g" name="SliderArrow_HZ.xml" path="/components/"/>
+    <image id="gjac8h" name="p14_png.png" path="/images/"/>
+    <image id="gjac8i" name="p15_png.png" path="/images/"/>
+    <component id="gjac8j" name="Slider_VT.xml" path="/components/"/>
+    <image id="gjac8k" name="p13_png.png" path="/images/"/>
+    <image id="gjac8l" name="p12_png.png" path="/images/"/>
+    <component id="gjac8m" name="SliderArrow_VT.xml" path="/components/"/>
+    <image id="gjac8n" name="p8_png.png" path="/images/"/>
+    <image id="gjac8o" name="p9_png.png" path="/images/"/>
+    <component id="gjac8p" name="Slider1.xml" path="/components/"/>
+    <image id="gjac8q" name="k33.png" path="/images/"/>
+    <image id="gjac8r" name="k34.png" path="/images/" scale="9grid" scale9grid="41,4,342,5"/>
+    <component id="gjac8s" name="Button13.xml" path="/components/"/>
+    <image id="gjac8t" name="b3.png" path="/images/"/>
+    <image id="gjac8u" name="b2.png" path="/images/"/>
+    <component id="gjac8v" name="ProgressBar.xml" path="/components/"/>
+    <image id="gjac8w" name="p2_png.png" path="/images/" scale="9grid" scale9grid="10,4,121,4"/>
+    <image id="gjac8x" name="p3_png.png" path="/images/"/>
+    <component id="gjac8y" name="ProgressBar6.xml" path="/components/"/>
+    <image id="gjac8z" name="k17.png" path="/images/" scale="9grid" scale9grid="27,9,54,2"/>
+    <image id="gjac90" name="k16.jpg" path="/images/" scale="9grid" scale9grid="8,5,16,2"/>
+    <image id="gjac91" name="k7.png" path="/images/"/>
+    <component id="gjac92" name="ProgressBar3.xml" path="/components/"/>
+    <image id="gjac93" name="caiji.png" path="/images/"/>
+    <component id="gjac94" name="ProgressBar1.xml" path="/components/"/>
+    <image id="gjac95" name="caiji2.png" path="/images/"/>
+    <component id="gjac96" name="ProgressBar5.xml" path="/components/"/>
+    <image id="gjac97" name="loading.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjac98" name="huawen1_png.png" path="/images/"/>
+    <image id="gjac99" name="huawen2_png.png" path="/images/"/>
+    <component id="gjac9a" name="ProgressBar4.xml" path="/components/"/>
+    <component id="gjac9b" name="ProgressBar2.xml" path="/components/"/>
+    <component id="gjac9c" name="BagGridSub.xml" path="/components/"/>
+    <image id="gjac9d" name="k0.png" path="/images/"/>
+    <image id="gjac9e" name="k2.png" path="/images/"/>
+    <image id="gjac9f" name="k1.png" path="/images/" scale="9grid" scale9grid="17,16,74,73"/>
+    <component id="gjac9g" name="Component4.xml" path="/components/"/>
+    <component id="gjac9h" name="BagGridSub2.xml" path="/components/"/>
+    <component id="gjac9i" name="CloseButton.xml" path="/components/"/>
+    <image id="gjac9j" name="close_png.png" path="/images/"/>
+    <component id="gjac9k" name="WindowFrameB.xml" path="/components/"/>
+    <component id="gjac9l" name="Button1.xml" path="/components/"/>
+    <component id="gjac9m" name="Component5.xml" path="/components/"/>
+    <component id="gjac9n" name="Component6.xml" path="/components/"/>
+    <component id="gjac9o" name="Button52.xml" path="/components/"/>
+    <component id="gjac9p" name="Component11.xml" path="/components/"/>
+    <image id="gjac9q" name="start.png" path="/images/" scale="tile"/>
+    <component id="gjac9r" name="GridItem.xml" path="/components/"/>
+    <component id="gjac9s" name="GridItem2.xml" path="/components/"/>
+    <movieclip id="gjac9t" name="gz.jta" path="/images/"/>
+    <component id="gjac9u" name="Component12.xml" path="/components/" exported="true"/>
+    <image id="gjac9v" name="plus_smile_png.png" path="/images/"/>
+    <component id="gjac9w" name="Component13.xml" path="/components/"/>
+    <component id="gjac9x" name="Button16.xml" path="/components/"/>
+    <image id="gjac9y" name="22.png" path="/images/"/>
+    <component id="gjac9z" name="Button82.xml" path="/components/"/>
+    <image id="gjaca0" name="k36.png" path="/images/"/>
+    <image id="gjaca1" name="k35.png" path="/images/"/>
+    <component id="gjaca2" name="Component14.xml" path="/components/"/>
+    <component id="gjaca3" name="Slider2_grip.xml" path="/components/"/>
+    <image id="gjaca4" name="back btn.png" path="/images/"/>
+    <component id="gjaca5" name="Slider2.xml" path="/components/"/>
+    <image id="gjaca6" name="background.png" path="/images/" scale="9grid" scale9grid="24,6,319,13"/>
+    <image id="gjaca7" name="full bar.png" path="/images/" scale="9grid" scale9grid="15,6,109,12"/>
+    <font id="gjaca8" name="BMFontTest.fnt" path="/font/" exported="true" texture="gjaca9"/>
+    <image id="gjaca9" name="BMFontTest_atlas.png" path="/font/"/>
+    <font id="gjacaa" name="HitNumber.fnt" path="/font/" exported="true"/>
+    <image id="gjacab" name="h0.png" path="/images/"/>
+    <image id="gjacac" name="h1.png" path="/images/"/>
+    <image id="gjacad" name="h2.png" path="/images/"/>
+    <image id="gjacae" name="h3.png" path="/images/"/>
+    <image id="gjacaf" name="h4.png" path="/images/"/>
+    <image id="gjacag" name="h5.png" path="/images/"/>
+    <image id="gjacah" name="h6.png" path="/images/"/>
+    <image id="gjacai" name="h7.png" path="/images/"/>
+    <image id="gjacaj" name="h8.png" path="/images/"/>
+    <image id="gjacak" name="h9.png" path="/images/"/>
+    <image id="gjacal" name="angry_smile_png.png" path="/images/"/>
+    <image id="gjacam" name="long_dead_png.png" path="/images/"/>
+    <image id="gjacan" name="k18.png" path="/images/"/>
+    <image id="gjacao" name="pic.png" path="/images/"/>
+    <movieclip id="gjacap" name="nlge1k.jta" path="/images/"/>
+    <image id="gjacaq" name="long_dead2_png.png" path="/images/" scale="tile"/>
+    <image id="gjacar" name="i256.png" path="/images/"/>
+    <image id="gjacas" name="k27.png" path="/images/"/>
+    <image id="gjacat" name="r3.png" path="/images/" exported="true"/>
+    <image id="gjacau" name="r4.png" path="/images/" exported="true"/>
+    <swf id="gjacav" name="qtm01d.swf" path="/images/"/>
+    <movieclip id="gjacaw" name="pet.jta" path="/images/"/>
+    <image id="gjacax" name="s10.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacay" name="s6.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacaz" name="s4.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacb0" name="s5.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacb1" name="s9.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacb2" name="s7.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacb3" name="s8.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacb4" name="s1.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacb5" name="s2.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacb6" name="s3.png.jpg" path="/images/" duplicatePadding="true"/>
+    <image id="gjacb7" name="k19.png" path="/images/"/>
+    <image id="gjacb8" name="p16_png.png" path="/images/" scale="9grid" scale9grid="7,4,144,49"/>
+    <image id="gjacb9" name="a8_png.png" path="/images/" scale="9grid" scale9grid="8,5,70,10"/>
+    <image id="gjacba" name="VtSeperator.jpg" path="/images/"/>
+    <image id="gjacbb" name="a18_png.png" path="/images/"/>
+    <image id="gjacbc" name="grid_header_png.png" path="/images/" scale="9grid" scale9grid="50,5,100,10"/>
+    <image id="gjacbd" name="Shape 1 copy 4.png" path="/images/"/>
+    <component id="gjacbe" name="PopupMenu.xml" path="/popupmenu/" exported="true"/>
+    <component id="gjacbf" name="PopupMenuItem.xml" path="/popupmenu/"/>
+    <component id="gjacbg" name="ScrollBar_HZ.xml" path="/scrollbars/" exported="true"/>
+    <component id="gjacbh" name="ScrollUpButton.xml" path="/scrollbars/"/>
+    <component id="gjacbi" name="ScrollDownButton.xml" path="/scrollbars/"/>
+    <component id="gjacbj" name="GripButton_HZ.xml" path="/scrollbars/"/>
+    <component id="gjacbk" name="ScrollBar_VT.xml" path="/scrollbars/" exported="true"/>
+    <component id="gjacbl" name="GripButton_VT.xml" path="/scrollbars/"/>
+    <sound id="gjacbm" name="tabswitch.wav" path="/sound/" exported="true"/>
+    <sound id="gjacbn" name="click.wav" path="/sound/" exported="true"/>
+    <component id="gjacbo" name="Demo_Button.xml" path="/" exported="true"/>
+    <component id="gjacbp" name="Main.xml" path="/" exported="true"/>
+    <component id="gjacbq" name="Demo_Image.xml" path="/" exported="true"/>
+    <component id="gjacbr" name="Demo_Graph.xml" path="/" exported="true"/>
+    <component id="gjacbs" name="Demo_MovieClip.xml" path="/" exported="true"/>
+    <component id="gjacbt" name="Demo_Text.xml" path="/" exported="true"/>
+    <component id="gjacbu" name="Demo_Loader.xml" path="/" exported="true"/>
+    <component id="gjacbv" name="Demo_Controller.xml" path="/" exported="true"/>
+    <component id="gjacbw" name="Demo_Relation.xml" path="/" exported="true"/>
+    <component id="gjacbx" name="Demo_Clip&amp;Scroll.xml" path="/" exported="true"/>
+    <component id="gjacby" name="Demo_Label.xml" path="/" exported="true"/>
+    <component id="gjacbz" name="Demo_ComboBox.xml" path="/" exported="true"/>
+    <component id="gjacc0" name="Demo_Slider.xml" path="/" exported="true"/>
+    <component id="gjacc1" name="Demo_ProgressBar.xml" path="/" exported="true"/>
+    <component id="gjacc2" name="CircleProgress.xml" path="/" exported="true"/>
+    <component id="gjacc3" name="Demo_List.xml" path="/" exported="true"/>
+    <component id="gjacc4" name="WindowA.xml" path="/" exported="true"/>
+    <component id="gjacc5" name="Demo_Popup.xml" path="/" exported="true"/>
+    <component id="gjacc6" name="Demo_Window.xml" path="/" exported="true"/>
+    <component id="gjacc7" name="Demo_Drag&amp;Drop.xml" path="/" exported="true"/>
+    <component id="gjacc8" name="WindowB.xml" path="/" exported="true"/>
+    <component id="gjacc9" name="Demo_Component.xml" path="/" exported="true"/>
+    <component id="gjacca" name="Demo_Grid.xml" path="/" exported="true"/>
+    <component id="gjaccb" name="Demo_Depth.xml" path="/" exported="true"/>
   </resources>
-  <publish name=""/>
+  <publish name="Basics"/>
 </packageDescription>

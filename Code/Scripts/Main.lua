@@ -45,6 +45,8 @@ end
 function OnDestroy()
     local demo = require "UIExample.UIDemo"
     demo:OnDestroy()
+    local util = require('xlua.util')
+    util.print_func_ref_by_csharp()
 end
 
 --------------------------------------------------------

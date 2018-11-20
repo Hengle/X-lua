@@ -12,7 +12,7 @@ local example = nil
 function UIDemo:Init()
     TEST.LoadAtlas()
 
-    local module = string.format("UIExample.Example%s", examples[index])
+    local module = string.format("UIExample.%s", examples[index])
     example = require(module)
     if example then
         example:Init()
