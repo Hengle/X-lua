@@ -86,9 +86,11 @@ SoundMgr = Game.SoundManager.Instance
 NetworkMgr = Game.NetworkManager.Instance
 
 local require = require
-require 'System.string'
-require 'System.table'
-require 'System.coroutine'
+require 'xlua.string'
+require 'xlua.table'
+require 'xlua.coroutine'
+Profiler = require 'xlua.profiler'
+Memory = require 'xlua.memory'
 
 
 Mathf		= require "UnityEngine.Mathf"
@@ -104,9 +106,6 @@ Touch		= require "UnityEngine.Touch"
 LayerMask	= require "UnityEngine.LayerMask"
 Plane		= require "UnityEngine.Plane"
 Time		= require "UnityEngine.Time"
-
-Profiler = require 'xlua.profiler'
-Memory = require 'xlua.memory'
 
 
 require "Local"

@@ -31,24 +31,53 @@ local function SetButton(context)
         dlg = UIPackage.CreateObject(package, "Demo_" .. type).asCom
         dlgTable[type] = dlg
     end
-
-    container:RemoveChildren(0, -1, true)
+    --0, -1, true
+    container:RemoveChildren()
     container:AddChild(dlg)
     ctrl.selectedIndex = 1
     btnBack.visible = true
 
     if type == "Text" then
         local rich = dlg:GetChild("n12").asRichTextField
-        rich.onClickLink:Add(function (context)
+        rich.onClickLink:Add(function(context)
             local rich = context.sender
             rich.text = "[img]ui://Basics/pet[/img][color=#FF0000]点击链接触发事件[/color]：" .. context.data
         end)
         local input = dlg:GetChild("n22").asTextInput
         local result = dlg:GetChild("n24").asTextField
         local inputBtn = dlg:GetChild("n25").asButton
-        inputBtn.onClick:Add(function ()
+        inputBtn.onClick:Add(function()
             result.text = input.text
         end)
+    elseif type == "Grid" then
+        local list1 = dlg:GetChild("list1").asList
+        list1:RemoveChildrenToPool()
+        local ls = {"A", "B", "C", "D", "E"}
+        for i = 1, #ls do
+            local item = list1:AddItemFromPool().asButton
+            local order = item:GetChild("t0").asTextField
+            local name = item:GetChild("t1").asTextField
+            local star = item:GetChild("star").asProgress
+
+            order.text = tostring(i)
+            name.text = ls[i]
+            star.value = math.random(0, 3) / 3 * 100
+        end
+        local list2 = dlg:GetChild("list2").asList
+        list2:RemoveChildrenToPool()
+        ---@param context FairyGUI.EventContext
+        for i = 1, #ls do
+            local item = list2:AddItemFromPool().asButton
+            local check = item:GetChild("cb").asButton
+            check.selected = false
+            local name = item:GetChild("t1").asTextField
+            local movie = item:GetChild("mc").asMovieClip
+            movie.playing = i % 2 == 1
+            local value = item:GetChild("t3").asTextField
+
+            name.text = ls[i]
+            value.text = tostring(math.random(5, 1000))
+        end
     end
 end
 
@@ -75,6 +104,9 @@ end
 
 function Basics:OnDestroy()
     mainCom:Dispose()
+    for i, v in pairs(dlgTable) do
+        v:Dispose()
+    end
 end
 
 return Basics
