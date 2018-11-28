@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="7xa0jp56" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="b5ss2" name="Component1.xml" path="/"/>
+    <component id="b5ss3" name="Label1.xml" path="/"/>
+    <component id="yz6u4" name="WindowFrame1.xml" path="/"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>

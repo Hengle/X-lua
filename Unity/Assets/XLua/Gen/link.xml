@@ -19,6 +19,7 @@
 		<type fullname="UnityEngine.Ray2D" preserve="all"/>
 		<type fullname="UnityEngine.Mathf" preserve="all"/>
 		<type fullname="UnityEngine.Time" preserve="all"/>
+		<type fullname="UnityEngine.Rect" preserve="all"/>
 		<type fullname="UnityEngine.GL" preserve="all"/>
 		<type fullname="UnityEngine.Input" preserve="all"/>
 		<type fullname="UnityEngine.Screen" preserve="all"/>
@@ -105,6 +106,7 @@
 		<type fullname="FairyGUI.EaseType" preserve="all"/>
 		<type fullname="FairyGUI.TweenValue" preserve="all"/>
 		<type fullname="FairyGUI.GoWrapper" preserve="all"/>
+		<type fullname="FairyGUI.DragDropManager" preserve="all"/>
 		<type fullname="LuaBehaviour" preserve="all"/>
 		<type fullname="XLuaTest.Pedding" preserve="all"/>
 		<type fullname="XLuaTest.MyStruct" preserve="all"/>

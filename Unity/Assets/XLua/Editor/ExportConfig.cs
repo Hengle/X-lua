@@ -50,6 +50,7 @@ public static class ExportConfig
         typeof(Ray2D),
         typeof(Mathf),
         typeof(Time),
+        typeof(Rect),
 
         typeof(GL),
         typeof(Input),

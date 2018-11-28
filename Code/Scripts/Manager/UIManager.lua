@@ -16,8 +16,11 @@ local GameObject = GameObject
 local printt = printt
 local printcolor = printcolor
 local ConditionOp = ConditionOp
-local ViewUtil = require "Common.ViewUtil"
 local gameEvent = GameEvent
+local GRoot = GRoot
+local XUtil = XUtil
+
+local ViewUtil = require "Common.ViewUtil"
 
 local LOAD_ING = 1              --正在加载中
 local LOAD_SUCC = 2             --加载成功
@@ -36,23 +39,24 @@ local OnHideTab                 --隐藏Tab页
 local CallBackDestroyAllDlgs    --销毁所有界面回调事件
 
 --[[        界面相关数据
-    filename                -- 文件名[小写]
+    filename                -- 文件名
     status                  -- 加载状态[加载成功/加载中]
     loaded                  -- 是否已被加载
     gameObject              -- 界面游戏对象
-
+    script                  -- 脚本对象
+    hideTime                -- 最后隐藏时刻
 
     dialogViewName          -- 是带dlgdialog的窗口?
-    hideTime                -- 最后隐藏时刻
     isShow                  -- 是否已显示
     needRefresh             -- 是否需要刷新
     refreshParams           -- 刷新界面时所带参数
 
-    isDialog                -- 是否为tab组窗口[tab组嵌套,可形成递归,树形结构]
-    initedTabs              -- tabName,true:切页是否已初始化
-    tabIndex                -- 切页索引
-    tabs                    -- 切页数组
-    tabGroupStates          -- tabIndex,map{tabName,isShow}切页数组状态
+-----废除一下参数
+    --isDialog                -- 是否为tab组窗口[tab组嵌套,可形成递归,树形结构]
+    --initedTabs              -- tabName,true:切页是否已初始化
+    --tabIndex                -- 切页索引
+    --tabs                    -- 切页数组
+    --tabGroupStates          -- tabIndex,map{tabName,isShow}切页数组状态
 --]]
 ---@type Stack
 local _dialogStack = nil
@@ -73,13 +77,23 @@ UIShowType = {
     DestroyWhenHide         = 4, --Hide时释放资源
 }
 
---[[
-    Tab切页默认成员
-        ShowTab(params)
-        HideTab(params)
+---窗体类,实例载体
+---@type FairyGUI.Window
+local Window = Class.new()
+function Window.ctor(...)
+    local ins = FairyGUI.LuaWindow()
+    XUtil.state(ins, self)
+    ins:ConnectLua(self)
+    self.name = 'window?'
+    self.status = nil           -- 加载状态[加载成功/加载中]
+    self.script = nil           -- 脚本对象
+    self.hideTime = nil         -- 最后隐藏时刻
+    self.loaded = nil           -- 是否已加载
+end
+
+---特殊:模态窗口!
 
 
---]]
 
 --显示已经加载的页面 用于弹出堆栈 或者tab页切换
 local function ShowLoadedView(viewName)
@@ -655,6 +669,10 @@ function UIManager.DestroyAllDlgs()
         CallBackDestroyAllDlgs = nil
     end
 end
+
+
+---------------------------------------------------下列函数可废除
+
 
 --Tab类型界面控制
 function UIManager.ShowTab(tabName, params)

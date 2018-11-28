@@ -52,7 +52,7 @@ local function SetButton(context)
     elseif type == "Grid" then
         local list1 = dlg:GetChild("list1").asList
         list1:RemoveChildrenToPool()
-        local ls = {"A", "B", "C", "D", "E"}
+        local ls = { "A", "B", "C", "D", "E" }
         for i = 1, #ls do
             local item = list1:AddItemFromPool().asButton
             local order = item:GetChild("t0").asTextField
@@ -78,6 +78,47 @@ local function SetButton(context)
             name.text = ls[i]
             value.text = tostring(math.random(5, 1000))
         end
+    elseif type == "ProgressBar" then
+        local time = 3
+        local p1 = dlg:GetChild("n1").asProgress
+        p1.value = 0
+        p1:TweenValue(100, time)
+
+        local p2 = dlg:GetChild("n2").asProgress
+        p2.value = 0
+        p2.titleType = 1
+        p2:TweenValue(100, time)
+
+        local p4 = dlg:GetChild("n4").asProgress
+        p4.value = 0
+        p4:TweenValue(100, time)
+
+        local p9 = dlg:GetChild("n9").asProgress
+        p9.value = 0
+        p9:TweenValue(100, time)
+    elseif type == "Drag&Drop" then
+        local a = dlg:GetChild('a').asButton
+        a.draggable = true
+
+        local b = dlg:GetChild('b').asButton
+        b.draggable = true
+        ---@param context FairyGUI.EventContext
+        b.onDragStart:Add(function (context)
+            context:PreventDefault()
+            DragDropManager.inst:StartDrag(b, b.icon, b.icon, context.data)
+        end)
+
+        local c = dlg:GetChild('c').asButton
+        c.draggable = true
+        c.onDrop:Add(function (context)
+            c.icon = context.data
+        end)
+
+        local d = dlg:GetChild('d').asButton
+        local bound = dlg:GetChild('n7').asGraph
+        ---TODO
+
+
     end
 end
 

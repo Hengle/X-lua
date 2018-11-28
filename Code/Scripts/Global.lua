@@ -21,6 +21,7 @@ Input = UnityEngine.Input
 KeyCode = UnityEngine.KeyCode
 CharacterController = UnityEngine.CharacterController
 SkinnedMeshRenderer = UnityEngine.SkinnedMeshRenderer
+Rect        = UnityEngine.Rect
 
 FairyGUI = CS.FairyGUI
 EventContext  = FairyGUI.EventContext
@@ -69,6 +70,8 @@ Transition = FairyGUI.Transition
 UIPackage = FairyGUI.UIPackage
 ---@type FairyGUI.Window
 Window = FairyGUI.Window
+---@type FairyGUI.DragDropManager
+DragDropManager = FairyGUI.DragDropManager
 GObjectPool = FairyGUI.GObjectPool
 Relations = FairyGUI.Relations
 RelationType = FairyGUI.RelationType
@@ -89,8 +92,9 @@ local require = require
 require 'xlua.string'
 require 'xlua.table'
 require 'xlua.coroutine'
-Profiler = require 'xlua.profiler'
-Memory = require 'xlua.memory'
+XUtil = require 'xlua.util'
+XProfiler = require 'xlua.profiler'
+XMemory = require 'xlua.memory'
 
 
 Mathf		= require "UnityEngine.Mathf"
@@ -113,6 +117,7 @@ require "Local"
 require 'Function'
 
 Define = require "Define"
+---@type Class
 Class = require "Common.Class"
 Util = require "Common.Util"
 List = require 'Common.List'

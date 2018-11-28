@@ -11,3 +11,14 @@
 #========================= 方案!
 1.Component 对象 - 界面容器[类似UIPanel] -> 
 2.
+
+
+
+#========================= 窗口操作逻辑
+onInit
+doShowAnimation
+onShow
+update
+doHideAnimation
+onHide
+destroy

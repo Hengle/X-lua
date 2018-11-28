@@ -24,6 +24,7 @@ function Main.Init()
     InitModule()
     printcolor("orange", 'lua framework init successful.')
 
+    printyellow("lua vector3" ,Vector3(1,2,3))
     local demo = require "UIExample.UIDemo"
     Util.Myxpcall(demo.Init, demo)
 end

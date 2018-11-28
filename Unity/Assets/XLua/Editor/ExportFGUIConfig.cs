@@ -50,6 +50,8 @@ public static class ExportFGUIConfig
         typeof(EaseType),
         typeof(TweenValue),
         typeof(GoWrapper),
+        typeof(DragDropManager),
+        typeof(Game.LuaWindow),
     };
 
     //C#静态调用Lua的配置（包括事件的原型），仅可以配delegate，interface

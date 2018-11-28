@@ -485,6 +485,7 @@
     <Compile Include="Assets\Source\Platform\Interface.cs" />
     <Compile Include="Assets\Source\Test\FPS.cs" />
     <Compile Include="Assets\Source\Utility\LuaHelper.cs" />
+    <Compile Include="Assets\Source\Utility\LuaWindow.cs" />
     <Compile Include="Assets\Source\Utility\Util.cs" />
     <Compile Include="Assets\Source\XLuaDelegate.cs" />
     <Compile Include="Assets\Timeline\Runtime\Animation\AniamtionBehaviour.cs" />
@@ -498,6 +499,7 @@
     <Compile Include="Assets\XLua\Gen\FairyGUIContainerWrap.cs" />
     <Compile Include="Assets\XLua\Gen\FairyGUIControllerWrap.cs" />
     <Compile Include="Assets\XLua\Gen\FairyGUIDisplayObjectWrap.cs" />
+    <Compile Include="Assets\XLua\Gen\FairyGUIDragDropManagerWrap.cs" />
     <Compile Include="Assets\XLua\Gen\FairyGUIEventContextWrap.cs" />
     <Compile Include="Assets\XLua\Gen\FairyGUIEventDispatcherWrap.cs" />
     <Compile Include="Assets\XLua\Gen\FairyGUIEventListenerWrap.cs" />
@@ -589,6 +591,7 @@
     <Compile Include="Assets\XLua\Gen\UnityEngineRay2DWrap.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngineRayWrap.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngineRectTransformWrap.cs" />
+    <Compile Include="Assets\XLua\Gen\UnityEngineRectWrap.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngineRendererWrap.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngineRenderSettingsWrap.cs" />
     <Compile Include="Assets\XLua\Gen\UnityEngineRenderTextureWrap.cs" />
