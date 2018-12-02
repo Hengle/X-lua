@@ -474,7 +474,7 @@ namespace XLua.CSObjectWrap
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.Push(L, UnityEngine.Application.platform);
+			    translator.PushUnityEngineRuntimePlatform(L, UnityEngine.Application.platform);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }

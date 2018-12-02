@@ -139,7 +139,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 XLuaTest.MyStruct gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
-                translator.PushXLuaTestPedding(L, gen_to_be_invoked.e);
+                translator.Push(L, gen_to_be_invoked.e);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }

@@ -52,7 +52,7 @@ namespace XLua.CSObjectWrap
 				
 				if (LuaAPI.lua_gettop(L) == 1)
 				{
-				    translator.PushXLuaTestPedding(L, default(XLuaTest.Pedding));
+				    translator.Push(L, default(XLuaTest.Pedding));
 			        return 1;
 				}
 				
@@ -99,7 +99,7 @@ namespace XLua.CSObjectWrap
                 XLuaTest.Pedding gen_to_be_invoked;translator.Get(L, 1, out gen_to_be_invoked);
                 gen_to_be_invoked.c = (byte)LuaAPI.xlua_tointeger(L, 2);
             
-                translator.UpdateXLuaTestPedding(L, 1, gen_to_be_invoked);
+                translator.Update(L, 1, gen_to_be_invoked);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

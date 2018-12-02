@@ -7,7 +7,6 @@ local gameEvent = GameEvent
 local LogError = LogError
 
 local Time = Time
-Main = {}
 
 local function InitModule()
     for _, name in ipairs(modules) do
@@ -20,30 +19,33 @@ local function InitModule()
     end
 end
 
-function Main.Init()
+local function Init()
     InitModule()
     printcolor("orange", 'lua framework init successful.')
 
-    printyellow("lua vector3" ,Vector3(1,2,3))
+    printyellow("lua vector3", Vector3(1, 2, 3))
     local demo = require "UIExample.UIDemo"
     Util.Myxpcall(demo.Init, demo)
 end
 
 --逻辑update
-function Update(deltaTime, unscaledDeltaTime)
+local function Update(deltaTime, unscaledDeltaTime)
     Time:SetDeltaTime(deltaTime, unscaledDeltaTime)
     gameEvent.UpdateEvent:Trigger()
 end
-function LateUpdate()
+local function SecondUpdate(time)
+    gameEvent.SecondUpdateEvent:Trigger()
+end
+local function LateUpdate()
     gameEvent.LateUpdateEvent:Trigger()
 end
 --物理update
-function FixedUpdate(fixedDeltaTime)
+local function FixedUpdate(fixedDeltaTime)
     Time:SetFixedDelta(fixedDeltaTime)
     gameEvent.FixedUpdateEvent:Trigger()
 end
 
-function OnDestroy()
+local function OnDestroy()
     local demo = require "UIExample.UIDemo"
     demo:OnDestroy()
     --local util = require('xlua.util')
@@ -64,3 +66,12 @@ function TEST()
     --print("Queue Dequeue:", queue:Dequeue())
     --print("Queue Count:", queue:Count())
 end
+
+Main = {
+    Init = Init,
+    Update = Update,
+    SecondUpdate = SecondUpdate,
+    LateUpdate = LateUpdate,
+    FixedUpdate = FixedUpdate,
+    OnDestroy = OnDestroy
+}

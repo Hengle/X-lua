@@ -21,11 +21,12 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(Game.LuaManager);
-			Utils.BeginObjectRegister(type, L, translator, 0, 5, 1, 0);
+			Utils.BeginObjectRegister(type, L, translator, 0, 6, 1, 0);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Init", _m_Init);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Dispose", _m_Dispose);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddLuaSearchPath", _m_AddLuaSearchPath);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "HasScript", _m_HasScript);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Tick", _m_Tick);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StartGame", _m_StartGame);
 			
@@ -135,6 +136,35 @@ namespace XLua.CSObjectWrap
                     
                     
                     return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_HasScript(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                Game.LuaManager gen_to_be_invoked = (Game.LuaManager)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    string _viewName = LuaAPI.lua_tostring(L, 2);
+                    
+                        bool gen_ret = gen_to_be_invoked.HasScript( _viewName );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
                 }
                 
             } catch(System.Exception gen_e) {

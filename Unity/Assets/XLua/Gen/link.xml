@@ -47,6 +47,7 @@
 		<type fullname="UnityEngine.Space" preserve="all"/>
 		<type fullname="UnityEngine.WrapMode" preserve="all"/>
 		<type fullname="UnityEngine.BlendWeights" preserve="all"/>
+		<type fullname="UnityEngine.RuntimePlatform" preserve="all"/>
 		<type fullname="UnityEngine.RectTransform" preserve="all"/>
 		<type fullname="UnityEngine.Debug" preserve="all"/>
 		<type fullname="UnityEngine.WaitForSeconds" preserve="all"/>
@@ -107,6 +108,7 @@
 		<type fullname="FairyGUI.TweenValue" preserve="all"/>
 		<type fullname="FairyGUI.GoWrapper" preserve="all"/>
 		<type fullname="FairyGUI.DragDropManager" preserve="all"/>
+		<type fullname="Game.LuaWindow" preserve="all"/>
 		<type fullname="LuaBehaviour" preserve="all"/>
 		<type fullname="XLuaTest.Pedding" preserve="all"/>
 		<type fullname="XLuaTest.MyStruct" preserve="all"/>

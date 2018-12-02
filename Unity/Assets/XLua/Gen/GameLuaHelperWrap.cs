@@ -31,9 +31,10 @@ namespace XLua.CSObjectWrap
 			Utils.EndObjectRegister(type, L, translator, null, null,
 			    null, null, null);
 
-		    Utils.BeginClassRegister(type, L, __CreateInstance, 3, 2, 2);
+		    Utils.BeginClassRegister(type, L, __CreateInstance, 4, 2, 2);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "Init", _m_Init_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "StringToHash", _m_StringToHash_xlua_st_);
+            Utils.RegisterFunc(L, Utils.CLS_IDX, "HasScript", _m_HasScript_xlua_st_);
             
 			
             
@@ -99,6 +100,31 @@ namespace XLua.CSObjectWrap
                     
                     
                     return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_HasScript_xlua_st_(RealStatePtr L)
+        {
+		    try {
+            
+            
+            
+                
+                {
+                    string _viewName = LuaAPI.lua_tostring(L, 1);
+                    
+                        bool gen_ret = Game.LuaHelper.HasScript( _viewName );
+                        LuaAPI.lua_pushboolean(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
                 }
                 
             } catch(System.Exception gen_e) {

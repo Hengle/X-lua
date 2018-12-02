@@ -10,6 +10,7 @@ AudioSource = UnityEngine.AudioSource
 Physics = UnityEngine.Physics
 GameObject = UnityEngine.GameObject
 Transform = UnityEngine.Transform
+---@type UnityEngine.Application
 Application = UnityEngine.Application
 SystemInfo = UnityEngine.SystemInfo
 Screen = UnityEngine.Screen
@@ -22,6 +23,8 @@ KeyCode = UnityEngine.KeyCode
 CharacterController = UnityEngine.CharacterController
 SkinnedMeshRenderer = UnityEngine.SkinnedMeshRenderer
 Rect        = UnityEngine.Rect
+---@type UnityEngine.RuntimePlatform
+RuntimePlatform = UnityEngine.RuntimePlatform
 
 FairyGUI = CS.FairyGUI
 EventContext  = FairyGUI.EventContext
@@ -78,6 +81,8 @@ RelationType = FairyGUI.RelationType
 UIPanel = FairyGUI.UIPanel
 UIPainter = FairyGUI.UIPainter
 TypingEffect = FairyGUI.TypingEffect
+---@type FairyGUI.Timers
+Timers = FairyGUI.Timers
 
 Game = CS.Game
 CSUtil = Game.Util
@@ -96,7 +101,6 @@ XUtil = require 'xlua.util'
 XProfiler = require 'xlua.profiler'
 XMemory = require 'xlua.memory'
 
-
 Mathf		= require "UnityEngine.Mathf"
 Vector3 	= require "UnityEngine.Vector3"
 Quaternion	= require "UnityEngine.Quaternion"
@@ -110,7 +114,6 @@ Touch		= require "UnityEngine.Touch"
 LayerMask	= require "UnityEngine.LayerMask"
 Plane		= require "UnityEngine.Plane"
 Time		= require "UnityEngine.Time"
-
 
 require "Local"
 -----------------------------------------------------------
@@ -126,5 +129,9 @@ Stack = require "Common.Stack"
 Event = require "Common.Event"
 Easing = require "Common.Easing"
 GameEvent = require "Common.GameEvent"
+
+IsEditor = Application.isEditor
+IsAndroid = Application.platform == RuntimePlatform.Android
+IsIPhone = Application.platform == RuntimePlatform.IPhonePlayer
 
 

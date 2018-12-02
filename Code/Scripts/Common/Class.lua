@@ -3,14 +3,14 @@ local setmetatable = setmetatable
 ---@class Class
 local Class = {}
 
-function Class:new(super)
+function Class:new(base)
 	local class = {}
 	class.__index = class--index 是给obj访问元表时使用
 	
 	local mt = {}
 	setmetatable(class, mt)
-	if super then 
-		mt.__index = super
+	if base then
+		mt.__index = base
 	end
 	function class:new(...)
 		local obj = {}

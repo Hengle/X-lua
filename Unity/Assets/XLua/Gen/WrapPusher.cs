@@ -16,9 +16,9 @@ namespace XLua
     public partial class ObjectTranslator
     {
         
-        class IniterAdderXLuaTestPedding
+        class IniterAdderXLuaTestMyStruct
         {
-            static IniterAdderXLuaTestPedding()
+            static IniterAdderXLuaTestMyStruct()
             {
                 LuaEnv.AddIniter(Init);
             }
@@ -26,7 +26,6 @@ namespace XLua
 			static void Init(LuaEnv luaenv, ObjectTranslator translator)
 			{
 			
-				translator.RegisterPushAndGetAndUpdate<XLuaTest.Pedding>(translator.PushXLuaTestPedding, translator.Get, translator.UpdateXLuaTestPedding);
 				translator.RegisterPushAndGetAndUpdate<XLuaTest.MyStruct>(translator.PushXLuaTestMyStruct, translator.Get, translator.UpdateXLuaTestMyStruct);
 				translator.RegisterPushAndGetAndUpdate<PushAsTableStruct>(translator.PushPushAsTableStruct, translator.Get, translator.UpdatePushAsTableStruct);
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.Vector2>(translator.PushUnityEngineVector2, translator.Get, translator.UpdateUnityEngineVector2);
@@ -46,6 +45,7 @@ namespace XLua
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.PlayMode>(translator.PushUnityEnginePlayMode, translator.Get, translator.UpdateUnityEnginePlayMode);
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.WrapMode>(translator.PushUnityEngineWrapMode, translator.Get, translator.UpdateUnityEngineWrapMode);
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.BlendWeights>(translator.PushUnityEngineBlendWeights, translator.Get, translator.UpdateUnityEngineBlendWeights);
+				translator.RegisterPushAndGetAndUpdate<UnityEngine.RuntimePlatform>(translator.PushUnityEngineRuntimePlatform, translator.Get, translator.UpdateUnityEngineRuntimePlatform);
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.EventSystems.EventTriggerType>(translator.PushUnityEngineEventSystemsEventTriggerType, translator.Get, translator.UpdateUnityEngineEventSystemsEventTriggerType);
 				translator.RegisterPushAndGetAndUpdate<Game.ResourceLoadType>(translator.PushGameResourceLoadType, translator.Get, translator.UpdateGameResourceLoadType);
 				translator.RegisterPushAndGetAndUpdate<FairyGUI.RelationType>(translator.PushFairyGUIRelationType, translator.Get, translator.UpdateFairyGUIRelationType);
@@ -55,75 +55,9 @@ namespace XLua
 			}
         }
         
-        static IniterAdderXLuaTestPedding s_IniterAdderXLuaTestPedding_dumb_obj = new IniterAdderXLuaTestPedding();
-        static IniterAdderXLuaTestPedding IniterAdderXLuaTestPedding_dumb_obj {get{return s_IniterAdderXLuaTestPedding_dumb_obj;}}
+        static IniterAdderXLuaTestMyStruct s_IniterAdderXLuaTestMyStruct_dumb_obj = new IniterAdderXLuaTestMyStruct();
+        static IniterAdderXLuaTestMyStruct IniterAdderXLuaTestMyStruct_dumb_obj {get{return s_IniterAdderXLuaTestMyStruct_dumb_obj;}}
         
-        
-        int XLuaTestPedding_TypeID = -1;
-        public void PushXLuaTestPedding(RealStatePtr L, XLuaTest.Pedding val)
-        {
-            if (XLuaTestPedding_TypeID == -1)
-            {
-			    bool is_first;
-                XLuaTestPedding_TypeID = getTypeId(L, typeof(XLuaTest.Pedding), out is_first);
-				
-            }
-			
-            IntPtr buff = LuaAPI.xlua_pushstruct(L, 1, XLuaTestPedding_TypeID);
-            if (!CopyByValue.Pack(buff, 0, val))
-            {
-                throw new Exception("pack fail fail for XLuaTest.Pedding ,value="+val);
-            }
-			
-        }
-		
-        public void Get(RealStatePtr L, int index, out XLuaTest.Pedding val)
-        {
-		    LuaTypes type = LuaAPI.lua_type(L, index);
-            if (type == LuaTypes.LUA_TUSERDATA )
-            {
-			    if (LuaAPI.xlua_gettypeid(L, index) != XLuaTestPedding_TypeID)
-				{
-				    throw new Exception("invalid userdata for XLuaTest.Pedding");
-				}
-				
-                IntPtr buff = LuaAPI.lua_touserdata(L, index);if (!CopyByValue.UnPack(buff, 0, out val))
-                {
-                    throw new Exception("unpack fail for XLuaTest.Pedding");
-                }
-            }
-			else if (type ==LuaTypes.LUA_TTABLE)
-			{
-			    CopyByValue.UnPack(this, L, index, out val);
-			}
-            else
-            {
-                val = (XLuaTest.Pedding)objectCasters.GetCaster(typeof(XLuaTest.Pedding))(L, index, null);
-            }
-        }
-		
-        public void UpdateXLuaTestPedding(RealStatePtr L, int index, XLuaTest.Pedding val)
-        {
-		    
-            if (LuaAPI.lua_type(L, index) == LuaTypes.LUA_TUSERDATA)
-            {
-			    if (LuaAPI.xlua_gettypeid(L, index) != XLuaTestPedding_TypeID)
-				{
-				    throw new Exception("invalid userdata for XLuaTest.Pedding");
-				}
-				
-                IntPtr buff = LuaAPI.lua_touserdata(L, index);
-                if (!CopyByValue.Pack(buff, 0,  val))
-                {
-                    throw new Exception("pack fail for XLuaTest.Pedding ,value="+val);
-                }
-            }
-			
-            else
-            {
-                throw new Exception("try to update a data with lua type:" + LuaAPI.lua_type(L, index));
-            }
-        }
         
         int XLuaTestMyStruct_TypeID = -1;
         public void PushXLuaTestMyStruct(RealStatePtr L, XLuaTest.MyStruct val)
@@ -1538,6 +1472,90 @@ namespace XLua
             }
         }
         
+        int UnityEngineRuntimePlatform_TypeID = -1;
+		int UnityEngineRuntimePlatform_EnumRef = -1;
+        
+        public void PushUnityEngineRuntimePlatform(RealStatePtr L, UnityEngine.RuntimePlatform val)
+        {
+            if (UnityEngineRuntimePlatform_TypeID == -1)
+            {
+			    bool is_first;
+                UnityEngineRuntimePlatform_TypeID = getTypeId(L, typeof(UnityEngine.RuntimePlatform), out is_first);
+				
+				if (UnityEngineRuntimePlatform_EnumRef == -1)
+				{
+				    Utils.LoadCSTable(L, typeof(UnityEngine.RuntimePlatform));
+				    UnityEngineRuntimePlatform_EnumRef = LuaAPI.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
+				}
+				
+            }
+			
+			if (LuaAPI.xlua_tryget_cachedud(L, (int)val, UnityEngineRuntimePlatform_EnumRef) == 1)
+            {
+			    return;
+			}
+			
+            IntPtr buff = LuaAPI.xlua_pushstruct(L, 4, UnityEngineRuntimePlatform_TypeID);
+            if (!CopyByValue.Pack(buff, 0, (int)val))
+            {
+                throw new Exception("pack fail fail for UnityEngine.RuntimePlatform ,value="+val);
+            }
+			
+			LuaAPI.lua_getref(L, UnityEngineRuntimePlatform_EnumRef);
+			LuaAPI.lua_pushvalue(L, -2);
+			LuaAPI.xlua_rawseti(L, -2, (int)val);
+			LuaAPI.lua_pop(L, 1);
+			
+        }
+		
+        public void Get(RealStatePtr L, int index, out UnityEngine.RuntimePlatform val)
+        {
+		    LuaTypes type = LuaAPI.lua_type(L, index);
+            if (type == LuaTypes.LUA_TUSERDATA )
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != UnityEngineRuntimePlatform_TypeID)
+				{
+				    throw new Exception("invalid userdata for UnityEngine.RuntimePlatform");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+				int e;
+                if (!CopyByValue.UnPack(buff, 0, out e))
+                {
+                    throw new Exception("unpack fail for UnityEngine.RuntimePlatform");
+                }
+				val = (UnityEngine.RuntimePlatform)e;
+                
+            }
+            else
+            {
+                val = (UnityEngine.RuntimePlatform)objectCasters.GetCaster(typeof(UnityEngine.RuntimePlatform))(L, index, null);
+            }
+        }
+		
+        public void UpdateUnityEngineRuntimePlatform(RealStatePtr L, int index, UnityEngine.RuntimePlatform val)
+        {
+		    
+            if (LuaAPI.lua_type(L, index) == LuaTypes.LUA_TUSERDATA)
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != UnityEngineRuntimePlatform_TypeID)
+				{
+				    throw new Exception("invalid userdata for UnityEngine.RuntimePlatform");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+                if (!CopyByValue.Pack(buff, 0,  (int)val))
+                {
+                    throw new Exception("pack fail for UnityEngine.RuntimePlatform ,value="+val);
+                }
+            }
+			
+            else
+            {
+                throw new Exception("try to update a data with lua type:" + LuaAPI.lua_type(L, index));
+            }
+        }
+        
         int UnityEngineEventSystemsEventTriggerType_TypeID = -1;
 		int UnityEngineEventSystemsEventTriggerType_EnumRef = -1;
         
@@ -1969,13 +1987,7 @@ namespace XLua
 	    internal static bool __tryArrayGet(Type type, RealStatePtr L, ObjectTranslator translator, object obj, int index)
 		{
 		
-			if (type == typeof(XLuaTest.Pedding[]))
-			{
-			    XLuaTest.Pedding[] array = obj as XLuaTest.Pedding[];
-				translator.PushXLuaTestPedding(L, array[index]);
-				return true;
-			}
-			else if (type == typeof(XLuaTest.MyStruct[]))
+			if (type == typeof(XLuaTest.MyStruct[]))
 			{
 			    XLuaTest.MyStruct[] array = obj as XLuaTest.MyStruct[];
 				translator.PushXLuaTestMyStruct(L, array[index]);
@@ -2089,6 +2101,12 @@ namespace XLua
 				translator.PushUnityEngineBlendWeights(L, array[index]);
 				return true;
 			}
+			else if (type == typeof(UnityEngine.RuntimePlatform[]))
+			{
+			    UnityEngine.RuntimePlatform[] array = obj as UnityEngine.RuntimePlatform[];
+				translator.PushUnityEngineRuntimePlatform(L, array[index]);
+				return true;
+			}
 			else if (type == typeof(UnityEngine.EventSystems.EventTriggerType[]))
 			{
 			    UnityEngine.EventSystems.EventTriggerType[] array = obj as UnityEngine.EventSystems.EventTriggerType[];
@@ -2125,13 +2143,7 @@ namespace XLua
 		internal static bool __tryArraySet(Type type, RealStatePtr L, ObjectTranslator translator, object obj, int array_idx, int obj_idx)
 		{
 		
-			if (type == typeof(XLuaTest.Pedding[]))
-			{
-			    XLuaTest.Pedding[] array = obj as XLuaTest.Pedding[];
-				translator.Get(L, obj_idx, out array[array_idx]);
-				return true;
-			}
-			else if (type == typeof(XLuaTest.MyStruct[]))
+			if (type == typeof(XLuaTest.MyStruct[]))
 			{
 			    XLuaTest.MyStruct[] array = obj as XLuaTest.MyStruct[];
 				translator.Get(L, obj_idx, out array[array_idx]);
@@ -2242,6 +2254,12 @@ namespace XLua
 			else if (type == typeof(UnityEngine.BlendWeights[]))
 			{
 			    UnityEngine.BlendWeights[] array = obj as UnityEngine.BlendWeights[];
+				translator.Get(L, obj_idx, out array[array_idx]);
+				return true;
+			}
+			else if (type == typeof(UnityEngine.RuntimePlatform[]))
+			{
+			    UnityEngine.RuntimePlatform[] array = obj as UnityEngine.RuntimePlatform[];
 				translator.Get(L, obj_idx, out array[array_idx]);
 				return true;
 			}

@@ -24,7 +24,6 @@ namespace Game
         private LuaEnv _luaEnv;
         private List<string> _searchPaths = new List<string>();
         private XLuaDelegate _luaDelegate;
-
         public LuaEnv LuaEnv { get { return _luaEnv; } }
         [DoNotGen]
         public void Init()
@@ -40,7 +39,8 @@ namespace Game
             {
                 try
                 {
-                    _luaDelegate.Dispose();
+                    if (_luaDelegate != null)
+                        _luaDelegate.Dispose();
                     _luaEnv.Dispose();
                     _luaEnv = null;
                     _instance = null;
@@ -56,6 +56,11 @@ namespace Game
         {
             _searchPaths.Add(path);
         }
+        [DoNotGen]
+        public bool HasScript(string viewName)
+        {
+            return _searchPaths.Exists(s => s.Equals(viewName));
+        }
         private byte[] CustomLoader(ref string filePath)
         {
             for (int i = 0; i < _searchPaths.Count; i++)
@@ -65,7 +70,7 @@ namespace Game
                 if (File.Exists(fullPath))
                     return File.ReadAllBytes(fullPath);
             }
-           
+
             return null;
         }
 
@@ -80,13 +85,14 @@ namespace Game
         public void StartGame()
         {
             _luaEnv.DoString("require 'Main'", "Main", _luaEnv.Global);
-            _luaEnv.DoString("Main.Init()", "Main", _luaEnv.Global);
+            LuaTable luaMain = _luaEnv.Global.GetInPath<LuaTable>("Main");
+            luaMain.Get<Action>("Init")();
 
             var main = Main.Instance.gameObject;
             _luaDelegate = main.GetComponent<XLuaDelegate>();
             if (_luaDelegate == null)
                 _luaDelegate = main.AddComponent<XLuaDelegate>();
-            _luaDelegate.Init(_luaEnv);
+            _luaDelegate.Init(luaMain);
         }
     }
 

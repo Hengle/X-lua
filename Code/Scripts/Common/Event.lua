@@ -92,8 +92,9 @@ end
 local global = Event:new("__global")
 -- 如果不指定事件名,则创建一个匿名事件
 function Event:NewSimple(name)
-    name = name or {}
-    return {
+    name = name or ""
+    ---@class SimpleEvent
+    local evt = {
         Add               = function(self, handler)
             return global:Add(name, handler)
         end,
@@ -114,6 +115,7 @@ function Event:NewSimple(name)
         end,
         name              = name,
     }
+    return evt
 end
 
 return Event

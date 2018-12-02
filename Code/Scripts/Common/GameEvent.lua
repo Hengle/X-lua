@@ -1,15 +1,13 @@
 local Event = Event
-local Time = Time
-
 
 local UpdateEvent = Event:NewSimple("Update")
-local CoUpdateEvent = Event:NewSimple("CoUpdate")
+local SecondUpdateEvent = Event:NewSimple("SecondUpdate")
 local LateUpdateEvent = Event:NewSimple("LateUpdate")
 local FixedUpdateEvent = Event:NewSimple("FixedUpdate")
 
 return {
     UpdateEvent = UpdateEvent,
-    CoUpdateEvent = CoUpdateEvent,
+    SecondUpdateEvent = SecondUpdateEvent,
     LateUpdateEvent = LateUpdateEvent,
     FixedUpdateEvent = FixedUpdateEvent,
 }

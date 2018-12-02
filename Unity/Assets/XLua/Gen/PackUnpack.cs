@@ -17,44 +17,6 @@ namespace XLua
     {
         
 		
-		public static void UnPack(ObjectTranslator translator, RealStatePtr L, int idx, out XLuaTest.Pedding val)
-		{
-		    val = new XLuaTest.Pedding();
-            int top = LuaAPI.lua_gettop(L);
-			
-			if (Utils.LoadField(L, idx, "c"))
-            {
-			    
-                translator.Get(L, top + 1, out val.c);
-				
-            }
-            LuaAPI.lua_pop(L, 1);
-			
-		}
-		
-        public static bool Pack(IntPtr buff, int offset, XLuaTest.Pedding field)
-        {
-            
-            if(!Pack(buff, offset, field.c))
-            {
-                return false;
-            }
-            
-            return true;
-        }
-        public static bool UnPack(IntPtr buff, int offset, out XLuaTest.Pedding field)
-        {
-            field = default(XLuaTest.Pedding);
-            
-            if(!UnPack(buff, offset, out field.c))
-            {
-                return false;
-            }
-            
-            return true;
-        }
-        
-		
 		public static void UnPack(ObjectTranslator translator, RealStatePtr L, int idx, out XLuaTest.MyStruct val)
 		{
 		    val = new XLuaTest.MyStruct();
@@ -139,6 +101,29 @@ namespace XLua
             }
             
             if(!UnPack(buff, offset + 24, out field.e))
+            {
+                return false;
+            }
+            
+            return true;
+        }
+        
+		
+        public static bool Pack(IntPtr buff, int offset, XLuaTest.Pedding field)
+        {
+            
+            if(!Pack(buff, offset, field.c))
+            {
+                return false;
+            }
+            
+            return true;
+        }
+        public static bool UnPack(IntPtr buff, int offset, out XLuaTest.Pedding field)
+        {
+            field = default(XLuaTest.Pedding);
+            
+            if(!UnPack(buff, offset, out field.c))
             {
                 return false;
             }

@@ -22,6 +22,10 @@ namespace Game
                 hash_name_map[hashcode] = name;
             }
         }
+        public static bool HasScript(string viewName)
+        {
+            return LuaManager.Instance.HasScript(viewName);
+        }
     }
 }
 

@@ -545,6 +545,7 @@
     <Compile Include="Assets\XLua\Gen\GameGameManagerWrap.cs" />
     <Compile Include="Assets\XLua\Gen\GameLuaHelperWrap.cs" />
     <Compile Include="Assets\XLua\Gen\GameLuaManagerWrap.cs" />
+    <Compile Include="Assets\XLua\Gen\GameLuaWindowWrap.cs" />
     <Compile Include="Assets\XLua\Gen\GameNetworkManagerWrap.cs" />
     <Compile Include="Assets\XLua\Gen\GamePlatformCustomInterfaceWrap.cs" />
     <Compile Include="Assets\XLua\Gen\GamePlatformInterfaceWrap.cs" />

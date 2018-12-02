@@ -358,3 +358,5 @@ E:\C#Project\X-lua\Unity\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cach
 E:\C#Project\X-lua\Unity\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 E:\C#Project\X-lua\Unity\obj\Debug\Assembly-CSharp.dll
 E:\C#Project\X-lua\Unity\obj\Debug\Assembly-CSharp.pdb
+E:\__Github\X-lua\Unity\Temp\bin\Debug\UnityEditor.UI.dll
+E:\__Github\X-lua\Unity\Temp\bin\Debug\UnityEditor.UI.xml

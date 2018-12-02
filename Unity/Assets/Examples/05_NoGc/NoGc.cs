@@ -12,7 +12,6 @@ using XLua;
 
 namespace XLuaTest
 {
-    [GCOptimize]
     [LuaCallCSharp]
     public struct Pedding
     {

@@ -203,6 +203,9 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(UnityEngine.BlendWeights), UnityEngineBlendWeightsWrap.__Register);
         
         
+            translator.DelayWrapLoader(typeof(UnityEngine.RuntimePlatform), UnityEngineRuntimePlatformWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(UnityEngine.RectTransform), UnityEngineRectTransformWrap.__Register);
         
         
@@ -328,13 +331,13 @@ namespace XLua.CSObjectWrap
         
             translator.DelayWrapLoader(typeof(FairyGUI.GList), FairyGUIGListWrap.__Register);
         
-        
-            translator.DelayWrapLoader(typeof(FairyGUI.GRoot), FairyGUIGRootWrap.__Register);
-        
         }
         
         static void wrapInit2(LuaEnv luaenv, ObjectTranslator translator)
         {
+        
+            translator.DelayWrapLoader(typeof(FairyGUI.GRoot), FairyGUIGRootWrap.__Register);
+        
         
             translator.DelayWrapLoader(typeof(FairyGUI.GLabel), FairyGUIGLabelWrap.__Register);
         
@@ -394,6 +397,9 @@ namespace XLua.CSObjectWrap
         
         
             translator.DelayWrapLoader(typeof(FairyGUI.DragDropManager), FairyGUIDragDropManagerWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(Game.LuaWindow), GameLuaWindowWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(LuaBehaviour), LuaBehaviourWrap.__Register);

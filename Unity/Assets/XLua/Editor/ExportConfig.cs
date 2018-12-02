@@ -59,7 +59,7 @@ public static class ExportConfig
         typeof(Graphics),
         typeof(Resources),
         typeof(Application),
-        typeof(SleepTimeout),
+        typeof(SleepTimeout),        
 
         typeof(Collider),
         typeof(BoxCollider),
@@ -102,6 +102,7 @@ public static class ExportConfig
         typeof(PlayMode),
         typeof(WrapMode),
         typeof(BlendWeights),
+        typeof(RuntimePlatform),
 
         typeof(RectTransform),
         typeof(Text),

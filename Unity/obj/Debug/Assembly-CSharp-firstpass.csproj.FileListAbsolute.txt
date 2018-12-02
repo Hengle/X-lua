@@ -356,3 +356,5 @@ E:\C#Project\X-lua\Unity\obj\Debug\Assembly-CSharp-firstpass.csproj.CoreCompileI
 E:\C#Project\X-lua\Unity\obj\Debug\Assembly-CSharp-firstpass.csproj.CopyComplete
 E:\C#Project\X-lua\Unity\obj\Debug\Assembly-CSharp-firstpass.dll
 E:\C#Project\X-lua\Unity\obj\Debug\Assembly-CSharp-firstpass.pdb
+E:\__Github\X-lua\Unity\Temp\bin\Debug\UnityEditor.UI.dll
+E:\__Github\X-lua\Unity\Temp\bin\Debug\UnityEditor.UI.xml
