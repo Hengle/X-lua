@@ -9,7 +9,7 @@ namespace Cfg.Skill
 		/// <summary>
 		/// 序列ID
 		/// <summary>
-		public readonly int Id;
+		public readonly string Id;
 		/// <summary>
 		/// 碰撞区域定义列表
 		/// <summary>
@@ -21,7 +21,7 @@ namespace Cfg.Skill
 
 		public Sequence(DataStream data)
 		{
-			this.Id = data.GetInt();
+			this.Id = data.GetString();
 			for (int n = data.GetInt(); n-- > 0; )
 			{
 				this.HitZones.Add((HitZone)data.GetObject(data.GetString()));

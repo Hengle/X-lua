@@ -69,13 +69,15 @@ namespace Flux
             GameObject go = GameObject.Find(path);//这里的对象可以是任意节点下的对象
             if (go == null)
             {
+#if UNITY_EDITOR
                 go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+#endif
                 if (go == null)
                 {
                     Debug.LogError("资源不存在" + path);
                     return null;
                 }
-
+              
                 go.transform.parent = resources.transform;
                 go.transform.localPosition = Vector3.zero;
                 go.transform.localEulerAngles = Vector3.zero;

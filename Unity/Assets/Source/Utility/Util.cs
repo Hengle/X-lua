@@ -91,6 +91,7 @@ namespace Game
         }
 
         /// <summary>
+        /// 热更后资源读取目录
         /// 取得数据存放目录-可读写目录(可包含美术资源,脚本,配置)
         /// </summary>
         public static string DataPath
@@ -142,6 +143,7 @@ namespace Game
                 return path;
             }
         }
+
 
         /// <summary>
         /// 网络可用

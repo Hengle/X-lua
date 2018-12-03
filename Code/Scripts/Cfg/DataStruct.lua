@@ -130,7 +130,7 @@ GetOrCreate('Cfg.Skill')['Sequence'] = meta
 function Stream:GetCfgSkillSequence()
 	local o = {}
 	setmetatable(o, Cfg.Skill.Sequence)
-	o.Id = self:GetInt()
+	o.Id = self:GetString()
 	o.HitZones = self:GetList('CfgSkillHitZone')
 	o.Timelines = self:GetList('CfgSkillTimeline')
 	return o

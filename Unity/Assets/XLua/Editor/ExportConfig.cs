@@ -89,7 +89,6 @@ public static class ExportConfig
         typeof(TrackedReference),
         typeof(SkinnedMeshRenderer),
         typeof(ParticleSystem),
-        typeof(QualitySettings),
         typeof(RenderSettings),
         typeof(RenderTexture),
 
@@ -176,6 +175,9 @@ public static class ExportConfig
     public static List<List<string>> BlackList = new List<List<string>>()  {
                 new List<string>(){"System.Xml.XmlNodeList", "ItemOf"},
                 new List<string>(){"UnityEngine.WWW", "movie"},
+                new List<string>(){"UnityEngine.Texture", "imageContentsHash"},
+                new List<string>(){ "UnityEngine.UI.Text", "OnRebuildRequested"},
+                new List<string>(){"UnityEngine.Input", "IsJoystickPreconfigured", "System.String"},
     #if UNITY_WEBGL
                 new List<string>(){"UnityEngine.WWW", "threadPriority"},
     #endif

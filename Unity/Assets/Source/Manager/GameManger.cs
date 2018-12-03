@@ -148,7 +148,7 @@ namespace Game
         public IEnumerator LoadResource()
         {
             yield return new WaitForEndOfFrame();
-            ResourceManager.Instance.Start();
+            //ResourceManager.Instance.Start();
             yield return new WaitForEndOfFrame();
             //场景加载
             //TODO

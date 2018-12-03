@@ -12,7 +12,7 @@ public partial class ExportResource
     static void GetSceneAssets()
     {
         assetScenes.Clear();
-        GetAssetsRecursively("Assets/Environment/Scene/", "*.unity", "scene/", "se", ref assetScenes);
+        GetAssetsRecursively("Assets/Environment/Scene/", "*.unity", "scene/", "s", ref assetScenes);
     }
 
     static void ExportAllScenes(BuildTarget target)

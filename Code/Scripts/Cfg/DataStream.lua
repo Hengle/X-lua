@@ -17,7 +17,7 @@ function Stream.new(dataFile)
 	local o = {}
 	setmetatable(o, Stream)
 	o.dataFile = dataFile
-	o.GetLine = lines(format('%sConfig/%s', root, dataFile))
+	o.GetLine = lines(format('%sconfig/csv/%s', root, dataFile))
 	o.idx = 0
 	o.line = 0
 	return o

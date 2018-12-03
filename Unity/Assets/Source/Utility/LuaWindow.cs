@@ -19,12 +19,18 @@ namespace Game
         {
             _table = table;
             _OnInit = table.Get<LuaFunction>("OnInit");
-            _DoHideAnimation = table.Get<LuaFunction>("DoHideAnimation");
-            _DoShowAnimation = table.Get<LuaFunction>("DoShowAnimation");
-            _OnShown = table.Get<LuaFunction>("OnShown");
+            _DoHideAnimation = table.Get<LuaFunction>("DoShowTween");
+            _DoShowAnimation = table.Get<LuaFunction>("DoHideTween");
+            _OnShown = table.Get<LuaFunction>("OnShow");
             _OnHide = table.Get<LuaFunction>("OnHide");
         }
-
+        /// <summary>
+        /// 仅在显示动画完成时调用
+        /// </summary>
+        public void FinishDisplay()
+        {
+            OnShown();
+        }
         public override void Dispose()
         {
             base.Dispose();
@@ -46,13 +52,13 @@ namespace Game
         protected override void OnInit()
         {
             if (_OnInit != null)
-                _OnInit.Action<LuaWindow>(this);
+                _OnInit.Action(_table);
         }
 
         protected override void DoHideAnimation()
         {
             if (_DoHideAnimation != null)
-                _DoHideAnimation.Action<LuaWindow>(this);
+                _DoHideAnimation.Action(_table);
             else
                 base.DoHideAnimation();
         }
@@ -60,7 +66,7 @@ namespace Game
         protected override void DoShowAnimation()
         {
             if (_DoShowAnimation != null)
-                _DoShowAnimation.Action<LuaWindow>(this);
+                _DoShowAnimation.Action(_table);
             else
                 base.DoShowAnimation();
         }
@@ -70,7 +76,7 @@ namespace Game
             base.OnShown();
 
             if (_OnShown != null)
-                _OnShown.Action<LuaWindow>(this);
+                _OnShown.Action(_table);
         }
 
         protected override void OnHide()
@@ -78,7 +84,7 @@ namespace Game
             base.OnHide();
 
             if (_OnHide != null)
-                _OnHide.Action<LuaWindow>(this);
+                _OnHide.Action(_table);
         }
     }
 }

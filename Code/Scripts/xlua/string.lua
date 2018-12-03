@@ -70,4 +70,4 @@ string.join = join
 string.contains = contains
 string.startswith = startswith
 string.endswith = endswith
-string.trim = endswith
+string.trim = trim

@@ -66,7 +66,7 @@ namespace Game
             for (int i = 0; i < _searchPaths.Count; i++)
             {
                 string dir = _searchPaths[i];
-                string fullPath = string.Format("{0}/{1}.lua", dir, filePath.Replace(".", "/"));
+                string fullPath = string.Format("{0}/{1}.lua", dir, filePath.Replace(".", "/")).ToString();
                 if (File.Exists(fullPath))
                     return File.ReadAllBytes(fullPath);
             }
@@ -93,6 +93,7 @@ namespace Game
             if (_luaDelegate == null)
                 _luaDelegate = main.AddComponent<XLuaDelegate>();
             _luaDelegate.Init(luaMain);
+            luaMain.Dispose();
         }
     }
 

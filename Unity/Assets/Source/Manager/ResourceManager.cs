@@ -98,6 +98,7 @@ namespace Game
 
         private string preloadListPath = "config/preloadlist.txt";
         private List<string> preloadList = new List<string>();
+        private int currentPreLoadCount = 0;
 
         private Dictionary<string, int> refCount = new Dictionary<string, int>();
         private Dictionary<string, float> refDelTime = new Dictionary<string, float>();
@@ -114,6 +115,7 @@ namespace Game
 
         public int MaxTaskCount { get; set; }
 
+        [DoNotGen]
         /// <summary>
         /// 初始化
         /// </summary>
@@ -126,25 +128,51 @@ namespace Game
             }
 
             byte[] stream = null;
-#if UNITY_EDITOR
-            string path = GetResPath("GamePlayer");
+            string path = "";
+#if UNITY_EDITOR || UNITY_EDITOR_WIN
+            path = GetResPath("GamePlayer");
 #elif UNITY_ANDROID
-            string path = GetResPath("Android");
+            path = GetResPath("Android");
 #elif UNITY_IOS
-            string path = GetResPath("IOS");
+            path = GetResPath("IOS");
 #endif
             if (!File.Exists(path)) return;
             stream = File.ReadAllBytes(path);
             var assetbundle = AssetBundle.LoadFromMemory(stream);
             manifest = assetbundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+
+            LoadPreLoadList();
+            PreLoadResource();
         }
 
-        public void Start()
+        private void LoadPreLoadList()
         {
-            //获取预加载资源列表
-            //加载预加载资源
-            //TODO
+            preloadList.Clear();
+            string dataPath = GetResPath(preloadListPath);
+
+            if (!File.Exists(dataPath)) return;
+
+            foreach (string p in File.ReadAllLines(dataPath))
+                preloadList.Add(p);
         }
+        private void PreLoadResource()
+        {
+            foreach (string path in preloadList)
+            {
+                if (path.Contains("_atlas0!a") && Application.platform != UnityEngine.RuntimePlatform.Android)
+                    currentPreLoadCount++;
+                else
+                    AddTask(path, PreLoadEventHandler, (int)(ResourceLoadType.LoadBundleFromFile | ResourceLoadType.Persistent));
+            }
+        }
+        private void PreLoadEventHandler(UnityEngine.Object obj)
+        {
+            currentPreLoadCount++;
+        }
+        /// <summary>
+        /// 判断预加载资源是否已经加载结束
+        /// </summary>
+        public bool IsPreLoadDone { get { return currentPreLoadCount >= preloadList.Count; } }
 
 
         public bool IsLoading(uint taskId)
@@ -381,7 +409,8 @@ namespace Game
                 delayLoadTask.Enqueue(loadTask);
             }
         }
-        void Update()
+        [DoNotGen]
+        public void Update()
         {
             CleanupCacheBundle();
             CleanupMemoryInterval();
