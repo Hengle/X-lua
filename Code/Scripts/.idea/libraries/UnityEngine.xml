@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="UnityEngine" type="Lua_net">
+    <CLASSES>
+      <root url="dll://E:/__Github/X-lua/Code/UnityEngine.dll!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
