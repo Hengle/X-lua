@@ -6,6 +6,7 @@ local insert = table.insert
 local loaded = package.loaded
 local trim = string.trim
 local clone = table.clone
+local clear = table.clear
 
 local Time = Time
 local Local = Local
@@ -33,6 +34,7 @@ local LOAD_SUCC = 2             --加载成功
 local LAYER_UI = 20             --UI Layer层
 local UI_LOAD_TYPE = CS.Game.ResourceLoadType.LoadBundleFromFile -- www方式加载
 local DLG_LOADING_MASK = "DlgUILock"    -- 加载界面时锁UI,禁止一切操作
+local MAX_HIDE_VIEW_NUM = 0
 
 local _views = {}
 local _stage = nil             -- 舞台对象
@@ -57,7 +59,7 @@ local this = UIManager
 ---窗口定义UIShowType函数指明显示类型
 UIShowType = {
     Default = 0, --默认策略显示
-    Refresh = 1, --强制调用show
+    Refresh = 1, --强制调用Show{执行Show,Refresh函数}
     DestroyWhenHide = 2, --Hide时释放资源,默认隐藏不销毁资源,仅在资源销毁时调用
 }
 
@@ -66,9 +68,9 @@ local Data = {
     base = nil,
     script = nil,
     fields = nil,
-    params = nil, -- 用于传参
-    fileName = nil,
-    viewName = nil,
+    params = nil, -- 用于Show,Refresh传参
+    fileName = nil, -- 界面名称/ab包资源名称
+    viewName = nil, -- 脚本相对UI路径名
     status = nil,
     loaded = nil,
     isShow = false,
@@ -126,6 +128,24 @@ function UIManager.SecondUpdate(now)
         if info.isShow and this.HasMethod(viewName, "SecondUpdate") then
             this.Call(viewName, "SecondUpdate", now)
         end
+    end
+end
+
+function UIManager.UnloadExpireView(now)
+    local unshowViewNum = 0
+    local toDestroyViewName
+    local minHideTime = now
+    for name, data in pairs(_views) do
+        if data ~= nil and data.status == LOAD_SUCC and not data.isShow and not this.IsPersistent(name) and not this.IsInStack(name) then
+            unshowViewNum = unshowViewNum + 1
+            if data.hideTime ~= nil and data.hideTime < minHideTime then
+                toDestroyViewName = name
+                minHideTime = data.hideTime
+            end
+        end
+    end
+    if toDestroyViewName and unshowViewNum > MAX_HIDE_VIEW_NUM then
+        this.Destroy(toDestroyViewName)
     end
 end
 
@@ -284,9 +304,12 @@ DoShow = function(data)
     local viewName = data.viewName
     ---@type Game.LuaWindow
     local window = data.base
-    window:FinishDisplay()
-
-
+    if this.Call(viewName, "DoShow", window.ShowImmediately) then
+        ---界面显示动画 ! 不知道什么时候结束
+        ---TODO
+    else
+        window:ShowImmediately()
+    end
 end
 ---@param data UIData
 OnShow = function(data)
@@ -307,18 +330,24 @@ OnShow = function(data)
 end
 ---@param data UIData
 DoHide = function(data)
-
+    local viewName = data.viewName
+    ---@type Game.LuaWindow
+    local window = data.base
+    if this.HasMethod(viewName, "DoHide", window.HideImmediately) then
+        ---界面隐藏动画 ! 不知道什么时候结束
+        ---TODO
+    else
+        window:HideImmediately()
+    end
 end
 ---@param data UIData
 OnHide = function(data)
+    local viewName = data.viewName
     if Local.LogModuals.UIManager then
-        printyellow("OnHide ==>>", viewName)
+        printyellow("[UIManager]OnHide", viewName)
     end
-    local data = this.GetViewData(viewName)
     if this.Call(viewName, "Hide") then
         data.isShow = false
-        data.gameObject:SetActive(false)
-        data.dialogViewName = nil
         if this.IsUIShowType(viewName, UIShowType.DestroyWhenHide) then
             this.Destroy(viewName, "Destroy")
         end
@@ -328,15 +357,6 @@ end
 NeedRefresh = function(viewName)
     return this.IsShow(viewName) --or this.IsInStack(viewName)
 end
-local ConnectLua = function(data, com)
-    ---@type Game.LuaWindow
-    local ins = FairyGUI.LuaWindow()
-    ins.contentPane = com
-    ins:ConnectLua(data)
-    data.base = ins     -- LuaWindow
-    data.hideTime = 0   -- 脚本对象
-    return ins
-end
 
 function UIManager.Show(viewName, params)
     if Local.LogModuals.UIManager then
@@ -344,7 +364,7 @@ function UIManager.Show(viewName, params)
         printt(params)
     end
     local data = this.GetViewData(viewName)
-    if data.isShow then
+    if data.isShow and not this.IsUIShowType(viewName, UIShowType.Refresh) then
         return
     end
     data.params = params
@@ -358,14 +378,19 @@ function UIManager.Show(viewName, params)
                 if fui == nil then
                     return
                 end
-                local name = trim("_fui")
+                local name = trim("_fui") --- 资源名都是大写,AB包名均小写
                 local viewCom = UIPackage.CreateObject(name, name).asCom
-                local window = ConnectLua(data, viewCom)
                 if not viewCom then
                     data.loaded = nil
                     LogError(format("view %s fgui load fail!", viewName))
                     return
                 end
+                ---@type Game.LuaWindow
+                local window = FairyGUI.LuaWindow()
+                window.contentPane = viewCom
+                window:ConnectLua(data)
+                data.base = window      -- LuaWindow
+                data.hideTime = 0       -- 脚本对象
                 data.status = LOAD_SUCC
                 data.fields = ViewUtil.ExportFields(viewCom)
                 window:Show()
@@ -408,19 +433,10 @@ function UIManager.Hide(viewName)
         print(format("view:%s not show!", viewName))
         return
     end
-    if data.uifadeout ~= nil then
-        --local DlgHiding = require "UI.DlgHiding"
-        --UIEventListenerHelper.SetPlayTweenFinish(data.uifadeout, function(uifadeout)
-        --    DlgHiding.OnFadeOutEnd()
-        --    OnHide(viewName)
-        --end)
-        --data.uifadeout:Play(true)
-        --DlgHiding.OnFadeOutBegin()
-    else
-        OnHide(viewName)
-    end
-    --local NoviceGuideTrigger = require "noviceguide.noviceguide_trigger"
-    --NoviceGuideTrigger.HideDialog(viewName)
+
+    ---@type Game.LuaWindow
+    local window = data.base
+    window:Hide()
 end
 function UIManager.HideImmediate(viewName)
     if Local.LogModuals.UIManager then
@@ -432,7 +448,9 @@ function UIManager.HideImmediate(viewName)
         print(format("view:%s not show!", viewName))
         return
     end
-    OnHide(viewName)
+    ---@type Game.LuaWindow
+    local window = data.base
+    window:HideImmediately()
 end
 function UIManager.Destroy(viewName)
     local data = this.GetViewData(viewName)
@@ -440,20 +458,24 @@ function UIManager.Destroy(viewName)
         this.HideImmediate(viewName)
     end
     this.Call(viewName, "Destroy")
-    if data.fields then
-        for k, _ in pairs(data.fields) do
-            data.fields[k] = nil
-        end
-        data.fields = nil
-    end
+    ---@type Game.LuaWindow
+    local window = data.base
+    clear(data)
     _views[viewName] = nil
     assert(loaded[this.GetModuleName(viewName)])
     loaded[this.GetModuleName(viewName)] = nil
-    GameObject.Destroy(data.gameObject)
+    window:Dispose()
 end
 function UIManager.HideAll()
-    for name, data in pairs(_views) do
-        this.Hide(name)
+    GRoot.inst:CloseAllWindows()
+    for viewName, data in pairs(_views) do
+        data.hideTime = Time.time
+        if this.Call(viewName, "Hide") then
+            data.isShow = false
+            if this.IsUIShowType(viewName, UIShowType.DestroyWhenHide) then
+                this.Destroy(viewName, "Destroy")
+            end
+        end
     end
 end
 function UIManager.RegistCallBackDestroyAllDlgs(callback)
@@ -478,6 +500,14 @@ function UIManager.DestroyAllDlgs()
         _callBackDestroyAllDlgs()
         _callBackDestroyAllDlgs = nil
     end
+end
+
+---------------------------------------------------------------
+-------------------------功能窗口设计
+---------------------------------------------------------------
+----显示警告窗口
+function UIManager.ShowWarn(content)
+
 end
 
 return UIManager

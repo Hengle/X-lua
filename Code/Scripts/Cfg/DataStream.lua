@@ -4,12 +4,9 @@ local tonumber = tonumber
 local lines = io.lines
 local split = string.split
 local format= string.format
-local root = CSUtil.DataPath
 local Stream = {}
 Stream.__index = Stream
 Stream.name = "Stream"
-local out = ''
-
 local Split = function (line)
 	return split(line, '▃')
 end
@@ -17,7 +14,7 @@ function Stream.new(dataFile)
 	local o = {}
 	setmetatable(o, Stream)
 	o.dataFile = dataFile
-	o.GetLine = lines(format('%sconfig/csv/%s', root, dataFile))
+	o.GetLine = lines(dataFile)
 	o.idx = 0
 	o.line = 0
 	return o
@@ -44,7 +41,6 @@ function Stream:NextColum()
 		end
 	end
 	local result = self.columns[self.idx]
-	out = out .. '▃' .. result
 	self.idx = self.idx + 1
 	return result
 end
@@ -73,8 +69,8 @@ function Stream:GetString()
 end
 function Stream:GetList(type)
 	local result = {}
-	local length = self:GetInt()
 	local method = self['Get' .. type]
+	local length = self:GetInt()
 	for i = 1, length do
 		result[i] = method(self)
 	end
@@ -90,8 +86,5 @@ function Stream:GetDict(key, value)
 	end
 	return result
 end
-function Stream:GetObject(name)
-	local getter = self['Get' .. name]
-	return getter(self)
-end
+
 return Stream

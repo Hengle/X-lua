@@ -25,6 +25,7 @@ SkinnedMeshRenderer = UnityEngine.SkinnedMeshRenderer
 Rect        = UnityEngine.Rect
 ---@type UnityEngine.RuntimePlatform
 RuntimePlatform = UnityEngine.RuntimePlatform
+Time = UnityEngine.Time
 
 FairyGUI = CS.FairyGUI
 EventContext  = FairyGUI.EventContext
@@ -58,7 +59,7 @@ GComponent = FairyGUI.GComponent
 ---@type FairyGUI.GList
 GList = FairyGUI.GList
 ---@type FairyGUI.GRoot
-GRoot = FairyGUI.GRoot
+GRoot = FairyGUI.GRoot          ---- 禁止其他模块使用GRoot
 ---@type FairyGUI.GLabel
 GLabel = FairyGUI.GLabel
 ---@type FairyGUI.GButton
@@ -113,7 +114,7 @@ RaycastHit	= require "UnityEngine.RaycastHit"
 Touch		= require "UnityEngine.Touch"
 LayerMask	= require "UnityEngine.LayerMask"
 Plane		= require "UnityEngine.Plane"
-Time		= require "UnityEngine.Time"
+--Time		= require "UnityEngine.Time"
 
 require "Local"
 -----------------------------------------------------------

@@ -19,18 +19,15 @@ local function InitModule()
 end
 
 local function Init()
-    InitModule()
+    Util.Myxpcall(InitModule)
     printcolor("orange", 'lua framework init successful.')
-    printyellow("type - ", type(UnityEngine.GameObject))
 
-    printyellow("lua vector3", Vector3(1, 2, 3))
     local demo = require "UIExample.UIDemo"
     Util.Myxpcall(demo.Init, demo)
 end
 
 --逻辑update
 local function Update(deltaTime, unscaledDeltaTime)
-    Time:SetDeltaTime(deltaTime, unscaledDeltaTime)
     gameEvent.UpdateEvent:Trigger()
 end
 local function SecondUpdate(time)
@@ -41,8 +38,7 @@ local function LateUpdate()
 end
 --物理update
 local function FixedUpdate(fixedDeltaTime)
-    Time:SetFixedDelta(fixedDeltaTime)
-    gameEvent.FixedUpdateEvent:Trigger()
+       gameEvent.FixedUpdateEvent:Trigger()
 end
 
 local function OnDestroy()

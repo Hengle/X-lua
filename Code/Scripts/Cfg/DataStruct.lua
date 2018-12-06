@@ -17,20 +17,22 @@ function Stream:GetCfgAllTypeAllClass()
 	o.VarString = self:GetString()
 	o.VarBool = self:GetBool()
 	o.VarEnum = self:GetInt()
-	local _VarClass = 'Cfg' .. self:GetString()
-	o.VarClass = self:GetObject(_VarClass)
+	o.VarClass = self:GetCfgAllTypeSingleClassMaker()
 	o.VarListBase = self:GetList('String')
-	o.VarListClass = self:GetList('CfgAllTypeSingleClass')
+	o.VarListClass = self:GetList('CfgAllTypeSingleClassMaker')
 	o.VarListCardElem = self:GetList('String')
 	o.VarDictBase = self:GetDict('Int', 'String')
 	o.VarDictEnum = self:GetDict('Long', 'Int')
-	o.VarDictClass = self:GetDict('String', 'CfgAllTypeSingleClass')
+	o.VarDictClass = self:GetDict('String', 'CfgAllTypeSingleClassMaker')
 	return o
 end
 meta= {}
 meta.__index = meta
 meta.class = 'Cfg.AllType.SingleClass'
 GetOrCreate('Cfg.AllType')['SingleClass'] = meta
+function Stream:GetCfgAllTypeSingleClassMaker()
+	return self['Get' .. self:GetString():gsub('%.', '')](self)
+end
 function Stream:GetCfgAllTypeSingleClass()
 	local o = {}
 	setmetatable(o, Cfg.AllType.SingleClass)
@@ -43,7 +45,7 @@ meta.__index = meta
 meta.class = 'Cfg.AllType.M1'
 GetOrCreate('Cfg.AllType')['M1'] = meta
 function Stream:GetCfgAllTypeM1()
-	local o = {}
+	local o = self:GetCfgAllTypeSingleClass()
 	setmetatable(o, Cfg.AllType.M1)
 	o.V3 = self:GetLong()
 	return o
@@ -53,7 +55,7 @@ meta.__index = meta
 meta.class = 'Cfg.AllType.M2'
 GetOrCreate('Cfg.AllType')['M2'] = meta
 function Stream:GetCfgAllTypeM2()
-	local o = {}
+	local o = self:GetCfgAllTypeSingleClass()
 	setmetatable(o, Cfg.AllType.M2)
 	o.V4 = self:GetBool()
 	return o
@@ -83,14 +85,17 @@ function Stream:GetCfgSkillActorConfig()
 	setmetatable(o, Cfg.Skill.ActorConfig)
 	o.ModelName = self:GetString()
 	o.BaseModelName = self:GetString()
-	o.GeneralActions = self:GetDict('String', 'CfgSkillGeneralAction')
-	o.SkillActions = self:GetDict('String', 'CfgSkillSkillAction')
+	o.GeneralActions = self:GetDict('String', 'CfgSkillGeneralActionMaker')
+	o.SkillActions = self:GetDict('String', 'CfgSkillGeneralActionMaker')
 	return o
 end
 meta= {}
 meta.__index = meta
 meta.class = 'Cfg.Skill.GeneralAction'
 GetOrCreate('Cfg.Skill')['GeneralAction'] = meta
+function Stream:GetCfgSkillGeneralActionMaker()
+	return self['Get' .. self:GetString():gsub('%.', '')](self)
+end
 function Stream:GetCfgSkillGeneralAction()
 	local o = {}
 	setmetatable(o, Cfg.Skill.GeneralAction)
@@ -101,7 +106,7 @@ function Stream:GetCfgSkillGeneralAction()
 	o.PostActionFile = self:GetString()
 	o.ActionSpeed = self:GetFloat()
 	o.LoopTimes = self:GetInt()
-	o.Timelines = self:GetList('CfgSkillTimeline')
+	o.Timelines = self:GetList('CfgSkillTimelineMaker')
 	return o
 end
 meta= {}
@@ -110,7 +115,7 @@ meta.class = 'Cfg.Skill.SkillAction'
 meta.EXPIRE_TIME = 1
 GetOrCreate('Cfg.Skill')['SkillAction'] = meta
 function Stream:GetCfgSkillSkillAction()
-	local o = {}
+	local o = self:GetCfgSkillGeneralAction()
 	setmetatable(o, Cfg.Skill.SkillAction)
 	o.SkillExpireTime = self:GetFloat()
 	o.SkillEndTime = self:GetFloat()
@@ -131,20 +136,23 @@ function Stream:GetCfgSkillSequence()
 	local o = {}
 	setmetatable(o, Cfg.Skill.Sequence)
 	o.Id = self:GetString()
-	o.HitZones = self:GetList('CfgSkillHitZone')
-	o.Timelines = self:GetList('CfgSkillTimeline')
+	o.HitZones = self:GetList('CfgSkillHitZoneMaker')
+	o.Timelines = self:GetList('CfgSkillTimelineMaker')
 	return o
 end
 meta= {}
 meta.__index = meta
 meta.class = 'Cfg.Skill.HitZone'
 GetOrCreate('Cfg.Skill')['HitZone'] = meta
+function Stream:GetCfgSkillHitZoneMaker()
+	return self['Get' .. self:GetString():gsub('%.', '')](self)
+end
 function Stream:GetCfgSkillHitZone()
 	local o = {}
 	setmetatable(o, Cfg.Skill.HitZone)
 	o.Id = self:GetInt()
 	o.Sharp = self:GetInt()
-	o.Offset = self:GetObject('CfgVector3')
+	o.Offset = self:GetCfgVector3()
 	o.MaxNum = self:GetInt()
 	return o
 end
@@ -153,9 +161,9 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.CubeZone'
 GetOrCreate('Cfg.Skill')['CubeZone'] = meta
 function Stream:GetCfgSkillCubeZone()
-	local o = {}
+	local o = self:GetCfgSkillHitZone()
 	setmetatable(o, Cfg.Skill.CubeZone)
-	o.Scale = self:GetObject('CfgVector3')
+	o.Scale = self:GetCfgVector3()
 	return o
 end
 meta= {}
@@ -163,7 +171,7 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.SphereZone'
 GetOrCreate('Cfg.Skill')['SphereZone'] = meta
 function Stream:GetCfgSkillSphereZone()
-	local o = {}
+	local o = self:GetCfgSkillHitZone()
 	setmetatable(o, Cfg.Skill.SphereZone)
 	o.Radius = self:GetFloat()
 	return o
@@ -173,7 +181,7 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.CylinderZone'
 GetOrCreate('Cfg.Skill')['CylinderZone'] = meta
 function Stream:GetCfgSkillCylinderZone()
-	local o = {}
+	local o = self:GetCfgSkillHitZone()
 	setmetatable(o, Cfg.Skill.CylinderZone)
 	o.Radius = self:GetFloat()
 	o.Height = self:GetFloat()
@@ -184,6 +192,9 @@ meta= {}
 meta.__index = meta
 meta.class = 'Cfg.Skill.Timeline'
 GetOrCreate('Cfg.Skill')['Timeline'] = meta
+function Stream:GetCfgSkillTimelineMaker()
+	return self['Get' .. self:GetString():gsub('%.', '')](self)
+end
 function Stream:GetCfgSkillTimeline()
 	local o = {}
 	setmetatable(o, Cfg.Skill.Timeline)
@@ -196,10 +207,9 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.StaticHit'
 GetOrCreate('Cfg.Skill')['StaticHit'] = meta
 function Stream:GetCfgSkillStaticHit()
-	local o = {}
+	local o = self:GetCfgSkillTimeline()
 	setmetatable(o, Cfg.Skill.StaticHit)
-	local _Zone = 'Cfg' .. self:GetString()
-	o.Zone = self:GetObject(_Zone)
+	o.Zone = self:GetCfgSkillHitZoneMaker()
 	o.SequeueID = self:GetInt()
 	return o
 end
@@ -208,7 +218,7 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.DynamicHit'
 GetOrCreate('Cfg.Skill')['DynamicHit'] = meta
 function Stream:GetCfgSkillDynamicHit()
-	local o = {}
+	local o = self:GetCfgSkillStaticHit()
 	setmetatable(o, Cfg.Skill.DynamicHit)
 	o.Target = self:GetString()
 	return o
@@ -218,7 +228,7 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.Controller'
 GetOrCreate('Cfg.Skill')['Controller'] = meta
 function Stream:GetCfgSkillController()
-	local o = {}
+	local o = self:GetCfgSkillTimeline()
 	setmetatable(o, Cfg.Skill.Controller)
 	o.Path = self:GetString()
 	return o
@@ -228,7 +238,7 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.Active'
 GetOrCreate('Cfg.Skill')['Active'] = meta
 function Stream:GetCfgSkillActive()
-	local o = {}
+	local o = self:GetCfgSkillController()
 	setmetatable(o, Cfg.Skill.Active)
 	o.Enable = self:GetBool()
 	return o
@@ -238,11 +248,11 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.ReplaceObject'
 GetOrCreate('Cfg.Skill')['ReplaceObject'] = meta
 function Stream:GetCfgSkillReplaceObject()
-	local o = {}
+	local o = self:GetCfgSkillController()
 	setmetatable(o, Cfg.Skill.ReplaceObject)
 	o.NewObject = self:GetString()
-	o.Offset = self:GetObject('CfgVector3')
-	o.EulerAngles = self:GetObject('CfgVector3')
+	o.Offset = self:GetCfgVector3()
+	o.EulerAngles = self:GetCfgVector3()
 	return o
 end
 meta= {}
@@ -250,11 +260,11 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.Move'
 GetOrCreate('Cfg.Skill')['Move'] = meta
 function Stream:GetCfgSkillMove()
-	local o = {}
+	local o = self:GetCfgSkillController()
 	setmetatable(o, Cfg.Skill.Move)
 	o.Type = self:GetInt()
 	o.IsRelateSelf = self:GetBool()
-	o.Offset = self:GetObject('CfgVector3')
+	o.Offset = self:GetCfgVector3()
 	o.Angle = self:GetFloat()
 	o.Speed = self:GetFloat()
 	return o
@@ -264,13 +274,13 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.CastObject'
 GetOrCreate('Cfg.Skill')['CastObject'] = meta
 function Stream:GetCfgSkillCastObject()
-	local o = {}
+	local o = self:GetCfgSkillController()
 	setmetatable(o, Cfg.Skill.CastObject)
 	o.IsTraceTarget = self:GetBool()
 	o.CurveId = self:GetInt()
 	o.PassBody = self:GetBool()
-	o.Position = self:GetObject('CfgVector3')
-	o.EulerAngles = self:GetObject('CfgVector3')
+	o.Position = self:GetCfgVector3()
+	o.EulerAngles = self:GetCfgVector3()
 	return o
 end
 meta= {}
@@ -278,15 +288,15 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.PlayParticle'
 GetOrCreate('Cfg.Skill')['PlayParticle'] = meta
 function Stream:GetCfgSkillPlayParticle()
-	local o = {}
+	local o = self:GetCfgSkillTimeline()
 	setmetatable(o, Cfg.Skill.PlayParticle)
 	o.Path = self:GetString()
 	o.IsRelateSelf = self:GetBool()
 	o.FollowDir = self:GetBool()
 	o.NodeName = self:GetString()
-	o.Position = self:GetObject('CfgVector3')
-	o.EulerAngles = self:GetObject('CfgVector3')
-	o.Scale = self:GetObject('CfgVector3')
+	o.Position = self:GetCfgVector3()
+	o.EulerAngles = self:GetCfgVector3()
+	o.Scale = self:GetCfgVector3()
 	o.AlignType = self:GetInt()
 	return o
 end
@@ -295,7 +305,7 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.Buff'
 GetOrCreate('Cfg.Skill')['Buff'] = meta
 function Stream:GetCfgSkillBuff()
-	local o = {}
+	local o = self:GetCfgSkillPlayParticle()
 	setmetatable(o, Cfg.Skill.Buff)
 	o.Id = self:GetInt()
 	return o
@@ -305,7 +315,7 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.PlaySound'
 GetOrCreate('Cfg.Skill')['PlaySound'] = meta
 function Stream:GetCfgSkillPlaySound()
-	local o = {}
+	local o = self:GetCfgSkillTimeline()
 	setmetatable(o, Cfg.Skill.PlaySound)
 	o.Path = self:GetString()
 	o.Volume = self:GetFloat()
@@ -316,7 +326,7 @@ meta.__index = meta
 meta.class = 'Cfg.Skill.ShakeScreen'
 GetOrCreate('Cfg.Skill')['ShakeScreen'] = meta
 function Stream:GetCfgSkillShakeScreen()
-	local o = {}
+	local o = self:GetCfgSkillTimeline()
 	setmetatable(o, Cfg.Skill.ShakeScreen)
 	o.Type = self:GetInt()
 	o.Frequency = self:GetInt()
@@ -334,7 +344,7 @@ meta.class = 'Cfg.Vector2'
 GetOrCreate('Cfg.')['Vector2'] = meta
 function Stream:GetCfgVector2()
 	local o = {}
-	setmetatable(o, Cfg..Vector2)
+	setmetatable(o, Cfg.Vector2)
 	o.X = self:GetFloat()
 	o.Y = self:GetFloat()
 	return o
@@ -345,7 +355,7 @@ meta.class = 'Cfg.Vector3'
 GetOrCreate('Cfg.')['Vector3'] = meta
 function Stream:GetCfgVector3()
 	local o = {}
-	setmetatable(o, Cfg..Vector3)
+	setmetatable(o, Cfg.Vector3)
 	o.X = self:GetFloat()
 	o.Y = self:GetFloat()
 	o.Z = self:GetFloat()

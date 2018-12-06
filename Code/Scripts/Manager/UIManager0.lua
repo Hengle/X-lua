@@ -289,7 +289,7 @@ function UIManager.UnloadExpireView(now)
         end
     end
     if toDestroyViewName and unshowViewNum > MAX_HIDE_VIEW_NUM then
-        Destroy(toDestroyViewName)
+        this.Destroy(toDestroyViewName)
     end
 end
 
