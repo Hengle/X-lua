@@ -96,7 +96,7 @@ NetworkMgr = Game.NetworkManager.Instance
 
 local require = require
 require 'xlua.extend'
-require 'xlua.coroutine'
+require 'xlua.coroutine'            --?
 XUtil = require 'xlua.util'
 XProfiler = require 'xlua.profiler'
 XMemory = require 'xlua.memory'
