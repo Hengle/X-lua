@@ -42,16 +42,17 @@ namespace Game
 
         void Update()
         {
+            float num = Time.realtimeSinceStartup;
+            if (luaSecondUpdate != null && time < num)
+            {
+                time = num + 1;
+                luaSecondUpdate(Time.time);
+            }
+
             LuaManager.Instance.Tick();
 
             if (luaUpdate != null)
                 luaUpdate(Time.deltaTime, Time.unscaledDeltaTime);
-
-            if (luaSecondUpdate != null && time < Time.time)
-            {
-                time = Time.time + 1;
-                luaSecondUpdate(Time.time);
-            }
         }
 
         void LateUpdate()

@@ -27,7 +27,7 @@ namespace Game
         /// <summary>
         /// 仅在显示动画完成时调用
         /// </summary>
-        public void FinishDisplay()
+        public void ShowImmediately()
         {
             OnShown();
         }
