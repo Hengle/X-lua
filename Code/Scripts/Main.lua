@@ -21,7 +21,7 @@ end
 local function Init()
     Util.Myxpcall(InitModule)
     printcolor("orange", 'lua framework init successful.')
-
+    TEST()
     local demo = require "UIExample.UIDemo"
     Util.Myxpcall(demo.Init, demo)
 end
@@ -50,17 +50,37 @@ end
 
 --------------------------------------------------------
 ---------------------- 测试 ----------------------------
+
 function TEST()
-    --local CfgMgr = require('Manager.CfgManager')
-    --printt(CfgMgr.NameTable, 'NameTable')
-    --local queue = Queue:new()
-    --queue:Enqueue('1')
-    --queue:Enqueue('2')
-    --print("Queue Count:", queue:Count())
-    --print("Queue Dequeue:", queue:Dequeue())
-    --print("Queue Count:", queue:Count())
-    --print("Queue Dequeue:", queue:Dequeue())
-    --print("Queue Count:", queue:Count())
+    local byte = string.byte
+    local sub = string.sub
+    local len = string.len
+
+    local function JSHash(str)
+        local l = len(str)
+        local h = l
+        local step = (l>>5) + 1
+        for i=l,step,-step do
+            h = (h~(h << 5) + byte(sub(str, i, i)) + (h >> 2))
+        end
+        return h
+    end
+    local function Hash(str)
+        local seed = 131;
+        local hash = 0;
+
+        for i = 1, #str do
+            hash = hash * seed + byte(sub(str, i, i))
+        end
+        return (hash & 0x7FFFFFFF)
+    end
+    --print(JSHash("0000000000000000000000000000000000"))
+    --print(JSHash("f0l0l0w0m0e0n0t0w0i0t0t0e0r0?0:0)0"))
+    --print(JSHash("x0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x0"))
+    -- output:-- 1777619995-- 1777619995-- 1777619995
+    print(Hash"PositionSpeed")
+    print(Hash"SpeedPosition")
+    print(Hash"SpeedPosition")
 end
 
 Main = {

@@ -1,5 +1,5 @@
 return {
-    "ECS.Component"
+    --"ECS.Component"
     "Manager.CfgManager",
     "Manager.UIManager",
 }

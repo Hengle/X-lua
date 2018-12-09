@@ -24,7 +24,7 @@ local function Register(name, fileds)
     local comp = components[name]
     if comp then
         error(format('Component: %s already exists', name))
-    --else
+        --else
         --comp = { name = name, fileds = fileds, }
         --components[name] = comp
     end
@@ -54,3 +54,4 @@ local func = {
 func.__index = func
 setmetatable(Component, func)
 return Component
+
