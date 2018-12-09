@@ -1,14 +1,14 @@
 local List = List
 local Class = Class
 
----@class Queue:List
-local Queue = Class:new(List)
+---@class Queue
+local Queue = Class:new("Queue", List)
 
 function Queue:Enqueue(item)
     self:push(item)
 end
 function Queue:Peek()
-   return self:head()
+    return self:head()
 end
 function Queue:Dequeue()
     return self:shift()

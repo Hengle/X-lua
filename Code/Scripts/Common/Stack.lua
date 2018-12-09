@@ -2,7 +2,7 @@ local List = List
 local Class = Class
 
 ---@class Stack:List
-local Stack = Class:new(List)
+local Stack = Class:new("Stack", List)
 
 function Stack:Push(item)
     self:push(item)

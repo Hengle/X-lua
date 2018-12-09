@@ -6,7 +6,7 @@ local format = string.format
 
 local Class = Class
 local Util = Util
-local Event = Class:new()
+local Event = Class:new("Event")
 
 function Event:ctor(name)
     self.name = name or "__unknown__"

@@ -5,7 +5,7 @@
 --------------------------------------------------------------------------------
 local setmetatable = setmetatable
 ---@class List
-local List = Class:new()
+local List = Class:new("List")
 
 function List:ctor()
     self.length = 0
