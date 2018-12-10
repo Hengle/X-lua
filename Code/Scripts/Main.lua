@@ -78,10 +78,21 @@ function TEST()
     --print(JSHash("f0l0l0w0m0e0n0t0w0i0t0t0e0r0?0:0)0"))
     --print(JSHash("x0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x0x0"))
     -- output:-- 1777619995-- 1777619995-- 1777619995
-    print(Hash"PositionSpeed")
-    print(Hash"SpeedPosition")
-    print(Hash"SpeedPosition")
+    --local t1 = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10'}
+    --local t2 = {'1', '23'}
+    --print(Hash"positionrotationscale")
+    --print(Hash(table.concat(t1, '.')))
+    --print(Hash(table.concat(t2, '.')))
+
+    local t1 = {4, 1, 2, 5, 34, 3}
+    local t2 = {4, 1, 2, 5, 34, 3}
+    print('----self',table.concat(t1, ','))
+    table.sort(t2)
+    print('----lua',table.concat(t2, ','))
 end
+
+
+
 
 Main = {
     Init = Init,

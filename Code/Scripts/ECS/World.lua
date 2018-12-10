@@ -118,6 +118,9 @@ function World:StopSystems()
         self.systems[i].enable = false
     end
 end
+function World:GetSystem(name)
+    return self.systems[name]
+end
 
 function World:GetGroup(match)
     local group = self.grouphash[match]
