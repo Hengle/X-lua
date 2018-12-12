@@ -11,11 +11,11 @@ function List:ctor()
     self._next = self
 end
 
-function List:clear()
+function List:Clear()
     self:ctor()
 end
 ---@param value any 在list最后推入值
-function List:push(value)
+function List:Push(value)
     --assert(value)
     local node = { value = value, _prev = 0, _next = 0, removed = false }
 
@@ -28,7 +28,7 @@ function List:push(value)
     return node
 end
 ---@param node node 在list最后推入节点
-function List:pushnode(node)
+function List:PushNode(node)
     if not node.removed then
         return
     end
@@ -41,13 +41,13 @@ function List:pushnode(node)
     self.length = self.length + 1
 end
 ---在list最后面取一个值
-function List:pop()
+function List:Pop()
     local _prev = self._prev
-    self:remove(_prev)
+    self:Remove(_prev)
     return _prev.value
 end
 ---@param v any 在list最前面插入一个值
-function List:unshift(v)
+function List:Unshift(v)
     local node = { value = v, _prev = 0, _next = 0, removed = false }
 
     self._next._prev = node
@@ -59,13 +59,13 @@ function List:unshift(v)
     return node
 end
 ---在list最前面取一个值
-function List:shift()
+function List:Shift()
     local _next = self._next
-    self:remove(_next)
+    self:Remove(_next)
     return _next.value
 end
 ---@param iter node 从list中移除当前节点
-function List:remove(iter)
+function List:Remove(iter)
     if iter.removed then
         return
     end
@@ -81,7 +81,7 @@ end
 ---顺序遍历list
 ---@param v any 查询值
 ---@param iter node 开始节点
-function List:find(v, iter)
+function List:Find(v, iter)
     iter = iter or self
 
     repeat
@@ -97,7 +97,7 @@ end
 ---逆序遍历list
 ---@param v any 查询值
 ---@param iter node 开始节点
-function List:findlast(v, iter)
+function List:FindLast(v, iter)
     iter = iter or self
 
     repeat
@@ -111,7 +111,7 @@ function List:findlast(v, iter)
     return nil
 end
 ---@param iter node 节点后面一个节点
-function List:next(iter)
+function List:Next(iter)
     local _next = iter._next
     if _next ~= self then
         return _next, _next.value
@@ -120,7 +120,7 @@ function List:next(iter)
     return nil
 end
 ---@param iter node 节点前面一个节点
-function List:prev(iter)
+function List:Prev(iter)
     local _prev = iter._prev
     if _prev ~= self then
         return _prev, _prev.value
@@ -129,19 +129,19 @@ function List:prev(iter)
     return nil
 end
 ---@param v any 从list中删除第一个v节点
-function List:erase(v)
-    local iter = self:find(v)
+function List:Erase(v)
+    local iter = self:Find(v)
 
     if iter then
-        self:remove(iter)
+        self:Remove(iter)
     end
 end
 ---非时,将值插入节点后;空时,直接在list最后插入值
 ---@param v any 插入值
 ---@param iter node 指定节点
-function List:insert(v, iter)
+function List:Insert(v, iter)
     if not iter then
-        return self:push(v)
+        return self:Push(v)
     end
 
     local node = { value = v, _next = 0, _prev = 0, removed = false }
@@ -159,34 +159,34 @@ function List:insert(v, iter)
     return node
 end
 ---list头部节点
-function List:head()
+function List:Head()
     return self._next.value
 end
 ---list尾部节点
-function List:tail()
+function List:Tail()
     return self._prev.value
 end
 
-function List:clone()
+function List:Clone()
     local t = List:new()
 
-    for i, v in List.next, self, self do
-        t:push(v)
+    for i, v in List.Next, self, self do
+        t:Push(v)
     end
 
     return t
 end
 
 ilist = function(_list)
-    return List.next, _list, _list
+    return List.Next, _list, _list
 end
 rilist = function(_list)
-    return List.prev, _list, _list
+    return List.Prev, _list, _list
 end
 
-function List:totable()
+function List:ToTable()
     local t = {}
-    for i, v in ilist(self) do
+    for _, v in ilist(self) do
         insert(t, v)
     end
     return t

@@ -5,6 +5,7 @@ local System = require('ECS.System')
 
 local format = string.format
 local insert = table.insert
+local clear = table.clear
 local error = error
 local assert = assert
 local type = type
@@ -35,8 +36,9 @@ function World:Init(name, entityID)
     self.name = name or "World"
     self.entityID = entityID or 1
     self.enities = {}   ---array mix hash
+    self.systems = {}  -- 数组,便于遍历查询
+    self.systemList = List:new()      -- 链表,便于list中节点修改
     self.groups = {}    --实体分组,系统各引用一个组[array mix hash]
-    self.systems = List:new() -- 链表,便于list中间节点删除添加
 end
 
 function World:Update(dt)
@@ -51,8 +53,8 @@ function World:Update(dt)
     for i = 1, #self.systems do
         ---@type System
         local system = self.systems[i]
-        if system and system.enable and system.Update then
-            system:Excute(dt)
+        if system and system.enable and system.OnUpdate then
+            system:OnUpdate(dt)
         end
     end
 end
@@ -65,7 +67,7 @@ end
 function World:CreateEnity()
     local entity = nil
     if reusedEntities.length > 0 then
-        entity = reusedEntities:shift()
+        entity = reusedEntities:Shift()
         entity:Reset(self.entityID)
     else
         entity = Entity:new(self.entityID)
@@ -103,7 +105,7 @@ function World:RemoveEnity(entity)
         entities[entity] = nil
     end
     OnDestroyEntity(entity)
-    reusedEntities:push(entity)
+    reusedEntities:Push(entity)
 end
 
 function World:DestroyAllEntities()
@@ -111,7 +113,7 @@ function World:DestroyAllEntities()
         local entity = self.enities[i]
         self.enities[entity] = nil
         OnDestroyEntity(entity)
-        reusedEntities:push(entity)
+        reusedEntities:Push(entity)
     end
 end
 
@@ -123,12 +125,11 @@ local SetSystemEnable = function(enable, ...)
     if length > 0 then
         for i = 1, length do
             local name = select(i, ...)
-            local index = self.systems[name]
-            self.systems[index].enable = true
+            self.systems[name].enable = enable
         end
     else
         for i = 1, #self.systems do
-            self.systems[i].enable = true
+            self.systems[i].enable = enable
         end
         printyellow('World:Set all systems', enable)
     end
@@ -140,6 +141,7 @@ function World:StopSystems(...)
     SetSystemEnable(false, ...)
 end
 -----系统执行顺序以添加顺序为准,顺序可动态调整
+---@param ... string
 function World:RegisterSystem(...)
     local length = select('#', ...)
     if length == 0 then
@@ -148,43 +150,72 @@ function World:RegisterSystem(...)
 
     for i = 1, length do
         local name = select(i, ...)
-        local index = self.systems[name]
-        if index then
-            return self.systems[index]
-        else
+        local sys = self.systems[name]
+        if not sys then
+            ---@type System
             local system = require('ECS.Systems.' .. name)
-            system = System.Extend(system, self)
+            system = System.Extend(system, self, name)
             insert(self.systems, system)
-            self.systems[name] = #self.systems
+            self.systems[name] = system
+            self.systemList:Push(system)
+            local group = {}
+            for i = 1, #self.enities do
+                local entity = self.enities[i]
+                if system:Filter(entity) then
+                    insert(group, entity)
+                end
+            end
+            self.groups[system.filterName] = group
+            system.group = group
+        else
+            printyellow('World:Repeat registration system ' .. name)
         end
     end
 end
+---@param ... string
 function World:RemoveSystem(...)
     local length = select('#', ...)
     if length == 0 then
         return
     end
 
-    for i = 1, length do
-        local name = select(i, ...)
-        local index = self.systems[name]
-        if index then
-            self.systems[index] = nil
-            self.systems[name] = nil
-        else
-            printyellow('World:'..name.. ' system is not registered.')
+    local names = { ... }
+    local count = 0
+    local node = self.systemList:Head()
+    while node ~= nil and length ~= count do
+        local del = nil
+        local system = node.value
+        for i = 1, length do
+            if system.name == names[i] then
+                count = count + 1
+                del = node
+                break
+            end
+        end
+        node = self.systemList:Next(node)
+        if del then
+            self.systemList:Remove(del)
+            clear(self.groups[system.filterName])
         end
     end
-    ---重新调整Systems
-    for i = 1, 10 do
-        
+end
+----在大量添加或者移除系统后,再进行系统调整.此函数不适合重复调用
+function World:AdjustSystem()
+    self.systems = self.systemList:ToTable()
+    for i = 1, #self.systems do
+        local sys = self.systems[i]
+        self.systems[sys.name] = sys
     end
 end
-function World:GetSystemIndex(name)
-    return self.systems[name]
-end
-function World:GetSystem(name)
-    return self.systems[name]
+---实体组件叠加修改,如何处理?
+---@param name string 系统名称,ECS.Systems相对路径名称
+function World:NotifySystem(name, component)
+    local system = self.systems[name]
+    if system then
+        --system:Notify(component)---缓存通知,下一帧统一执行
+    else
+        printyellow('World:Notify System ' .. name .. ' does not exist.')
+    end
 end
 
 ------------------------------------

@@ -6,13 +6,13 @@ local getmetatable = getmetatable
 local pairs = pairs
 local require = require
 local pcall = pcall
-local string = string
-local math = math
-local table = table
+--local math = math
+--local string = string
+--local table = table
+--local io = io
 local pairs = pairs
 local ipairs = ipairs
 local os = os
-local io = io
 local type = type
 local debug = debug
 

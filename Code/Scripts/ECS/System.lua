@@ -25,7 +25,8 @@ local function GenUnique(system)
     local filter = system:GetFilter()
     return system.filterName or Hash(concat(sort(filter), '.'))
 end
-local function Filter(entity, filter)
+local function Filter(system, entity)
+    local filter = system:GetFilter()
     assert(type(filter) == 'table', "Filter can only be table type.")
     for i = 1, #filter do
         local comp = filter[i]
@@ -39,14 +40,15 @@ end
 ---@class System
 local System = {}
 
-function System:Extend(world)
+function System:Extend(world, name)
     self.world = world
+    self.name = name
     self.enable = false
+    self.group = nil
+    self.singleton = nil  -- 单例类
     ---使用filter表生成filter唯一标识
     self.filterName = GenUnique(self)
-    self.Filter = function(entity)
-        return Filter(entity, self:GetFilter())
-    end
+    self.Filter = Filter
 end
 
 return System
