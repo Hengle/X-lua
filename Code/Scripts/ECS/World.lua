@@ -1,17 +1,21 @@
+local require = require
 local Component = require('ECS.Component')
 local Entity = require('ECS.Enity')
 local System = require('ECS.System')
 
 local format = string.format
-local error = error
 local insert = table.insert
+local error = error
+local assert = assert
+local type = type
+local select = select
 local EventMgr = GameEvent.ECSEvent
-local Queue = Queue
+local List = List
 local Class = Class
+local printyellow = printyellow
 local LogError = LogError
 
----@type Queue
-local entityQueue = Queue:new()
+local reusedEntities = List:new()
 local compPool = {}--k:组件类型;v:组件池
 
 ---@class World
@@ -30,9 +34,9 @@ local removeDestroyEvt
 function World:Init(name, entityID)
     self.name = name or "World"
     self.entityID = entityID or 1
-    self.enities = {}
-    self.grouphash = {}--实体分组,系统各引用一个组
-    self.systems = {}
+    self.enities = {}   ---array mix hash
+    self.groups = {}    --实体分组,系统各引用一个组[array mix hash]
+    self.systems = List:new() -- 链表,便于list中间节点删除添加
 end
 
 function World:Update(dt)
@@ -46,7 +50,7 @@ function World:Update(dt)
 
     for i = 1, #self.systems do
         ---@type System
-        local system= self.systems[i]
+        local system = self.systems[i]
         if system and system.enable and system.Update then
             system:Excute(dt)
         end
@@ -60,8 +64,8 @@ end
 
 function World:CreateEnity()
     local entity = nil
-    if entityQueue:Count() > 0 then
-        entity = entityQueue:Dequeue()
+    if reusedEntities.length > 0 then
+        entity = reusedEntities:shift()
         entity:Reset(self.entityID)
     else
         entity = Entity:new(self.entityID)
@@ -86,6 +90,7 @@ end
 function World:RemoveEnity(entity)
     if not entity then
         LogError('World:%s remove entity fail.', self.name)
+        return
     end
 
     local entities = self.enities
@@ -98,6 +103,7 @@ function World:RemoveEnity(entity)
         entities[entity] = nil
     end
     OnDestroyEntity(entity)
+    reusedEntities:push(entity)
 end
 
 function World:DestroyAllEntities()
@@ -105,29 +111,80 @@ function World:DestroyAllEntities()
         local entity = self.enities[i]
         self.enities[entity] = nil
         OnDestroyEntity(entity)
+        reusedEntities:push(entity)
     end
 end
 
-function World:StartSystems()
-    for i = 1, #self.systems do
-        self.systems[i].enable = true
+---------------------------------------------
+---------------System控制函数
+---------------------------------------------
+local SetSystemEnable = function(enable, ...)
+    local length = select('#', ...)
+    if length > 0 then
+        for i = 1, length do
+            local name = select(i, ...)
+            local index = self.systems[name]
+            self.systems[index].enable = true
+        end
+    else
+        for i = 1, #self.systems do
+            self.systems[i].enable = true
+        end
+        printyellow('World:Set all systems', enable)
     end
 end
-function World:StopSystems()
-    for i = 1, #self.systems do
-        self.systems[i].enable = false
+function World:StartSystems(...)
+    SetSystemEnable(true, ...)
+end
+function World:StopSystems(...)
+    SetSystemEnable(false, ...)
+end
+-----系统执行顺序以添加顺序为准,顺序可动态调整
+function World:RegisterSystem(...)
+    local length = select('#', ...)
+    if length == 0 then
+        return
     end
+
+    for i = 1, length do
+        local name = select(i, ...)
+        local index = self.systems[name]
+        if index then
+            return self.systems[index]
+        else
+            local system = require('ECS.Systems.' .. name)
+            system = System.Extend(system, self)
+            insert(self.systems, system)
+            self.systems[name] = #self.systems
+        end
+    end
+end
+function World:RemoveSystem(...)
+    local length = select('#', ...)
+    if length == 0 then
+        return
+    end
+
+    for i = 1, length do
+        local name = select(i, ...)
+        local index = self.systems[name]
+        if index then
+            self.systems[index] = nil
+            self.systems[name] = nil
+        else
+            printyellow('World:'..name.. ' system is not registered.')
+        end
+    end
+    ---重新调整Systems
+    for i = 1, 10 do
+        
+    end
+end
+function World:GetSystemIndex(name)
+    return self.systems[name]
 end
 function World:GetSystem(name)
     return self.systems[name]
-end
-
-function World:GetGroup(match)
-    local group = self.grouphash[match]
-    if not group then
-        -----添加Group
-    end
-    return group
 end
 
 ------------------------------------

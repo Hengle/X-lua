@@ -1,9 +1,7 @@
---------------------------------------------------------------------------------
---      Copyright (c) 2015 - 2016 , 蒙占志(topameng) topameng@gmail.com
---      All rights reserved.
---      Use, modification and distribution are subject to the "MIT License"
---------------------------------------------------------------------------------
-local setmetatable = setmetatable
+local getmetatable = getmetatable
+local insert = table.insert
+local max = math.max
+
 ---@class List
 local List = Class:new("List")
 
@@ -14,9 +12,9 @@ function List:ctor()
 end
 
 function List:clear()
-    self.ctor()
+    self:ctor()
 end
-
+---@param value any 在list最后推入值
 function List:push(value)
     --assert(value)
     local node = { value = value, _prev = 0, _next = 0, removed = false }
@@ -29,7 +27,7 @@ function List:push(value)
     self.length = self.length + 1
     return node
 end
-
+---@param node node 在list最后推入节点
 function List:pushnode(node)
     if not node.removed then
         return
@@ -42,13 +40,13 @@ function List:pushnode(node)
     node.removed = false
     self.length = self.length + 1
 end
-
+---在list最后面取一个值
 function List:pop()
     local _prev = self._prev
     self:remove(_prev)
     return _prev.value
 end
-
+---@param v any 在list最前面插入一个值
 function List:unshift(v)
     local node = { value = v, _prev = 0, _next = 0, removed = false }
 
@@ -60,13 +58,13 @@ function List:unshift(v)
     self.length = self.length + 1
     return node
 end
-
+---在list最前面取一个值
 function List:shift()
     local _next = self._next
     self:remove(_next)
     return _next.value
 end
-
+---@param iter node 从list中移除当前节点
 function List:remove(iter)
     if iter.removed then
         return
@@ -77,10 +75,12 @@ function List:remove(iter)
     _next._prev = _prev
     _prev._next = _next
 
-    self.length = math.max(0, self.length - 1)
+    self.length = max(0, self.length - 1)
     iter.removed = true
 end
-
+---顺序遍历list
+---@param v any 查询值
+---@param iter node 开始节点
 function List:find(v, iter)
     iter = iter or self
 
@@ -94,7 +94,9 @@ function List:find(v, iter)
 
     return nil
 end
-
+---逆序遍历list
+---@param v any 查询值
+---@param iter node 开始节点
 function List:findlast(v, iter)
     iter = iter or self
 
@@ -108,7 +110,7 @@ function List:findlast(v, iter)
 
     return nil
 end
-
+---@param iter node 节点后面一个节点
 function List:next(iter)
     local _next = iter._next
     if _next ~= self then
@@ -117,7 +119,7 @@ function List:next(iter)
 
     return nil
 end
-
+---@param iter node 节点前面一个节点
 function List:prev(iter)
     local _prev = iter._prev
     if _prev ~= self then
@@ -126,7 +128,7 @@ function List:prev(iter)
 
     return nil
 end
-
+---@param v any 从list中删除第一个v节点
 function List:erase(v)
     local iter = self:find(v)
 
@@ -134,7 +136,9 @@ function List:erase(v)
         self:remove(iter)
     end
 end
-
+---非时,将值插入节点后;空时,直接在list最后插入值
+---@param v any 插入值
+---@param iter node 指定节点
 function List:insert(v, iter)
     if not iter then
         return self:push(v)
@@ -154,11 +158,11 @@ function List:insert(v, iter)
     self.length = self.length + 1
     return node
 end
-
+---list头部节点
 function List:head()
     return self._next.value
 end
-
+---list尾部节点
 function List:tail()
     return self._prev.value
 end
@@ -173,27 +177,6 @@ function List:clone()
     return t
 end
 
-local node = nil
-local current = nil
-function List:movenext()
-    node, current = self:next(node)
-    return node ~= nil
-end
-function List:current()
-    return current
-end
-function List:initenumerator()
-    current = nil
-    node = self
-end
-function List:totable()
-    local t = {}
-    for i, v in ilist(self) do
-        table.insert(t, v)
-    end
-    return t
-end
-
 ilist = function(_list)
     return List.next, _list, _list
 end
@@ -201,5 +184,14 @@ rilist = function(_list)
     return List.prev, _list, _list
 end
 
-setmetatable(List, { __call = List.new })
+function List:totable()
+    local t = {}
+    for i, v in ilist(self) do
+        insert(t, v)
+    end
+    return t
+end
+
+local mt = getmetatable(List)
+mt.__call = List.new
 return List

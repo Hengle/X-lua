@@ -6,7 +6,6 @@ local format = string.format
 local traceback = debug.traceback
 local collectgarbage = collectgarbage
 
-
 local dump = table.dump
 local Debug = CS.UnityEngine.Debug
 local GameObject = GameObject
@@ -63,6 +62,12 @@ function printt(t, des)
         print(format("<color=orange>%s</color>\n%s", des, dump(t, dump_level)))
     else
         print(format("%s\n%s", des, tostring(t)))
+    end
+end
+function printmodule(m, ...)
+    if not Local.LogManager then return end
+    if m then
+        printyellow(string.format("%.3f",UnityEngine.Time.time),...)
     end
 end
 

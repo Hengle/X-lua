@@ -11,7 +11,6 @@ local Class = Class
 local function Hash(str)
     local seed = 131
     local hash = 0
-
     for i = 1, #str do
         hash = hash * seed + byte(sub(str, i, i))
     end
@@ -19,12 +18,12 @@ local function Hash(str)
 end
 -- 为filter 筛选条件表唯一标识
 local function GenUnique(system)
-    local filter = system:GetFilter()
-    if not filter then
+    if not system.GetFilter then
         error(format('System:%s undefined \'GetFilter\' function', system.__class))
         return nil
     end
-    return system.unique or Hash(concat(sort(filter), '.'))
+    local filter = system:GetFilter()
+    return system.filterName or Hash(concat(sort(filter), '.'))
 end
 local function Filter(entity, filter)
     assert(type(filter) == 'table', "Filter can only be table type.")
@@ -38,17 +37,16 @@ local function Filter(entity, filter)
 end
 
 ---@class System
-local System = Class:new("System")
+local System = {}
 
-function System:ctor(world)
+function System:Extend(world)
     self.world = world
     self.enable = false
-    ---使用filter表生成filter唯一标识,及GroupID
-    self.groupId = GenUnique(self)
-end
-
-function System:FilterEntity(entity)
-    return Filter(entity, self:GetFilter())
+    ---使用filter表生成filter唯一标识
+    self.filterName = GenUnique(self)
+    self.Filter = function(entity)
+        return Filter(entity, self:GetFilter())
+    end
 end
 
 return System
