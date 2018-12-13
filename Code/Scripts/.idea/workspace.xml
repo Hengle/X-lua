@@ -3,13 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="a488e5e2-4338-4eb4-9ac7-3e3070572b8e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/List.lua" beforeDir="false" afterPath="$PROJECT_DIR$/Common/List.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Queue.lua" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Stack.lua" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ECS/Entity.lua" beforeDir="false" afterPath="$PROJECT_DIR$/ECS/Entity.lua" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ECS/System.lua" beforeDir="false" afterPath="$PROJECT_DIR$/ECS/System.lua" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ECS/World.lua" beforeDir="false" afterPath="$PROJECT_DIR$/ECS/World.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Function.lua" beforeDir="false" afterPath="$PROJECT_DIR$/Function.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Global.lua" beforeDir="false" afterPath="$PROJECT_DIR$/Global.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xlua/extend.lua" beforeDir="false" afterPath="$PROJECT_DIR$/xlua/extend.lua" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -61,7 +58,7 @@
       <file leaf-file-name="Global.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Global.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
+            <state relative-caret-position="4375">
               <caret line="125" column="4" selection-start-line="125" selection-end-line="125" selection-end-column="4" />
             </state>
           </provider>
@@ -71,7 +68,7 @@
         <entry file="file://$PROJECT_DIR$/Common/Class.lua">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="420">
-              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -79,8 +76,8 @@
       <file leaf-file-name="Entity.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ECS/Entity.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="769">
-              <caret line="56" column="3" lean-forward="true" selection-start-line="56" selection-start-column="3" selection-end-line="56" selection-end-column="3" />
+            <state relative-caret-position="315">
+              <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -88,8 +85,8 @@
       <file leaf-file-name="System.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ECS/System.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="699">
-              <caret line="51" column="13" lean-forward="true" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
+            <state relative-caret-position="350">
+              <caret line="34" column="20" lean-forward="true" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -97,25 +94,74 @@
       <file leaf-file-name="World.lua" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ECS/World.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="38" column="42" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
+            <state relative-caret-position="193">
+              <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
               <folding>
-                <element signature="e#843#1176#0" />
-                <element signature="e#848#970#0" />
-                <element signature="e#1003#1172#0" />
-                <element signature="e#1203#1256#0" />
-                <element signature="e#1289#1503#0" />
-                <element signature="e#1540#1878#0" />
-                <element signature="e#1997#2441#0" />
-                <element signature="e#2359#2506#0" />
-                <element signature="e#2768#3152#0" />
-                <element signature="e#3353#3830#0" />
-                <element signature="e#3154#3247#0" />
-                <element signature="e#3296#3298#0" />
-                <element signature="e#3350#3352#0" />
-                <element signature="e#3389#3391#0" />
-                <element signature="e#3429#3431#0" />
+                <element signature="e#803#1061#0" />
+                <element signature="e#1091#1428#0" />
+                <element signature="e#1096#1218#0" />
+                <element signature="e#1251#1424#0" />
+                <element signature="e#1371#1375#0" />
+                <element signature="e#1416#1419#0" />
+                <element signature="e#1455#1508#0" />
+                <element signature="e#1541#1758#0" />
+                <element signature="e#1795#2136#0" />
+                <element signature="e#2175#2625#0" />
+                <element signature="e#2198#2278#0" />
+                <element signature="e#2370#2561#0" />
+                <element signature="e#2665#2851#0" />
+                <element signature="e#2698#2847#0" />
+                <element signature="e#2856#2973#0" />
+                <element signature="e#3011#3361#0" />
+                <element signature="e#3078#3211#0" />
+                <element signature="e#3107#3203#0" />
+                <element signature="e#3215#3365#0" />
+                <element signature="e#3249#3251#0" />
+                <element signature="e#3304#3307#0" />
+                <element signature="e#3404#3405#0" />
+                <element signature="e#3437#3440#0" />
+                <element signature="e#3471#3472#0" />
+                <element signature="e#3505#3508#0" />
+                <element signature="n#!!doc;n#RegisterSystem#0" />
+                <element signature="e#3591#4569#0" />
+                <element signature="e#3647#3651#0" />
+                <element signature="e#3671#3674#0" />
+                <element signature="e#3700#4565#0" />
+                <element signature="e#3799#4475#0" />
+                <element signature="e#4150#4387#0" />
+                <element signature="e#4247#4249#0" />
+                <element signature="e#4317#4320#0" />
+                <element signature="e#4475#4479#0" />
+                <element signature="e#4557#4560#0" />
+                <element signature="e#4615#5245#0" />
+                <element signature="e#4682#4686#0" />
+                <element signature="e#4706#4709#0" />
+                <element signature="e#4841#5260#0" />
+                <element signature="e#4928#5080#0" />
+                <element signature="e#4972#5068#0" />
+                <element signature="e#5145#5252#0" />
+                <element signature="e#5314#5473#0" />
+                <element signature="e#5410#5488#0" />
+                <element signature="n#!!doc;n#NotifySystem#0" />
+                <element signature="e#5603#5804#0" />
+                <element signature="e#5660#5717#0" />
+                <element signature="e#5717#5721#0" />
+                <element signature="e#5800#5803#0" />
+                <element signature="e#5809#5902#0" />
+                <element signature="e#5951#5953#0" />
+                <element signature="e#6005#6007#0" />
+                <element signature="e#6044#6046#0" />
+                <element signature="e#6084#6086#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Group.lua" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ECS/Group.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -123,23 +169,8 @@
       <file leaf-file-name="Function.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Function.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="66" column="28" lean-forward="true" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
-              <folding>
-                <element signature="e#308#607#0" />
-                <element signature="e#748#1090#0" />
-                <element signature="e#1121#1191#0" />
-                <element signature="e#1278#1533#0" />
-                <element signature="e#1564#1663#0" />
-                <element signature="e#1698#1807#0" />
-                <element signature="e#1844#1957#0" />
-                <element signature="e#2195#2350#0" />
-                <element signature="e#2223#2331#0" />
-                <element signature="e#2383#2584#0" />
-                <element signature="n#!!doc;n#ConditionOp#0" />
-                <element signature="e#2676#2742#0" />
-                <element signature="e#2762#2925#0" />
-              </folding>
+            <state relative-caret-position="618">
+              <caret line="81" column="9" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -155,9 +186,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>t--</find>
-      <find>index</find>
-      <find>ProgressTitleType</find>
       <find>Rect</find>
       <find>hotfix</find>
       <find>UpdateEvent</find>
@@ -185,6 +213,9 @@
       <find>unityengine</find>
       <find>Player</find>
       <find>unique</find>
+      <find>__index</find>
+      <find>g.</find>
+      <find>OnUpdate</find>
     </findStrings>
     <replaceStrings>
       <replace>function</replace>
@@ -200,6 +231,8 @@
       <replace>t = t - 1</replace>
       <replace>params</replace>
       <replace>UnityEngine</replace>
+      <replace>count</replace>
+      <replace>self.</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -235,34 +268,37 @@
         <option value="$PROJECT_DIR$/Common/Util.lua" />
         <option value="$PROJECT_DIR$/xlua/math.lua" />
         <option value="$PROJECT_DIR$/xlua/luaext.lua" />
-        <option value="$PROJECT_DIR$/xlua/extend.lua" />
         <option value="$PROJECT_DIR$/xlua/table.lua" />
         <option value="$PROJECT_DIR$/UnityEngine/Color.lua" />
         <option value="$PROJECT_DIR$/Common/Class.lua" />
         <option value="$PROJECT_DIR$/ECS/Component.lua" />
-        <option value="$PROJECT_DIR$/ECS/Entity.lua" />
         <option value="$PROJECT_DIR$/ECS/Filter.lua" />
         <option value="$PROJECT_DIR$/ECS/Systems/TransformSystem.lua" />
         <option value="$PROJECT_DIR$/ECS/Components/Transform.lua" />
-        <option value="$PROJECT_DIR$/ECS/System.lua" />
         <option value="$PROJECT_DIR$/Function.lua" />
         <option value="$PROJECT_DIR$/Common/List.lua" />
         <option value="$PROJECT_DIR$/Global.lua" />
+        <option value="$PROJECT_DIR$/xlua/extend.lua" />
+        <option value="$PROJECT_DIR$/ECS/System.lua" />
+        <option value="$PROJECT_DIR$/ECS/Group.lua" />
         <option value="$PROJECT_DIR$/ECS/World.lua" />
+        <option value="$PROJECT_DIR$/ECS/Entity.lua" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
+    <option name="x" value="-27" />
+    <option name="y" value="4" />
     <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -273,19 +309,13 @@
             <path>
               <item name="Scripts" type="b2602c69:ProjectViewProjectNode" />
               <item name="Scripts" type="462c0819:PsiDirectoryNode" />
-              <item name="Common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Scripts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
-              <item name="xlua" type="462c0819:PsiDirectoryNode" />
+              <item name="ECS" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -404,10 +434,18 @@
       <option name="presentableId" value="Default" />
       <updated>1536074179960</updated>
     </task>
+    <task id="LOCAL-00001">
+      <created>1544615231531</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1544615231531</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="0" width="1936" height="1096" extended-state="0" />
+    <frame x="-27" y="4" width="1936" height="1056" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -419,12 +457,11 @@
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="LuaCheck" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Version Control" order="10" visible="true" weight="0.1969532" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Designer" order="3" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15671642" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.3295099" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15991472" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
@@ -436,6 +473,8 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.29053319" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3295099" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
@@ -473,6 +512,7 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/../.." />
     </ignored-roots>
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -497,7 +537,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/FairyGUI.GObject.lua" />
     <entry file="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/FairyGUI.EventContext.lua" />
     <entry file="file://$PROJECT_DIR$/Common/Timer.lua" />
     <entry file="file://$PROJECT_DIR$/Common/TimeUtil.lua">
@@ -643,13 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xlua/extend.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="327" column="18" lean-forward="true" selection-start-line="327" selection-start-column="18" selection-end-line="327" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/UnityEngine/Color.lua">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -681,21 +713,7 @@
     <entry file="file://$PROJECT_DIR$/Common/Class.lua">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ECS/System.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="699">
-          <caret line="51" column="13" lean-forward="true" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ECS/Entity.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="769">
-          <caret line="56" column="3" lean-forward="true" selection-start-line="56" selection-start-column="3" selection-end-line="56" selection-end-column="3" />
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
@@ -713,140 +731,118 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xlua/list.lua">
+    <entry file="file://$PROJECT_DIR$/xlua/list.lua" />
+    <entry file="file://$PROJECT_DIR$/Common/Queue.lua" />
+    <entry file="file://$PROJECT_DIR$/Common/Stack.lua" />
+    <entry file="file://$PROJECT_DIR$/Global.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="187" column="3" lean-forward="true" selection-start-line="187" selection-start-column="3" selection-end-line="187" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/Queue.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="23" column="22" lean-forward="true" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/Stack.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Function.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="66" column="28" lean-forward="true" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
-          <folding>
-            <element signature="e#308#607#0" />
-            <element signature="e#748#1090#0" />
-            <element signature="e#1121#1191#0" />
-            <element signature="e#1278#1533#0" />
-            <element signature="e#1564#1663#0" />
-            <element signature="e#1698#1807#0" />
-            <element signature="e#1844#1957#0" />
-            <element signature="e#2195#2350#0" />
-            <element signature="e#2223#2331#0" />
-            <element signature="e#2383#2584#0" />
-            <element signature="n#!!doc;n#ConditionOp#0" />
-            <element signature="e#2676#2742#0" />
-            <element signature="e#2762#2925#0" />
-          </folding>
+        <state relative-caret-position="4375">
+          <caret line="125" column="4" selection-start-line="125" selection-end-line="125" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Common/List.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="79" column="3" lean-forward="true" selection-start-line="79" selection-start-column="3" selection-end-line="79" selection-end-column="3" />
-          <folding>
-            <element signature="e#437#502#0" />
-            <element signature="e#241#242#0" />
-            <element signature="e#259#262#0" />
-            <element signature="e#575#822#0" />
-            <element signature="e#855#1068#0" />
-            <element signature="e#641#645#0" />
-            <element signature="e#665#668#0" />
-            <element signature="e#1092#1168#0" />
-            <element signature="e#1197#1420#0" />
-            <element signature="e#1110#1186#0" />
-            <element signature="e#1395#1623#0" />
-            <element signature="e#1416#1420#0" />
-            <element signature="e#1440#1443#0" />
-            <element signature="n#!!doc;n#find#0" />
-            <element signature="e#1477#1664#0" />
-            <element signature="e#1513#1629#0" />
-            <element signature="e#1747#1751#0" />
-            <element signature="e#1784#1788#0" />
-            <element signature="e#1784#1788#0" />
-            <element signature="e#1827#1830#0" />
-            <element signature="n#!!doc;n#findlast#0" />
-            <element signature="e#1700#1871#0" />
-            <element signature="e#1736#1836#0" />
-            <element signature="e#1998#2002#0" />
-            <element signature="e#2035#2038#0" />
-            <element signature="e#1900#2014#0" />
-            <element signature="e#2213#2217#0" />
-            <element signature="e#2256#2259#0" />
-            <element signature="e#2043#2157#0" />
-            <element signature="e#2384#2388#0" />
-            <element signature="e#2427#2430#0" />
-            <element signature="e#2184#2267#0" />
-            <element signature="e#2548#2552#0" />
-            <element signature="e#2583#2586#0" />
-            <element signature="n#!!doc;n#insert#0" />
-            <element signature="e#2301#2655#0" />
-            <element signature="e#2704#2708#0" />
-            <element signature="e#2741#2744#0" />
-            <element signature="e#2453#2522#0" />
-            <element signature="e#2908#2912#0" />
-            <element signature="e#2942#2945#0" />
-            <element signature="e#3159#3160#0" />
-            <element signature="e#3189#3192#0" />
-            <element signature="e#3224#3225#0" />
-            <element signature="e#3254#3257#0" />
-            <element signature="e#3280#3388#0" />
-            <element signature="e#3345#3347#0" />
-            <element signature="e#3370#3373#0" />
-            <element signature="e#3415#3416#0" />
-            <element signature="e#3452#3455#0" />
-            <element signature="e#3479#3480#0" />
-            <element signature="e#3516#3519#0" />
-            <element signature="e#3544#3635#0" />
-            <element signature="e#3590#3592#0" />
-            <element signature="e#3618#3621#0" />
-          </folding>
+        <state relative-caret-position="6230">
+          <caret line="178" selection-start-line="178" selection-end-line="178" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Global.lua">
+    <entry file="file://$PROJECT_DIR$/xlua/extend.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="125" column="4" selection-start-line="125" selection-end-line="125" selection-end-column="4" />
+        <state relative-caret-position="21700">
+          <caret line="620" selection-start-line="620" selection-end-line="620" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Function.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="618">
+          <caret line="81" column="9" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ECS/Group.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ECS/System.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="34" column="20" lean-forward="true" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ECS/Entity.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ECS/World.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="38" column="42" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
+        <state relative-caret-position="193">
+          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
           <folding>
-            <element signature="e#843#1176#0" />
-            <element signature="e#848#970#0" />
-            <element signature="e#1003#1172#0" />
-            <element signature="e#1203#1256#0" />
-            <element signature="e#1289#1503#0" />
-            <element signature="e#1540#1878#0" />
-            <element signature="e#1997#2441#0" />
-            <element signature="e#2359#2506#0" />
-            <element signature="e#2768#3152#0" />
-            <element signature="e#3353#3830#0" />
-            <element signature="e#3154#3247#0" />
-            <element signature="e#3296#3298#0" />
-            <element signature="e#3350#3352#0" />
-            <element signature="e#3389#3391#0" />
-            <element signature="e#3429#3431#0" />
+            <element signature="e#803#1061#0" />
+            <element signature="e#1091#1428#0" />
+            <element signature="e#1096#1218#0" />
+            <element signature="e#1251#1424#0" />
+            <element signature="e#1371#1375#0" />
+            <element signature="e#1416#1419#0" />
+            <element signature="e#1455#1508#0" />
+            <element signature="e#1541#1758#0" />
+            <element signature="e#1795#2136#0" />
+            <element signature="e#2175#2625#0" />
+            <element signature="e#2198#2278#0" />
+            <element signature="e#2370#2561#0" />
+            <element signature="e#2665#2851#0" />
+            <element signature="e#2698#2847#0" />
+            <element signature="e#2856#2973#0" />
+            <element signature="e#3011#3361#0" />
+            <element signature="e#3078#3211#0" />
+            <element signature="e#3107#3203#0" />
+            <element signature="e#3215#3365#0" />
+            <element signature="e#3249#3251#0" />
+            <element signature="e#3304#3307#0" />
+            <element signature="e#3404#3405#0" />
+            <element signature="e#3437#3440#0" />
+            <element signature="e#3471#3472#0" />
+            <element signature="e#3505#3508#0" />
+            <element signature="n#!!doc;n#RegisterSystem#0" />
+            <element signature="e#3591#4569#0" />
+            <element signature="e#3647#3651#0" />
+            <element signature="e#3671#3674#0" />
+            <element signature="e#3700#4565#0" />
+            <element signature="e#3799#4475#0" />
+            <element signature="e#4150#4387#0" />
+            <element signature="e#4247#4249#0" />
+            <element signature="e#4317#4320#0" />
+            <element signature="e#4475#4479#0" />
+            <element signature="e#4557#4560#0" />
+            <element signature="e#4615#5245#0" />
+            <element signature="e#4682#4686#0" />
+            <element signature="e#4706#4709#0" />
+            <element signature="e#4841#5260#0" />
+            <element signature="e#4928#5080#0" />
+            <element signature="e#4972#5068#0" />
+            <element signature="e#5145#5252#0" />
+            <element signature="e#5314#5473#0" />
+            <element signature="e#5410#5488#0" />
+            <element signature="n#!!doc;n#NotifySystem#0" />
+            <element signature="e#5603#5804#0" />
+            <element signature="e#5660#5717#0" />
+            <element signature="e#5717#5721#0" />
+            <element signature="e#5800#5803#0" />
+            <element signature="e#5809#5902#0" />
+            <element signature="e#5951#5953#0" />
+            <element signature="e#6005#6007#0" />
+            <element signature="e#6044#6046#0" />
+            <element signature="e#6084#6086#0" />
           </folding>
         </state>
       </provider>

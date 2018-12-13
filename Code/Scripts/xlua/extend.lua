@@ -34,7 +34,9 @@ dump(t)
 ---@param desciption string 输出内容前的文字描述,可选
 ---@param nesting integer 输出时的嵌套层级，默认为 3,可选
 function dump(value, desciption, nesting)
-    if type(nesting) ~= "number" then nesting = 3 end
+    if type(nesting) ~= "number" then
+        nesting = 3
+    end
 
     local lookupTable = {}
     local result = {}
@@ -52,16 +54,16 @@ function dump(value, desciption, nesting)
             spc = string.rep(" ", keylen - string.len(_v(desciption)))
         end
         if type(value) ~= "table" then
-            result[#result +1 ] = string.format("%s%s%s = %s", indent, _v(desciption), spc, _v(value))
+            result[#result + 1] = string.format("%s%s%s = %s", indent, _v(desciption), spc, _v(value))
         elseif lookupTable[value] then
-            result[#result +1 ] = string.format("%s%s%s = *REF %s*", indent, desciption, spc, value)
+            result[#result + 1] = string.format("%s%s%s = *REF %s*", indent, desciption, spc, value)
         else
             lookupTable[value] = true
             if nest > nesting then
-                result[#result +1 ] = string.format("%s%s = *MAX NESTING %s*", indent, desciption, nest)
+                result[#result + 1] = string.format("%s%s = *MAX NESTING %s*", indent, desciption, nest)
             else
-                result[#result +1 ] = string.format("%s%s = {", indent, _v(desciption))
-                local indent2 = indent.."    "
+                result[#result + 1] = string.format("%s%s = {", indent, _v(desciption))
+                local indent2 = indent .. "    "
                 local keys = {}
                 local keylen = 0
                 local values = {}
@@ -69,7 +71,9 @@ function dump(value, desciption, nesting)
                     keys[#keys + 1] = k
                     local vk = _v(k)
                     local vkl = string.len(vk)
-                    if vkl > keylen then keylen = vkl end
+                    if vkl > keylen then
+                        keylen = vkl
+                    end
                     values[k] = v
                 end
                 table.sort(keys, function(a, b)
@@ -82,7 +86,7 @@ function dump(value, desciption, nesting)
                 for i, k in ipairs(keys) do
                     _dump(values[k], k, indent2, nest + 1, keylen)
                 end
-                result[#result +1] = string.format("%s}", indent)
+                result[#result + 1] = string.format("%s}", indent)
             end
         end
     end
@@ -606,6 +610,13 @@ function table.copy(src, dst)
     for k, v in pairs(src) do
         dst[k] = v
     end
+end
+
+---判断table中是否有内容
+---@param t table
+function table.isempty(t)
+    local check, kv = pairs(t)
+    return check(kv) == nil
 end
 
 string._htmlspecialchars_set = {}

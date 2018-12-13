@@ -2,6 +2,7 @@ local require = require
 local Component = require('ECS.Component')
 local Entity = require('ECS.Enity')
 local System = require('ECS.System')
+local Group = require('ECS.Group')
 
 local format = string.format
 local insert = table.insert
@@ -35,7 +36,7 @@ local removeDestroyEvt
 function World:Init(name, entityID)
     self.name = name or "World"
     self.entityID = entityID or 1
-    self.enities = {}   ---array mix hash
+    self.entities = {}   ---array mix hash
     self.systems = {}  -- 数组,便于遍历查询
     self.systemList = List:new()      -- 链表,便于list中节点修改
     self.groups = {}    --实体分组,系统各引用一个组[array mix hash]
@@ -77,8 +78,8 @@ function World:CreateEnity()
 end
 
 function World:AddEntity(entity)
-    insert(self.enities, entity)
-    self.enities[entity] = #self.enities
+    insert(self.entities, entity)
+    self.entities[entity] = #self.entities
 
     entity.OnComponentAdded = OnComponentChanged
     entity.OnComponentRemoved = OnComponentChanged
@@ -95,7 +96,7 @@ function World:RemoveEnity(entity)
         return
     end
 
-    local entities = self.enities
+    local entities = self.entities
     local index = entities[entity]
     if index then
         local lastEntity = entities[#entities]
@@ -109,9 +110,9 @@ function World:RemoveEnity(entity)
 end
 
 function World:DestroyAllEntities()
-    for i = 1, #self.enities do
-        local entity = self.enities[i]
-        self.enities[entity] = nil
+    for i = 1, #self.entities do
+        local entity = self.entities[i]
+        self.entities[entity] = nil
         OnDestroyEntity(entity)
         reusedEntities:Push(entity)
     end
@@ -158,14 +159,15 @@ function World:RegisterSystem(...)
             insert(self.systems, system)
             self.systems[name] = system
             self.systemList:Push(system)
-            local group = {}
-            for i = 1, #self.enities do
-                local entity = self.enities[i]
-                if system:Filter(entity) then
-                    insert(group, entity)
+            local group = self.groups[system.filterName]
+            if not group then
+                group = Group:new(system:GetFilter())
+                for i = 1, #self.entities do
+                    group:Filter(self.entities[i])
                 end
+                self.groups[system.filterName] = group
             end
-            self.groups[system.filterName] = group
+            group:Increment()
             system.group = group
         else
             printyellow('World:Repeat registration system ' .. name)
@@ -195,7 +197,7 @@ function World:RemoveSystem(...)
         node = self.systemList:Next(node)
         if del then
             self.systemList:Remove(del)
-            clear(self.groups[system.filterName])
+            self.groups[del.filterName]:Decrement()
         end
     end
 end
@@ -212,7 +214,7 @@ end
 function World:NotifySystem(name, component)
     local system = self.systems[name]
     if system then
-        --system:Notify(component)---缓存通知,下一帧统一执行
+        --system:OnNotify(component)---缓存通知,下一帧统一执行
     else
         printyellow('World:Notify System ' .. name .. ' does not exist.')
     end

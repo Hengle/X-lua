@@ -1,12 +1,14 @@
-local type = type
+local printyellow = printyellow
 local assert = assert
-local error = error
 local format = string.format
 local concat = table.concat
 local sort = table.sort
 local byte = string.byte
 local sub = string.sub
-local Class = Class
+local error = error
+
+---@class System
+local System = {}
 
 local function Hash(str)
     local seed = 131
@@ -25,20 +27,6 @@ local function GenUnique(system)
     local filter = system:GetFilter()
     return system.filterName or Hash(concat(sort(filter), '.'))
 end
-local function Filter(system, entity)
-    local filter = system:GetFilter()
-    assert(type(filter) == 'table', "Filter can only be table type.")
-    for i = 1, #filter do
-        local comp = filter[i]
-        if entity[comp] == nil then
-            return false
-        end
-    end
-    return true
-end
-
----@class System
-local System = {}
 
 function System:Extend(world, name)
     self.world = world
@@ -48,7 +36,11 @@ function System:Extend(world, name)
     self.singleton = nil  -- 单例类
     ---使用filter表生成filter唯一标识
     self.filterName = GenUnique(self)
-    self.Filter = Filter
+    self.GetFilter = function(system)
+        printyellow('System:The system will traverses all entities')
+        return {}
+    end
+    assert(self.OnUpdate or self.OnNotify, 'System:' .. name .. 'No Define OnUpdate or OnNotify')
 end
 
 return System

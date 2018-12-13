@@ -4,7 +4,6 @@ local pairs = pairs
 local format = string.format
 local Class = Class
 local Component = require('ECS.Component')
-local EventMgr = GameEvent.ECSEvent
 
 ---@class Entity
 local Entity = Class:new('Entity')
