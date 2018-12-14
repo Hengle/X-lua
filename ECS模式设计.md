@@ -93,6 +93,9 @@
 >>>>Filter = {c1, c2, c3} -> 基于id大小排序,从小到大组合成字符串,然后hash得到最终结果
 #filter:匹配条件
 #filterName:唯一标识[直接使用]
+#添加Component->匹配到Group并触发一次事件[移除事件或者添加事件]
+#移除Component->匹配到Group并触发一次事件[移除事件或者添加事件]
+#更新Component->匹配到Group并触发一次事件[处理事件(修改事件)]
 
 
 
