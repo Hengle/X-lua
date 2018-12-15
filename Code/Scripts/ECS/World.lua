@@ -32,7 +32,6 @@ local removeChangeEvt
 local removeUpdateEvt
 local removeDestroyEvt
 
-----可能需要细分世界
 function World:Init(name, entityID)
     self.name = name or "World"
     self.entityID = entityID or 1
