@@ -47,7 +47,7 @@ function Entity:AddComponent(index)
     if not self.enable then
         error(format('Entity:%d has been destroyed.', self.id))
     end
-    assert(self[index] == nil, "Entity: Trying to add Component '" .. name .. "', but it's already existing.")
+    assert(self[index] == nil, "Entity: Trying to add Component '" .. index .. "', but it's already existing.")
     local comp = ComponentMgr.Create(index)
     self[index] = comp
     self.world:OnComponentChanged(self)
@@ -56,13 +56,13 @@ function Entity:RemoveComponent(index)
     if not self.enable then
         error(format('Entity:%d has been destroyed.', self.id))
     end
-    assert(self[index] == nil, "Entity: Trying to remove non-existent component " .. name .. " from Entity. Please fix this")
+    assert(self[index] == nil, "Entity: Trying to remove non-existent component " .. index .. " from Entity. Please fix this")
     ComponentMgr.Release(index, self[index])
     self[index] = nil
     self.world:OnComponentChanged(self)
 end
 function Entity:Modify(index)
-    assert(self[index] == nil, "Entity: Trying to remove non-existent component " .. name .. " from Entity. Please fix this")
+    assert(self[index] == nil, "Entity: Trying to remove non-existent component " .. index .. " from Entity. Please fix this")
     self.world:OnComponentModify(self)
 end
 
