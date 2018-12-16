@@ -158,11 +158,11 @@ function List:Insert(v, iter)
     self.length = self.length + 1
     return node
 end
----list头部节点
+---list头部节点值
 function List:Head()
     return self._next.value
 end
----list尾部节点
+---list尾部节点值
 function List:Tail()
     return self._prev.value
 end

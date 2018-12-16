@@ -1,35 +1,62 @@
 local printcolor = printcolor
 local printyellow = printyellow
+local type = type
 local assert = assert
 local format = string.format
 local concat = table.concat
 local sort = table.sort
+local clear = table.clear
 local error = error
-local Filter = require('Filter')
+local Class = Class
 
 ---@class System
-local System = {}
+local System = Class:new('System')
 
-function System:ctor(world, name)
+--[[
+    是否关注一下事件,初始化时手动绑定
+    --ComponentAdd
+    --ComponentRemove
+    --ComponentModify
+--]]
+
+function System:Init(world, name)
     self.world = world
     self.name = name
-    self.enable = false
-    self.group = nil
-    self.singleton = nil  -- 单例类
-    ---使用filter表生成filter唯一标识
-    if not self.GetFilter then
-        error(format('System:%s undefined \'GetFilter\' function', self.__class))
-    else
-        local comps, func = self:GetFilter()
-        self.Filter = func
-        self.filterName = Filter.GenUnique(comps)
-    end
-    assert(self.OnUpdate or self.OnNotify, 'System:' .. name .. 'No Define OnUpdate or OnNotify')
+    self.group = nil      --> Update
+    assert(self.OnUpdate or self.OnNotify and not (self.OnUpdate and self.OnNotify),
+            'System:' .. name .. 'No Define OnUpdate or OnNotify')
 end
 
-function System:GetFilter(system)
-    printcolor('red', 'System:The system will traverses all entities')
-    return {}
+function System:Notify()
+    for i = 1, #self.group do
+        local entity = self.group[i]
+        self:OnNotify(entity)
+    end
+    clear(self.group)
+end
+
+--覆盖方法
+function System:GetFilter()
+    error('System:The system will traverses all entities.[' .. self.name .. ']')
+end
+
+function System:Filter(entity)
+    if not self.__handle then
+        self.__handle = self:GetFilter()
+        if type(self.__handle) ~= 'function' then
+            error('System:self.GetFilter does not return a function.[' .. self.name .. ']')
+            return false
+        else
+            return self:__handle(entity)
+        end
+    else
+        return self:__handle(entity)
+    end
+end
+
+function System:Destroy()
+    self.collector = nil
+    self.group = nil
 end
 
 return System

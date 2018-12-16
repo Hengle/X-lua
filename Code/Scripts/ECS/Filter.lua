@@ -19,14 +19,22 @@ end
 local function filterJoinRaw(prefix, seperator, ...)
     local accum = {}
     local build = {}
+    local comps = {}
     for i = 1, select('#', ...) do
         local item = select(i, ...)
         if type(item) == 'string' then
-            accum[#accum + 1] = ("(e[%s] ~= nil)"):format(make_safe(item))
+            local comp = make_safe(item)
+            accum[#accum + 1] = ("(e[%s] ~= nil)"):format(comp)
+            comps[#comps + 1] = comp
         elseif type(item) == 'function' then
             build[#build + 1] = ('local subfilter_%d_ = select(%d, ...)')
                     :format(i, i)
             accum[#accum + 1] = ('(subfilter_%d_(system, e))'):format(i)
+        elseif type(item) == 'table' then
+            local index = #comps
+            for i = 1, #item do
+                comps[index + i] = item[i]
+            end
         else
             error 'Filter token must be a string or a filter function.'
         end
@@ -40,15 +48,15 @@ local function filterJoinRaw(prefix, seperator, ...)
     if err then
         error(err)
     end
-    return loader(...)
+    return loader(...), comps
 end
 
 local function filterJoin(...)
-    local state, value = pcall(filterJoinRaw, ...)
+    local state, value, comps = pcall(filterJoinRaw, ...)
     if state then
-        return value
+        return value, comps
     else
-        return nil, value
+        return nil, value, comps
     end
 end
 

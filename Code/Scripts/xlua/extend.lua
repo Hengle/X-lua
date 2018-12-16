@@ -361,11 +361,21 @@ function table.values(hashtable)
 end
 
 ---将来源表格中所有键及其值复制到目标表格对象中，如果存在同名键，则覆盖其值
----@param dest table  目标表格
 ---@param src table  来源表格
-function table.merge(dest, src)
-    for k, v in pairs(src) do
-        dest[k] = v
+---@param dst table  目标表格
+function table.merge(src, dst)
+    for k, v in pairs(dst) do
+        src[k] = v
+    end
+end
+
+---合并数组表
+---@param src table  来源表格
+---@param dst table  目标表格
+function table.mergearray(src, dst)
+    local index = #src
+    for i = 1, #dst do
+        src[index + i] = dst[i]
     end
 end
 
