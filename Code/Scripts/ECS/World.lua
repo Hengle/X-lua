@@ -42,11 +42,7 @@ function World:Init(name, entityID)
     self.systemNodes = {}  -- 键值对,便于遍历查询
     self.systemList = List:new()      -- 链表,便于list中节点修改
     self.groups = {}    --逐帧处理,系统各引用一个组[array mix hash]
-    ---统一在当前帧结束时进行操作
-    self.system2Add = {}
-    self.system2Remove = {}
-    self.ntity2Add = {}
-    self.entity2Remove = {}
+    self.groupForIndex = {} --组件类型做为key,对groups分类
 end
 
 function World:Update(dt)
@@ -163,24 +159,27 @@ function World:AddSystem(...)
             system:Init(self, name)
             local node = self.systemList:Push(system)
             self.systemNodes[name] = node
-            if system.OnUpdate then
-                local group = self.groups[name]
-                if not group then
-                    group = { Handle = system.__handle }
+            local filter = system:GetFilter()
+            local filterName = system.filterName
+            local group = self.groups[filterName]
+            if not group then
+                group = Group:new(filter)
+                if system.OnUpdate then
                     for i = 1, #self.entities do
                         local entity = self.entities[i]
-                        if group:Handle(entity) then
-                            insert(group, entity)
-                            group[entity] = #group
-                        end
+                        group:Filter(entity)
                     end
-                    self.groups[name] = group
+                else
+                    system.collector = {}
                 end
-                system.group = group
-            else
-                local group = { Handle = system.__handle }
-                self.groups[name] = group
+                self.groups[filterName] = group
+                for i = 1, #filter do
+                    local gs = self.groupForIndex[i] or {}
+                    insert(gs, group)
+                end
             end
+            system.group = group
+            group:AddSystem(name)
         else
             printcolor('red', 'World:Repeat registration system ' .. name)
         end
@@ -211,7 +210,20 @@ function World:RemoveSystem(...)
         if del then
             local node = self.systemNodes[del.name]
             self.systemList:Remove(node)
-            self.groups[del.name] = nil
+            local group = self.groups[del.filterName]
+            group:RemoveSystem(del.name)
+            --self.groups[del.filterName] = nil
+            --local filter = group.filter
+            --for i = 1, #filter do
+            --    local index = filter[i]
+            --    local gs = self.groupForIndex[index]
+            --    for j = 1, #gs do
+            --        if gs[j] == group then
+            --            gs[j] = nil
+            --            break
+            --        end
+            --    end
+            --end
             del:Destroy()
         end
     end
@@ -220,29 +232,41 @@ end
 ------------------------------------
 ---------------事件函数
 ------------------------------------
-function World:OnComponentChanged(entity)
-    for name, group in pairs(self.groups) do
+function World:OnComponentChanged(entity, index)
+    local gs = self.groupForIndex[index]
+    for i = 1, #gs do
+        local group = gs[i]
         local index = group[entity]
-        if group:Handle(entity) then
-            if not index then
-                insert(group, entity)
-                group[entity] = #group
-                entity.linkedSys[name] = name
+        if not group:CheckEmpty() then
+            if group:Filter(entity) then
+                if not index then
+                    insert(group, entity)
+                    group[entity] = #group
+                end
+            else
+                if index then
+                    local last = group[#group]
+                    local lastIndex = #group
+                    group[index] = last
+                    group[entity] = nil
+                    group[last] = index
+                    group[lastIndex] = nil
+                end
             end
-        else
-            if index then
-                local last = group[#group]
-                local lastIndex = #group
-                group[index] = last
-                group[entity] = nil
-                group[last] = index
-                group[lastIndex] = nil
-            end
-            entity.linkedSys[name] = nil
         end
     end
 end
-function World:OnComponentModify(entity)
+function World:OnComponentModify(entity, index)
+    local gs = self.groupForIndex[index]
+    for i = 1, #gs do
+        local group = gs[i]
+        local index = group[entity]
+        if not index then
+            insert(group, entity)
+            group[entity] = #group
+        end
+    end
+
     for _, name in pairs(entity.linkedSys) do
         local group = self.groups[name]
         local index = group[entity]

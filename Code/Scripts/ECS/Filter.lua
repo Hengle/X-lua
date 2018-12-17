@@ -80,18 +80,18 @@ local function RejectAny(...)
     return filterJoin('not', ' or ', ...)
 end
 
---local function Hash(str)
---    local seed = 131
---    local hash = 0
---    for i = 1, #str do
---        hash = hash * seed + byte(sub(str, i, i))
---    end
---    return (hash & 0x7FFFFFFF)
---end
----- 为filter 筛选条件表唯一标识
---local function GenUnique(filter)
---    return Hash(concat(sort(filter), '.'))
---end
+local function Hash(str)
+    local seed = 131
+    local hash = 0
+    for i = 1, #str do
+        hash = hash * seed + byte(sub(str, i, i))
+    end
+    return (hash & 0x7FFFFFFF)
+end
+-- 为filter 筛选条件表唯一标识
+local function GenUnique(filter)
+    return Hash(concat(sort(filter), '.'))
+end
 
 ---@class Filter
 local Filter = {
@@ -99,6 +99,6 @@ local Filter = {
     RequireAny = RequireAny,
     RejectAll = RejectAll,
     RejectAny = RejectAny,
-    --GenUnique = GenUnique,
+    GenUnique = GenUnique,
 }
 return Filter

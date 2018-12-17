@@ -3,6 +3,8 @@ local printyellow = printyellow
 local type = type
 local assert = assert
 local format = string.format
+local sub = string.sub
+local byte = string.byte
 local concat = table.concat
 local sort = table.sort
 local clear = table.clear
@@ -17,27 +19,48 @@ local System = Class:new('System')
     --ComponentAdd
     --ComponentRemove
     --ComponentModify
+    -------------------------------
+    filter 定义格式固定为table.
+    {Comp.Position, Comp.Rotation, Comp.Scale}
 --]]
+
+local function Hash(str)
+    local seed = 131
+    local hash = 0
+    for i = 1, #str do
+        hash = hash * seed + byte(sub(str, i, i))
+    end
+    return (hash & 0x7FFFFFFF)
+end
 
 function System:Init(world, name)
     self.world = world
     self.name = name
     self.group = nil      --> Update
+    self.collector = nil    --> Notify
+    local filter = self:GetFilter()
+    if filter then
+        self.filterName = Hash(concat(sort(filter), '.'))
+    else
+        error('System:Filter table is nil.[' .. self.name .. ']')
+    end
     assert(self.OnUpdate or self.OnNotify and not (self.OnUpdate and self.OnNotify),
             'System:' .. name .. 'No Define OnUpdate or OnNotify')
 end
 
 function System:Notify()
-    for i = 1, #self.group do
-        local entity = self.group[i]
-        self:OnNotify(entity)
+    if self.collector then
+        for i = 1, #self.collector do
+            local entity = self.collector[i]
+            self:OnNotify(entity)
+        end
+        clear(self.collector)
     end
-    clear(self.group)
 end
 
 --覆盖方法
 function System:GetFilter()
-    error('System:The system will traverses all entities.[' .. self.name .. ']')
+    error(format('System:The system [%s] no define GetFilter().', self.name))
 end
 
 function System:Filter(entity)

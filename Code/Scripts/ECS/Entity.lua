@@ -14,7 +14,6 @@ function Entity:ctor(world, id)
     self.id = id
     self.world = world
     self.enable = true
-    self.linkedSys = {}
 end
 
 function Entity:Reset(world, id)
@@ -42,6 +41,22 @@ end
 function Entity:HasComponent(index)
     return self[index] ~= nil
 end
+function Entity:HasComponents(indices)
+    for i = 1, #indices do
+        if not self[indices[i]] then
+            return false
+        end
+    end
+    return true
+end
+function Entity:HasAnyComponent(indices)
+    for i = 1, #indices do
+        if self[indices[i]] then
+            return true
+        end
+    end
+    return false
+end
 
 function Entity:AddComponent(index)
     if not self.enable then
@@ -50,7 +65,7 @@ function Entity:AddComponent(index)
     assert(self[index] == nil, "Entity: Trying to add Component '" .. index .. "', but it's already existing.")
     local comp = ComponentMgr.Create(index)
     self[index] = comp
-    self.world:OnComponentChanged(self)
+    self.world:OnComponentChanged(self, index)
 end
 function Entity:RemoveComponent(index)
     if not self.enable then
@@ -59,11 +74,11 @@ function Entity:RemoveComponent(index)
     assert(self[index] == nil, "Entity: Trying to remove non-existent component " .. index .. " from Entity. Please fix this")
     ComponentMgr.Release(index, self[index])
     self[index] = nil
-    self.world:OnComponentChanged(self)
+    self.world:OnComponentChanged(self, index)
 end
 function Entity:Modify(index)
     assert(self[index] == nil, "Entity: Trying to remove non-existent component " .. index .. " from Entity. Please fix this")
-    self.world:OnComponentModify(self)
+    self.world:OnComponentModify(self, index)
 end
 
 return Entity
