@@ -128,5 +128,31 @@
         c.系统通知处理,指明处理实体[e-s]
 
 
-1. InputSystem -> InputData.isModify(true)
-2. 
+>group[index]=e(comps)
+
+groupIndex[compIndex] = gs
+group[filter] = es
+
+#---Add
+    groups[filterName] = group
+    groupForIndex[index] = groups
+#---Remove  - doing
+    ...同上
+#---OnStart
+    sys.enable = true
+    group.sys.add
+#---OnStop
+    sys.enable = false
+    group.sys.remove
+#---CompChange
+    groups = groupForIndex[index]
+    group:CheckEmpty()
+        group.Handle(e)            
+        group.add|group.remove   
+
+        -->添加移除组件是否触发通知? --- 不处理,如需处理则直接触发通知
+#---CompModify
+    groups = groupForIndex[index]
+    group:CheckEmpty()
+        sys = sysyems[group.systems]
+        sys.collocter.add
