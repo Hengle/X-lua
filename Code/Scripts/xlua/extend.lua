@@ -617,8 +617,10 @@ end
 ---@param src table 源数据表
 ---@param dst table 目标数据表
 function table.copy(src, dst)
-    for k, v in pairs(src) do
-        dst[k] = v
+    if src and dst then
+        for k, v in pairs(src) do
+            dst[k] = v
+        end
     end
 end
 

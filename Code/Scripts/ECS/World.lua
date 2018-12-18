@@ -41,8 +41,8 @@ function World:Init(name, entityID)
     self.entities = {}   ---array mix hash
     self.systemNodes = {}  -- 键值对,便于遍历查询
     self.systemList = List:new()      -- 链表,便于list中节点修改
-    self.groups = {}    --逐帧处理,系统各引用一个组[array mix hash]
-    self.groupForIndex = {} --组件类型做为key,对groups分类
+    self.groups = {}    --逐帧处理,系统各引用一个组;key-filterName:value-group
+    self.groupForIndex = {} --组件类型做为key,对groups分类;key-compindex:value-groups
 end
 
 function World:Update(dt)
@@ -159,11 +159,10 @@ function World:AddSystem(...)
             system:Init(self, name)
             local node = self.systemList:Push(system)
             self.systemNodes[name] = node
-            local filter = system:GetFilter()
             local filterName = system.filterName
             local group = self.groups[filterName]
             if not group then
-                group = Group:new(filter)
+                group = Group:new(system.filter)
                 if system.OnUpdate then
                     for i = 1, #self.entities do
                         local entity = self.entities[i]
@@ -173,9 +172,16 @@ function World:AddSystem(...)
                     system.collector = {}
                 end
                 self.groups[filterName] = group
-                for i = 1, #filter do
-                    local gs = self.groupForIndex[i] or {}
-                    insert(gs, group)
+                local indices = system.filter.indices
+                for i = 1, #indices do
+                    local index = indices[i]
+                    local gs = self.groupForIndex[index]
+                    if gs then
+                        insert(gs, group)
+                    else
+                        gs = {group}
+                    end
+                    self.groupForIndex[index] = gs
                 end
             end
             system.group = group

@@ -192,6 +192,4 @@ function List:ToTable()
     return t
 end
 
-local mt = getmetatable(List)
-mt.__call = List.new
 return List

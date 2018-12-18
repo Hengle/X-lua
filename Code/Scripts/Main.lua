@@ -21,9 +21,9 @@ end
 local function Init()
     Util.Myxpcall(InitModule)
     printcolor("orange", 'lua framework init successful.')
-    TEST()
-    local demo = require "UIExample.UIDemo"
-    Util.Myxpcall(demo.Init, demo)
+    Util.Myxpcall(TEST)
+    --local demo = require "UIExample.UIDemo"
+    --Util.Myxpcall(demo.Init, demo)
 end
 
 --逻辑update
@@ -38,7 +38,7 @@ local function LateUpdate()
 end
 --物理update
 local function FixedUpdate(fixedDeltaTime)
-       gameEvent.FixedUpdateEvent:Trigger()
+    gameEvent.FixedUpdateEvent:Trigger()
 end
 
 local function OnDestroy()
@@ -59,9 +59,9 @@ function TEST()
     local function JSHash(str)
         local l = len(str)
         local h = l
-        local step = (l>>5) + 1
-        for i=l,step,-step do
-            h = (h~(h << 5) + byte(sub(str, i, i)) + (h >> 2))
+        local step = (l >> 5) + 1
+        for i = l, step, -step do
+            h = (h ~ (h << 5) + byte(sub(str, i, i)) + (h >> 2))
         end
         return h
     end
@@ -84,15 +84,23 @@ function TEST()
     --print(Hash(table.concat(t1, '.')))
     --print(Hash(table.concat(t2, '.')))
 
-    local t1 = {4, 1, 2, 5, 34, 3}
-    local t2 = {4, 1, 2, 5, 34, 3}
-    print('----self',table.concat(t1, ','))
+    local t1 = { 4, 1, 2, 5, 34, 3 }
+    local t2 = { 4, 1, 2, 5, 34, 3 }
+
+    local Filter = require('ECS.Filter')
+    local f1 = Filter:new()
+    local f2 = Filter:new()
+    f1:All(2, 1, 3)
+    f1:None(4)
+    f1:Any(5)
+    f2:All(1, 2, 3, f2:None(4), f2:Any(5))
+    printyellow(f1:GetHashCode(), f2:GetHashCode())
+    print('self.AllHandle -', f1.AllHandle == nil)
+    print('self.AllHandle -', f2.AllHandle == nil)
+    print('----self', table.concat(t1, ','))
     table.sort(t2)
-    print('----lua',table.concat(t2, ','))
+    print('----lua', table.concat(t2, ','))
 end
-
-
-
 
 Main = {
     Init = Init,
@@ -102,3 +110,6 @@ Main = {
     FixedUpdate = FixedUpdate,
     OnDestroy = OnDestroy
 }
+
+
+

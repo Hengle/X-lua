@@ -24,25 +24,28 @@ local System = Class:new('System')
     {Comp.Position, Comp.Rotation, Comp.Scale}
 --]]
 
-local function Hash(str)
-    local seed = 131
-    local hash = 0
-    for i = 1, #str do
-        hash = hash * seed + byte(sub(str, i, i))
-    end
-    return (hash & 0x7FFFFFFF)
-end
+--[[
+    两种方式无差异
+    local f1 = Filter:new()
+    f1:All(2, 1, 3)
+    f1:None(4)
+    f1:Any(5)
+    self.filter = f1
 
+    local f2 = Filter:new()
+    f2:All(1, 2, 3, f2:None(4), f2:Any(5))
+    self.filter = f2
+--]]
 function System:Init(world, name)
     self.world = world
     self.name = name
     self.group = nil      --> Update
     self.collector = nil    --> Notify
-    local filter = self:GetFilter()
-    if filter then
-        self.filterName = Hash(concat(sort(filter), '.'))
+    if self.filter then
+        self.filter:Init()
+        self.filterName = self.filter.hashCode
     else
-        error('System:Filter table is nil.[' .. self.name .. ']')
+        error('System:filter table is nil.[' .. self.name .. ']')
     end
     assert(self.OnUpdate or self.OnNotify and not (self.OnUpdate and self.OnNotify),
             'System:' .. name .. 'No Define OnUpdate or OnNotify')
@@ -58,23 +61,8 @@ function System:Notify()
     end
 end
 
---覆盖方法
-function System:GetFilter()
-    error(format('System:The system [%s] no define GetFilter().', self.name))
-end
-
 function System:Filter(entity)
-    if not self.__handle then
-        self.__handle = self:GetFilter()
-        if type(self.__handle) ~= 'function' then
-            error('System:self.GetFilter does not return a function.[' .. self.name .. ']')
-            return false
-        else
-            return self:__handle(entity)
-        end
-    else
-        return self:__handle(entity)
-    end
+    return self.filter:Handle(entity)
 end
 
 function System:Destroy()

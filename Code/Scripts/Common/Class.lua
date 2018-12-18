@@ -14,6 +14,8 @@ function Class:new(className, base)
     if base then
         setmetatable(class, { __index = base })
         class.base = base
+    else
+        setmetatable(class, {})
     end
 
     function class:new(...)

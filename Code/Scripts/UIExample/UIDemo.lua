@@ -22,7 +22,7 @@ function UIDemo:Init()
 end
 
 function UIDemo:OnDestroy()
-    example:OnDestroy()
+    --example:OnDestroy()
 end
 
 return UIDemo

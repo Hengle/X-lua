@@ -117,7 +117,7 @@ Plane		= require "UnityEngine.Plane"
 
 require "Local"
 -----------------------------------------------------------
-require 'Function'
+require 'Common.Function'
 
 Define = require "Define"
 ---@type Class
