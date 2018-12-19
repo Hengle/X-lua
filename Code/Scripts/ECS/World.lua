@@ -119,17 +119,38 @@ end
 -----------------System控制函数
 -----------------------------------------------
 ---@param nodes List
+local function HasSystem(name)
+    return false
+end
 local SetSystemEnable = function(nodes, enable, ...)
     local length = select('#', ...)
     if length > 0 then
         for i = 1, length do
             local name = select(i, ...)
-            nodes[name].value.enable = enable
+            if HasSystem(name) then
+                local system = nodes[name].value
+                system.enable = enable
+                local group = system.group
+                if enable then
+                    group:AddSystem(name)
+                else
+                    group:RemoveSystem(name)
+                end
+            else
+                printcolor('red', 'World:The system ' .. name .. ' does not exist.')
+            end
         end
     else
         local node = nodes:Head()
         while node do
-            node.value.enable = enable
+            local system = node.value
+            system.enable = enable
+            local group = system.group
+            if enable then
+                group:AddSystem(system.name)
+            else
+                group:RemoveSystem(system.name)
+            end
             node = node:Next()
         end
         printyellow('World:Set all systems', enable)
@@ -156,36 +177,39 @@ function World:AddSystem(...)
         local system = self.systemNodes[name]
         if not system then
             system = require('Systems.' .. name)
-            system:Init(self, name)
-            local node = self.systemList:Push(system)
-            self.systemNodes[name] = node
-            local filterName = system.filterName
-            local group = self.groups[filterName]
-            if not group then
-                group = Group:new(system.filter)
-                if system.OnUpdate then
-                    for i = 1, #self.entities do
-                        local entity = self.entities[i]
-                        group:Filter(entity)
-                    end
-                else
-                    system.collector = {}
-                end
-                self.groups[filterName] = group
-                local indices = system.filter.indices
-                for i = 1, #indices do
-                    local index = indices[i]
-                    local gs = self.groupForIndex[index]
-                    if gs then
-                        insert(gs, group)
+            if system then
+                system:Init(self, name)
+                local node = self.systemList:Push(system)
+                self.systemNodes[name] = node
+                local filterName = system.filterName
+                local group = self.groups[filterName]
+                if not group then
+                    group = Group:new(system.filter)
+                    if system.OnUpdate then
+                        for i = 1, #self.entities do
+                            group:Filter(self.entities[i])
+                        end
                     else
-                        gs = {group}
+                        system.collector = {}
                     end
-                    self.groupForIndex[index] = gs
+                    self.groups[filterName] = group
+                    local indices = system.filter.indices
+                    for i = 1, #indices do
+                        local index = indices[i]
+                        local gs = self.groupForIndex[index]
+                        if gs then
+                            insert(gs, group)
+                        else
+                            gs = { group }
+                        end
+                        self.groupForIndex[index] = gs
+                    end
                 end
+                system.group = group
+                group:AddSystem(name)
+            else
+                printcolor('red', 'World:The system ' .. name .. ' does not exist.')
             end
-            system.group = group
-            group:AddSystem(name)
         else
             printcolor('red', 'World:Repeat registration system ' .. name)
         end
@@ -199,38 +223,29 @@ function World:RemoveSystem(...)
         return
     end
 
-    local names = { ... }
-    local count = 0
-    local node = self.systemList:Head()
-    while node ~= nil and length ~= count do
-        local del = nil
-        local system = node.value
-        for i = 1, length do
-            if system.name == names[i] then
-                count = count + 1
-                del = node
-                break
-            end
-        end
-        node = self.systemList:Next(node)
+    for i = 1, length do
+        local name = select(i, ...)
+        local del = self.systemNodes[name]
         if del then
-            local node = self.systemNodes[del.name]
-            self.systemList:Remove(node)
+            self.systemNodes[name] = nil
+            self.systemList:Remove(del)
             local group = self.groups[del.filterName]
             group:RemoveSystem(del.name)
-            --self.groups[del.filterName] = nil
-            --local filter = group.filter
-            --for i = 1, #filter do
-            --    local index = filter[i]
-            --    local gs = self.groupForIndex[index]
-            --    for j = 1, #gs do
-            --        if gs[j] == group then
-            --            gs[j] = nil
-            --            break
-            --        end
-            --    end
-            --end
+            self.groups[del.filterName] = nil
+            local indices = group.filter.indices
+            for i = 1, #indices do
+                local index = indices[i]
+                local gs = self.groupForIndex[index]
+                for j = 1, #gs do
+                    if gs[j] == group then
+                        gs[j] = gs[#gs]
+                        break
+                    end
+                end
+            end
             del:Destroy()
+        else
+            printcolor('red', 'World:The system ' .. name .. ' remove fail.')
         end
     end
 end
@@ -242,23 +257,8 @@ function World:OnComponentChanged(entity, index)
     local gs = self.groupForIndex[index]
     for i = 1, #gs do
         local group = gs[i]
-        local index = group[entity]
         if not group:CheckEmpty() then
-            if group:Filter(entity) then
-                if not index then
-                    insert(group, entity)
-                    group[entity] = #group
-                end
-            else
-                if index then
-                    local last = group[#group]
-                    local lastIndex = #group
-                    group[index] = last
-                    group[entity] = nil
-                    group[last] = index
-                    group[lastIndex] = nil
-                end
-            end
+            group:Filter(entity)
         end
     end
 end
@@ -266,19 +266,14 @@ function World:OnComponentModify(entity, index)
     local gs = self.groupForIndex[index]
     for i = 1, #gs do
         local group = gs[i]
-        local index = group[entity]
-        if not index then
-            insert(group, entity)
-            group[entity] = #group
-        end
-    end
-
-    for _, name in pairs(entity.linkedSys) do
-        local group = self.groups[name]
-        local index = group[entity]
-        if not index then
-            insert(group, entity)
-            group[entity] = #group
+        if not group:CheckEmpty() then
+            for i = 1, #group.systems do
+                local system = self.systemNodes[group.systems[i]].value
+                if system and system:Filter(entity) and not system.collector[entity] then
+                    insert(system.collector, entity)
+                    system.collector[entity] = #system.collector
+                end
+            end
         end
     end
 end

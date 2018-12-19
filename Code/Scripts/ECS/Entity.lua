@@ -4,6 +4,7 @@ local pairs = pairs
 local type = type
 local format = string.format
 local Class = Class
+local printcolor = printcolor
 local ComponentMgr = require('ComponentManager')
 
 ---@class Entity
@@ -60,18 +61,28 @@ end
 
 function Entity:AddComponent(index)
     if not self.enable then
-        error(format('Entity:%d has been destroyed.', self.id))
+        printcolor('red', format('Entity:%d has been destroyed.', self.id))
+        return
     end
-    assert(self[index] == nil, "Entity: Trying to add Component '" .. index .. "', but it's already existing.")
+    if self[index] then
+        printcolor('red', "Entity: Trying to add Component '" .. index .. "', but it's already existing.")
+        return
+    end
+
     local comp = ComponentMgr.Create(index)
     self[index] = comp
     self.world:OnComponentChanged(self, index)
 end
 function Entity:RemoveComponent(index)
     if not self.enable then
-        error(format('Entity:%d has been destroyed.', self.id))
+        printcolor('red', format('Entity:%d has been destroyed.', self.id))
+        return
     end
-    assert(self[index] == nil, "Entity: Trying to remove non-existent component " .. index .. " from Entity. Please fix this")
+    if not self[index] then
+        printcolor('red', "Entity: Trying to remove non-existent component " .. index .. " from Entity. Please fix this")
+        return
+    end
+
     ComponentMgr.Release(index, self[index])
     self[index] = nil
     self.world:OnComponentChanged(self, index)

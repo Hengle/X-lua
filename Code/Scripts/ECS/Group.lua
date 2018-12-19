@@ -15,16 +15,24 @@ function Group:ctor(filter)
 end
 
 function Group:Filter(entity)
-    local filter = self.filter
-    assert(type(filter) == 'table', "Filter can only be table type.")
-    for i = 1, #filter do
-        local comp = filter[i]
-        if entity[comp] == nil then
-            return false
+    local r = self.filter:Handle(entity)
+    local index = self.entities[entity]
+    if r then
+        if not index then
+            insert(self.entities, entity)
+            self.entities[entity] = #self.entities
+        end
+    else
+        if index then
+            local length = #self.entities
+            local last = self.entities[length]
+            self.entities[index] = last
+            self.entities[entity] = nil
+            self.entities[length] = nil
+            self.entities[last] = index
         end
     end
-    insert(self.entities, entity)
-    return true
+    return r
 end
 
 ---检查是否还有所关注的系统,如果无则清空数据
@@ -37,17 +45,12 @@ function Group:CheckEmpty()
 end
 function Group:AddSystem(name)
     insert(self.systems, name)
+    self.systems[name] = #self.systems
 end
 function Group:RemoveSystem(name)
+    local index = self.systems[name]
     local length = #self.systems
-    for i = 1, length do
-        local sys = self.systems[i]
-        if sys.name == name then
-            local last = self.systems[length]
-            self.systems[i] = last
-            break
-        end
-    end
+    self.systems[index] = self.systems[length]
 end
 
 return Group
