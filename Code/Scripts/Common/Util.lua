@@ -16,7 +16,7 @@ local this = Util
 
 --错误处理机制
 function Util.ErrHandler(e)
-    LogError(traceback())
+    LogError(e .. traceback())
 end
 
 function Util.Myxpcall(func, data)

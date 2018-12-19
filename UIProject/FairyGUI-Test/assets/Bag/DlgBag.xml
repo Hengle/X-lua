@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="640,582">
+  <controller name="page" pages="0,,1,,2," selected="0"/>
+  <displayList>
+    <component id="n0_mxwy" name="frame" src="mr0jb" fileName="WindowFrame.xml" xy="0,0" size="640,582"/>
+    <list id="n1_mxwy" name="list" xy="54,71" size="525,332" pageController="page" layout="pagination" overflow="scroll" scroll="horizontal" scrollBarFlags="8" lineGap="5" colGap="5" defaultItem="ui://xs7ku0d0mxwye">
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+    </list>
+    <list id="n3_mxwy" name="dots" xy="200,390" size="200,25" layout="row" colGap="45" defaultItem="ui://xs7ku0d0mxwyg" align="center" selectionController="page">
+      <item/>
+      <item/>
+      <item/>
+    </list>
+    <loader id="n4_mxwy" name="Loader_Selected" xy="60,420" size="130,130"/>
+    <image id="n5_mxwy" name="line" src="mr0j6" fileName="images/7.png" xy="100,412" size="400,2"/>
+    <image id="n7_mxwy" name="selectedFrame" src="mr0j7" fileName="images/8.png" xy="60,420" size="130,130"/>
+    <text id="n8_mxwy" name="n8" xy="207,467" size="104,30" fontSize="22" color="#cc3300" autoSize="none" text="Selected:&#xA;"/>
+    <text id="n9_mxwy" name="Label_Name" xy="317,467" size="179,30" fontSize="22" color="#cc3300" autoSize="none" text="&#xA;"/>
+  </displayList>
+</component>
