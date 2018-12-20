@@ -64,6 +64,7 @@ namespace Game
         [DoNotGen]
         public void Dispose()
         {
+            _launcher.Clear();
             _instance = null;
             Resources.UnloadUnusedAssets();
         }

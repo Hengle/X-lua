@@ -41,6 +41,7 @@ namespace Game
                 {
                     if (_luaDelegate != null)
                         _luaDelegate.Dispose();
+                    _searchPaths.Clear();
                     _luaEnv.Dispose();
                     _luaEnv = null;
                     _instance = null;
@@ -65,8 +66,7 @@ namespace Game
         {
             for (int i = 0; i < _searchPaths.Count; i++)
             {
-                string dir = _searchPaths[i];
-                string fullPath = string.Format("{0}/{1}.lua", dir, filePath.Replace(".", "/")).ToString();
+                string fullPath = string.Format("{0}/{1}.lua", _searchPaths[i], filePath.Replace(".", "/")).ToLower();
                 if (File.Exists(fullPath))
                     return File.ReadAllBytes(fullPath);
             }
