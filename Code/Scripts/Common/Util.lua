@@ -11,6 +11,7 @@ local traceback = debug.traceback
 local xpcall = xpcall
 local LogError = LogError
 
+---@class Util
 local Util = {}
 local this = Util
 

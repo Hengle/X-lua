@@ -2,11 +2,11 @@
 <component size="100,40" overflow="hidden" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="1"/>
   <displayList>
-    <image id="n0" name="n0" src="gjac74" xy="-100,0">
+    <image id="n0" name="n0" src="gjac74" xy="-100,0" pkg="vjaxkvw8">
       <gearDisplay controller="button" pages="0,2"/>
       <gearXY controller="button" pages="0,1,2,3" values="-|-100,0|-|-100,0" default="0,0" tween="true" ease="Quad.Out"/>
     </image>
-    <image id="n1" name="n1" src="gjac75" xy="0,0">
+    <image id="n1" name="n1" src="gjac75" xy="0,0" pkg="vjaxkvw8">
       <gearDisplay controller="button" pages="1,3"/>
       <gearXY controller="button" pages="0,1,2,3" values="-|0,0|-|0,0" default="100,0" tween="true" ease="Quad.Out"/>
     </image>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="vjaxkvw8" jpegQuality="80" compressPNG="true">
+  <resources>
+    <image id="adipcc" name="0.png" path="/bagImages/" exported="true"/>
+    <image id="adipcd" name="1.png" path="/bagImages/" exported="true"/>
+    <image id="adipce" name="2.png" path="/bagImages/" exported="true"/>
+    <image id="adipcf" name="3.png" path="/bagImages/" exported="true"/>
+    <image id="adipcg" name="4.png" path="/bagImages/" exported="true"/>
+    <image id="adipch" name="5.png" path="/bagImages/" exported="true" scale="9grid" scale9grid="154,97,308,194"/>
+    <image id="adipci" name="7.png" path="/bagImages/" exported="true"/>
+    <image id="adipcj" name="8.png" path="/bagImages/" exported="true"/>
+    <image id="gp6dh" name="btnimage.png" path="/bagImages/" exported="true"/>
+    <movieclip id="gp6di" name="quan.jta" path="/bagImages/" exported="true"/>
+    <font id="gjaca8" name="BMFontTest.fnt" path="/font/" exported="true" texture="gjaca9"/>
+    <image id="gjaca9" name="BMFontTest_atlas.png" path="/font/"/>
+    <font id="gjacaa" name="HitNumber.fnt" path="/font/" exported="true"/>
+    <image id="gjac67" name="b7_png.png" path="/images/" exported="true" scale="9grid" scale9grid="8,7,66,14"/>
+    <image id="gjac68" name="b5_png.png" path="/images/" exported="true" scale="9grid" scale9grid="12,7,61,14"/>
+    <image id="gjac69" name="b6_png.png" path="/images/" exported="true" scale="9grid" scale9grid="9,5,66,16"/>
+    <image id="gjac6d" name="k20.png" path="/images/" exported="true"/>
+    <image id="gjac6e" name="k26.png" path="/images/" exported="true"/>
+    <image id="gjac6f" name="k25.png" path="/images/" exported="true"/>
+    <image id="gjac6g" name="b1.png" path="/images/" exported="true"/>
+    <image id="gjac6i" name="VIP_png.png" path="/images/" exported="true"/>
+    <image id="gjac6k" name="k5.png" path="/images/" exported="true"/>
+    <image id="gjac6l" name="k3.png" path="/images/" exported="true" scale="9grid" scale9grid="16,9,32,6"/>
+    <image id="gjac6m" name="k6.png" path="/images/" exported="true" scale="9grid" scale9grid="16,11,32,7"/>
+    <image id="gjac6n" name="k4.png" path="/images/" exported="true"/>
+    <image id="gjac6p" name="k9.png" path="/images/" exported="true"/>
+    <image id="gjac6q" name="k8.png" path="/images/" exported="true"/>
+    <image id="gjac6s" name="k11.png" path="/images/" exported="true"/>
+    <image id="gjac6t" name="k10.png" path="/images/" exported="true"/>
+    <image id="gjac6v" name="k14.png" path="/images/" exported="true" scale="9grid" scale9grid="40,13,80,26"/>
+    <image id="gjac6w" name="k12.png" path="/images/" exported="true" scale="9grid" scale9grid="40,19,80,18"/>
+    <image id="gjac6x" name="k13.png" path="/images/" exported="true" scale="9grid" scale9grid="40,13,80,26"/>
+    <image id="gjac6z" name="b4.png.jpg" path="/images/" exported="true"/>
+    <image id="gjac70" name="b1.png.jpg" path="/images/" exported="true"/>
+    <image id="gjac71" name="b3.png.jpg" path="/images/" exported="true"/>
+    <image id="gjac72" name="b2.png.jpg" path="/images/" exported="true"/>
+    <image id="gjac74" name="b12_png.png" path="/images/" exported="true"/>
+    <image id="gjac75" name="b13_png.png" path="/images/" exported="true"/>
+    <image id="gjac77" name="a1_png.png" path="/images/" exported="true"/>
+    <image id="gjac78" name="a3_png.png" path="/images/" exported="true"/>
+    <image id="gjac79" name="a2_png.png" path="/images/" exported="true"/>
+    <image id="gjac7a" name="a4_png.png" path="/images/" exported="true"/>
+    <image id="gjac7c" name="b4.png" path="/images/" exported="true" scale="9grid" scale9grid="40,17,80,34"/>
+    <image id="gjac7d" name="b5.png" path="/images/" exported="true" scale="9grid" scale9grid="40,17,80,34"/>
+    <image id="gjac7f" name="change.png" path="/images/" exported="true" scale="tile"/>
+    <image id="gjac7m" name="6_png.png" path="/images/" exported="true" scale="9grid" scale9grid="40,40,80,142"/>
+    <image id="gjac7o" name="10_png.png" path="/images/" exported="true"/>
+    <image id="gjac7p" name="9_png.png" path="/images/" exported="true"/>
+    <image id="gjac7q" name="8_png.png" path="/images/" exported="true"/>
+    <image id="gjac7t" name="c1_png.png" path="/images/" exported="true" scale="9grid" scale9grid="7,5,73,10"/>
+    <image id="gjac7u" name="c3_png.png" path="/images/" exported="true" scale="9grid" scale9grid="11,5,71,10"/>
+    <image id="gjac7v" name="c2_png.png" path="/images/" exported="true" scale="9grid" scale9grid="8,5,73,10"/>
+    <image id="gjac7w" name="b7(2)_png.png" path="/images/" exported="true"/>
+    <image id="gjac7y" name="p1_png.png" path="/images/" exported="true" scale="9grid" scale9grid="7,4,144,49"/>
+    <image id="gjac82" name="k30.png" path="/images/" exported="true" scale="9grid" scale9grid="33,10,57,20"/>
+    <image id="gjac83" name="k28.png" path="/images/" exported="true" scale="9grid" scale9grid="33,10,55,20"/>
+    <image id="gjac84" name="k31.png" path="/images/" exported="true" scale="9grid" scale9grid="33,10,55,20"/>
+    <image id="gjac85" name="k29.png" path="/images/" exported="true" scale="9grid" scale9grid="33,10,53,20"/>
+    <image id="gjac87" name="k32.png" path="/images/" exported="true" scale="9grid" scale9grid="26,11,52,22"/>
+    <image id="gjac89" name="k23.png" path="/images/" exported="true" scale="9grid" scale9grid="26,10,52,20"/>
+    <image id="gjac8a" name="k21.png" path="/images/" exported="true" scale="9grid" scale9grid="11,7,82,26"/>
+    <image id="gjac8b" name="k24.png" path="/images/" exported="true" scale="9grid" scale9grid="26,10,52,20"/>
+    <image id="gjac8c" name="k22.png" path="/images/" exported="true" scale="9grid" scale9grid="26,10,52,20"/>
+    <image id="gjac8e" name="p10_png.png" path="/images/" exported="true"/>
+    <image id="gjac8f" name="p11_png.png" path="/images/" exported="true"/>
+    <image id="gjac8h" name="p14_png.png" path="/images/" exported="true"/>
+    <image id="gjac8i" name="p15_png.png" path="/images/" exported="true"/>
+    <image id="gjac8k" name="p13_png.png" path="/images/" exported="true"/>
+    <image id="gjac8l" name="p12_png.png" path="/images/" exported="true"/>
+    <image id="gjac8n" name="p8_png.png" path="/images/" exported="true"/>
+    <image id="gjac8o" name="p9_png.png" path="/images/" exported="true"/>
+    <image id="gjac8q" name="k33.png" path="/images/" exported="true"/>
+    <image id="gjac8r" name="k34.png" path="/images/" exported="true" scale="9grid" scale9grid="41,4,342,5"/>
+    <image id="gjac8t" name="b3.png" path="/images/" exported="true"/>
+    <image id="gjac8u" name="b2.png" path="/images/" exported="true"/>
+    <image id="gjac8w" name="p2_png.png" path="/images/" exported="true" scale="9grid" scale9grid="10,4,121,4"/>
+    <image id="gjac8x" name="p3_png.png" path="/images/" exported="true"/>
+    <image id="gjac8z" name="k17.png" path="/images/" exported="true" scale="9grid" scale9grid="27,9,54,2"/>
+    <image id="gjac90" name="k16.jpg" path="/images/" exported="true" scale="9grid" scale9grid="8,5,16,2"/>
+    <image id="gjac91" name="k7.png" path="/images/" exported="true"/>
+    <image id="gjac93" name="caiji.png" path="/images/" exported="true"/>
+    <image id="gjac95" name="caiji2.png" path="/images/" exported="true"/>
+    <image id="gjac97" name="loading.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjac98" name="huawen1_png.png" path="/images/" exported="true"/>
+    <image id="gjac99" name="huawen2_png.png" path="/images/" exported="true"/>
+    <image id="gjac9d" name="k0.png" path="/images/" exported="true"/>
+    <image id="gjac9e" name="k2.png" path="/images/" exported="true"/>
+    <image id="gjac9f" name="k1.png" path="/images/" exported="true" scale="9grid" scale9grid="17,16,74,73"/>
+    <image id="gjac9j" name="close_png.png" path="/images/" exported="true"/>
+    <image id="gjac9q" name="start.png" path="/images/" exported="true" scale="tile"/>
+    <movieclip id="gjac9t" name="gz.jta" path="/images/" exported="true"/>
+    <image id="gjac9v" name="plus_smile_png.png" path="/images/" exported="true"/>
+    <image id="gjac9y" name="22.png" path="/images/" exported="true"/>
+    <image id="gjaca0" name="k36.png" path="/images/" exported="true"/>
+    <image id="gjaca1" name="k35.png" path="/images/" exported="true"/>
+    <image id="gjaca4" name="back btn.png" path="/images/" exported="true"/>
+    <image id="gjaca6" name="background.png" path="/images/" exported="true" scale="9grid" scale9grid="24,6,319,13"/>
+    <image id="gjaca7" name="full bar.png" path="/images/" exported="true" scale="9grid" scale9grid="15,6,109,12"/>
+    <image id="gjacab" name="h0.png" path="/images/" exported="true"/>
+    <image id="gjacac" name="h1.png" path="/images/" exported="true"/>
+    <image id="gjacad" name="h2.png" path="/images/" exported="true"/>
+    <image id="gjacae" name="h3.png" path="/images/" exported="true"/>
+    <image id="gjacaf" name="h4.png" path="/images/" exported="true"/>
+    <image id="gjacag" name="h5.png" path="/images/" exported="true"/>
+    <image id="gjacah" name="h6.png" path="/images/" exported="true"/>
+    <image id="gjacai" name="h7.png" path="/images/" exported="true"/>
+    <image id="gjacaj" name="h8.png" path="/images/" exported="true"/>
+    <image id="gjacak" name="h9.png" path="/images/" exported="true"/>
+    <image id="gjacal" name="angry_smile_png.png" path="/images/" exported="true"/>
+    <image id="gjacam" name="long_dead_png.png" path="/images/" exported="true"/>
+    <image id="gjacan" name="k18.png" path="/images/" exported="true"/>
+    <image id="gjacao" name="pic.png" path="/images/" exported="true"/>
+    <movieclip id="gjacap" name="nlge1k.jta" path="/images/" exported="true"/>
+    <image id="gjacaq" name="long_dead2_png.png" path="/images/" exported="true" scale="tile"/>
+    <image id="gjacar" name="i256.png" path="/images/" exported="true"/>
+    <image id="gjacas" name="k27.png" path="/images/" exported="true"/>
+    <image id="gjacat" name="r3.png" path="/images/" exported="true"/>
+    <image id="gjacau" name="r4.png" path="/images/" exported="true"/>
+    <swf id="gjacav" name="qtm01d.swf" path="/images/" exported="true"/>
+    <movieclip id="gjacaw" name="pet.jta" path="/images/" exported="true"/>
+    <image id="gjacax" name="s10.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacay" name="s6.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacaz" name="s4.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacb0" name="s5.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacb1" name="s9.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacb2" name="s7.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacb3" name="s8.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacb4" name="s1.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacb5" name="s2.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacb6" name="s3.png.jpg" path="/images/" exported="true" duplicatePadding="true"/>
+    <image id="gjacb7" name="k19.png" path="/images/" exported="true"/>
+    <image id="gjacb8" name="p16_png.png" path="/images/" exported="true" scale="9grid" scale9grid="7,4,144,49"/>
+    <image id="gjacb9" name="a8_png.png" path="/images/" exported="true" scale="9grid" scale9grid="8,5,70,10"/>
+    <image id="gjacba" name="VtSeperator.jpg" path="/images/" exported="true"/>
+    <image id="gjacbb" name="a18_png.png" path="/images/" exported="true"/>
+    <image id="gjacbc" name="grid_header_png.png" path="/images/" exported="true" scale="9grid" scale9grid="50,5,100,10"/>
+    <image id="gjacbd" name="Shape 1 copy 4.png" path="/images/" exported="true"/>
+    <sound id="gjacbm" name="tabswitch.wav" path="/sound/" exported="true"/>
+    <sound id="gjacbn" name="click.wav" path="/sound/" exported="true"/>
+  </resources>
+  <publish name="BaseSprite" path="..\..\Unity\Assets\Interface\Atlas"/>
+</packageDescription>

@@ -54,16 +54,25 @@ namespace FairyGUI
 
 		void LoadFont()
 		{
-			//Try to load name.ttf in Resources
-			_font = (Font)Resources.Load(name, typeof(Font));
+            ////Try to load name.ttf in Resources
+            //_font = (Font)Resources.Load(name, typeof(Font));
 
-			//Try to load name.ttf in Resources/Fonts/
-			if (_font == null)
-				_font = (Font)Resources.Load("Fonts/" + name, typeof(Font));
+            ////Try to load name.ttf in Resources/Fonts/
+            //if (_font == null)
+            //	_font = (Font)Resources.Load("Fonts/" + name, typeof(Font));
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                string path = Game.ResourceManager.Instance.GetResPath(name);
+                var ab = AssetBundle.LoadFromFile(path);
+                var assetName = System.IO.Path.GetFileNameWithoutExtension(name);
+                _font = ab.LoadAsset<Font>(assetName);
+                ab.Unload(false);
+            }
 
 #if (UNITY_5 || UNITY_5_3_OR_NEWER)
-			//Try to use new API in Uinty5 to load
-			if (_font == null)
+            //Try to use new API in Uinty5 to load
+            if (_font == null)
 			{
 				if (name.IndexOf(",") != -1)
 				{

@@ -65,9 +65,11 @@ function printt(t, des)
     end
 end
 function printmodule(m, ...)
-    if not Local.LogManager then return end
+    if not Local.LogManager then
+        return
+    end
     if m then
-        printyellow(string.format("%.3f",UnityEngine.Time.time),...)
+        print(...)
     end
 end
 

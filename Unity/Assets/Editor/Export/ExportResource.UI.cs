@@ -15,23 +15,50 @@ public partial class ExportResource
     //5.动态加载图片(大图)                -另作处理
     //6.2D特效/3D特效?麻烦!!
 
+
+    //---一个FGUI包对应一个AB包
+
     static string guiFolder = "Assets/Interface/GUI";
     static string atlasFolder = "Assets/Interface/Atlas";
     static Dictionary<string, string> assetFonts = new Dictionary<string, string>()
-    { {"Assets/Interface/Font/HYQiHei-55JW.otf", "ui/atlas/dlgfont.ui"} };//Unity资源路径 -> Bundle资源路径
+    { {"Assets/Interface/Font/font.otf", "ui/atlas/font.bundle"} };//Unity资源路径 -> Bundle资源路径
 
     //rgb:atlas0.png        -RGB通道贴图
     //a:atlas0!a.png        -A通道贴图
     //des:fui.bytes         -UI描述文件
     static void SetAtlasPackage(string srcFolder, string dstFolder)
     {
+        //---功能:图集分des和res包
+        //        Dictionary<string, string> assets = new Dictionary<string, string>();
+        //        GetAssetsRecursively(srcFolder, "*_fui.bytes", dstFolder, null, ref assets);
+        //        GetAssetsRecursively(srcFolder, "*_atlas0.png", dstFolder, null, ref assets);
+        //#if UNITY_ANDROID
+        //        GetAssetsRecursively(srcFolder, "*_atlas0!a.png", dstFolder, null, ref assets);
+        //#endif
+        //        SetAssetBundleName(assets, new string[] { EXT_PNG, EXT_TGA }, DEPTEX_FOLDER);
+
+
+        //---des和res打到同一个包中作为图集
+        Dictionary<string, string> temps = new Dictionary<string, string>();
+        GetAssetsRecursively(srcFolder, "*_fui.bytes", dstFolder, null, ref temps);
         Dictionary<string, string> assets = new Dictionary<string, string>();
-        GetAssetsRecursively(srcFolder, "*_fui.bytes", dstFolder, null, ref assets);
-        GetAssetsRecursively(srcFolder, "*_atlas0.png", dstFolder, null, ref assets);
+        List<string> others = new List<string>() {
+            "_atlas0.png",
 #if UNITY_ANDROID
-        GetAssetsRecursively(srcFolder, "*_atlas0!a.png", dstFolder, null, ref assets);
+            "_atlas0!a.png"
 #endif
-        SetAssetBundleName(assets, new string[] { EXT_PNG, EXT_TGA }, DEPTEX_FOLDER);
+        };
+        foreach (var item in temps)
+        {
+            string value = item.Value.Replace("_fui.bundle", ".bundle");
+            assets.Add(item.Key, value);
+            for (int i = 0; i < others.Count; i++)
+            {
+                string key = item.Key.Replace("_fui.bytes", others[i]);
+                assets.Add(key, value);
+            }
+        }
+        SetAssetBundleName(assets);
     }
     static Dictionary<string, string> GetGUIPackage(string srcFolder, string dstFolder)
     {
@@ -51,6 +78,7 @@ public partial class ExportResource
             var assets = GetSelectedAssets(assetUIs, selection);
 
             CombineAssets(new Dictionary<string, string>[] { assetFonts }, ref assets);
+            assets = ModifyABName(assets);
             SetAssetBundleName(assets, new string[] { EXT_PNG, EXT_TGA }, DEPTEX_FOLDER);
 
             BuildAssetBundles(target);
@@ -61,9 +89,20 @@ public partial class ExportResource
         SetAtlasPackage(atlasFolder, "ui/atlas/");
         var assets = GetGUIPackage(guiFolder, "ui/");
         CombineAssets(new Dictionary<string, string>[] { assetFonts }, ref assets);
+        assets = ModifyABName(assets);
         SetAssetBundleName(assets, new string[] { EXT_PNG, EXT_TGA }, DEPTEX_FOLDER);
 
         BuildAssetBundles(target);
+    }
+    static Dictionary<string, string> ModifyABName(Dictionary<string, string> assets)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        foreach (var item in assets)
+        {
+            string value = item.Value.Replace("_fui.bundle", ".bundle");
+            dict.Add(item.Key, value);
+        }
+        return dict;
     }
     static void CombineAssets(Dictionary<string, string>[] dics, ref Dictionary<string, string> assets)
     {

@@ -161,6 +161,7 @@
     <Compile Include="Assets\Editor\XmlUtil.cs" />
     <Compile Include="Assets\Examples\13_BuildFromCLI\Editor\BuildFromCLI.cs" />
     <Compile Include="Assets\FairyGUI\Examples\Editor\BuildAssetBundles.cs" />
+    <Compile Include="Assets\FairyGUI\Scripts\Editor\DisplayObjectEditor.cs" />
     <Compile Include="Assets\FairyGUI\Scripts\Editor\EditorToolSet.cs" />
     <Compile Include="Assets\FairyGUI\Scripts\Editor\PackagesWindow.cs" />
     <Compile Include="Assets\FairyGUI\Scripts\Editor\StageCameraEditor.cs" />
@@ -439,6 +440,9 @@
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson">
+      <HintPath>E:/__Github/X-lua/Unity/Assets/Plugins/LitJson.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
       <HintPath>E:/__Github/X-lua/Unity/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>

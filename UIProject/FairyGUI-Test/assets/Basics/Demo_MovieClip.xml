@@ -6,7 +6,7 @@
     <jta id="n13" name="n13" src="gjacap" xy="52,243" color="#0066cc"/>
     <jta id="n14" name="n14" src="gjacap" xy="70,416" frame="1" playing="false"/>
     <jta id="n15" name="n15" src="gjacap" xy="298,227" pivot="0.5,0.5" size="155,144" alpha="0.33" rotation="-49" frame="1"/>
-    <component id="n18" name="n18" src="gjac6a" xy="170,426" size="84,42">
+    <component id="n18" name="n18" src="gjac6a" xy="170,426" size="84,42" pkg="vjaxkvw8">
       <Button title="点我" icon="ui://gxzp6q7wgjacap"/>
     </component>
     <jta id="n19" name="n19" src="gjacaw" xy="172,111"/>

@@ -19,8 +19,8 @@ namespace Game
         {
             _table = table;
             _OnInit = table.Get<LuaFunction>("OnInit");
-            _DoHideAnimation = table.Get<LuaFunction>("DoShowTween");
-            _DoShowAnimation = table.Get<LuaFunction>("DoHideTween");
+            _DoHideAnimation = table.Get<LuaFunction>("DoShow");
+            _DoShowAnimation = table.Get<LuaFunction>("DoHide");
             _OnShown = table.Get<LuaFunction>("OnShow");
             _OnHide = table.Get<LuaFunction>("OnHide");
         }

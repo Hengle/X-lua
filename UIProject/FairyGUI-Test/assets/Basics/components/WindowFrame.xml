@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="157,202" extention="Label" initName="frame">
   <displayList>
-    <image id="n0" name="n0" src="gjac7m" xy="0,0" aspect="true">
+    <image id="n0" name="n0" src="gjac7m" xy="0,0" aspect="true" pkg="vjaxkvw8">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
-    <component id="n1" name="closeButton" src="gjac7n" xy="133,5" aspect="true">
+    <component id="n1" name="closeButton" src="gjac7n" xy="133,5" aspect="true" pkg="vjaxkvw8">
       <relation target="" sidePair="right-right"/>
     </component>
     <graph id="n3" name="dragArea" xy="6,4" size="123,22">

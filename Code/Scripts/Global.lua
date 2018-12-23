@@ -27,6 +27,7 @@ Rect        = UnityEngine.Rect
 RuntimePlatform = UnityEngine.RuntimePlatform
 Time = UnityEngine.Time
 
+
 FairyGUI = CS.FairyGUI
 EventContext  = FairyGUI.EventContext
 EventListener = FairyGUI.EventListener
@@ -84,6 +85,7 @@ UIPainter = FairyGUI.UIPainter
 TypingEffect = FairyGUI.TypingEffect
 ---@type FairyGUI.Timers
 Timers = FairyGUI.Timers
+UIConfig = FairyGUI.UIConfig
 
 Game = CS.Game
 CSUtil = Game.Util
@@ -93,6 +95,7 @@ Interface = Game.Platform.Interface
 ResMgr = Game.ResourceManager.Instance
 SoundMgr = Game.SoundManager.Instance
 NetworkMgr = Game.NetworkManager.Instance
+LuaWindow = Game.LuaWindow
 
 local require = require
 require 'xlua.extend'

@@ -5,14 +5,14 @@ local match = string.match
 local insert = table.insert
 local loaded = package.loaded
 local trim = string.trim
-local clone = table.clone
+local copy = table.copy
 local clear = table.clear
 
 local Time = Time
 local Local = Local
 local ResMgr = ResMgr
 local Vector3 = Vector3
-local LuaUtils = LuaUtils
+local Util = Util
 local LuaHelper = LuaHelper
 local GameObject = GameObject
 local ConditionOp = ConditionOp
@@ -26,14 +26,16 @@ local LogError = LogError
 local printt = printt
 local print = print
 local printyellow = printyellow
+local printmodule = printmodule
+local IsNull = IsNull
 
 local ViewUtil = require "Common.ViewUtil"
 
 local LOAD_ING = 1              --正在加载中
 local LOAD_SUCC = 2             --加载成功
 local LAYER_UI = 20             --UI Layer层
-local UI_LOAD_TYPE = CS.Game.ResourceLoadType.LoadBundleFromFile -- www方式加载
-local DLG_LOADING_MASK = "DlgUILock"    -- 加载界面时锁UI,禁止一切操作
+local UI_LOAD_TYPE = Define.ResourceLoadType.LoadBundleFromFile | Define.ResourceLoadType.ReturnAssetBundle -- www方式加载
+--local DLG_LOADING_MASK = "DlgUILock"    -- 加载界面时锁UI,禁止一切操作
 local MAX_HIDE_VIEW_NUM = 0
 
 local _views = {}
@@ -52,6 +54,14 @@ local HideLoadingLock           --隐藏加载中提示!
 
 local UIManager = {}
 local this = UIManager
+
+--[[
+    注:问题
+        1.LuaWindow类缓存重复利用,直接再C#层完成!
+        2.C#侧callback释放lua function
+        3.添加移除子对象后,子对象无法完整释放.[子对象应该已被缓存,后续有待集中释放]
+        4.
+--]]
 
 ---#注:未完成功能
 ---#遮罩界面,避免对当前窗口后面物体进行交互
@@ -76,17 +86,22 @@ local Data = {
     isShow = false,
 
     OnInit = OnInit, --  脚本对应事件 Init
-    DoShowTween = DoShow, --  脚本对应事件 DoShow
+    DoShow = DoShow, --  脚本对应事件 DoShow
     OnShow = OnShow, --  脚本对应事件 Show
-    DoHideTween = DoHide, --  脚本对应事件 DoHide
+    DoHide = DoHide, --  脚本对应事件 DoHide
     OnHide = OnHide, --  脚本对应事件 Hide
 }
 
 function UIManager.Init()
     _stage = FindObj("Stage")
-    if _stage then
-        GameObject.DontDestroyOnLoad(_stage)
+    local list = { "Stage", "Stage Camera" }
+    for i = 1, #list do
+        local obj = FindObj(list[i])
+        if obj then
+            GameObject.DontDestroyOnLoad(obj)
+        end
     end
+    UIConfig.globalModalWaiting = 'ui://Basics/DlgUILock'
 
     gameEvent.UpdateEvent:Add(this.Update)
     gameEvent.SecondUpdateEvent:Add(this.SecondUpdate)
@@ -112,9 +127,12 @@ function UIManager.LateUpdate()
         end
 
         if info.needRefresh and NeedRefresh(viewName) then
-            if Local.LogModuals.UIManager then
-                print("[UIManager]LateUpdate Refresh", viewName)
-                printt(info.refreshParams, "LateUpdate Refresh")
+            if Local.Moduals.UIManager then
+                if info.refreshParams then
+                    printt(info.refreshParams, "[UIManager]LateUpdate Refresh " .. viewName)
+                else
+                    print("[UIManager]LateUpdate Refresh " .. viewName)
+                end
             end
             info.needRefresh = false
             this.Call(viewName, "Refresh", info.params)
@@ -136,7 +154,8 @@ function UIManager.UnloadExpireView(now)
     local toDestroyViewName
     local minHideTime = now
     for name, data in pairs(_views) do
-        if data ~= nil and data.status == LOAD_SUCC and not data.isShow and not this.IsPersistent(name) and not this.IsInStack(name) then
+        if data ~= nil and data.status == LOAD_SUCC and not data.isShow and not this.IsPersistent(name) then
+            --and not this.IsInStack(name)
             unshowViewNum = unshowViewNum + 1
             if data.hideTime ~= nil and data.hideTime < minHideTime then
                 toDestroyViewName = name
@@ -145,16 +164,25 @@ function UIManager.UnloadExpireView(now)
         end
     end
     if toDestroyViewName and unshowViewNum > MAX_HIDE_VIEW_NUM then
-        this.Destroy(toDestroyViewName)
+        --this.Destroy(toDestroyViewName)
     end
 end
 
 function UIManager.GetViewData(viewName)
+    ---@type UIData
     local data = _views[viewName]
     if not data then
-        data = clone(Data)
-        local _, fileName = match(viewName, "^(.*)%.(.*)$")
+        data = {
+            isShow = false,
+            OnInit = OnInit,
+            DoShowTween = DoShow,
+            OnShow = OnShow,
+            DoHideTween = DoHide,
+            OnHide = OnHide,
+        }
+        local pkgName, fileName = match(viewName, "^(.*)%.(.*)$")
         data.fileName = ConditionOp(fileName, fileName, viewName)
+        data.pkgName = pkgName
         data.viewName = viewName
         _views[viewName] = data
     end
@@ -217,7 +245,7 @@ function UIManager.Call(viewName, methodName, params)
         LogError("[UIManager]%s not loaded! can't call method:%s", viewName, methodName)
         return
     end
-    local succ = LuaUtils.Myxpcall(method, params)
+    local succ = Util.Myxpcall(method, params)
     if succ then
         return true
     else
@@ -259,6 +287,17 @@ end
 function UIManager.IsPersistent(viewName)
     return Local.UIPersistentMap[viewName] == true
 end
+function UIManager.GetUIShowType(viewName)
+    local showType = UIShowType.Default
+    if (this.HasMethod(viewName, "UIShowType")) then
+        showType = this.CallWithReturn(viewName, "UIShowType")
+    end
+    return showType
+end
+function UIManager.IsUIShowType(viewName, showType)
+    local viewuishowtype = this.GetUIShowType(viewName)
+    return (showType & viewuishowtype) > 0
+end
 
 ---------------------------------------------
 ---普通窗口操作方法
@@ -267,24 +306,23 @@ ShowLoadingLock = function(beginTime, endTime)
     if _isLocked == true then
         return
     end
-    if Local.LogModuals.UIManager then
-        printyellow("[UIManager]ShowLoading Locked")
-    end
-    local params = { beginTime = ConditionOp(beginTime, beginTime, 0.5), endTime = ConditionOp(endTime, endTime, 3) }
-    if this.IsShow(DLG_LOADING_MASK) then
-        this.Refresh(DLG_LOADING_MASK, params)
-    else
-        this.Show(DLG_LOADING_MASK, params)
-    end
+
+    printmodule(Local.Moduals.UIManager, "[UIManager]ShowLoading Locked")
+    --local params = { beginTime = ConditionOp(beginTime, beginTime, 0.5), endTime = ConditionOp(endTime, endTime, 3) }
+    GRoot.inst:ShowModalWait()
+    --if this.IsShow(DLG_LOADING_MASK) then
+    --    this.Refresh(DLG_LOADING_MASK, params)
+    --else
+    --    this.Show(DLG_LOADING_MASK, params)
+    --end
 end
 HideLoadingLock = function()
     if _isLocked == true then
         return
     end
-    if Local.LogModuals.UIManager then
-        printyellow("[UIManager]HideLoading Locked")
-    end
-    this.Hide(DLG_LOADING_MASK)
+    printmodule(Local.Moduals.UIManager, "[UIManager]HideLoading Locked")
+    GRoot.inst:CloseModalWait()
+    --this.Hide(DLG_LOADING_MASK)
 end
 ---@param data UIData
 OnInit = function(data)
@@ -294,7 +332,7 @@ OnInit = function(data)
     window:Center()
     window.displayObject.gameObject.layer = LAYER_UI
     if this.Call(viewName, "Init", { viewName, window, data.fields }) then
-        --
+        printmodule(Local.Moduals.UIManager, '[UIManager]OnInit ' .. viewName)
     else
         window:HideImmediately()
     end
@@ -304,6 +342,7 @@ DoShow = function(data)
     local viewName = data.viewName
     ---@type Game.LuaWindow
     local window = data.base
+    data.isShow = true
     if this.Call(viewName, "DoShow", window.ShowImmediately) then
         ---界面显示动画 ! 不知道什么时候结束
         ---TODO
@@ -314,15 +353,10 @@ end
 ---@param data UIData
 OnShow = function(data)
     local window, viewName, params = data.base, data.viewName, data.params
-    if Local.LogModuals.UIManager then
-        printyellow("[UIManager]OnShow", viewName)
-    end
-    if viewName ~= DLG_LOADING_MASK then
-        HideLoadingLock()
-    end
+    printmodule(Local.Moduals.UIManager, '[UIManager]OnShow ' .. viewName)
+    HideLoadingLock()
 
     if this.Call(viewName, "Show", data.params) then
-        data.isShow = true
         this.Refresh(viewName, params)
     else
         window:HideImmediately()
@@ -343,9 +377,7 @@ end
 ---@param data UIData
 OnHide = function(data)
     local viewName = data.viewName
-    if Local.LogModuals.UIManager then
-        printyellow("[UIManager]OnHide", viewName)
-    end
+    printmodule(Local.Moduals.UIManager, '[UIManager]OnHide ' .. viewName)
     if this.Call(viewName, "Hide") then
         data.isShow = false
         if this.IsUIShowType(viewName, UIShowType.DestroyWhenHide) then
@@ -359,9 +391,12 @@ NeedRefresh = function(viewName)
 end
 
 function UIManager.Show(viewName, params)
-    if Local.LogModuals.UIManager then
-        printyellow("[UIManager]Show", viewName)
-        printt(params)
+    if Local.Moduals.UIManager then
+        if params then
+            printt(params, '[UIManager]Show ' .. viewName)
+        else
+            print("[UIManager]Show", viewName)
+        end
     end
     local data = this.GetViewData(viewName)
     if data.isShow and not this.IsUIShowType(viewName, UIShowType.Refresh) then
@@ -369,28 +404,33 @@ function UIManager.Show(viewName, params)
     end
     data.params = params
     ShowLoadingLock(viewName)
-    if data.status ~= LOAD_SUCC then
+    local pkg = UIPackage.GetByName(data.pkgName)
+    if IsNull(pkg) and data.status ~= LOAD_SUCC then
         if not data.loaded then
-            print(format("view: %s %s", viewName, "not loaded!\n"))
+            --print(format("view: %s %s", viewName, "be going to be loaded!\n"))
             data.loaded = LOAD_ING
             --ShowLoading()--显示界面加载提示界面
-            ResMgr:AddTask(format("ui/%s.bundle", data.fileName), function(fui)
-                if fui == nil then
+            ResMgr:AddTask(format("ui/%s.bundle", data.pkgName), function(ab)
+                ---@type UnityEngine.AssetBundle
+                local asstbundle = ab
+                local viewCom = nil
+                if IsNull(asstbundle) then
                     return
                 end
-                local name = trim("_fui") --- 资源名都是大写,AB包名均小写
-                local viewCom = UIPackage.CreateObject(name, name).asCom
+                UIPackage.AddPackage(asstbundle)
+                viewCom = UIPackage.CreateObject(data.pkgName, data.fileName).asCom
                 if not viewCom then
                     data.loaded = nil
                     LogError(format("view %s fgui load fail!", viewName))
                     return
                 end
                 ---@type Game.LuaWindow
-                local window = FairyGUI.LuaWindow()
+                local window = LuaWindow()
                 window.contentPane = viewCom
                 window:ConnectLua(data)
                 data.base = window      -- LuaWindow
                 data.hideTime = 0       -- 脚本对象
+                data.isShow = true
                 data.status = LOAD_SUCC
                 data.fields = ViewUtil.ExportFields(viewCom)
                 window:Show()
@@ -399,12 +439,19 @@ function UIManager.Show(viewName, params)
         return
     end
 
-    data.base:Show()
+    local viewCom = pkg:CreateObject(data.fileName).asCom
+    local window = LuaWindow()
+    window.contentPane = viewCom
+    window:ConnectLua(data)
+    data.base = window      -- LuaWindow
+    data.hideTime = 0       -- 脚本对象
+    data.isShow = true
+    data.status = LOAD_SUCC
+    data.fields = ViewUtil.ExportFields(viewCom)
+    window:Show()
 end
 function UIManager.Refresh(viewName, params)
-    if Local.LogModuals.UIManager then
-        printyellow("[UIManager]Refresh", viewName)
-    end
+    printmodule(Local.Moduals.UIManager, "[UIManager]Refresh", viewName)
     if NeedRefresh(viewName) then
         local data = this.GetViewData(viewName)
         data.needRefresh = true
@@ -424,9 +471,7 @@ function UIManager.IfShowThenCall(viewName, methodName, params)
     end
 end
 function UIManager.Hide(viewName)
-    if Local.LogModuals.UIManager then
-        printyellow("[UIManager]Hide", viewName)
-    end
+    printmodule(Local.Moduals.UIManager, "[UIManager]Hide", viewName)
     local data = this.GetViewData(viewName)
     data.hideTime = Time.time
     if not data.isShow then
@@ -439,9 +484,7 @@ function UIManager.Hide(viewName)
     window:Hide()
 end
 function UIManager.HideImmediate(viewName)
-    if Local.LogModuals.UIManager then
-        printyellow("[UIManager]HideImmediate", viewName)
-    end
+    printmodule(Local.Moduals.UIManager, "[UIManager]HideImmediate", viewName)
     local data = this.GetViewData(viewName)
     data.hideTime = Time.time
     if not data.isShow then
@@ -460,7 +503,8 @@ function UIManager.Destroy(viewName)
     this.Call(viewName, "Destroy")
     ---@type Game.LuaWindow
     local window = data.base
-    clear(data)
+    data.base = nil
+    --clear(data)
     _views[viewName] = nil
     assert(loaded[this.GetModuleName(viewName)])
     loaded[this.GetModuleName(viewName)] = nil

@@ -21,17 +21,21 @@ end
 local function Init()
     Util.Myxpcall(InitModule)
     printcolor("orange", 'lua framework init successful.')
-    Util.Myxpcall(TEST)
-    local demo = require "UIExample.UIDemo"
-    Util.Myxpcall(demo.Init, demo)
+
+    local UIMgr = require('Manager.UIManager')
+    Util.Myxpcall(UIMgr.Show, 'Bag.DlgBagEnter')
+
+    --Util.Myxpcall(TEST)
+    --local demo = require "UIExample.UIDemo"
+    --Util.Myxpcall(demo.Init, demo)
 end
 
 --逻辑update
 local function Update(deltaTime, unscaledDeltaTime)
-    gameEvent.UpdateEvent:Trigger()
+    gameEvent.UpdateEvent:Trigger(deltaTime, unscaledDeltaTime)
 end
 local function SecondUpdate(time)
-    gameEvent.SecondUpdateEvent:Trigger()
+    gameEvent.SecondUpdateEvent:Trigger(time)
 end
 local function LateUpdate()
     gameEvent.LateUpdateEvent:Trigger()

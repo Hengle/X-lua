@@ -17,10 +17,10 @@
       <relation target="" sidePair="width-width"/>
     </graph>
     <text id="n5" name="t1" xy="62,11" size="220,28" fontSize="22" color="#ffffff" autoSize="none" singleLine="true" text="Name"/>
-    <component id="n7" name="cb" src="gjac6r" xy="1,0">
+    <component id="n7" name="cb" src="gjac6r" xy="1,0" pkg="vjaxkvw8">
       <Button checked="true"/>
     </component>
-    <jta id="n8" name="mc" src="gjac9t" xy="317,13"/>
+    <jta id="n8" name="mc" src="gjac9t" xy="317,13" pkg="vjaxkvw8"/>
   </displayList>
   <Button mode="Radio"/>
 </component>

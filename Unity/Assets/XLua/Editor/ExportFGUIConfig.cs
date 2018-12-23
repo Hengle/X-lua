@@ -43,6 +43,7 @@ public static class ExportFGUIConfig
         typeof(GObjectPool),
         typeof(Relations),
         typeof(RelationType),
+        typeof(UIConfig),
 
         typeof(Timers),
         typeof(GTween),

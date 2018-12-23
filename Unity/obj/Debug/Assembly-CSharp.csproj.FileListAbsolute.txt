@@ -176,3 +176,4 @@ E:\__Github\X-lua\Unity\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 E:\__Github\X-lua\Unity\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 E:\__Github\X-lua\Unity\obj\Debug\Assembly-CSharp.dll
 E:\__Github\X-lua\Unity\obj\Debug\Assembly-CSharp.pdb
+E:\__Github\X-lua\Unity\Temp\bin\Debug\LitJson.dll

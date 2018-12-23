@@ -533,6 +533,7 @@
     <Compile Include="Assets\XLua\Gen\FairyGUITimersWrap.cs" />
     <Compile Include="Assets\XLua\Gen\FairyGUITransitionWrap.cs" />
     <Compile Include="Assets\XLua\Gen\FairyGUITweenValueWrap.cs" />
+    <Compile Include="Assets\XLua\Gen\FairyGUIUIConfigWrap.cs" />
     <Compile Include="Assets\XLua\Gen\FairyGUIUIPackageWrap.cs" />
     <Compile Include="Assets\XLua\Gen\FairyGUIWindowWrap.cs" />
     <Compile Include="Assets\XLua\Gen\Foo1ChildWrap.cs" />
@@ -663,7 +664,6 @@
     <None Include="Assets\Resources\launcher.txt" />
     <None Include="Assets\XLua\Resources\perf\profiler.lua.txt" />
     <None Include="Assets\FairyGUI\ReadMe - 3.0.0.txt" />
-    <None Include="Assets\Interface\GUI\新建文本文档.txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouchControls\Issues in button behavior (MAC).txt" />
     <None Include="Assets\XLua\Resources\perf\memory.lua.txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouch\RealseNotes.txt" />
@@ -875,6 +875,9 @@
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity2018.2.18/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson">
+      <HintPath>E:/__Github/X-lua/Unity/Assets/Plugins/LitJson.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
       <HintPath>E:/__Github/X-lua/Unity/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>

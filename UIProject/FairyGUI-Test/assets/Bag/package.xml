@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <packageDescription id="xs7ku0d0" jpegQuality="80" compressPNG="true">
   <resources>
-    <image id="mr0j0" name="0.png" path="/images/" exported="true"/>
-    <image id="mr0j1" name="1.png" path="/images/" exported="true"/>
-    <image id="mr0j2" name="2.png" path="/images/" exported="true"/>
-    <image id="mr0j3" name="3.png" path="/images/" exported="true"/>
-    <image id="mr0j4" name="4.png" path="/images/" exported="true"/>
-    <image id="mr0j5" name="5.png" path="/images/" exported="true" scale="9grid" scale9grid="120,65,375,257"/>
-    <image id="mr0j6" name="7.png" path="/images/" exported="true"/>
-    <image id="mr0j7" name="8.png" path="/images/" exported="true"/>
-    <image id="mr0j8" name="btnimage.png" path="/images/" exported="true" scale=""/>
-    <movieclip id="mr0j9" name="quan.jta" path="/images/" exported="true"/>
     <component id="mr0ja" name="BagButton.xml" path="/"/>
-    <component id="mr0jb" name="WindowFrame.xml" path="/"/>
-    <component id="mxwyd" name="DlgBag.xml" path="/"/>
+    <component id="mxwyd" name="DlgBag.xml" path="/" exported="true"/>
     <component id="mxwye" name="GridItem.xml" path="/"/>
     <component id="mxwyg" name="dot.xml" path="/"/>
+    <component id="gp6dj" name="WindowFrame.xml" path="/"/>
+    <component id="gp6dk" name="CloseButtom.xml" path="/"/>
+    <component id="gp6dl" name="DlgBagEnter.xml" path="/" exported="true"/>
   </resources>
-  <publish name=""/>
+  <publish name="Bag"/>
 </packageDescription>

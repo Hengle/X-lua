@@ -42,7 +42,6 @@ namespace Game
 
 
         Dictionary<string, string> _launcher = new Dictionary<string, string>();
-        [DoNotGen]
         public void Init()
         {
             TextAsset text = (TextAsset)Resources.Load("launcher", typeof(TextAsset));
@@ -61,7 +60,6 @@ namespace Game
                 }
             }
         }
-        [DoNotGen]
         public void Dispose()
         {
             _launcher.Clear();
@@ -75,11 +73,11 @@ namespace Game
             while (!Interface.Instance.IsSDKFinished())
             {
                 yield return new WaitForEndOfFrame();
-                
+
             }
             //获取设备内存大小,如果不足,则提示内存不足.
             long memorysize = Interface.Instance.GetMemInfo();
-         
+
 #if UNITY_ANDROID
             if (memorysize < 1500000)
             {
@@ -148,9 +146,10 @@ namespace Game
         }
         public IEnumerator LoadResource()
         {
-            yield return new WaitForEndOfFrame();
-            //ResourceManager.Instance.Start();
-            yield return new WaitForEndOfFrame();
+            Debug.Log("Is PreLoad Done?");
+            while (!ResourceManager.Instance.IsPreLoadDone)
+                yield return new WaitForEndOfFrame();
+            Debug.Log("Load Done!");
             //场景加载
             //TODO
             RefreshLaunch(LaunchState.LoadResource, 1f);
@@ -166,7 +165,13 @@ namespace Game
 
         void RefreshLaunch(LaunchState state, float value)
         {
-            UpdateManager.Instance.SetProgressValue(_launcher[state.ToString()], value);
+            string name = "";
+            if (_launcher.TryGetValue(state.ToString(), out name))
+            {
+                Debug.LogErrorFormat("_launcher[{0}] = null ~", state.ToString());
+                return;
+            }
+            UpdateManager.Instance.SetProgressValue(name, value);
         }
     }
 }

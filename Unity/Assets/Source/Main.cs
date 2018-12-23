@@ -17,7 +17,7 @@ namespace Game
             LuaManager.Instance,
             //UpdateManager.Instance,
             //GameManager.Instance,
-            //ResourceManager.Instance,
+            ResourceManager.Instance,
         };
 
         void Awake()
@@ -45,10 +45,15 @@ namespace Game
             //yield return GameManager.Instance.UpdateAppVersion();
             //yield return GameManager.Instance.UpdateResVersion();
             //yield return GameManager.Instance.GetServerList();
-            //yield return GameManager.Instance.LoadResource();
+            yield return GameManager.Instance.LoadResource();
 
             yield return new WaitForEndOfFrame();
             GameManager.Instance.StartGame();
+        }
+
+        void Update()
+        {
+            ResourceManager.Instance.Update();
         }
 
         void OnDestroy()

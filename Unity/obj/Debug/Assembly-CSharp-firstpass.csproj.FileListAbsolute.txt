@@ -175,3 +175,4 @@ E:\__Github\X-lua\Unity\obj\Debug\Assembly-CSharp-firstpass.csproj.CoreCompileIn
 E:\__Github\X-lua\Unity\obj\Debug\Assembly-CSharp-firstpass.csproj.CopyComplete
 E:\__Github\X-lua\Unity\obj\Debug\Assembly-CSharp-firstpass.dll
 E:\__Github\X-lua\Unity\obj\Debug\Assembly-CSharp-firstpass.pdb
+E:\__Github\X-lua\Unity\Temp\bin\Debug\LitJson.dll

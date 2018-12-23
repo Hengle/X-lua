@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FairyGUI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -153,21 +154,38 @@ namespace Game
             if (!File.Exists(dataPath)) return;
 
             foreach (string p in File.ReadAllLines(dataPath))
-                preloadList.Add(p);
+            {
+                if (!string.IsNullOrEmpty(p))
+                    preloadList.Add(p);
+            }
         }
+        /*
+            UI部分,分成两部分.
+            1.des界面预制描述内容
+            2.res界面美术资源图集
+            作为图集资源,des和res合并打成一个包
+            作为UI界面,则只打des包文件
+        */
         private void PreLoadResource()
         {
             foreach (string path in preloadList)
             {
-                if (path.Contains("_atlas0!a") && Application.platform != UnityEngine.RuntimePlatform.Android)
-                    currentPreLoadCount++;
-                else
-                    AddTask(path, PreLoadEventHandler, (int)(ResourceLoadType.LoadBundleFromFile | ResourceLoadType.Persistent));
+                //if (path.Contains("_atlas0!a") && Application.platform != UnityEngine.RuntimePlatform.Android)
+                //    currentPreLoadCount++;
+                //else
+                AddTask(path, PreLoadEventHandler, (int)(ResourceLoadType.LoadBundleFromFile
+                    | ResourceLoadType.Persistent | ResourceLoadType.ReturnAssetBundle));
             }
         }
         private void PreLoadEventHandler(UnityEngine.Object obj)
         {
             currentPreLoadCount++;
+            if (!IsPreLoadDone)
+            {
+                var pkg = UIPackage.AddPackage(obj as AssetBundle);
+                pkg.LoadAllAssets();
+                pkg.resBundle.Unload(false);
+            }
         }
         /// <summary>
         /// 判断预加载资源是否已经加载结束
@@ -208,7 +226,7 @@ namespace Game
             {
                 return 0;
             }
-            string fileReplace = file.Replace(@"\", @" / ");
+            string fileReplace = file.Replace(@"\", @"/");
 
             string lowerFile = fileReplace.ToLower();
             Object obj;
@@ -409,7 +427,6 @@ namespace Game
                 delayLoadTask.Enqueue(loadTask);
             }
         }
-        [DoNotGen]
         public void Update()
         {
             CleanupCacheBundle();
@@ -701,6 +718,7 @@ namespace Game
                 }
             }
             cacheObjects.Clear();
+            _instance = null;
             Debug.Log("~ResourceManager was destroy!");
         }
     }

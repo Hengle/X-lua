@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="400,400">
   <displayList>
-    <component id="n0" name="frame" src="gjac7l" xy="0,0" size="400,400">
+    <component id="n0" name="frame" src="gjac7l" xy="0,0" size="400,400" pkg="vjaxkvw8">
       <relation target="" sidePair="width-width,height-height"/>
       <Label title="Window A"/>
     </component>
-    <component id="n2" name="n2" src="gjac80" xy="33,47">
+    <component id="n2" name="n2" src="gjac80" xy="33,47" pkg="vjaxkvw8">
       <ComboBox visibleItemCount="5">
         <item title="Item 1"/>
         <item title="Item 2"/>
@@ -16,9 +16,9 @@
         <item title="Item 7"/>
       </ComboBox>
     </component>
-    <component id="n5" name="n5" src="gjac6h" xy="108,320" pivot="0.5,0.5">
+    <component id="n5" name="n5" src="gjac6h" xy="108,320" pivot="0.5,0.5" pkg="vjaxkvw8">
       <Button icon="ui://gxzp6q7wgjacan"/>
     </component>
-    <list id="n6" name="n6" xy="39,98" size="335,215" layout="flow_hz" overflow="scroll" margin="0,0,0,0" clipSoftness="0,20" lineGap="6" colGap="6" defaultItem="ui://gxzp6q7wgjac9c"/>
+    <list id="n6" name="n6" xy="39,98" size="335,215" layout="flow_hz" overflow="scroll" margin="0,0,0,0" clipSoftness="0,20" lineGap="6" colGap="6" defaultItem="ui://vjaxkvw8gjac9c"/>
   </displayList>
 </component>

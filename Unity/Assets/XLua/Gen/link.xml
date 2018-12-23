@@ -100,6 +100,7 @@
 		<type fullname="FairyGUI.GObjectPool" preserve="all"/>
 		<type fullname="FairyGUI.Relations" preserve="all"/>
 		<type fullname="FairyGUI.RelationType" preserve="all"/>
+		<type fullname="FairyGUI.UIConfig" preserve="all"/>
 		<type fullname="FairyGUI.Timers" preserve="all"/>
 		<type fullname="FairyGUI.GTween" preserve="all"/>
 		<type fullname="FairyGUI.GTweener" preserve="all"/>

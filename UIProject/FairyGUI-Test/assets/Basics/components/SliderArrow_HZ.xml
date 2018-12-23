@@ -2,11 +2,11 @@
 <component size="10,19" extention="Button" idnum="3">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
   <displayList>
-    <image id="n1" src="gjac8h" name="n1" xy="0,0" aspect="true">
+    <image id="n1" src="gjac8h" name="n1" xy="0,0" aspect="true" pkg="vjaxkvw8">
       <gearDisplay controller="button" pages="0,2"/>
       <relation target="" sidePair="width,height"/>
     </image>
-    <image id="n2" src="gjac8i" name="n2" xy="0,0" aspect="true">
+    <image id="n2" src="gjac8i" name="n2" xy="0,0" aspect="true" pkg="vjaxkvw8">
       <gearDisplay controller="button" pages="1,3"/>
       <relation target="" sidePair="width,height"/>
     </image>

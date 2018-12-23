@@ -28,7 +28,7 @@
     <jta id="n10" name="n10" src="gjacap" xy="422,285">
       <gearAni controller="c1" pages="1" values="0,s" default="0,p"/>
     </jta>
-    <component id="n11" name="n11" src="gjac6c" xy="89,195">
+    <component id="n11" name="n11" src="gjac6c" xy="89,195" pkg="vjaxkvw8">
       <Button controller="c1" page="1"/>
     </component>
     <image id="n13" name="n13" src="gjacar" xy="1383,450" group="n16"/>
@@ -39,7 +39,7 @@
       <gearXY controller="c2" pages="0" values="1154,450" default="661,450" tween="true"/>
       <relation target="" sidePair="bottom-bottom,right-right"/>
     </group>
-    <component id="n12" name="switchBtn" src="gjac9x" xy="1015,449">
+    <component id="n12" name="switchBtn" src="gjac9x" xy="1015,449" pkg="vjaxkvw8">
       <relation target="" sidePair="right-right,bottom-bottom"/>
       <Button controller="c2" page="1"/>
     </component>

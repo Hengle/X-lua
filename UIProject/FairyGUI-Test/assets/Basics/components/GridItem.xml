@@ -16,7 +16,7 @@
     </graph>
     <text id="n5" name="t1" xy="53,3" size="229,28" fontSize="22" color="#ffffff" align="center" autoSize="none" singleLine="true" text="Name"/>
     <text id="n6" name="t2" xy="289,3" size="94,28" fontSize="22" color="#ffffff" align="center" autoSize="none" singleLine="true" text="Fairy"/>
-    <component id="n7" name="star" src="gjac9p" xy="402,5">
+    <component id="n7" name="star" src="gjac9p" xy="402,5" pkg="vjaxkvw8">
       <ProgressBar value="67" max="100"/>
     </component>
   </displayList>

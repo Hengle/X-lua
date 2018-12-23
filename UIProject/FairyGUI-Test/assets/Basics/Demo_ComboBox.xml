@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1136,570">
   <displayList>
-    <component id="n1" name="n1" src="gjac7s" xy="83,64">
+    <component id="n1" name="n1" src="gjac7s" xy="83,64" pkg="vjaxkvw8">
       <ComboBox visibleItemCount="10">
         <item title="Item 1"/>
         <item title="Item 2"/>
@@ -13,7 +13,7 @@
         <item title="Item 8"/>
       </ComboBox>
     </component>
-    <component id="n4" name="n4" src="gjac80" xy="258,137">
+    <component id="n4" name="n4" src="gjac80" xy="258,137" pkg="vjaxkvw8">
       <ComboBox visibleItemCount="5">
         <item title="Item 1"/>
         <item title="Item 2"/>
@@ -24,7 +24,7 @@
         <item title="Item 7"/>
       </ComboBox>
     </component>
-    <component id="n5" name="n5" src="gjac80" xy="80,141">
+    <component id="n5" name="n5" src="gjac80" xy="80,141" pkg="vjaxkvw8">
       <ComboBox visibleItemCount="10">
         <item title="Item 1"/>
         <item title="Item 2"/>
@@ -35,7 +35,7 @@
         <item title="Item 7"/>
       </ComboBox>
     </component>
-    <component id="n6" name="n6" src="gjac7s" xy="256,66">
+    <component id="n6" name="n6" src="gjac7s" xy="256,66" pkg="vjaxkvw8">
       <ComboBox visibleItemCount="5">
         <item title="Item 1"/>
         <item title="Item 2"/>

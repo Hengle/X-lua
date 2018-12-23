@@ -3,7 +3,7 @@
   <displayList>
     <graph id="n27" name="n27" xy="32,61" size="528,337" type="rect" lineColor="#49959595" fillColor="#ff233e43"/>
     <image id="n18" name="n18" src="gjacbc" xy="32,23" size="527,39"/>
-    <list id="n19" name="list1" xy="32,61" size="527,336" overflow="scroll" margin="0,0,0,0" clipSoftness="0,20" defaultItem="ui://gxzp6q7wgjac9r">
+    <list id="n19" name="list1" xy="32,61" size="527,336" overflow="scroll" margin="0,0,0,0" clipSoftness="0,20" defaultItem="ui://vjaxkvw8gjac9r">
       <item/>
       <item/>
       <item/>
@@ -16,7 +16,7 @@
     <group id="n25" name="n25" xy="41,29" size="451,26" advanced="true"/>
     <graph id="n28" name="n28" xy="585,59" size="527,337" type="rect" lineColor="#49959595" fillColor="#ff233e43"/>
     <image id="n29" name="n29" src="gjacbc" xy="585,21" size="527,39"/>
-    <list id="n30" name="list2" xy="585,59" size="526,336" selectionMode="none" overflow="scroll" margin="0,0,0,0" clipSoftness="0,20" defaultItem="ui://gxzp6q7wgjac9s">
+    <list id="n30" name="list2" xy="585,59" size="526,336" selectionMode="none" overflow="scroll" margin="0,0,0,0" clipSoftness="0,20" defaultItem="ui://vjaxkvw8gjac9s">
       <item/>
       <item/>
       <item/>

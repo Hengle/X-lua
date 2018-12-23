@@ -9,7 +9,7 @@
     <graph id="n1" name="n1" xy="45,219" size="100,100" type="rect">
       <gearXY controller="c1" pages="0,1" values="45,219|336,224" default="40,212" tween="true"/>
     </graph>
-    <component id="n5" name="n5" src="gjac6c" xy="37,108">
+    <component id="n5" name="n5" src="gjac6c" xy="37,108" pkg="vjaxkvw8">
       <Button controller="c1" page="1"/>
     </component>
     <graph id="n7" name="n7" xy="278,380" size="100,100" type="rect" fillColor="#ff009900">

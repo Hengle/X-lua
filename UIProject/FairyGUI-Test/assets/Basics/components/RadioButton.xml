@@ -2,16 +2,16 @@
 <component size="29,19" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="gjac77" xy="0,3" aspect="true">
+    <image id="n1" name="n1" src="gjac77" xy="0,3" aspect="true" pkg="vjaxkvw8">
       <gearDisplay controller="button" pages="0"/>
     </image>
-    <image id="n2" name="n2" src="gjac78" xy="0,3" aspect="true">
+    <image id="n2" name="n2" src="gjac78" xy="0,3" aspect="true" pkg="vjaxkvw8">
       <gearDisplay controller="button" pages="1"/>
     </image>
-    <image id="n3" name="n3" src="gjac79" xy="0,3" aspect="true">
+    <image id="n3" name="n3" src="gjac79" xy="0,3" aspect="true" pkg="vjaxkvw8">
       <gearDisplay controller="button" pages="2"/>
     </image>
-    <image id="n4" name="n4" src="gjac7a" xy="0,3" aspect="true">
+    <image id="n4" name="n4" src="gjac7a" xy="0,3" aspect="true" pkg="vjaxkvw8">
       <gearDisplay controller="button" pages="3"/>
     </image>
     <text id="n5" name="title" xy="13,1" size="10,19" fontSize="12" autoSize="none" text="">

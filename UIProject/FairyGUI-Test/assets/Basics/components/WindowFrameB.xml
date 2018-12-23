@@ -7,7 +7,7 @@
     <graph id="n3" name="dragArea" xy="4,7" size="383,256">
       <relation target="" sidePair="width-width,height-height"/>
     </graph>
-    <component id="n2" name="closeButton" src="gjac9i" xy="363,-15">
+    <component id="n2" name="closeButton" src="gjac9i" xy="363,-15" pkg="vjaxkvw8">
       <relation target="" sidePair="right-right"/>
     </component>
   </displayList>
