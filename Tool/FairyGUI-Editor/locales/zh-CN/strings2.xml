@@ -38,7 +38,8 @@
 	<string name="text370">相同宽度</string>
 	<string name="text371">相同高度</string>
 	<string name="text310">自定义排列</string>
-	
+	<string name="text382">交换位置</string>
+		
 	<!-- EditPanel -->
 	<string name="text13">关闭</string>
 	<string name="text14">关闭其他文档</string>
@@ -202,7 +203,7 @@
 	<string name="text101">'{0}'未设置文件名</string>
 	<string name="text273">未能发布代码，代码保存路径未设置！</string>
 	<string name="text346">检查发布路径</string>
-	<string name="text376">动画'{0}'被自动发布到了不同的纹理集页面上，这会导致运行时显示错误，请手动调整</string>
+	<string name="text376">动画'{0}'被自动发布到了不同的纹理集页面上，这会导致运行时显示错误。你可以双击动画，通过调整它的纹理集属性解决此问题。</string>
 	
 	<!-- WaitingDialog -->
 	<string name="text102">正在努力完成你的请求</string>
@@ -505,5 +506,5 @@
 	<string name="text332">水平布局</string>
 	<string name="text333">垂直布局</string>
 
-	<string name="text382"></string>
+	<string name="text383"></string>
 </resources>

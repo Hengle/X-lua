@@ -28,10 +28,8 @@ const std::string {className}::URL = "{uiPath}";
     }
 }
 
-void {className}::constructFromXML(TXMLElement* xml)
+void {className}::onConstruct()
 {
-    {componentName}::constructFromXML(xml);
-
 {content}
 }
 

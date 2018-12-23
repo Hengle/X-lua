@@ -15,7 +15,7 @@ public:
 {variable}
 
 protected:
-    virtual void constructFromXML(TXMLElement* xml) override;
+    virtual void onConstruct() override;
 	
 private:
     static {className}* createByBinder();

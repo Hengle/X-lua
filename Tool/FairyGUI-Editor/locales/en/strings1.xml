@@ -190,6 +190,7 @@ Design drawings are shown in a semi-transparent manner in the bottom or the top 
 The design is visible only in the design phase and will not be published in the final package.</string>
   <string name="2pshu6oiud2n61-n70" mz="n70">X</string>
   <string name="2pshu6oiud2n61-n71" mz="n71">Layer</string>
+  <string name="2pshu6oiud2n61-n72_bjbm" mz="designImageForTest">Show In Test View</string>
   <!-- Builder - ComPropsPanel -->
   <string name="2pshu6oiau3n47-n57" mz="bg">Basic</string>
   <string name="2pshu6oiau3n47-n16" mz="title">Description</string>
@@ -849,9 +850,10 @@ Restore: Ctrl+1</string>
   <string name="2pshu6oiio7w5r-n15" mz="cancel">Close</string>
   <string name="2pshu6oiio7w5r-n43_g9yd-0" mz="tab">General</string>
   <string name="2pshu6oiio7w5r-n43_g9yd-1" mz="tab">Hotkey</string>
-  <string name="2pshu6oiio7w5r-n33" mz="n33">Automatically cut the image to the minimum when importing</string>
-  <string name="2pshu6oiio7w5r-n37" mz="n37">Language (Need to restart)</string>
+  <string name="2pshu6oiio7w5r-n53_ukh7" mz="n53">Generate Component Preview</string>
   <string name="2pshu6oiio7w5r-n39_htim" mz="n39">Software Update</string>
+  <string name="2pshu6oiio7w5r-n37" mz="n37">Language (Need to restart)</string>
+  <string name="2pshu6oiio7w5r-n33" mz="n33">Automatically cut the image to the minimum on importing</string>
   <string name="2pshu6oiio7w5r-n51_v3j1" mz="resetHotkeys">Reset All to Default</string>
   <!-- Builder - PreviewPanel -->
   <string name="2pshu6oiau3n4-n18" mz="titleBar">Preview</string>
@@ -872,7 +874,7 @@ bar: name of the horizontal extension section.bar_v: name of the the vertical e
   <string name="2pshu6oiau3n3n-n0" mz="frame">Project settings</string>
   <string name="2pshu6oiau3n3n-n1" mz="n1">Project Name</string>
   <string name="2pshu6oiau3n3n-n34" mz="n34">Project Type</string>
-  <string name="2pshu6oiau3n3n-n88_cvd8" mz="publishDepEnabled">Automatically publish other modified packages</string>
+  <string name="2pshu6oiau3n3n-n88_cvd8" mz="publishDepEnabled">Automatically publish modified packages</string>
   <string name="2pshu6oiau3n3n-n2" mz="n2">Font</string>
   <string name="2pshu6oiau3n3n-n3" mz="n3">Font Size</string>
   <string name="2pshu6oiau3n3n-n4" mz="n4">Font Color</string>
@@ -1057,15 +1059,13 @@ ani: name of the animation.</string>
   <string name="2pshu6oioqvzu6k-n40" mz="n40">Select All</string>
   <string name="2pshu6oioqvzu6k-n41" mz="n41">Clear</string>
   <string name="2pshu6oioqvzu6k-n51" mz="n51">Export...</string>
-  <string name="2pshu6oioqvzu6k-n45" mz="n45">Multi language support:
-1, the use of export functions, will be all the text properties of the package to extract, save as XML format file, the file will be submitted for translation.
-2, after the translation, can be re introduced into the package, then the contents of all the text will be replaced directly. You can use the SDK method(UIPackage.setStringsSource) to import dynamically.</string>
-  <string name="2pshu6oioqvzu6k-n46" mz="n46">Export all strings to the file</string>
   <string name="2pshu6oioqvzu6k-n43" mz="n43">Next</string>
+  <string name="2pshu6oioqvzu6k-n46" mz="n46">Export all strings to the file</string>
+  <string name="2pshu6oioqvzu6k-n73_hx5d" mz="merge">Merge with destination file</string>
+  <string name="2pshu6oioqvzu6k-n76_p4u6" mz="ignoreDiscarded">Ignore the contents marked as 'clear on publish'</string>
   <string name="2pshu6oioqvzu6k-n47" mz="n47">Import strings (more than one component may be modified)</string>
   <string name="2pshu6oioqvzu6k-n53" mz="n53">Browse..</string>
   <string name="2pshu6oioqvzu6k-n70_hiva" mz="n69">Source File</string>
-  <string name="2pshu6oioqvzu6k-n73_hx5d" mz="merge">Merge with destination file</string>
   <string name="2pshu6oioqvzu6k-n57" mz="n57">The file content contains the string set of the following packages</string>
   <string name="2pshu6oioqvzu6k-n61" mz="n61">Import</string>
   <string name="2pshu6oioqvzu6k-n14" mz="n14">Close</string>

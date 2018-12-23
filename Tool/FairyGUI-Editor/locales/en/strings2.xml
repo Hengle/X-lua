@@ -11,15 +11,15 @@
 	<string name="text8">Arrange Down</string>
 	<string name="text9">Arrange Bottom</string>
 	<string name="text10">Replace Element</string>
-	<string name="text11">Show in Library</string>
+	<string name="text11">Show In Library</string>
 	<string name="text12">Could not use the non export resources of other packages</string>
 	<string name="text76">Can not put the components themselves</string>
 	<string name="text77">Create failed</string>
-	<string name="text238">Convert to Component</string>
-	<string name="text325">Convert to Bitmap</string>
+	<string name="text238">Convert To Component</string>
+	<string name="text325">Convert To Bitmap</string>
 	<string name="text23">Unselect All</string>
-	<string name="text104">Paste in Center</string>
-	<string name="text105">Paste in Place</string>
+	<string name="text104">Paste In Center</string>
+	<string name="text105">Paste In Place</string>
 	<string name="text106">Assets</string>
 	<string name="text107">Undo</string>
 	<string name="text108">Redo</string>
@@ -29,28 +29,29 @@
 	<string name="text361">Change the layer of design drawings</string>
 	<string name="text362">Group</string>
 	<string name="text363">Ungroup</string>
-	<string name="text364">Align left</string>
-	<string name="text365">Align center</string>
-	<string name="text366">Align right</string>
-	<string name="text367">Align top</string>
-	<string name="text368">Align middle</string>
-	<string name="text369">Align bottom</string>
-	<string name="text370">Same width</string>
-	<string name="text371">Same height</string>
+	<string name="text364">Align Left</string>
+	<string name="text365">Align Center</string>
+	<string name="text366">Align Right</string>
+	<string name="text367">Align Top</string>
+	<string name="text368">Align Middle</string>
+	<string name="text369">Align Bottom</string>
+	<string name="text370">Same Width</string>
+	<string name="text371">Same Height</string>
 	<string name="text310">Arrange</string>
-	
+	<string name="text382">Exchange Position</string>
+		
 	<!-- EditPanel -->
 	<string name="text13">Close</string>
 	<string name="text14">Close Others</string>
 	<string name="text15">Close All</string>
-	<string name="text351">Save document</string>
-	<string name="text352">Save all documents</string>
-	<string name="text353">Close document</string>
-	<string name="text354">Back to previous</string>
+	<string name="text351">Save Document</string>
+	<string name="text352">Save All Documents</string>
+	<string name="text353">Close Document</string>
+	<string name="text354">Back To Previous</string>
 	<string name="text355">Test</string>
-	<string name="text356">Zoom in</string>
-	<string name="text357">Zoom out</string>
-	<string name="text358">Restore scale</string>
+	<string name="text356">Zoom In</string>
+	<string name="text357">Zoom Out</string>
+	<string name="text358">Restore Scale</string>
 	
 	<!-- LibPanel -->
 	<string name="text16">Copy URL</string>
@@ -59,8 +60,8 @@
 	<string name="text20">Set Exported</string>
 	<string name="text21">Set Not Exported</string>
 	<string name="text22">Update Resource</string>
-	<string name="text192">Open with External Program</string>
-	<string name="text24">Open in Explorer</string>
+	<string name="text192">Open With External Program</string>
+	<string name="text24">Open In Explorer</string>
 	<string name="text25">Delete</string>
 	<string name="text27">Package Settings</string>
 	<string name="text28">Publish</string>
@@ -77,10 +78,10 @@ Note: this operation can not be recovered.</string>
 	<string name="text243">{0} results.</string>
 	<string name="text245">Move To</string>
 	<string name="text246">Duplicate</string>
-	<string name="text334">Add to Favorites</string>
-	<string name="text335">Remove from Favorites</string>
+	<string name="text334">Add To Favorites</string>
+	<string name="text335">Remove From Favorites</string>
 	<string name="text336">Paste All</string>
-	<string name="text359">Collapse all</string>
+	<string name="text359">Collapse All</string>
 	<string name="text360">Find</string>
 	
 	<!-- MainPanel -->
@@ -141,7 +142,7 @@ Note: this operation can not be recovered.</string>
 	<string name="text372">Open big text edit form</string>
 	<string name="text373">Online Help</string>
 	<string name="text374">Support</string>
-	<string name="text375">Enter Key</string>
+	<string name="text375">Enterprise Channel</string>
 	
 	<!-- PreviewPanel -->
 	<string name="text57">Resource Size</string>

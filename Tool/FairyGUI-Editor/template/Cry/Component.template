@@ -1,5 +1,4 @@
 using FairyGUI;
-using FairyGUI.Utils;
 
 namespace {packageName}
 {
@@ -18,10 +17,8 @@ namespace {packageName}
 		{
 		}
 
-		public override void ConstructFromXML(XML xml)
+		protected override void OnConstruct()
 		{
-			base.ConstructFromXML(xml);
-
 {content}
 		}
 	}
