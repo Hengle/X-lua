@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="99,99" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n4_mxwy" name="bg" src="mr0j1" fileName="images/1.png" xy="5,2"/>
+    <loader id="n7_mxwy" name="icon" xy="0,0" size="100,100"/>
+    <image id="n3_mxwy" name="frame" src="mr0j3" fileName="images/3.png" xy="0,-1"/>
+    <text id="n8_mxwy" name="title" xy="0,77" size="100,19" fontSize="12" autoSize="none" text="">
+      <relation target="" sidePair="width-width,bottom-bottom"/>
+    </text>
+  </displayList>
+  <Button/>
+</component>
