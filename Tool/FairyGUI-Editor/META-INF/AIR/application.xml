@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <application xmlns="http://ns.adobe.com/air/application/32.0">
 
+=======
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/23.0">
+
+>>>>>>> 1d8f3cd81a2e6b28b65e750d857fc04cfa6a59b9
 <!-- Adobe AIR Application Descriptor File Template.
 
 	Specifies parameters for identifying, installing, and launching AIR applications.
@@ -14,6 +20,7 @@
 -->
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
+<<<<<<< HEAD
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
 	<id>com.fairygui.FairyGUIEditor</id>
 
@@ -22,18 +29,35 @@
 	
 	<architecture>64</architecture>
 
+=======
+	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
+	<id>com.fairygui.FairyGUIEditor</id>
+
+	<!-- Used as the filename for the application. Required. -->
+	<filename>FairyGUI-Editor</filename>
+
+>>>>>>> 1d8f3cd81a2e6b28b65e750d857fc04cfa6a59b9
 	<!-- The name that is displayed in the AIR application installer. 
 	May have multiple values for each language. See samples or xsd schema file. Optional. -->
 	<name>FairyGUI Editor</name>
 	
 	<!-- A string value of the format <0-999>.<0-999>.<0-999> that represents application version which can be used to check for application upgrade. 
 	Values can also be 1-part or 2-part. It is not necessary to have a 3-part value.
+<<<<<<< HEAD
 	An updated version of application must have a versionNumber value higher than the previous version. Required for namespace >= 2.5 . -->
 	<versionNumber>3.10.2</versionNumber>
 
 	<!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
 	<versionLabel>3.10.2 (Build 1812200)</versionLabel>
 
+=======
+	An updated version of application must have a versionNumber value higher than the previous version. Required for namespace >= 2.5 . -->
+	<versionNumber>3.9.7</versionNumber>
+
+	<!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
+	<versionLabel>3.9.7 (Build 1810111)</versionLabel>
+
+>>>>>>> 1d8f3cd81a2e6b28b65e750d857fc04cfa6a59b9
 	<!-- Description, displayed in the AIR application installer.
 	May have multiple values for each language. See samples or xsd schema file. Optional. -->
 	<!-- <description></description> -->
@@ -128,6 +152,7 @@
 	<!-- <programMenuFolder></programMenuFolder> -->
 
 	<!-- The icon the system uses for the application. For at least one resolution,
+<<<<<<< HEAD
 	specify the path to a PNG file included in the AIR package. Optional. -->
 	<icon>
 		<image16x16>icon/logo16.png</image16x16>
@@ -136,6 +161,16 @@
 		<image128x128>icon/logo128.png</image128x128>
 	</icon>
 
+=======
+	specify the path to a PNG file included in the AIR package. Optional. -->
+	<icon>
+		<image16x16>icon/logo16.png</image16x16>
+		<image32x32>icon/logo32.png</image32x32>
+		<image48x48>icon/logo48.png</image48x48>
+		<image128x128>icon/logo128.png</image128x128>
+	</icon>
+
+>>>>>>> 1d8f3cd81a2e6b28b65e750d857fc04cfa6a59b9
 	<!-- Whether the application handles the update when a user double-clicks an update version
 	of the AIR file (true), or the default AIR application installer handles the update (false).
 	Optional. Default false. -->
