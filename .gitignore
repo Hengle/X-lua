@@ -1,3 +1,4 @@
-Unity/.vs/
-Unity/Temp/
-Unity/Library/
+# Unity:
+/Unity/.vs/
+/Unity/Temp/
+/Unity/Library/
