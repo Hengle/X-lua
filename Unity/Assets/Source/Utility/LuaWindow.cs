@@ -8,6 +8,25 @@ namespace Game
 {
     public class LuaWindow : Window
     {
+        static int _maxNum = 7;
+        static Stack<LuaWindow> _pool = new Stack<LuaWindow>();
+
+        public static LuaWindow Get()
+        {
+            if (_pool.Count > 0)
+                return _pool.Pop();
+            else
+                return new LuaWindow();
+        }
+        public static void Release(LuaWindow window)
+        {
+            if (window != null && _pool.Count <= _maxNum)
+                _pool.Push(window);
+            else
+                window.Dispose();
+        }
+
+
         LuaTable _table;
         LuaFunction _OnInit;
         LuaFunction _DoHideAnimation;
@@ -15,12 +34,14 @@ namespace Game
         LuaFunction _OnShown;
         LuaFunction _OnHide;
 
-        public void ConnectLua(LuaTable table) 
+        private LuaWindow() { }
+
+        public void ConnectLua(LuaTable table)
         {
             _table = table;
             _OnInit = table.Get<LuaFunction>("OnInit");
-            _DoHideAnimation = table.Get<LuaFunction>("DoShowTween");
-            _DoShowAnimation = table.Get<LuaFunction>("DoHideTween");
+            _DoHideAnimation = table.Get<LuaFunction>("DoShow");
+            _DoShowAnimation = table.Get<LuaFunction>("DoHide");
             _OnShown = table.Get<LuaFunction>("OnShow");
             _OnHide = table.Get<LuaFunction>("OnHide");
         }

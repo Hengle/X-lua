@@ -39,6 +39,7 @@ namespace Game
             {
                 try
                 {
+                    FairyGUI.UIPackage.RemoveAllPackages();
                     if (_luaDelegate != null)
                         _luaDelegate.Dispose();
                     _searchPaths.Clear();

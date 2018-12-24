@@ -1,4 +1,11 @@
 # Unity:
-/Unity/.vs/
-/Unity/Temp/
-/Unity/Library/
+Unity/.vs/**
+Unity/Temp/**
+Unity/Library/**
+Unity/obj/**
+Code/Scripts/.idea/**
+
+Unity/Assembly-CSharp-Editor-firstpass.csproj
+Unity/Assembly-CSharp-Editor.csproj
+Unity/Assembly-CSharp-firstpass.csproj
+Unity/Assembly-CSharp.csproj
