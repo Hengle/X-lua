@@ -27,7 +27,6 @@ Rect        = UnityEngine.Rect
 RuntimePlatform = UnityEngine.RuntimePlatform
 Time = UnityEngine.Time
 
-
 FairyGUI = CS.FairyGUI
 EventContext  = FairyGUI.EventContext
 EventListener = FairyGUI.EventListener
