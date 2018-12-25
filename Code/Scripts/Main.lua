@@ -17,7 +17,6 @@ local function InitModule()
         end
     end
 end
-
 local function Init()
     Util.Myxpcall(InitModule)
     printcolor("orange", 'lua framework init successful.')
@@ -46,8 +45,7 @@ local function FixedUpdate(fixedDeltaTime)
 end
 
 local function OnDestroy()
-    local demo = require "UIExample.UIDemo"
-    demo:OnDestroy()
+    gameEvent.DestroyEvent:Trigger()
     --local util = require('xlua.util')
     --util.print_func_ref_by_csharp()
 end

@@ -37,7 +37,7 @@ namespace XLua.CSObjectWrap
 			Utils.EndObjectRegister(type, L, translator, null, null,
 			    null, null, null);
 
-		    Utils.BeginClassRegister(type, L, __CreateInstance, 2, 29, 29);
+		    Utils.BeginClassRegister(type, L, __CreateInstance, 2, 30, 30);
 			Utils.RegisterFunc(L, Utils.CLS_IDX, "ClearResourceRefs", _m_ClearResourceRefs_xlua_st_);
             
 			
@@ -70,6 +70,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "inputHighlightColor", _g_get_inputHighlightColor);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "frameTimeForAsyncUIConstruction", _g_get_frameTimeForAsyncUIConstruction);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "depthSupportForPaintingMode", _g_get_depthSupportForPaintingMode);
+            Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "enhancedTextOutlineEffect", _g_get_enhancedTextOutlineEffect);
             Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "soundLoader", _g_get_soundLoader);
             
 			Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "defaultFont", _s_set_defaultFont);
@@ -100,6 +101,7 @@ namespace XLua.CSObjectWrap
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "inputHighlightColor", _s_set_inputHighlightColor);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "frameTimeForAsyncUIConstruction", _s_set_frameTimeForAsyncUIConstruction);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "depthSupportForPaintingMode", _s_set_depthSupportForPaintingMode);
+            Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "enhancedTextOutlineEffect", _s_set_enhancedTextOutlineEffect);
             Utils.RegisterFunc(L, Utils.CLS_SETTER_IDX, "soundLoader", _s_set_soundLoader);
             
 			
@@ -553,6 +555,18 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_enhancedTextOutlineEffect(RealStatePtr L)
+        {
+		    try {
+            
+			    LuaAPI.lua_pushboolean(L, FairyGUI.UIConfig.enhancedTextOutlineEffect);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_Items(RealStatePtr L)
         {
 		    try {
@@ -954,6 +968,19 @@ namespace XLua.CSObjectWrap
 		    try {
                 
 			    FairyGUI.UIConfig.depthSupportForPaintingMode = LuaAPI.lua_toboolean(L, 1);
+            
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 0;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _s_set_enhancedTextOutlineEffect(RealStatePtr L)
+        {
+		    try {
+                
+			    FairyGUI.UIConfig.enhancedTextOutlineEffect = LuaAPI.lua_toboolean(L, 1);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

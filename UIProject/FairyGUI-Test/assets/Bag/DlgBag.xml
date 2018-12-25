@@ -3,7 +3,7 @@
   <controller name="page" pages="0,,1,,2," selected="0"/>
   <displayList>
     <component id="n12_gp6d" name="frame" src="gp6dj" fileName="WindowFrame.xml" xy="280,70" size="640,580"/>
-    <list id="n1_mxwy" name="list" xy="334,141" size="525,330" pageController="page" layout="pagination" overflow="scroll" scroll="horizontal" scrollBarFlags="8" lineGap="5" colGap="5" defaultItem="ui://xs7ku0d0mxwye">
+    <list id="n1_mxwy" name="List_BagGrid" xy="334,141" size="525,330" pageController="page" layout="pagination" overflow="scroll" scroll="horizontal" scrollBarFlags="8" lineGap="5" colGap="5" defaultItem="ui://xs7ku0d0mxwye">
       <relation target="n12_gp6d" sidePair="left-left,middle-middle"/>
       <item/>
       <item/>

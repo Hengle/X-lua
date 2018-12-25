@@ -106,6 +106,13 @@ function UIManager.Init()
     gameEvent.UpdateEvent:Add(this.Update)
     gameEvent.SecondUpdateEvent:Add(this.SecondUpdate)
     gameEvent.LateUpdateEvent:Add(this.LateUpdate)
+    gameEvent.DestroyEvent:Add(this.Destroy)
+end
+
+function UIManager.Destroy()
+    for name, data in pairs(_views) do
+         this.DestroyView(name)
+    end
 end
 
 function UIManager.Update()
@@ -381,7 +388,7 @@ OnHide = function(data)
     if this.Call(viewName, "Hide") then
         data.isShow = false
         if this.IsUIShowType(viewName, UIShowType.DestroyWhenHide) then
-            this.Destroy(viewName, "Destroy")
+            this.DestroyView(viewName, "Destroy")
         end
     end
 end
@@ -425,7 +432,7 @@ function UIManager.Show(viewName, params)
                     return
                 end
                 ---@type Game.LuaWindow
-                local window = LuaWindow()
+                local window = LuaWindow.Get()
                 window.contentPane = viewCom
                 window:ConnectLua(data)
                 data.base = window      -- LuaWindow
@@ -440,7 +447,7 @@ function UIManager.Show(viewName, params)
     end
 
     local viewCom = pkg:CreateObject(data.fileName).asCom
-    local window = LuaWindow()
+    local window = LuaWindow.Get()
     window.contentPane = viewCom
     window:ConnectLua(data)
     data.base = window      -- LuaWindow
@@ -495,7 +502,7 @@ function UIManager.HideImmediate(viewName)
     local window = data.base
     window:HideImmediately()
 end
-function UIManager.Destroy(viewName)
+function UIManager.DestroyView(viewName)
     local data = this.GetViewData(viewName)
     if data.isShow then
         this.HideImmediate(viewName)
@@ -517,7 +524,7 @@ function UIManager.HideAll()
         if this.Call(viewName, "Hide") then
             data.isShow = false
             if this.IsUIShowType(viewName, UIShowType.DestroyWhenHide) then
-                this.Destroy(viewName, "Destroy")
+                this.DestroyView(viewName, "Destroy")
             end
         end
     end
@@ -531,7 +538,7 @@ function UIManager.DestroyAllDlgs()
     local d = false
     for _, name in pairs(list) do
         d = false
-        for _, persistentName in pairs(Local.UIPersistentList) do
+        for _, persistentName in pairs(Local.UIPersistentMap) do
             if name == persistentName then
                 this.Hide(name)
                 d = true

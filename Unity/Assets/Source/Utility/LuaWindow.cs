@@ -25,6 +25,12 @@ namespace Game
             else
                 window.Dispose();
         }
+        public static void Destroy()
+        {
+            int length = _pool.Count;
+            for (int i = 0; i < length; i++)
+                _pool.Pop().Dispose();
+        }
 
 
         LuaTable _table;
@@ -54,8 +60,6 @@ namespace Game
         }
         public override void Dispose()
         {
-            base.Dispose();
-
             if (_table != null)
                 _table.Dispose();
             if (_OnInit != null)
@@ -68,6 +72,8 @@ namespace Game
                 _OnShown.Dispose();
             if (_OnHide != null)
                 _OnHide.Dispose();
+            base.Dispose();
+            Release(this);
         }
 
         protected override void OnInit()

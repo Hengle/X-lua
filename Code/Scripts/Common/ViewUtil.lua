@@ -25,9 +25,9 @@ local prefixs = {
 local function ConvertComp(prefix, gobj)
     local comp = nil
     if prefixs[prefix] then
-        comp =  gobj['as'..prefix]
+        comp =  gobj['as'..prefix] or gobj
     else
-        comp = gobj.asCom
+        comp = gobj.asCom or gobj
         print("invalid extension base: " .. prefix)
     end
     return comp

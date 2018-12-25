@@ -17,7 +17,6 @@ namespace Game
 
         float time = -1;
 
-        [DoNotGen]
         public void Init(LuaTable luaMain)
         {
             luaUpdate += luaMain.Get<Action<float, float>>("Update");
@@ -27,7 +26,6 @@ namespace Game
             luaDestroy += luaMain.Get<Action>("OnDestroy");
         }
 
-        [DoNotGen]
         public void Dispose()
         {
             if (luaDestroy != null)

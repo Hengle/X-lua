@@ -23,7 +23,7 @@ namespace XLua.CSObjectWrap
 			System.Type type = typeof(FairyGUI.GoWrapper);
 			Utils.BeginObjectRegister(type, L, translator, 0, 4, 4, 4);
 			
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "setWrapTarget", _m_setWrapTarget);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetWrapTarget", _m_SetWrapTarget);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CacheRenderers", _m_CacheRenderers);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Update", _m_Update);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Dispose", _m_Dispose);
@@ -93,7 +93,7 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_setWrapTarget(RealStatePtr L)
+        static int _m_SetWrapTarget(RealStatePtr L)
         {
 		    try {
             
@@ -108,7 +108,7 @@ namespace XLua.CSObjectWrap
                     UnityEngine.GameObject _target = (UnityEngine.GameObject)translator.GetObject(L, 2, typeof(UnityEngine.GameObject));
                     bool _cloneMaterial = LuaAPI.lua_toboolean(L, 3);
                     
-                    gen_to_be_invoked.setWrapTarget( _target, _cloneMaterial );
+                    gen_to_be_invoked.SetWrapTarget( _target, _cloneMaterial );
                     
                     
                     

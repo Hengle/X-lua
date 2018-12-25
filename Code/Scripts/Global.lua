@@ -130,6 +130,8 @@ Event = require "Common.Event"
 Easing = require "Common.Easing"
 GameEvent = require "Common.GameEvent"
 
+unpack = table.unpack
+
 IsEditor = Application.isEditor
 IsAndroid = Application.platform == RuntimePlatform.Android
 IsIPhone = Application.platform == RuntimePlatform.IPhonePlayer
