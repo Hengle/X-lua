@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="kveygx9p" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="uw5h0" name="Button_Rect.xml" path="/"/>
+    <component id="uw5h1" name="Button_Circle.xml" path="/"/>
+    <component id="uw5h3" name="DlgCoolTime.xml" path="/" exported="true"/>
+  </resources>
+  <publish name="CoolDown"/>
+</packageDescription>

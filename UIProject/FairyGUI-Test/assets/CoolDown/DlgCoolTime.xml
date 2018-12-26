@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1280,720">
+  <displayList>
+    <component id="n0_uw5h" name="n0" src="uw5h1" fileName="Button_Circle.xml" xy="682,197" scale="2,2"/>
+    <component id="n1_uw5h" name="n1" src="uw5h0" fileName="Button_Rect.xml" xy="416,289" aspect="true" scale="2,2"/>
+  </displayList>
+</component>

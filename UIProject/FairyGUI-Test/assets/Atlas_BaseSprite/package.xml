@@ -140,6 +140,93 @@
     <image id="gjacbd" name="Shape 1 copy 4.png" path="/images/" exported="true"/>
     <sound id="gjacbm" name="tabswitch.wav" path="/sound/" exported="true"/>
     <sound id="gjacbn" name="click.wav" path="/sound/" exported="true"/>
+    <component id="uw5hck" name="GripButton_HZ.xml" path="/scrollbars/"/>
+    <component id="uw5hcl" name="GripButton_VT.xml" path="/scrollbars/"/>
+    <component id="uw5hcm" name="ScrollBar_HZ.xml" path="/scrollbars/"/>
+    <component id="uw5hcn" name="ScrollBar_VT.xml" path="/scrollbars/"/>
+    <component id="uw5hco" name="ScrollDownButton.xml" path="/scrollbars/"/>
+    <component id="uw5hcp" name="ScrollUpButton.xml" path="/scrollbars/"/>
+    <component id="uw5hcq" name="PopupMenu.xml" path="/popupmenu/"/>
+    <component id="uw5hcr" name="PopupMenuItem.xml" path="/popupmenu/"/>
+    <image id="uw5hcu" name="11.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hcv" name="12.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hcw" name="13.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hcx" name="14.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hcy" name="15.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hd7" name="mask0.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hd8" name="mask1.png" path="/Images_coolDown/" exported="true"/>
+    <component id="uw5hd9" name="BagGridSub.xml" path="/components/"/>
+    <component id="uw5hda" name="BagGridSub2.xml" path="/components/"/>
+    <component id="uw5hdb" name="Button.xml" path="/components/"/>
+    <component id="uw5hdc" name="Button1.xml" path="/components/"/>
+    <component id="uw5hdd" name="Button10.xml" path="/components/"/>
+    <component id="uw5hde" name="Button13.xml" path="/components/"/>
+    <component id="uw5hdf" name="Button14.xml" path="/components/"/>
+    <component id="uw5hdg" name="Button15.xml" path="/components/"/>
+    <component id="uw5hdh" name="Button16.xml" path="/components/"/>
+    <component id="uw5hdi" name="Button2.xml" path="/components/"/>
+    <component id="uw5hdj" name="Button3.xml" path="/components/"/>
+    <component id="uw5hdk" name="Button4.xml" path="/components/"/>
+    <component id="uw5hdl" name="Button5.xml" path="/components/"/>
+    <component id="uw5hdm" name="Button52.xml" path="/components/"/>
+    <component id="uw5hdn" name="Button6.xml" path="/components/"/>
+    <component id="uw5hdo" name="Button7.xml" path="/components/"/>
+    <component id="uw5hdp" name="Button8.xml" path="/components/"/>
+    <component id="uw5hdq" name="Button82.xml" path="/components/"/>
+    <component id="uw5hdr" name="Button9.xml" path="/components/"/>
+    <component id="uw5hds" name="Checkbox.xml" path="/components/"/>
+    <component id="uw5hdt" name="CloseButton.xml" path="/components/"/>
+    <component id="uw5hdu" name="ComboBox.xml" path="/components/"/>
+    <component id="uw5hdv" name="ComboBoxItem.xml" path="/components/"/>
+    <component id="uw5hdw" name="ComboBoxPopup.xml" path="/components/"/>
+    <component id="uw5hdx" name="Component1.xml" path="/components/"/>
+    <component id="uw5hdy" name="Component10.xml" path="/components/"/>
+    <component id="uw5hdz" name="Component11.xml" path="/components/"/>
+    <component id="uw5he0" name="Component12.xml" path="/components/"/>
+    <component id="uw5he1" name="Component13.xml" path="/components/"/>
+    <component id="uw5he2" name="Component14.xml" path="/components/"/>
+    <component id="uw5he3" name="Component2.xml" path="/components/"/>
+    <component id="uw5he4" name="Component3.xml" path="/components/"/>
+    <component id="uw5he5" name="Component4.xml" path="/components/"/>
+    <component id="uw5he6" name="Component5.xml" path="/components/"/>
+    <component id="uw5he7" name="Component6.xml" path="/components/"/>
+    <component id="uw5he8" name="Component7.xml" path="/components/"/>
+    <component id="uw5he9" name="Component8.xml" path="/components/"/>
+    <component id="uw5hea" name="Component9.xml" path="/components/"/>
+    <component id="uw5heb" name="Dropdown.xml" path="/components/"/>
+    <component id="uw5hec" name="Dropdown2.xml" path="/components/"/>
+    <component id="uw5hed" name="GridItem.xml" path="/components/"/>
+    <component id="uw5hee" name="GridItem2.xml" path="/components/"/>
+    <component id="uw5hef" name="OnOffButton.xml" path="/components/"/>
+    <component id="uw5heg" name="ProgressBar.xml" path="/components/"/>
+    <component id="uw5heh" name="ProgressBar1.xml" path="/components/"/>
+    <component id="uw5hei" name="ProgressBar2.xml" path="/components/"/>
+    <component id="uw5hej" name="ProgressBar3.xml" path="/components/"/>
+    <component id="uw5hek" name="ProgressBar4.xml" path="/components/"/>
+    <component id="uw5hel" name="ProgressBar5.xml" path="/components/"/>
+    <component id="uw5hem" name="ProgressBar6.xml" path="/components/"/>
+    <component id="uw5hen" name="RadioButton.xml" path="/components/"/>
+    <component id="uw5heo" name="Slider1.xml" path="/components/"/>
+    <component id="uw5hep" name="Slider2.xml" path="/components/"/>
+    <component id="uw5heq" name="Slider2_grip.xml" path="/components/"/>
+    <component id="uw5her" name="SliderArrow_HZ.xml" path="/components/"/>
+    <component id="uw5hes" name="SliderArrow_VT.xml" path="/components/"/>
+    <component id="uw5het" name="Slider_HZ.xml" path="/components/"/>
+    <component id="uw5heu" name="Slider_VT.xml" path="/components/"/>
+    <component id="uw5hev" name="WindowCloseButton.xml" path="/components/"/>
+    <component id="uw5hew" name="WindowFrame.xml" path="/components/"/>
+    <component id="uw5hex" name="WindowFrameB.xml" path="/components/"/>
+    <image id="uw5hcs" name="0(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hct" name="1(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hcz" name="2(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hd0" name="3(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hd1" name="4(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hd2" name="5(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hd3" name="6(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hd4" name="7(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hd5" name="8(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <image id="uw5hd6" name="9(4)_png.png" path="/Images_coolDown/" exported="true"/>
+    <font id="uw5hf1" name="coolTime.fnt" path="/Images_coolDown/" exported="true"/>
   </resources>
   <publish name="BaseSprite" path="..\..\Unity\Assets\Interface\Atlas"/>
 </packageDescription>

@@ -1,5 +1,6 @@
 local type = type
 local ipairs = ipairs
+local select = select
 local tostring = tostring
 local concat = table.concat
 local format = string.format
@@ -9,6 +10,10 @@ local collectgarbage = collectgarbage
 local dump = table.dump
 local Debug = CS.UnityEngine.Debug
 local GameObject = GameObject
+
+printf = function(fmt, ...)
+    print(format(fmt, ...))
+end
 
 print = function(...)
     if not Local.LogManager then

@@ -5,8 +5,6 @@ local modules = require "Modules"
 local gameEvent = GameEvent
 local LogError = LogError
 
-local Time = Time
-
 local function InitModule()
     for _, name in ipairs(modules) do
         local module = require(name)
@@ -22,7 +20,7 @@ local function Init()
     printcolor("orange", 'lua framework init successful.')
 
     local UIMgr = require('Manager.UIManager')
-    Util.Myxpcall(UIMgr.Show, 'Bag.DlgBagEnter')
+    Util.Myxpcall(UIMgr.Show, 'CoolDown.DlgCoolTime')
 
     --Util.Myxpcall(TEST)
     --local demo = require "UIExample.UIDemo"

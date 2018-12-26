@@ -57,10 +57,10 @@ local this = UIManager
 
 --[[
     注:问题
-        1.LuaWindow类缓存重复利用,直接再C#层完成!
-        2.C#侧callback释放lua function
-        3.添加移除子对象后,子对象无法完整释放.[子对象应该已被缓存,后续有待集中释放]
-        4.
+        1.LuaWindow类缓存重复利用,直接再C#层完成!   --- 待测试
+        2.添加移除子对象后,子对象无法完整释放.[子对象应该已被缓存,后续有待集中释放]
+        3.Lua UI API提示功能
+        4.Timer 功能设计
 --]]
 
 ---#注:未完成功能
@@ -115,11 +115,11 @@ function UIManager.Destroy()
     end
 end
 
-function UIManager.Update()
+function UIManager.Update(dt)
     for viewName, info in pairs(_views) do
         if info.isShow then
             if this.HasMethod(viewName, "Update") then
-                this.Call(viewName, "Update")
+                this.Call(viewName, "Update", dt)
             end
         end
     end
@@ -515,7 +515,9 @@ function UIManager.DestroyView(viewName)
     _views[viewName] = nil
     assert(loaded[this.GetModuleName(viewName)])
     loaded[this.GetModuleName(viewName)] = nil
-    window:Dispose()
+    if window then
+        window:Dispose()
+    end
 end
 function UIManager.HideAll()
     GRoot.inst:CloseAllWindows()
