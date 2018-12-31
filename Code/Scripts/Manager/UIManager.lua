@@ -16,7 +16,7 @@ local Util = Util
 local LuaHelper = LuaHelper
 local GameObject = GameObject
 local ConditionOp = ConditionOp
-local gameEvent = GameEvent
+local GameEvent = GameEvent
 local XUtil = XUtil
 local GRoot = GRoot
 local UIPackage = UIPackage
@@ -103,10 +103,9 @@ function UIManager.Init()
     end
     UIConfig.globalModalWaiting = 'ui://Basics/DlgUILock'
 
-    gameEvent.UpdateEvent:Add(this.Update)
-    gameEvent.SecondUpdateEvent:Add(this.SecondUpdate)
-    gameEvent.LateUpdateEvent:Add(this.LateUpdate)
-    gameEvent.DestroyEvent:Add(this.Destroy)
+    GameEvent.UpdateEvent:Add(this.Update)
+    GameEvent.LateUpdateEvent:Add(this.LateUpdate)
+    GameEvent.DestroyEvent:Add(this.Destroy)
 end
 
 function UIManager.Destroy()

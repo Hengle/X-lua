@@ -218,49 +218,5 @@ namespace Game
         {
             Debug.LogError(str);
         }
-
-        #region 本地文件读写
-        /// <summary>
-        /// 解析成字典.格式:键值对用'='号分离
-        /// </summary>
-        public static Dictionary<string, string> ReadDict(string filePath)
-        {
-            var dict = new Dictionary<string, string>();
-            if (File.Exists(filePath))
-            {
-                string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    string[] nodes = lines[i].Split("=".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                    if (nodes.Length == 2 && !dict.ContainsKey(nodes[0]))
-                        dict.Add(nodes[0], nodes[1]);
-                    else
-                        Debug.LogErrorFormat("{0} 文件第{1}行格式错误!", filePath, i + 1);
-                }
-            }
-            return dict;
-        }
-        /// <summary>
-        /// 解析成列表.每行一个数据
-        /// </summary>
-        public static List<string> ReadList(string filePath)
-        {
-            var list = new List<string>();
-            if (File.Exists(filePath))
-                list.AddRange(File.ReadAllLines(filePath, Encoding.UTF8));
-            return list;
-        }
-        public static void WriteDict(string filePath, Dictionary<string, string> dict)
-        {
-            StringBuilder builder = new StringBuilder();
-            foreach (var item in dict)
-                builder.AppendFormat("{0}={1}\n", item.Key, item.Value);
-            File.WriteAllText(filePath, builder.ToString(), Encoding.UTF8);
-        }
-        public static void WriteList(string filePath, List<string> list)
-        {
-            File.WriteAllLines(filePath, list.ToArray(), Encoding.UTF8);
-        }
-        #endregion
     }
 }

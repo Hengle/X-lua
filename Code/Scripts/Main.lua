@@ -2,8 +2,13 @@ local require = require
 require "Global"
 
 local modules = require "Modules"
-local gameEvent = GameEvent
+local GameEvent = GameEvent
 local LogError = LogError
+
+local Time = Time
+local UpdateBeat = UpdateBeat
+local LateUpdateBeat = LateUpdateBeat
+local FixedUpdateBeat = FixedUpdateBeat
 
 local function InitModule()
     for _, name in ipairs(modules) do
@@ -22,28 +27,29 @@ local function Init()
     local UIMgr = require('Manager.UIManager')
     Util.Myxpcall(UIMgr.Show, 'CoolDown.DlgCoolTime')
 
-    --Util.Myxpcall(TEST)
+    Util.Myxpcall(TEST)
     --local demo = require "UIExample.UIDemo"
     --Util.Myxpcall(demo.Init, demo)
 end
 
 --逻辑update
 local function Update(deltaTime, unscaledDeltaTime)
-    gameEvent.UpdateEvent:Trigger(deltaTime, unscaledDeltaTime)
+    Time:SetDeltaTime(deltaTime, unscaledDeltaTime)
+    GameEvent.UpdateEvent:Trigger()
 end
-local function SecondUpdate(time)
-    gameEvent.SecondUpdateEvent:Trigger(time)
-end
+--帧Update
 local function LateUpdate()
-    gameEvent.LateUpdateEvent:Trigger()
+    GameEvent.LateUpdateEvent:Trigger()
+    Time:SetFrameCount()
 end
 --物理update
 local function FixedUpdate(fixedDeltaTime)
-    gameEvent.FixedUpdateEvent:Trigger()
+    Time:SetFixedDelta(fixedDeltaTime)
+    GameEvent.FixedUpdateEvent:Trigger()
 end
 
 local function OnDestroy()
-    gameEvent.DestroyEvent:Trigger()
+    GameEvent.DestroyEvent:Trigger()
     --local util = require('xlua.util')
     --util.print_func_ref_by_csharp()
 end
@@ -52,22 +58,26 @@ end
 ---------------------- 测试 ----------------------------
 
 function TEST()
-    local Filter = require('Core.Filter')
-    local f1 = Filter:new()
-    local f2 = Filter:new()
-    f1:All(2, 1, 3)
-    f1:None(4)
-    f1:Any(5)
-    f2:All(1, 2, 3, f2:None(4), f2:Any(5))
-    f2:Init()
-    f1:Init()
-    printyellow(f1.hashCode , f2.hashCode)
+    --local Filter = require('Core.Filter')
+    --local f1 = Filter:new()
+    --local f2 = Filter:new()
+    --f1:All(2, 1, 3)
+    --f1:None(4)
+    --f1:Any(5)
+    --f2:All(1, 2, 3, f2:None(4), f2:Any(5))
+    --f2:Init()
+    --f1:Init()
+    --printyellow(f1.hashCode , f2.hashCode)
+    local func = function(timer)
+        print('Time - ', Time.time, timer.loop)
+    end
+    local timer = Timer:new(func, 1, 5)
+    timer:Start()
 end
 
 Main = {
     Init = Init,
     Update = Update,
-    SecondUpdate = SecondUpdate,
     LateUpdate = LateUpdate,
     FixedUpdate = FixedUpdate,
     OnDestroy = OnDestroy

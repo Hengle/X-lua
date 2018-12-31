@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
 using XLua;
+using LitJson;
 
 namespace Game
 {
@@ -19,7 +20,6 @@ namespace Game
             //GameManager.Instance,
             ResourceManager.Instance,
         };
-
         void Awake()
         {
             Instance = this;

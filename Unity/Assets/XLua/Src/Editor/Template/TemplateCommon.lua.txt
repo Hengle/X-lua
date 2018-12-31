@@ -136,6 +136,19 @@ local notranslator = {
 	["System.Byte[]"] = true,
 }
 
+function GenInfo(info, callback)
+	callback(info)
+	for k, v in pairs(info) do
+		if type(v) == 'table' then
+			for k1, v1 in pairs(v) do
+				print('---',k1, v1)
+			end
+		else
+			print(k, v)
+		end
+	end
+end
+
 function ForEachCsList(...)
     local list_count = select('#', ...) - 1
 	local callback = select(list_count + 1, ...)

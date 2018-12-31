@@ -148,7 +148,7 @@ local function TimeStr(serverms)
 end
 
 local function init()
-    --计算服务器与客户端时间差
+
 end
 
 return {

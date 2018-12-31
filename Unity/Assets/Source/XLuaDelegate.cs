@@ -10,7 +10,6 @@ namespace Game
     public class XLuaDelegate : MonoBehaviour
     {
         Action<float, float> luaUpdate;
-        Action<float> luaSecondUpdate;
         Action luaLateUpdate;
         Action<float> luaFixedUpdate;
         Action luaDestroy;
@@ -20,7 +19,6 @@ namespace Game
         public void Init(LuaTable luaMain)
         {
             luaUpdate += luaMain.Get<Action<float, float>>("Update");
-            luaSecondUpdate += luaMain.Get<Action<float>>("SecondUpdate");
             luaLateUpdate += luaMain.Get<Action>("LateUpdate");
             luaFixedUpdate += luaMain.Get<Action<float>>("FixedUpdate");
             luaDestroy += luaMain.Get<Action>("OnDestroy");
@@ -35,18 +33,10 @@ namespace Game
             luaLateUpdate = null;
             luaFixedUpdate = null;
             luaDestroy = null;
-            luaSecondUpdate = null;
         }
 
         void Update()
         {
-            float num = Time.realtimeSinceStartup;
-            if (luaSecondUpdate != null && time < num)
-            {
-                time = num + 1;
-                luaSecondUpdate(Time.time);
-            }
-
             LuaManager.Instance.Tick();
 
             if (luaUpdate != null)

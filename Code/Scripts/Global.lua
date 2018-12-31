@@ -25,7 +25,6 @@ SkinnedMeshRenderer = UnityEngine.SkinnedMeshRenderer
 Rect        = UnityEngine.Rect
 ---@type UnityEngine.RuntimePlatform
 RuntimePlatform = UnityEngine.RuntimePlatform
-Time = UnityEngine.Time
 
 FairyGUI = CS.FairyGUI
 EventContext  = FairyGUI.EventContext
@@ -115,7 +114,7 @@ RaycastHit	= require "UnityEngine.RaycastHit"
 Touch		= require "UnityEngine.Touch"
 LayerMask	= require "UnityEngine.LayerMask"
 Plane		= require "UnityEngine.Plane"
---Time		= require "UnityEngine.Time"
+Time		= require "UnityEngine.Time"
 
 require "Local"
 -----------------------------------------------------------
@@ -129,6 +128,8 @@ List = require 'Common.List'
 Event = require "Common.Event"
 Easing = require "Common.Easing"
 GameEvent = require "Common.GameEvent"
+
+require "Common.Timer"
 
 unpack = table.unpack
 

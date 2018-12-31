@@ -66,4 +66,25 @@ public class EUtil
         }
     }
 
+    /// <summary>
+    /// 按扩展名筛选文件
+    /// </summary>
+    /// <param name="path">目录路径</param>
+    /// <param name="exts">需要过滤的扩展名</param>
+    /// <param name="searchOption">查询模式</param>
+    /// <returns></returns>
+    public static string[] GetFiles(string path, string[] exts, SearchOption searchOption)
+    {
+        List<string> list = new List<string>();
+        string[] fs = Directory.GetFiles(path, "*.*", searchOption);
+        HashSet<string> hash = new HashSet<string>(exts);
+        for (int i = 0; i < fs.Length; i++)
+        {
+            string ext = Path.GetExtension(fs[i]);
+            if (!hash.Contains(ext))
+                list.Add(fs[i]);
+        }
+        return list.ToArray();
+    }
+
 }

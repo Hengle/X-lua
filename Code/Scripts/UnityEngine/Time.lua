@@ -10,6 +10,7 @@
 local rawget = rawget
 local unity_time = CS.UnityEngine.Time
 
+---@class _Time
 local _Time = 
 {	
 	deltaTime			= 0,
@@ -71,6 +72,7 @@ _Time.newindex = function(t, k, v)
 	error(string.format("Property or indexer `CS.UnityEngine.Time.%s' cannot be assigned to (it is read only)", k))	
 end
 
+---@class Time : _Time
 local Time = {}
 local counter = 1
 
@@ -113,10 +115,6 @@ function Time:SetTimeScale(scale)
 	return last
 end
 
-function Time:GetTimestamp()
-	return gettime()
-end
-
 Time.unity_time = unity_time
 CS.UnityEngine.Time = Time
 setmetatable(Time, _Time)
@@ -125,6 +123,5 @@ if unity_time ~= nil then
 	_Time.maximumDeltaTime = unity_time.maximumDeltaTime	
 	_Time.timeScale = unity_time.timeScale	
 end
-
 
 return Time

@@ -1,6 +1,8 @@
 local List = List
 local Class = Class
 
+--定时销毁功能后续完善
+
 ---@class ObjectPool
 local ObjectPool = Class:new('ObjectPool')
 

@@ -40,29 +40,29 @@ namespace Game
             ServerListFailed,//获取服务器列表失败
         }
 
-
         Dictionary<string, string> _launcher = new Dictionary<string, string>();
         public void Init()
         {
-            TextAsset text = (TextAsset)Resources.Load("launcher", typeof(TextAsset));
-            if (null != text)
-            {
-                using (MemoryStream stream = new MemoryStream(text.bytes))
-                using (StreamReader r = new StreamReader(stream))
-                {
-                    string line;
-                    while ((line = r.ReadLine()) != null)
-                    {
-                        string[] pair = line.Split("=".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        if (pair != null && pair.Length == 2 && !_launcher.ContainsKey(pair[0]))
-                            _launcher.Add(pair[0], pair[1]);
-                    }
-                }
-            }
+            TextAsset launcher = (TextAsset)Resources.Load("launcher", typeof(TextAsset));
+            _launcher = LitJson.JsonMapper.ToObject<Dictionary<string, string>>(launcher.text);
+            //if (null != launcher)
+            //{
+            //    using (MemoryStream stream = new MemoryStream(launcher.bytes))
+            //    using (StreamReader r = new StreamReader(stream))
+            //    {
+            //        string line;
+            //        while ((line = r.ReadLine()) != null)
+            //        {
+            //            string[] pair = line.Split("=".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            //            if (pair != null && pair.Length == 2 && !_launcher.ContainsKey(pair[0]))
+            //                _launcher.Add(pair[0], pair[1]);
+            //        }
+            //    }
+            //}
         }
         public void Dispose()
         {
-            _launcher.Clear();
+            _launcher = null;
             _instance = null;
             Resources.UnloadUnusedAssets();
         }

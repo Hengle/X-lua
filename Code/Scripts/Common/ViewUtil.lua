@@ -4,17 +4,17 @@
 -- 一个界面模块一个包.
 -- 直接解析指定组件,非GameObject
 local prefixs = {
-    Label = 1,
     Image = 1,
-    Button = 1,
-    Progress = 1,
-    Slider = 1,
+    MovieClip = 1,
+    Graph = 1,
+    Loader = 1,
     TextField = 1,
     RichTextField = 1,
     TextInput = 1,
-    Loader = 1,
-    Graph = 1,
-    MovieClip = 1,
+    Label = 1,
+    Button = 1,
+    ProgressBar = 1,
+    Slider = 1,
 
     ComboBox = 2,
     Group = 2,

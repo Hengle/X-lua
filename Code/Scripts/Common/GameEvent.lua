@@ -1,11 +1,10 @@
 local Event = Event
 
-local UpdateEvent = Event:NewSimple("Update")
-local SecondUpdateEvent = Event:NewSimple("SecondUpdate")
-local LateUpdateEvent = Event:NewSimple("LateUpdate")
-local FixedUpdateEvent = Event:NewSimple("FixedUpdate")
-local DestroyEvent = Event:NewSimple("Destroy")
-local ECSEvent = Event:new('ECS')
+local UpdateEvent = Event.NewSimple("Update")
+local SecondUpdateEvent = Event.NewSimple("SecondUpdate")
+local LateUpdateEvent = Event.NewSimple("LateUpdate")
+local FixedUpdateEvent = Event.NewSimple("FixedUpdate")
+local DestroyEvent = Event.NewSimple("Destroy")
 
 return {
     UpdateEvent = UpdateEvent,
@@ -13,5 +12,4 @@ return {
     LateUpdateEvent = LateUpdateEvent,
     FixedUpdateEvent = FixedUpdateEvent,
     DestroyEvent = DestroyEvent,
-    ECSEvent = ECSEvent,
 }
