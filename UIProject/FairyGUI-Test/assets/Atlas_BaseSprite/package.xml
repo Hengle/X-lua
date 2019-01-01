@@ -227,6 +227,8 @@
     <image id="uw5hd5" name="8(4)_png.png" path="/Images_coolDown/" exported="true"/>
     <image id="uw5hd6" name="9(4)_png.png" path="/Images_coolDown/" exported="true"/>
     <font id="uw5hf1" name="coolTime.fnt" path="/Images_coolDown/" exported="true"/>
+    <movieclip id="m1wz3" name="arrow.jta" path="/" exported="true"/>
+    <component id="b3l50" name="DlgUILock.xml" path="/" exported="true"/>
   </resources>
   <publish name="BaseSprite" path="..\..\Unity\Assets\Interface\Atlas"/>
 </packageDescription>

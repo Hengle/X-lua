@@ -25,7 +25,7 @@ local function Init()
     printcolor("orange", 'lua framework init successful.')
 
     local UIMgr = require('Manager.UIManager')
-    Util.Myxpcall(UIMgr.Show, 'CoolDown.DlgCoolTime')
+    Util.Myxpcall(UIMgr.Show, 'Guide.DlgNormalTest')
 
     Util.Myxpcall(TEST)
     --local demo = require "UIExample.UIDemo"
@@ -68,11 +68,11 @@ function TEST()
     --f2:Init()
     --f1:Init()
     --printyellow(f1.hashCode , f2.hashCode)
-    local func = function(timer)
-        print('Time - ', Time.time, timer.loop)
-    end
-    local timer = Timer:new(func, 1, 5)
-    timer:Start()
+    --local func = function(timer)
+    --    print('Time - ', Time.time, timer.loop)
+    --end
+    --local timer = Timer:new(func, 1, 5)
+    --timer:Start()
 end
 
 Main = {

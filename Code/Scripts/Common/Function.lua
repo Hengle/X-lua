@@ -7,7 +7,7 @@ local format = string.format
 local traceback = debug.traceback
 local collectgarbage = collectgarbage
 
-local dump = table.dump
+local dump = dump
 local Debug = CS.UnityEngine.Debug
 local GameObject = GameObject
 
@@ -32,7 +32,6 @@ end
 
 local DEFAULT_LOG_COLOR = "yellow"
 local color = DEFAULT_LOG_COLOR
-local dump_level = 3
 --输出黄色日志-无格式
 local function printwitchcolor(...)
     if not Local.LogManager then
@@ -64,7 +63,7 @@ function printt(t, des)
     end
     des = des or ''
     if type(t) == "table" then
-        print(format("<color=orange>%s</color>\n%s", des, dump(t, dump_level)))
+        print(format("<color=orange>%s</color>\n%s", des, dump(t, 'table')))
     else
         print(format("%s\n%s", des, tostring(t)))
     end

@@ -87,14 +87,14 @@
 
 
             //--初始化资源路径
-            EUtil.GetAssetsInSubFolderRecursively(_config.CharacterRelativeDir, "*.prefab", ref AllCharacters);
-            EUtil.GetAssetsInSubFolderRecursively(_config.AvatarRelativeDir, "*.prefab", ref AllAvatars);
-            EUtil.GetAssetsInSubFolderRecursively(_config.EffectRelativeDir, "*.prefab", ref AllEffects);
+            EditorUtil.GetAssetsInSubFolderRecursively(_config.CharacterRelativeDir, "*.prefab", ref AllCharacters);
+            EditorUtil.GetAssetsInSubFolderRecursively(_config.AvatarRelativeDir, "*.prefab", ref AllAvatars);
+            EditorUtil.GetAssetsInSubFolderRecursively(_config.EffectRelativeDir, "*.prefab", ref AllEffects);
             foreach (var item in AllCharacters)
             {
                 string searchDir = item.Value.Substring(0, item.Value.LastIndexOf(@"/prefab")) + "/clips";
                 var selfClips = new Dictionary<string, string>();
-                EUtil.GetAssetsInSubFolderRecursively(searchDir, "*.anim", ref selfClips);
+                EditorUtil.GetAssetsInSubFolderRecursively(searchDir, "*.anim", ref selfClips);
                 AllCharacterClips[item.Key] = selfClips;
             }
 

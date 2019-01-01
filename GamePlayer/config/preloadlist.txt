@@ -1,3 +1,2 @@
-ui/atlas/basics.bundle
 ui/atlas/basesprite.bundle
 ui/atlas/font.bundle

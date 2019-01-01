@@ -16,21 +16,21 @@ public class LuaFairyGUIApi : LuaApiGen
     [MenuItem("XLua/Gen FairyGUI Api", false, 500)]
     static void GenFairyGUIApi()
     {
-        List<Info> infos = new List<Info>();
+        List<LuaApi> infos = new List<LuaApi>();
         string[] fs = Directory.GetFiles(fairyGUIDir, "*.bytes");
         for (int i = 0; i < fs.Length; i++)
         {
-            string path = EUtil.FilePath2UnityPath(fs[i]);
+            string path = EditorUtil.FilePath2UnityPath(fs[i]);
             int index = path.LastIndexOf('_');
-            string f = EUtil.StandardlizePath(path).Substring(0, index);
+            string f = EditorUtil.StandardlizePath(path).Substring(0, index);
             infos.AddRange(CreateInfo(f));
         }
         GenLuaApi("FairyGUIApi", infos);
     }
 
-    static List<Info> CreateInfo(string path)
+    static List<LuaApi> CreateInfo(string path)
     {
-        List<Info> infos = new List<Info>();
+        List<LuaApi> infos = new List<LuaApi>();
         try
         {
             var pkg = UIPackage.AddPackage(path);
@@ -38,7 +38,7 @@ public class LuaFairyGUIApi : LuaApiGen
             foreach (var item in items)
             {
                 GComponent gcomp = pkg.CreateObject(item.name).asCom;
-                Info info = new Info();
+                LuaApi info = new LuaApi();
                 info.ClassName = string.Format("UI.{0}.{1}", pkg.name, item.name);
                 CollectUIElements(item.name, gcomp, info);
                 if (info.Fields.Count > 0)
@@ -70,7 +70,7 @@ public class LuaFairyGUIApi : LuaApiGen
         {"Group", 2},
         {"List", 2},
     };
-    static void CollectUIElements(string dlg, GComponent comp, Info info)
+    static void CollectUIElements(string dlg, GComponent comp, LuaApi info)
     {
         GObject[] children = comp.GetChildren();
         for (int i = 0; i < children.Length; i++)

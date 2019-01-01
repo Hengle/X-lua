@@ -13,7 +13,7 @@ public class LuaApiGen
     /// <summary>
     /// 一个Api脚本信息
     /// </summary>
-    public class Info
+    public class LuaApi
     {
         public string ClassName;
         public string InhertName;
@@ -37,14 +37,14 @@ public class LuaApiGen
     static readonly string apiDir = codeDir + "/Api";
     static readonly string cacheDir = codeDir + "/Cache";
     static readonly string winRAR = Application.dataPath + "/../../Tool/WinRAR.exe";
-    static List<Info> infoList = new List<Info>();
+    static List<LuaApi> infoList = new List<LuaApi>();
 
     /// <summary>
     /// Lua Api生成
     /// </summary>
     /// <param name="name">Zip名称</param>
     /// <param name="ls">类型信息列表</param>
-    protected static void GenLuaApi(string name, List<Info> ls)
+    protected static void GenLuaApi(string name, List<LuaApi> ls)
     {
         if (!Directory.Exists(cacheDir))
             Directory.CreateDirectory(cacheDir);

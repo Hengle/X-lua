@@ -100,7 +100,7 @@ function dump(value, desciption, nesting)
             content = string.format("%s\n%s", content, line)
         end
     end
-    print(content)
+    return content
 end
 
 ---检查并尝试转换为数值，如果无法转换则返回 0

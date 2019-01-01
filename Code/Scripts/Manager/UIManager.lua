@@ -54,6 +54,7 @@ local HideLoadingLock           --隐藏加载中提示!
 
 local UIManager = {}
 local this = UIManager
+local secondTimer
 
 --[[
     注:问题
@@ -68,9 +69,11 @@ local this = UIManager
 ---#界面返回,至上一次界面
 ---窗口定义UIShowType函数指明显示类型
 UIShowType = {
-    Default = 0, --默认策略显示
-    Refresh = 1, --强制调用Show{执行Show,Refresh函数}
-    DestroyWhenHide = 2, --Hide时释放资源,默认隐藏不销毁资源,仅在资源销毁时调用
+    Default = 1 << 0, --默认策略显示
+    Refresh = 1 << 1, --强制调用Show{执行Show,Refresh函数}
+    DestroyWhenHide = 1 << 2, --Hide时释放资源,默认隐藏不销毁资源,仅在资源销毁时调用
+    TabGroup = 1 << 3, --多界面切换组[树结构]..未完成
+    ReturnType = 1 << 4, --界面可回退到上一个界面[栈结构]..未完成
 }
 
 ---@class UIData
@@ -101,17 +104,20 @@ function UIManager.Init()
             GameObject.DontDestroyOnLoad(obj)
         end
     end
-    UIConfig.globalModalWaiting = 'ui://Basics/DlgUILock'
+    UIConfig.globalModalWaiting = 'ui://Atlas_BaseSprite/DlgUILock'
 
     GameEvent.UpdateEvent:Add(this.Update)
     GameEvent.LateUpdateEvent:Add(this.LateUpdate)
     GameEvent.DestroyEvent:Add(this.Destroy)
+    secondTimer = Timer:new(this.SecondUpdate, 1, -1, false)
+    secondTimer:Start()
 end
 
 function UIManager.Destroy()
     for name, data in pairs(_views) do
          this.DestroyView(name)
     end
+    secondTimer = nil
 end
 
 function UIManager.Update(dt)
@@ -456,19 +462,16 @@ function UIManager.Show(viewName, params)
     data.fields = ViewUtil.ExportFields(viewCom)
     window:Show()
 end
+---所有类型的窗口均可关闭[默认]
+function UIManager.ShowAndCloseOther(viewName, params)
+
+end
 function UIManager.Refresh(viewName, params)
     printmodule(Local.Moduals.UIManager, "[UIManager]Refresh", viewName)
     if NeedRefresh(viewName) then
         local data = this.GetViewData(viewName)
         data.needRefresh = true
         data.params = params
-    end
-end
-function UIManager.ShowOrRefresh(viewName, params)
-    if this.IsShow(viewName) then
-        this.Refresh(viewName, params)
-    else
-        this.Show(viewName, params)
     end
 end
 function UIManager.IfShowThenCall(viewName, methodName, params)
@@ -554,11 +557,35 @@ function UIManager.DestroyAllDlgs()
     end
 end
 
+
 ---------------------------------------------------------------
--------------------------功能窗口设计
+-------------------------Tab界面组[树]
 ---------------------------------------------------------------
-----显示警告窗口
-function UIManager.ShowWarn(content)
+
+
+
+
+
+
+
+---------------------------------------------------------------
+-------------------------界面返回功能[栈]
+---------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------
+-------------------------弹窗窗口设计[固定几种样式]
+---------------------------------------------------------------
+--[[
+    警告提示
+    普通提示
+--]]
+function UIManager.PopSystemTip(content)
+
+end
+function UIManager.PopFlyText(content)
 
 end
 

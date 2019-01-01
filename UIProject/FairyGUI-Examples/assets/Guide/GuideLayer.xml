@@ -19,8 +19,8 @@
       <relation target="n0" sidePair="bottomext-bottom"/>
     </graph>
     <graph id="n11" name="window" xy="409,221" size="312,182" touchable="false" type="rect" lineSize="0" fillColor="#00000000"/>
-    <jta id="n12" name="n12" src="xcfj6" xy="330,288">
+    <movieclip id="n12" name="n12" src="xcfj6" fileName="rswcfhd.jta" xy="329,287">
       <relation target="n11" sidePair="left-left,middle-middle"/>
-    </jta>
+    </movieclip>
   </displayList>
 </component>
