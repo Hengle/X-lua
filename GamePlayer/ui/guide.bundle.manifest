@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1154207191
+CRC: 1208749639
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f757c6fc1784fbf254eabd86b7a2abf0
+    Hash: 967fe4b2d8489ccee2a87a6975b5aa2b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/Interface/GUI/Basics_fui.bytes
+- Assets/Interface/GUI/Guide_fui.bytes
 Dependencies: []

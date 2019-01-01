@@ -22,3 +22,12 @@ update
 doHideAnimation
 onHide
 destroy
+
+#========================= 窗体生命周期
+Show
+Hide
+Destroy
+Refresh
+Update
+
+#========================= 其他

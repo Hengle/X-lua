@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="ioc3jvsm" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="m1wz0" name="ButtonStartGuide.xml" path="/"/>
+    <component id="m1wz1" name="ButtonBag.xml" path="/"/>
+    <component id="m1wz2" name="DlgNormalTest.xml" path="/" exported="true"/>
+    <component id="m1wz4" name="DlgGuideLayer.xml" path="/" exported="true"/>
+  </resources>
+  <publish name="Guide"/>
+</packageDescription>

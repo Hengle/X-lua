@@ -94,7 +94,6 @@
     <component id="gjacc9" name="Demo_Component.xml" path="/" exported="true"/>
     <component id="gjacca" name="Demo_Grid.xml" path="/" exported="true"/>
     <component id="gjaccb" name="Demo_Depth.xml" path="/" exported="true"/>
-    <component id="b3l50" name="DlgUILock.xml" path="/" exported="true"/>
   </resources>
   <publish name="Basics"/>
 </packageDescription>

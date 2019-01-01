@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="100,100" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="1"/>
+  <displayList>
+    <image id="n0_m1wz" name="Bag" src="gp6dh" fileName="bagImages/btnimage.png" pkg="vjaxkvw8" xy="0,0" size="100,100" color="#b4b4b4">
+      <gearColor controller="button" pages="1" values="#b4b4b4" default="#ffffff"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <movieclip id="n2_m1wz" name="n2" src="gp6di" fileName="bagImages/quan.jta" pkg="vjaxkvw8" xy="-9,-7"/>
+  </displayList>
+  <Button/>
+</component>

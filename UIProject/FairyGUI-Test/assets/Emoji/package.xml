@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="ihfwmjch" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="m1wz0" name="ButtonSend.xml" path="/"/>
+    <component id="m1wz2" name="ButtonEmijo.xml" path="/"/>
+    <component id="m1wz4" name="ChatLeft.xml" path="/"/>
+    <component id="m1wz5" name="ChatRight.xml" path="/"/>
+    <component id="m1wz6" name="DlgEmoji.xml" path="/"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>
