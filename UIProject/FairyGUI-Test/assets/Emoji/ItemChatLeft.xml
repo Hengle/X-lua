@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="900,90">
+  <displayList>
+    <image id="n3_m1wz" name="bg" src="m1wz3" fileName="images/3.png" pkg="i8la6ifq" xy="4,2" size="50,50" scale="1.6,1.6"/>
+    <loader id="n4_m1wz" name="Loader_icon" xy="7,6" size="46,46" aspect="true" scale="1.6,1.6"/>
+    <image id="n5_m1wz" name="n5" src="m1wz6" fileName="images/6.png" pkg="i8la6ifq" xy="88,13" size="788,48"/>
+    <richtext id="n6_m1wz" name="RichTextField_LMsg" xy="114,21" size="750,33" fontSize="12" autoSize="none" text="">
+      <relation target="n5_m1wz" sidePair="width-width,height-height"/>
+    </richtext>
+  </displayList>
+</component>

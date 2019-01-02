@@ -8,7 +8,7 @@
     <image id="n4_uw5h" name="down" src="uw5hcw" fileName="Images_coolDown/13.png" pkg="vjaxkvw8" xy="0,0">
       <gearDisplay controller="button" pages="1"/>
     </image>
-    <text id="n8_uw5h" name="Label_CoolTime" xy="37,40" size="51,46" font="ui://vjaxkvw8uw5hf1" fontSize="12" color="#cccccc" autoSize="none" text="9"/>
+    <text id="n8_uw5h" name="TextField_CoolTime" xy="37,40" size="51,46" font="ui://vjaxkvw8uw5hf1" fontSize="12" color="#cccccc" autoSize="none" text="9"/>
     <image id="n7_uw5h" name="Image_maskCircle" src="uw5hd8" fileName="Images_coolDown/mask1.png" pkg="vjaxkvw8" xy="22,22" size="82,82" fillMethod="radial360" fillClockwise="false"/>
     <image id="n5_uw5h" name="bg" src="uw5hcv" fileName="Images_coolDown/12.png" pkg="vjaxkvw8" xy="22,22"/>
   </displayList>

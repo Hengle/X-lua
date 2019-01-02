@@ -7,7 +7,7 @@
     <image id="m1wz3" name="3.png" path="/images/" exported="true" scale="9grid" scale9grid="13,16,26,32"/>
     <image id="m1wz4" name="4.png" path="/images/" exported="true"/>
     <image id="m1wz5" name="5.png" path="/images/" exported="true"/>
-    <image id="m1wz6" name="6.png" path="/images/" exported="true"/>
+    <image id="m1wz6" name="6.png" path="/images/" exported="true" scale="9grid" scale9grid="31,12,331,24"/>
     <image id="m1wz7" name="7.png" path="/images/" exported="true" scale="9grid" scale9grid="70,34,140,26" gridTile="2"/>
     <image id="m1wz8" name="8.png" path="/images/" exported="true"/>
     <image id="m1wz9" name="9.png" path="/images/" exported="true" scale="9grid" scale9grid="12,10,24,20"/>

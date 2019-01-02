@@ -1,4 +1,4 @@
----@field public Label_CoolTime FairyGUI.GTextField
+---@field public TextField_CoolTime FairyGUI.GTextField
 ---@field public Image_maskCircle FairyGUI.GImage
 ---@class UI.CoolDown.Button_Circle
 local m = {}

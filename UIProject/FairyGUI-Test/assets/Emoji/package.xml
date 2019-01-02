@@ -3,9 +3,12 @@
   <resources>
     <component id="m1wz0" name="ButtonSend.xml" path="/"/>
     <component id="m1wz2" name="ButtonEmijo.xml" path="/"/>
-    <component id="m1wz4" name="ChatLeft.xml" path="/"/>
-    <component id="m1wz5" name="ChatRight.xml" path="/"/>
-    <component id="m1wz6" name="DlgEmoji.xml" path="/"/>
+    <component id="m1wz4" name="ItemChatLeft.xml" path="/" exported="true"/>
+    <component id="m1wz5" name="ItemChatRight.xml" path="/" exported="true"/>
+    <component id="m1wz6" name="DlgEmoji.xml" path="/" exported="true"/>
+    <component id="ev7g7" name="ListEmoji.xml" path="/" exported="true"/>
+    <component id="ev7g8" name="ItemEmojiFace.xml" path="/"/>
+    <component id="ev7g9" name="ListEmojiIOS.xml" path="/" exported="true"/>
   </resources>
-  <publish name=""/>
+  <publish name="Emoji"/>
 </packageDescription>

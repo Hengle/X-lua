@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1767465927
+CRC: 2117451066
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 50c40279715b1a4cfc1da4428607c55f
+    Hash: a229e71f39a6c56db8babf5184ecd6d9
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/Interface/GUI/Bag_fui.bytes
+- Assets/Interface/GUI/Emoji_fui.bytes
 Dependencies: []

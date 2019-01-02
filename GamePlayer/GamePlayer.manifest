@@ -1,22 +1,13 @@
 ManifestFileVersion: 0
-CRC: 2449419025
+CRC: 2744405648
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: ui/atlas/basesprite.bundle
       Dependencies: {}
     Info_1:
-      Name: ui/bag.bundle
+      Name: ui/emoji.bundle
       Dependencies: {}
     Info_2:
-      Name: ui/basics.bundle
-      Dependencies: {}
-    Info_3:
-      Name: ui/cooldown.bundle
-      Dependencies: {}
-    Info_4:
-      Name: ui/guide.bundle
-      Dependencies: {}
-    Info_5:
       Name: ui/atlas/font.bundle
       Dependencies: {}

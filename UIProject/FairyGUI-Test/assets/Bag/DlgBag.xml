@@ -69,7 +69,7 @@
     <text id="n8_mxwy" name="n8" xy="487,537" size="104,29" fontSize="22" color="#cc3300" autoSize="none" text="Selected:&#xA;">
       <relation target="n12_gp6d" sidePair="left-left,bottom-bottom"/>
     </text>
-    <text id="n9_mxwy" name="Label_Name" xy="597,537" size="179,29" fontSize="22" color="#cc3300" autoSize="none" text="&#xA;">
+    <text id="n9_mxwy" name="TextField_Name" xy="597,537" size="179,29" fontSize="22" color="#cc3300" autoSize="none" text="&#xA;">
       <relation target="n12_gp6d" sidePair="left-left,bottom-bottom"/>
     </text>
   </displayList>
