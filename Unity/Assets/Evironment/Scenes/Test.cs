@@ -36,19 +36,19 @@ public class Test : MonoBehaviour
 
     void Start()
     {
-        GButton button = GetComponent<UIPanel>().ui.asButton;
-        Debug.Log(button.baseUserData);
- 
-        var buffer = button.packageItem.rawData;
-        buffer.Seek(0, 6);
-        var mode = (ButtonMode)buffer.ReadByte();
-        string str = buffer.ReadS();
-        if (str != null)
-        {
-            var sound = UIPackage.GetItemAssetByURL(str) as NAudioClip;
-#if UNITY_EDITOR
-            Debug.Log(UnityEditor.AssetDatabase.GetAssetPath(sound.nativeClip));
-#endif
-        }
+//        GButton button = GetComponent<UIPanel>().ui.asButton;
+//        Debug.Log(button.baseUserData);
+
+//        var buffer = button.packageItem.rawData;
+//        buffer.Seek(0, 6);
+//        var mode = (ButtonMode)buffer.ReadByte();
+//        string str = buffer.ReadS();
+//        if (str != null)
+//        {
+//            var sound = UIPackage.GetItemAssetByURL(str) as NAudioClip;
+//#if UNITY_EDITOR
+//            Debug.Log(UnityEditor.AssetDatabase.GetAssetPath(sound.nativeClip));
+//#endif
+//        }
     }
 }

@@ -92,10 +92,11 @@ public class LuaFairyGUIApi : LuaApiGen
                     field.Name = name;
                     string cType = child.GetType().ToString();
                     field.Type = cType;
-                    string nType = "FairyGUI.G" + prefix;
-                    if (cType != nType)
-                        Debug.LogErrorFormat("[{0}]{1}的类型({2})与实际需求({3})不匹配",
-                            dlg, name, cType, nType);
+                    string mType = "FairyGUI.G" + prefix;
+                    if (cType == "MyLoader" && mType != "GLoader")
+                        Debug.LogErrorFormat("[{0}]{1}的类型({2})与实际需求({3})不匹配", dlg, name, cType, mType);
+                    else if (cType != mType)
+                        Debug.LogErrorFormat("[{0}]{1}的类型({2})与实际需求({3})不匹配", dlg, name, cType, mType);
                     info.Fields.Add(field);
                 }
             }

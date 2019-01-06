@@ -190,7 +190,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 549788302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.891687, y: -5, z: 0}
+  m_LocalPosition: {x: 8.888889, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -244,11 +244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024553ecf96a65649b929ee08c9214fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  packageName: DlgBasics
-  componentName: Button_Clip_Scroll
+  packageName: MEmoji
+  componentName: DlgEmoji
   fitScreen: 0
   sortingOrder: 0
-  packagePath: Assets/Interface/GUI/DlgBasics
+  packagePath: Assets/Interface/GUI/Emoji
   renderMode: 0
   renderCamera: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
@@ -256,7 +256,7 @@ MonoBehaviour:
   rotation: {x: 0, y: 0, z: 0}
   fairyBatching: 1
   touchDisabled: 0
-  cachedUISize: {x: 160, y: 69}
+  cachedUISize: {x: 1280, y: 720}
   hitTestMode: 0
   setNativeChildrenOrder: 0
 --- !u!4 &659104356
@@ -267,7 +267,7 @@ Transform:
   m_GameObject: {fileID: 659104354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.013888888, y: 0.013888888, z: 0.013888888}
+  m_LocalScale: {x: 0.01388889, y: 0.01388889, z: 0.01388889}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3

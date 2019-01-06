@@ -24,6 +24,7 @@ namespace Game
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            FairyGUI.UIObjectFactory.SetLoaderExtension(typeof(MyLoader));
 
             for (int i = 0; i < _managers.Count; i++)
                 _managers[i].Init();

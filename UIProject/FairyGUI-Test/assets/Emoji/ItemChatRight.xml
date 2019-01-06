@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<component size="900,90">
-  <displayList>
-    <image id="n3_m1wz" name="bg" src="m1wz3" fileName="images/3.png" pkg="i8la6ifq" xy="814,5" size="50,50" scale="1.6,1.6"/>
-    <loader id="n4_m1wz" name="Loader_icon" xy="818,9" size="46,46" aspect="true" scale="1.6,1.6"/>
-    <image id="n7_m1wz" name="n7" src="m1wz7" fileName="images/7.png" pkg="i8la6ifq" xy="20,10" size="787,48"/>
-    <richtext id="n6_m1wz" name="RichTextField_RMsg" xy="31,17" size="751,35" fontSize="12" autoSize="none" text=""/>
-  </displayList>
-</component>

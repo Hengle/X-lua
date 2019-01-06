@@ -173,7 +173,8 @@ public class EmojiMain : MonoBehaviour
 	void __clickEmoji2(EventContext context)
 	{
 		GButton item = (GButton)context.data;
-		_input2.ReplaceSelection(Char.ConvertFromUtf32(Convert.ToInt32(UIPackage.GetItemByURL(item.icon).name, 16)));
+        string txt = Char.ConvertFromUtf32(Convert.ToInt32(UIPackage.GetItemByURL(item.icon).name, 16));
+        _input2.ReplaceSelection(txt);
 	}
 
 	void __inputKeyDown1(EventContext context)

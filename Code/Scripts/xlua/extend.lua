@@ -939,3 +939,8 @@ function string.formatnumberthousands(num)
     end
     return formatted
 end
+
+function string.isempty(s)
+    s = string.trim(s)
+    return string.len(s) == 0
+end

@@ -55,6 +55,7 @@ local HideLoadingLock           --隐藏加载中提示!
 local UIManager = {}
 local this = UIManager
 local secondTimer
+local pkgItems = {}
 
 --[[
     注:问题
@@ -115,9 +116,12 @@ end
 
 function UIManager.Destroy()
     for name, data in pairs(_views) do
-         this.DestroyView(name)
+        this.DestroyView(name)
     end
     secondTimer = nil
+    for _, v in pairs(pkgItems) do
+        v:Dispose()
+    end
 end
 
 function UIManager.Update(dt)
@@ -556,6 +560,12 @@ function UIManager.DestroyAllDlgs()
         _callBackDestroyAllDlgs = nil
     end
 end
+function UIManager.GetPkgItem(viewName, item)
+    local data = this.GetViewData(viewName)
+    local comp = UIPackage.CreateObject(data.pkgName, item)
+    insert(pkgItems, comp)
+    return comp
+end
 
 
 ---------------------------------------------------------------
@@ -587,6 +597,9 @@ function UIManager.PopSystemTip(content)
 end
 function UIManager.PopFlyText(content)
 
+end
+function UIManager.ShowPopup(target, sender)
+    GRoot.inst:ShowPopup(target, sender, false)
 end
 
 return UIManager
