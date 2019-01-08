@@ -65,6 +65,8 @@
     <movieclip id="m1wz1p" name="hx.jta" path="/emoji/" exported="true"/>
     <movieclip id="m1wz1q" name="hxiao.jta" path="/emoji/" exported="true"/>
     <movieclip id="m1wz1r" name="hxiu.jta" path="/emoji/" exported="true"/>
+    <image id="mpyf0" name="joystick_bg.png" path="/images/"/>
+    <image id="mpyf1" name="joystick_opt.png" path="/images/"/>
   </resources>
   <publish name="Atlas_Icon" path="..\..\Unity\Assets\Interface\Atlas"/>
 </packageDescription>
