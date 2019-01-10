@@ -1,4 +1,4 @@
----@field public Loader_icon FairyGUI.GLoader
+---@field public Loader_icon MyLoader
 ---@field public RichTextField_RMsg FairyGUI.GRichTextField
 ---@class UI.MEmoji.ItemChatRight
 local m = {}

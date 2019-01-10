@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="178,160" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n3_mkqn" name="thumb" src="mpyf1" fileName="images/joystick_opt.png" pkg="i8la6ifq" xy="0,0">
+      <gearDisplay controller="button" pages="1"/>
+    </image>
+  </displayList>
+  <Button/>
+</component>

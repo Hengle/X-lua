@@ -4,16 +4,18 @@ local GRoot = GRoot
 local Vector2 = Vector2
 local Mathf = Mathf
 
+---@class Joystick
 local Joystick = Class:new("Joystick")
 
-local onBegin = nil
-local onMove = nil
-local onEnd = nil
+local DoMoveStart = nil
+local DoMove = nil
+local DoMoveEnd = nil
 
-function Joystick:ctor(name, radius)
+function Joystick:ctor(name, radius, speed)
     self.touchId = -1
     self.name = name or ""
     self.radius = radius or 150
+    self.speed = speed or 10
 
     self.lastPos = Vector2.zero
     self.centerPos = Vector2.zero
@@ -22,11 +24,10 @@ function Joystick:ctor(name, radius)
 
     ---@type FairyGUI.GTween
     self.tweener = nil
-    self.onBegin = nil
+    self.onMoveStart = nil
     self.onMove = nil
-    self.onEnd = nil
+    self.onMoveEnd = nil
 end
-
 function Joystick:Init(params)
     ---@type FairyGUI.GButton
     self.button = params.joystick
@@ -42,19 +43,22 @@ function Joystick:Init(params)
 
     ---@param context FairyGUI.EventContext
     self.touchArea.onTouchBegin:Add(function(context)
-        onBegin(self, context)
+        printyellow("------onTouchBegin------")
+        DoMoveStart(self, context)
     end)
     ---@param context FairyGUI.EventContext
     self.touchArea.onTouchMove:Add(function(context)
-        onMove(self, context)
+        printyellow("------onTouchMove------")
+        DoMove(self, context)
     end)
     ---@param context FairyGUI.EventContext
     self.touchArea.onTouchEnd:Add(function(context)
-        onEnd(self, context)
+        printyellow("------onTouchEnd------")
+        DoMoveEnd(self, context)
     end)
 end
 
-onBegin = function(joystick, context)
+DoMoveStart = function(joystick, context)
     if joystick.touchId == -1 then
         ---@type FairyGUI.InputEvent
         local evt = context.data
@@ -97,12 +101,12 @@ onBegin = function(joystick, context)
         joystick.thumb.rotation = degrees + 90
         context:CaptureTouch()
 
-        if joystick.onBegin then
-            joystick.onBegin()
+        if joystick.onMoveStart then
+            joystick.onMoveStart()
         end
     end
 end
-onMove = function(joystick, context)
+DoMove = function(joystick, context)
     local evt = context.data
     if joystick.touchId ~= -1 and evt.touchId == joystick.touchId then
         local pointer = GRoot.inst:GlobalToLocal(Vector2(evt.x, evt.y))
@@ -144,11 +148,11 @@ onMove = function(joystick, context)
         button:SetXY(buttonx - button.width / 2, buttony - button.height / 2)
 
         if joystick.onMove then
-            joystick.onMove()
+            joystick.onMove(offsetx, offsety)
         end
     end
 end
-onEnd = function(joystick, context)
+DoMoveEnd = function(joystick, context)
     local evt = context.data
     if joystick.touchId ~= -1 and evt.touchId == joystick.touchId then
         joystick.touchId = -1
@@ -165,8 +169,8 @@ onEnd = function(joystick, context)
             center.visible = true
             center:SetXY(joystick.initPos.x - center.width / 2, joystick.initPos.y - center.height / 2)
 
-            if joystick.onEnd then
-                joystick.onEnd()
+            if joystick.onMoveEnd then
+                joystick.onMoveEnd()
             end
         end)
     end
