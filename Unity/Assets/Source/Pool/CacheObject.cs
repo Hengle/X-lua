@@ -7,27 +7,32 @@ namespace Game
 {
     public class CacheObject<T> : IPoolItem<T> where T : UnityEngine.Object
     {
-        public string Name { get { return _original != null ? _original.name : "Null"; } }
+        public string Name { get { return _name; } }
         public int MaxSize { get { return 1; } }
         public float LastUseTime { get { return _lastUseTime; } }
         public float CacheTime { get { return _cacheTime; } }
         public T Original { get { return _original; } }
 
-        private float _lastUseTime;
-        private float _cacheTime;
+        private string _name = "Null";
+        private float _lastUseTime = 0;
+        /// <summary>
+        /// time < 0时,不做记时处理;反之,计时处理
+        /// </summary>
+        private float _cacheTime = -1;
         private T _original;
         private Action<T> _onGet;
         private Action<T> _onRelease;
 
-        public CacheObject(T original, float lastUseTime = 0, float cacheTime = 0)
-            : this(original, lastUseTime, cacheTime, null, null) { }
-        public CacheObject(T original, Action<T> onGet, Action<T> onRelease)
-             : this(original, 0, 0, onGet, onRelease) { }
-        public CacheObject(T original, float lastUseTime, float cacheTime,
+        public CacheObject(string name, T original, float cacheTime = -1)
+            : this(name, original, cacheTime, null, null) { }
+        public CacheObject(string name, T original, Action<T> onGet, Action<T> onRelease)
+             : this(name, original, -1, onGet, onRelease) { }
+        public CacheObject(string name, T original, float cacheTime,
             Action<T> onGet, Action<T> onRelease)
         {
+            _name = name;
             _original = original;
-            _lastUseTime = lastUseTime;
+            _lastUseTime = cacheTime < 0 ? 0 : Time.time;
             _cacheTime = cacheTime;
             _onGet = onGet;
             _onRelease = onRelease;

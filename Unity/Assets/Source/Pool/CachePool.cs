@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Game
 {
+    /// <summary>
+    /// 创建一个对象的Clone集合
+    /// </summary>
     public class CachePool<T> : IPoolItem<T> where T : UnityEngine.Object
     {
         /// <summary>
@@ -12,31 +15,39 @@ namespace Game
         /// </summary>
         readonly int Capacity = 50;
 
-        public string Name { get { return _original != null ? _original.name : "Null"; } }
+        public string Name { get { return _name; } }
         public int MaxSize { get { return _maxSize; } }
         public float LastUseTime { get { return _lastUseTime; } }
         public float CacheTime { get { return _cacheTime; } }
+        /// <summary>
+        /// Clone对象
+        /// </summary>
         public T Original { get { return _original; } }
 
+        private string _name = "Null";
         private int _maxSize = 10;
-        private float _lastUseTime;
-        private float _cacheTime;
+        private float _lastUseTime = 0;
+        /// <summary>
+        /// time < 0时,不做记时处理;反之,计时处理
+        /// </summary>
+        private float _cacheTime = -1;
         private T _original;
         private SimplePool<T> _cache;
         private HashSet<T> _usingObjects;
         private Action<T> _onGet;
         private Action<T> _onRelease;
 
-        public CachePool(T original, int maxSize, float lastUseTime = 0, float cacheTime = 0)
-            : this(original, maxSize, lastUseTime, cacheTime, null, null) { }
-        public CachePool(T original, int maxSize, Action<T> onGet, Action<T> onRelease)
-             : this(original, maxSize, 0, 0, onGet, onRelease) { }
-        public CachePool(T original, int maxSize, float lastUseTime, float cacheTime,
+        public CachePool(string name, T original, int maxSize, float cacheTime = -1)
+            : this(name, original, maxSize, cacheTime, null, null) { }
+        public CachePool(string name, T original, int maxSize, Action<T> onGet, Action<T> onRelease)
+             : this(name, original, maxSize, -1, onGet, onRelease) { }
+        public CachePool(string name, T original, int maxSize, float cacheTime,
             Action<T> onGet, Action<T> onRelease)
         {
+            _name = name;
             _original = original;
             _maxSize = maxSize;
-            _lastUseTime = lastUseTime;
+            _lastUseTime = cacheTime < 0 ? 0 : Time.time;
             _cacheTime = cacheTime;
             _cache = new SimplePool<T>(original.name, maxSize);
             _usingObjects = new HashSet<T>();
@@ -92,6 +103,19 @@ namespace Game
             if (_onRelease != null)
                 _onRelease(obj);
             return true;
+        }
+        public virtual void ReleaseAllUsing()
+        {
+            List<T> usingObjs = new List<T>(_usingObjects);
+            for (int i = 0; i < usingObjs.Count; i++)
+            {
+                var obj = usingObjs[i];
+                _usingObjects.Remove(obj);
+                _cache.Release(obj);
+                if (_onRelease != null)
+                    _onRelease(obj);
+            }
+            _lastUseTime = Time.time;
         }
     }
 }
