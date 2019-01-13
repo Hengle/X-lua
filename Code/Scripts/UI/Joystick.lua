@@ -42,20 +42,20 @@ function Joystick:Init(params)
     self.initPos.y = self.center.y + self.center.height / 2
 
     ---@param context FairyGUI.EventContext
-    self.touchArea.onTouchBegin:Add(function(context)
+    self.touchArea.onTouchBegin:Add(function(obj, context)
         printyellow("------onTouchBegin------")
-        DoMoveStart(self, context)
-    end)
+        DoMoveStart(obj, context)
+    end, self)
     ---@param context FairyGUI.EventContext
-    self.touchArea.onTouchMove:Add(function(context)
+    self.touchArea.onTouchMove:Add(function(obj, context)
         printyellow("------onTouchMove------")
-        DoMove(self, context)
-    end)
+        DoMove(obj, context)
+    end, self)
     ---@param context FairyGUI.EventContext
-    self.touchArea.onTouchEnd:Add(function(context)
+    self.touchArea.onTouchEnd:Add(function(obj, context)
         printyellow("------onTouchEnd------")
-        DoMoveEnd(self, context)
-    end)
+        DoMoveEnd(obj, context)
+    end, self)
 end
 
 DoMoveStart = function(joystick, context)

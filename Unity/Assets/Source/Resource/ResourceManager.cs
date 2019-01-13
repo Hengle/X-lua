@@ -12,8 +12,7 @@ public class ManagedResource : MonoBehaviour
     public string bundlename;
     public void OnDestroy()
     {
-        //Util.LogColor("green", "~~~ OnDestroy : " + bundlename);
-        Game.ResourceManager.Instance.RemoveRefCount(bundlename);
+        Game.Manager.ResMgr.RemoveRefCount(bundlename);
     }
 }
 
@@ -26,7 +25,7 @@ namespace Game
         Cache = 1 << 1,                     // Asset需要缓存
 
         UnLoad = 1 << 4,                     // 利用www加载并且处理后是否立即unload ab,如不卸载,则在指定时间后清理
-        Immediate = 1 << 5,                     // 需要立即加载
+
         // 加载方式
         LoadBundleFromFile = 1 << 6,                     // 利用AssetBundle.LoadFromFile加载
         LoadBundleFromWWW = 1 << 7,                     // 利用WWW 异步加载 AssetBundle
@@ -37,6 +36,9 @@ namespace Game
         public Object obj;
         public float lastUseTime;
     }
+    /// <summary>
+    /// 资源指AB包资源
+    /// </summary>
     class AssetLoadTask
     {
         public uint id;
@@ -59,7 +61,7 @@ namespace Game
     /// <summary>
     /// AssetBundle加载完毕,后续处理
     /// </summary>
-    class LoadTask
+    class CompleteTask
     {
         public AssetLoadTask task;
         public AssetBundle bundle;
@@ -67,56 +69,48 @@ namespace Game
 
     public class ResourceManager : IManager
     {
-        public static ResourceManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new ResourceManager();
-                return _instance;
-            }
-        }
-        static ResourceManager _instance;
-        protected ResourceManager() { }
+        public ResourceManager() { }
 
         //资源存储策略
-        private Dictionary<string, Object> persistantObjects = new Dictionary<string, Object>();       //key-依赖路径
-        private Dictionary<string, CacheObject> cacheObjects = new Dictionary<string, CacheObject>();
-        //加载的AB资源包
-        private Dictionary<string, AssetBundle> dependenciesObj = new Dictionary<string, AssetBundle>();  //key-依赖路径
+        private Dictionary<string, Object> _persistantObjects = new Dictionary<string, Object>();       //key-依赖路径
+        private Dictionary<string, CacheObject> _cacheObjects = new Dictionary<string, CacheObject>();
+
         //加载任务
-        private Dictionary<string, AssetLoadTask> loadingFiles = new Dictionary<string, AssetLoadTask>();//key-文件名
-        private Dictionary<uint, AssetLoadTask> loadingTasks = new Dictionary<uint, AssetLoadTask>();  //key-任务ID
-        private ObjectPool<AssetLoadTask> assetLoadTaskPool = new ObjectPool<AssetLoadTask>();        //加载资源的相关信息
-        private Queue<AssetLoadTask> delayAssetLoadTask = new Queue<AssetLoadTask>();
-        private ObjectPool<LoadTask> loadTaskPool = new ObjectPool<LoadTask>();
-        private Queue<LoadTask> delayLoadTask = new Queue<LoadTask>();
+        private Dictionary<string, AssetLoadTask> _loadingFiles = new Dictionary<string, AssetLoadTask>();//key-文件名
+        private Dictionary<uint, AssetLoadTask> _loadingTasks = new Dictionary<uint, AssetLoadTask>();  //key-任务ID
+        private SimplePool<AssetLoadTask> _assetLoadTaskPool = new SimplePool<AssetLoadTask>();        //加载资源的相关信息
+        private Queue<AssetLoadTask> _delayAssetLoadTask = new Queue<AssetLoadTask>();
+        private SimplePool<CompleteTask> _loadTaskPool = new SimplePool<CompleteTask>();
+        private Queue<CompleteTask> _delayLoadTask = new Queue<CompleteTask>();
 
-        private bool canStartCleanupMemeory = true;
-        private const float cleanupMemInterval = 180;
-        private const float cleanupCacheInterval = 120;
-        private const float cleanupDepInterval = 30;
+        //所有资源的依赖信息,由OnlyRead目录和ReadWrite目录组合
+        private Dictionary<string, string[]> _assetDependencies = new Dictionary<string, string[]>();
 
-        private string preloadListPath = "config/preloadlist.txt";
-        private List<string> preloadList = new List<string>();
-        private int currentPreLoadCount = 0;
+        private bool _canStartCleanupMemeory = true;
+        private const float _cleanupMemInterval = 180;
+        private const float _cleanupCacheInterval = 120;
+        private const float _cleanupBundleInterval = 30;
 
-        private Dictionary<string, int> refCount = new Dictionary<string, int>();
-        private Dictionary<string, float> refDelTime = new Dictionary<string, float>();
-        private int currentTaskCount = 0;
-        private const int defaultMaxTaskCount = 10;
+        private string _preloadListPath = "config/preloadlist.txt";
+        private List<string> _preloadList = new List<string>();
+        private int _currentPreLoadCount = 0;
 
-        private float cleanupMemoryLastTime;
-        private float cleanupCacheBundleLastTime;
-        private float cleanupDependenciesLastTime;
+        //加载的AB包信息
+        private Dictionary<string, AssetBundle> _assetBundlesObj = new Dictionary<string, AssetBundle>();  //key-依赖路径
+        private Dictionary<string, int> _refCount = new Dictionary<string, int>();
+        private Dictionary<string, float> _refDelTime = new Dictionary<string, float>();
 
-        private AssetBundleManifest manifest;
+        private int _currentTaskCount = 0;
+        private const int _defaultMaxTaskCount = 10;
 
-        private static uint nextTaskId;
+        private float _cleanupMemoryLastTime;
+        private float _cleanupCacheObjectLastTime;
+        private float _cleanupBundlesLastTime;
+
+        private static uint _nextTaskId;
 
         public int MaxTaskCount { get; set; }
 
-        [DoNotGen]
         /// <summary>
         /// 初始化
         /// </summary>
@@ -127,6 +121,9 @@ namespace Game
             {
                 MaxTaskCount = 5;
             }
+
+            _assetLoadTaskPool.AutoCreate = () => new AssetLoadTask();
+            _loadTaskPool.AutoCreate = () => new CompleteTask();
 
             byte[] stream = null;
             string path = "";
@@ -140,7 +137,13 @@ namespace Game
             if (!File.Exists(path)) return;
             stream = File.ReadAllBytes(path);
             var assetbundle = AssetBundle.LoadFromMemory(stream);
-            manifest = assetbundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+            AssetBundleManifest manifest = assetbundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+            string[] assets = manifest.GetAllAssetBundles();
+            for (int i = 0; i < assets.Length; i++)
+            {
+                string[] dependencies = manifest.GetAllDependencies(assets[i]);
+                _assetDependencies.Add(assets[i], dependencies);
+            }
 
             PreLoadResource();
         }
@@ -154,18 +157,18 @@ namespace Game
         */
         private void PreLoadResource()
         {
-            preloadList.Clear();
-            string dataPath = GetResPath(preloadListPath);
+            _preloadList.Clear();
+            string dataPath = GetResPath(_preloadListPath);
 
             if (!File.Exists(dataPath)) return;
 
             foreach (string p in File.ReadAllLines(dataPath))
             {
                 if (!string.IsNullOrEmpty(p))
-                    preloadList.Add(p);
+                    _preloadList.Add(p);
             }
 
-            foreach (string path in preloadList)
+            foreach (string path in _preloadList)
             {
                 //if (path.Contains("_atlas0!a") && Application.platform != UnityEngine.RuntimePlatform.Android)
                 //    currentPreLoadCount++;
@@ -176,34 +179,79 @@ namespace Game
         }
         private void PreLoadEventHandler(UnityEngine.Object obj)
         {
-            currentPreLoadCount++;
+            _currentPreLoadCount++;
             if (!IsPreLoadDone)
             {
-                var pkg = UIPackage.AddPackage(obj as AssetBundle);
+                AssetBundle ab = obj as AssetBundle;
+                var pkg = UIPackage.AddPackage(ab);
                 pkg.LoadAllAssets();
-                pkg.resBundle.Unload(false);
+                Main.Instance.StartCoroutine(AsyncUnload(ab));
             }
         }
         /// <summary>
         /// 判断预加载资源是否已经加载结束
         /// </summary>
-        public bool IsPreLoadDone { get { return currentPreLoadCount >= preloadList.Count; } }
+        public bool IsPreLoadDone { get { return _currentPreLoadCount >= _preloadList.Count; } }
+        IEnumerator AsyncUnload(AssetBundle ab)
+        {
+            yield return new WaitForEndOfFrame();
+            ab.Unload(false);
+        }
 
 
         public bool IsLoading(uint taskId)
         {
-            return loadingTasks.ContainsKey(taskId);
+            return _loadingTasks.ContainsKey(taskId);
         }
         public void RemoveTask(uint taskId, Action<Object> action)
         {
             if (IsLoading(taskId))
             {
                 AssetLoadTask oldTask = null;
-                if (loadingTasks.TryGetValue(taskId, out oldTask))
+                if (_loadingTasks.TryGetValue(taskId, out oldTask))
                 {
                     if (null != action)
                     {
                         oldTask.actions -= action;
+                    }
+                }
+            }
+        }
+
+        public void AddRefCount(string bundlename)
+        {
+            string[] dependencies = _assetDependencies[bundlename];
+            if (dependencies != null && dependencies.Length > 0)
+            {
+                for (int i = 0; i < dependencies.Length; i++)
+                {
+                    string depname = dependencies[i];
+                    if (!_persistantObjects.ContainsKey(depname))
+                    {
+                        if (!_refCount.ContainsKey(depname))
+                        {
+                            _refCount[depname] = 0;
+                        }
+                        _refCount[depname]++;
+                    }
+                }
+            }
+        }
+        public void RemoveRefCount(string bundlename)
+        {
+            string[] dependencies = _assetDependencies[bundlename];
+            if (dependencies != null && dependencies.Length > 0)
+            {
+                for (int i = 0; i < dependencies.Length; i++)
+                {
+                    string depname = dependencies[i];
+                    if (_refCount.ContainsKey(depname))
+                    {
+                        _refCount[depname]--;
+                        if (_refCount[depname] <= 0)
+                        {
+                            _refDelTime[depname] = Time.realtimeSinceStartup;
+                        }
                     }
                 }
             }
@@ -227,14 +275,14 @@ namespace Game
 
             string lowerFile = fileReplace.ToLower();
             Object obj;
-            if (persistantObjects.TryGetValue(lowerFile, out obj))
+            if (_persistantObjects.TryGetValue(lowerFile, out obj))
             {
                 action(obj);
                 return 0;
             }
 
             CacheObject cacheObject;
-            if (cacheObjects.TryGetValue(lowerFile, out cacheObject))
+            if (_cacheObjects.TryGetValue(lowerFile, out cacheObject))
             {
                 cacheObject.lastUseTime = Time.realtimeSinceStartup;
 
@@ -243,7 +291,7 @@ namespace Game
             }
 
             AssetLoadTask oldTask;
-            if (loadingFiles.TryGetValue(lowerFile, out oldTask))
+            if (_loadingFiles.TryGetValue(lowerFile, out oldTask))
             {//资源加载任务-正在进行中
                 if (action != null)
                 {
@@ -269,15 +317,15 @@ namespace Game
             }
 
             //加载资源到内存
-            uint id = ++nextTaskId;
+            uint id = ++_nextTaskId;
             List<uint> ptList = null;
             if (parentTaskId != 0)
             {
                 ptList = new List<uint>();
                 ptList.Add(parentTaskId);
             }
-            string[] deps = manifest.GetAllDependencies(lowerFile);
-            var task = assetLoadTaskPool.Get();
+            string[] deps = _assetDependencies[lowerFile];
+            var task = _assetLoadTaskPool.Get();
             {
                 task.id = id;
                 task.parentTaskIds = ptList;
@@ -287,58 +335,21 @@ namespace Game
                 task.dependencies = deps == null ? null : new List<string>(deps);
                 task.loadedDependenciesCount = 0;
             };
-            loadingFiles[lowerFile] = task;
-            loadingTasks[id] = task;
-            if (dependenciesObj.ContainsKey(task.path))
+            _loadingFiles[lowerFile] = task;
+            _loadingTasks[id] = task;
+            if (_assetBundlesObj.ContainsKey(task.path))
             {//依赖资源已被加载
                 AddRefCount(task.path);
             }
             //任务数量达最大时,延迟加载资源[需要排队]
-            if (currentTaskCount < MaxTaskCount)
+            if (_currentTaskCount < MaxTaskCount)
                 DoTask(task);
             else
-                delayAssetLoadTask.Enqueue(task);
+                _delayAssetLoadTask.Enqueue(task);
 
             return id;
         }
-        public void AddRefCount(string bundlename)
-        {
-            string[] dependencies = manifest.GetAllDependencies(bundlename);
-            if (dependencies != null && dependencies.Length > 0)
-            {
-                for (int i = 0; i < dependencies.Length; i++)
-                {
-                    string depname = dependencies[i];
-                    if (!persistantObjects.ContainsKey(depname))
-                    {
-                        if (!refCount.ContainsKey(depname))
-                        {
-                            refCount[depname] = 0;
-                        }
-                        refCount[depname]++;
-                    }
-                }
-            }
-        }
-        public void RemoveRefCount(string bundlename)
-        {
-            string[] dependencies = manifest.GetAllDependencies(bundlename);
-            if (dependencies != null && dependencies.Length > 0)
-            {
-                for (int i = 0; i < dependencies.Length; i++)
-                {
-                    string depname = dependencies[i];
-                    if (refCount.ContainsKey(depname))
-                    {
-                        refCount[depname]--;
-                        if (refCount[depname] <= 0)
-                        {
-                            refDelTime[depname] = Time.realtimeSinceStartup;
-                        }
-                    }
-                }
-            }
-        }
+
         private void DoTask(AssetLoadTask task)
         {
             if (task.dependencies == null)
@@ -356,7 +367,7 @@ namespace Game
                     int i = task.loadedDependenciesCount;
                     for (; i < task.dependencies.Count; ++i)
                     {
-                        if (dependenciesObj.ContainsKey(task.dependencies[i]) || persistantObjects.ContainsKey(task.dependencies[i]))
+                        if (_assetBundlesObj.ContainsKey(task.dependencies[i]) || _persistantObjects.ContainsKey(task.dependencies[i]))
                         {
                             task.loadedDependenciesCount += 1;
                             if (task.loadedDependenciesCount >= task.dependencies.Count)
@@ -375,7 +386,7 @@ namespace Game
         }
         private void DoImmediateTask(AssetLoadTask task)
         {
-            currentTaskCount += 1;
+            _currentTaskCount += 1;
             if ((task.loadType & (int)ResourceLoadType.LoadBundleFromWWW) != 0)
             {
                 Main.Instance.StartCoroutine(LoadBundleFromWWW(task));
@@ -386,7 +397,7 @@ namespace Game
             }
             else
             {
-                currentTaskCount -= 1;
+                _currentTaskCount -= 1;
                 Debug.LogErrorFormat("Unknown task loadtype:{0} path:{1}", task.loadType, task.path);
             }
         }
@@ -409,7 +420,7 @@ namespace Game
         //AssetBundle加载完毕
         private void OnBundleLoaded(AssetLoadTask task, AssetBundle ab)
         {
-            currentTaskCount -= 1;
+            _currentTaskCount -= 1;
             Object obj = null;
             if (ab == null)
             {
@@ -418,37 +429,37 @@ namespace Game
             }
             else
             {
-                var loadTask = loadTaskPool.Get();
+                var loadTask = _loadTaskPool.Get();
                 loadTask.task = task;
                 loadTask.bundle = ab;
-                delayLoadTask.Enqueue(loadTask);
+                _delayLoadTask.Enqueue(loadTask);
             }
         }
         public void Update()
         {
-            CleanupCacheBundle();
+            CleanupCacheObjetc();
             CleanupMemoryInterval();
-            CleanupDependenciesInterval();
+            CleanupBundlesInterval();
             //执行延迟加载任务
             DoDelayTasks();
         }
         private void DoDelayTasks()
         {
-            if (delayAssetLoadTask.Count > 0)
+            if (_delayAssetLoadTask.Count > 0)
             {
-                while (delayAssetLoadTask.Count > 0 && currentTaskCount < MaxTaskCount)
+                while (_delayAssetLoadTask.Count > 0 && _currentTaskCount < MaxTaskCount)
                 {
-                    AssetLoadTask task = delayAssetLoadTask.Dequeue();
+                    AssetLoadTask task = _delayAssetLoadTask.Dequeue();
                     DoTask(task);
                 }
             }
-            if (delayLoadTask.Count > 0)
+            if (_delayLoadTask.Count > 0)
             {
                 var maxLoadTime = 0.02f;
                 var startTime = Time.realtimeSinceStartup;
-                while (delayLoadTask.Count > 0 && Time.realtimeSinceStartup - startTime < maxLoadTime)
+                while (_delayLoadTask.Count > 0 && Time.realtimeSinceStartup - startTime < maxLoadTime)
                 {
-                    LoadTask loadTask = delayLoadTask.Dequeue();
+                    CompleteTask loadTask = _delayLoadTask.Dequeue();
                     var task = loadTask.task;
                     var bundle = loadTask.bundle;
 
@@ -467,21 +478,21 @@ namespace Game
                         }
                     }
                     OnAseetsLoaded(task, bundle, obj);
-                    loadTaskPool.Put(loadTask);
+                    _loadTaskPool.Release(loadTask);
                 }
             }
         }
         //Asset加载完毕,可能是依赖资源,也可能是主资源
         private void OnAseetsLoaded(AssetLoadTask task, AssetBundle ab, Object obj)
         {
-            string[] dependencies = manifest.GetAllDependencies(task.path);
+            string[] dependencies = _assetDependencies[task.path];
             if (dependencies == null || dependencies.Length == 0)
             {
                 RemoveRefCount(task.path);
             }
 
-            loadingFiles.Remove(task.path);
-            loadingTasks.Remove(task.id);
+            _loadingFiles.Remove(task.path);
+            _loadingTasks.Remove(task.id);
 
             //主资源加载完毕
             if (task.actions != null && task.parentTaskIds == null)
@@ -513,7 +524,7 @@ namespace Game
             {
                 if ((task.loadType & (int)ResourceLoadType.Persistent) > 0)
                 {
-                    persistantObjects[task.path] = obj;
+                    _persistantObjects[task.path] = obj;
                     if ((task.loadType & (int)ResourceLoadType.UnLoad) > 0)
                     {
                         ab.Unload(false);
@@ -529,7 +540,7 @@ namespace Game
                             obj = obj
                         };
 
-                        cacheObjects[task.path] = cacheObject;
+                        _cacheObjects[task.path] = cacheObject;
                     }
                     if ((task.loadType & (int)ResourceLoadType.ReturnAssetBundle) == 0)
                     {
@@ -541,12 +552,12 @@ namespace Game
             //依赖资源加载完毕
             if (task.parentTaskIds != null)
             {
-                dependenciesObj[task.path] = ab;
+                _assetBundlesObj[task.path] = ab;
                 for (int i = 0; i < task.parentTaskIds.Count; ++i)
                 {
                     uint taskid = task.parentTaskIds[i];
                     AssetLoadTask pt = null;
-                    if (loadingTasks.TryGetValue(taskid, out pt))
+                    if (_loadingTasks.TryGetValue(taskid, out pt))
                     {
                         pt.loadedDependenciesCount += 1;
                         if (pt.loadedDependenciesCount >= pt.dependencies.Count)
@@ -558,7 +569,7 @@ namespace Game
             }
 
             task.Reset();
-            assetLoadTaskPool.Put(task);
+            _assetLoadTaskPool.Release(task);
         }
         public string GetResPath(string relative)
         {
@@ -573,17 +584,15 @@ namespace Game
         //-内存清理 
         public void CleanupMemoryInterval()
         {
-            if (Time.realtimeSinceStartup > cleanupMemoryLastTime + cleanupMemInterval)
-            {
+            if (Time.realtimeSinceStartup > _cleanupMemoryLastTime + _cleanupMemInterval)
                 CleanupMemoryNow();
-            }
         }
         public void CleanupMemoryNow()
         {
-            if (canStartCleanupMemeory)
+            if (_canStartCleanupMemeory)
             {
-                canStartCleanupMemeory = false;
-                cleanupMemoryLastTime = Time.realtimeSinceStartup;
+                _canStartCleanupMemeory = false;
+                _cleanupMemoryLastTime = Time.realtimeSinceStartup;
                 Main.Instance.StartCoroutine(CleanupMemoryAsync());
             }
         }
@@ -591,21 +600,21 @@ namespace Game
         {
             yield return Resources.UnloadUnusedAssets();
             GC.Collect();
-            canStartCleanupMemeory = true;
-            cleanupMemoryLastTime = Time.realtimeSinceStartup;
+            _canStartCleanupMemeory = true;
+            _cleanupMemoryLastTime = Time.realtimeSinceStartup;
         }
         //-缓存包清理
-        private void CleanupCacheBundle()
+        private void CleanupCacheObjetc()
         {
-            if (cacheObjects.Count <= 0) return;
-            if (!(Time.realtimeSinceStartup > cleanupCacheBundleLastTime + 10)) return;
+            if (_cacheObjects.Count <= 0) return;
+            if (!(Time.realtimeSinceStartup > _cleanupCacheObjectLastTime + 10)) return;
 
-            var now = cleanupCacheBundleLastTime = Time.realtimeSinceStartup;
+            var now = _cleanupCacheObjectLastTime = Time.realtimeSinceStartup;
 
             var tempList = new List<string>();
-            foreach (var pair in cacheObjects)
+            foreach (var pair in _cacheObjects)
             {
-                if (now > pair.Value.lastUseTime + cleanupCacheInterval)
+                if (now > pair.Value.lastUseTime + _cleanupCacheInterval)
                 {
                     tempList.Add(pair.Key);
                     if (null != pair.Value.obj)
@@ -624,56 +633,55 @@ namespace Game
             }
             foreach (var bundle in tempList)
             {
-                cacheObjects.Remove(bundle);
+                _cacheObjects.Remove(bundle);
             }
         }
         //-依赖包清理
-        public void CleanupDependenciesInterval()
+        public void CleanupBundlesInterval()
         {
-            if (Time.realtimeSinceStartup > cleanupDependenciesLastTime + cleanupDepInterval)
+            if (Time.realtimeSinceStartup > _cleanupBundlesLastTime + _cleanupBundleInterval)
             {
-                CleanupDependenciesNow();
+                CleanupBundlesNow();
             }
         }
-        public void CleanupDependenciesNow()
+        public void CleanupBundlesNow()
         {
-            if (refCount == null || refDelTime == null || dependenciesObj == null)
+            if (_refCount == null || _refDelTime == null || _assetBundlesObj == null)
             {
                 return;
             }
-            cleanupDependenciesLastTime = Time.realtimeSinceStartup;
+            _cleanupBundlesLastTime = Time.realtimeSinceStartup;
             List<string> refCountToRemove = new List<string>();
-            foreach (var pairs in refCount)
+            foreach (var pairs in _refCount)
             {
                 if (pairs.Value <= 0)
                 {
-                    if (dependenciesObj.ContainsKey(pairs.Key) &&
-                        refDelTime.ContainsKey(pairs.Key) &&
-                        Time.realtimeSinceStartup - refDelTime[pairs.Key] > 60)
+                    if (_assetBundlesObj.ContainsKey(pairs.Key) &&
+                        _refDelTime.ContainsKey(pairs.Key) &&
+                        Time.realtimeSinceStartup - _refDelTime[pairs.Key] > 60)
                     {
-                        if (dependenciesObj.ContainsKey(pairs.Key))
+                        if (_assetBundlesObj.ContainsKey(pairs.Key))
                         {
-                            if (dependenciesObj[pairs.Key] != null)
-                                dependenciesObj[pairs.Key].Unload(false);
-                            dependenciesObj[pairs.Key] = null;
-                            dependenciesObj.Remove(pairs.Key);
+                            if (_assetBundlesObj[pairs.Key] != null)
+                                _assetBundlesObj[pairs.Key].Unload(false);
+                            _assetBundlesObj[pairs.Key] = null;
+                            _assetBundlesObj.Remove(pairs.Key);
                         }
-                        refDelTime.Remove(pairs.Key);
+                        _refDelTime.Remove(pairs.Key);
                         refCountToRemove.Add(pairs.Key);
                     }
                 }
             }
             foreach (var remove in refCountToRemove)
             {
-                refCount.Remove(remove);
+                _refCount.Remove(remove);
             }
         }
 
         //其他操作        
         public void Dispose()
         {
-            if (manifest != null) manifest = null;
-            foreach (KeyValuePair<string, Object> pair in persistantObjects)
+            foreach (KeyValuePair<string, Object> pair in _persistantObjects)
             {
                 if (pair.Value != null)
                 {
@@ -689,18 +697,18 @@ namespace Game
                 }
             }
 
-            persistantObjects.Clear();
+            _persistantObjects.Clear();
 
-            foreach (var pair in dependenciesObj)
+            foreach (var pair in _assetBundlesObj)
             {
                 if (pair.Value != null)
                 {
                     pair.Value.Unload(true);
                 }
             }
-            dependenciesObj.Clear();
+            _assetBundlesObj.Clear();
 
-            foreach (var pair in cacheObjects)
+            foreach (var pair in _cacheObjects)
             {
                 if (pair.Value != null && pair.Value.obj != null)
                 {
@@ -714,10 +722,9 @@ namespace Game
                     }
                 }
             }
-            cacheObjects.Clear();
+            _cacheObjects.Clear();
 
             LuaWindow.Destroy();
-            _instance = null;
             Debug.Log("~ResourceManager was destroy!");
         }
     }

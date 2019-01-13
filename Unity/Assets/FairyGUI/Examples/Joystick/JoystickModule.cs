@@ -51,6 +51,7 @@ public class JoystickModule : EventDispatcher
 	{
 		if (touchId == -1)//First touch
 		{
+            Debug.Log(1);
 			InputEvent evt = (InputEvent)context.data;
 			touchId = evt.touchId;
 

@@ -42,7 +42,7 @@ public class AnimationData
 public class MecanimControl : MonoBehaviour
 {
     #region ControllerPool
-    static Game.ObjectPool<AnimatorOverrideController> controllerPool = new Game.ObjectPool<AnimatorOverrideController>(50, false);
+    static Game.SimplePool<AnimatorOverrideController> controllerPool = new Game.SimplePool<AnimatorOverrideController>(50);
     static AnimatorOverrideController GetController()
     {
         AnimatorOverrideController overrideController = controllerPool.Get();
@@ -67,7 +67,7 @@ public class MecanimControl : MonoBehaviour
             overrideController["State1"] = null;
             overrideController["State2"] = null;
             overrideController["State3"] = null;
-            controllerPool.Put(overrideController);
+            controllerPool.Release(overrideController);
             Destroy(overrideController);
         }
     }

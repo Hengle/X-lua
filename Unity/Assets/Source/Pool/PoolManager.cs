@@ -17,7 +17,7 @@ namespace Game
             }
         }
         static PoolManager _instance;
-        protected PoolManager() { }
+        public PoolManager() { }
 
         public int Count { get { return _objectPools.Count; } }
 
@@ -38,25 +38,25 @@ namespace Game
             }
         }
 
-        public ObjectPoolA<T> CreateObjectPool<T>(string name) where T : UnityEngine.Object
+        public ObjectPool<T> CreateObjectPool<T>(string name) where T : UnityEngine.Object, new()
         {
             var objectPool = CreateObjectPool<T>(name, 10);
             return objectPool;
         }
-        public ObjectPoolA<T> CreateObjectPool<T>(string name, int maxSize) where T : UnityEngine.Object
+        public ObjectPool<T> CreateObjectPool<T>(string name, int maxSize) where T : UnityEngine.Object, new()
         {
             var objectPool = CreateObjectPool<T>(name, maxSize, 0);
             return objectPool;
         }
-        public ObjectPoolA<T> CreateObjectPool<T>(string name, int maxSize, float interval) where T : UnityEngine.Object
+        public ObjectPool<T> CreateObjectPool<T>(string name, int maxSize, float interval) where T : UnityEngine.Object, new()
         {
             var objectPool = CreateObjectPool<T>(name, maxSize, interval, null);
             return objectPool;
         }
-        public ObjectPoolA<T> CreateObjectPool<T>(string name, int maxSize, float interval,
-            Func<List<IPoolItem<T>>, List<IPoolItem<T>>> onCleanup) where T : UnityEngine.Object
+        public ObjectPool<T> CreateObjectPool<T>(string name, int maxSize, float interval,
+            Func<List<IPoolItem<T>>, List<IPoolItem<T>>> onCleanup) where T : UnityEngine.Object, new()
         {
-            var objectPool = new ObjectPoolA<T>(name, maxSize, interval, onCleanup);
+            var objectPool = new ObjectPool<T>(name, maxSize, interval, onCleanup);
             if (HasPool(name))
                 Debug.LogErrorFormat("PoolManager中已存在 {0} ObjectPool对象.", name);
             else

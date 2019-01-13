@@ -55,7 +55,24 @@ namespace XLua.CSObjectWrap
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int __CreateInstance(RealStatePtr L)
         {
-            return LuaAPI.luaL_error(L, "Game.GameManager does not have a constructor!");
+            
+			try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+				if(LuaAPI.lua_gettop(L) == 1)
+				{
+					
+					Game.GameManager gen_ret = new Game.GameManager();
+					translator.Push(L, gen_ret);
+                    
+					return 1;
+				}
+				
+			}
+			catch(System.Exception gen_e) {
+				return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+			}
+            return LuaAPI.luaL_error(L, "invalid arguments to Game.GameManager constructor!");
+            
         }
         
 		

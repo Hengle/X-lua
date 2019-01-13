@@ -37,7 +37,7 @@ namespace Game
 
         void Update()
         {
-            LuaManager.Instance.Tick();
+            Manager.LuaMgr.Tick();
 
             if (luaUpdate != null)
                 luaUpdate(Time.deltaTime, Time.unscaledDeltaTime);

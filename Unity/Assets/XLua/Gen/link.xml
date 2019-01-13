@@ -64,6 +64,7 @@
 		<type fullname="Game.ResourceLoadType" preserve="all"/>
 		<type fullname="Game.SoundManager" preserve="all"/>
 		<type fullname="Game.NetworkManager" preserve="all"/>
+		<type fullname="Game.Manager" preserve="all"/>
 		<type fullname="Game.Platform.CustomInterface" preserve="all"/>
 		<type fullname="Game.Platform.Interface" preserve="all"/>
 		<type fullname="FairyGUI.EventContext" preserve="all"/>

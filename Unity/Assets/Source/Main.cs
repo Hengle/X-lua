@@ -15,10 +15,10 @@ namespace Game
 
         List<IManager> _managers = new List<IManager>()
         {
-            LuaManager.Instance,
+             Manager.LuaMgr,
             //UpdateManager.Instance,
             //GameManager.Instance,
-            ResourceManager.Instance,
+             Manager.ResMgr,
         };
         void Awake()
         {
@@ -54,7 +54,7 @@ namespace Game
 
         void Update()
         {
-            ResourceManager.Instance.Update();
+            Manager.ResMgr.Update();
         }
 
         void OnDestroy()

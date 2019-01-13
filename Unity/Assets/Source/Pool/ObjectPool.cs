@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class ObjectPoolA<T> : IObjectPool where T : UnityEngine.Object
+    public class ObjectPool<T> : IObjectPool where T : UnityEngine.Object
     {
         readonly int Capacity = 50;
 
@@ -24,7 +24,7 @@ namespace Game
         private float _cleanupLastTime = 0;
         private Dictionary<string, IPoolItem<T>> _cache;
 
-        public ObjectPoolA(string name, int maxSize, float interval, Func<List<IPoolItem<T>>, List<IPoolItem<T>>> onCleanup)
+        public ObjectPool(string name, int maxSize, float interval, Func<List<IPoolItem<T>>, List<IPoolItem<T>>> onCleanup)
         {
             _name = string.IsNullOrEmpty(name) ? "Null" : name;
             _maxSize = maxSize;
@@ -120,12 +120,16 @@ namespace Game
                 throw new Exception("IPoolItem.MaxSize 必须大于0");
             else if (maxSize == 1)
             {
-                CacheObject<T> cacheObject = new CacheObject<T>(name, original, cacheTime, onGet, onRelease);
+                CacheObject<T> cacheObject = new CacheObject<T>(name, original, cacheTime);
+                cacheObject.OnGet = onGet;
+                cacheObject.OnRelease = onRelease;
                 _cache.Add(name, cacheObject);
             }
             else
             {
-                CachePool<T> cachePool = new CachePool<T>(name, original, maxSize, cacheTime, onGet, onRelease);
+                CachePool<T> cachePool = new CachePool<T>(name, original, maxSize, cacheTime);
+                cachePool.OnGet = onGet;
+                cachePool.OnRelease = onRelease;
                 _cache.Add(name, cachePool);
             }
         }

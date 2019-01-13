@@ -38,12 +38,11 @@ namespace XLua.CSObjectWrap
 			Utils.EndObjectRegister(type, L, translator, null, null,
 			    null, null, null);
 
-		    Utils.BeginClassRegister(type, L, __CreateInstance, 1, 1, 0);
+		    Utils.BeginClassRegister(type, L, __CreateInstance, 1, 0, 0);
 			
 			
             
-			Utils.RegisterFunc(L, Utils.CLS_GETTER_IDX, "Instance", _g_get_Instance);
-            
+			
 			
 			
 			Utils.EndClassRegister(type, L, translator);
@@ -52,7 +51,24 @@ namespace XLua.CSObjectWrap
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int __CreateInstance(RealStatePtr L)
         {
-            return LuaAPI.luaL_error(L, "Game.LuaManager does not have a constructor!");
+            
+			try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+				if(LuaAPI.lua_gettop(L) == 1)
+				{
+					
+					Game.LuaManager gen_ret = new Game.LuaManager();
+					translator.Push(L, gen_ret);
+                    
+					return 1;
+				}
+				
+			}
+			catch(System.Exception gen_e) {
+				return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+			}
+            return LuaAPI.luaL_error(L, "invalid arguments to Game.LuaManager constructor!");
+            
         }
         
 		
@@ -229,18 +245,6 @@ namespace XLua.CSObjectWrap
         
         
         
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_Instance(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			    translator.Push(L, Game.LuaManager.Instance);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_LuaEnv(RealStatePtr L)

@@ -128,6 +128,7 @@ public static class ExportConfig
         typeof(ResourceLoadType),
         typeof(SoundManager),
         typeof(NetworkManager),
+        typeof(Manager),
         typeof(Game.Platform.CustomInterface),
         typeof(Game.Platform.Interface),
 

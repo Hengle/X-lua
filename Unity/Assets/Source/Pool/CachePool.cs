@@ -24,35 +24,30 @@ namespace Game
         /// </summary>
         public T Original { get { return _original; } }
 
-        private string _name = "Null";
-        private int _maxSize = 10;
-        private float _lastUseTime = 0;
+        protected string _name = "Null";
+        protected int _maxSize = 10;
+        protected float _lastUseTime = 0;
         /// <summary>
-        /// time < 0时,不做记时处理;反之,计时处理
+        /// time 小于 0时,不做记时处理;反之,计时处理
         /// </summary>
-        private float _cacheTime = -1;
-        private T _original;
-        private SimplePool<T> _cache;
-        private HashSet<T> _usingObjects;
-        private Action<T> _onGet;
-        private Action<T> _onRelease;
+        protected float _cacheTime = -1;
+        protected T _original;
+        protected SimplePool<T> _cache;
+        protected HashSet<T> _usingObjects;
+
+        public Func<T> AutoCreate;
+        public Action<T> OnGet;
+        public Action<T> OnRelease;
 
         public CachePool(string name, T original, int maxSize, float cacheTime = -1)
-            : this(name, original, maxSize, cacheTime, null, null) { }
-        public CachePool(string name, T original, int maxSize, Action<T> onGet, Action<T> onRelease)
-             : this(name, original, maxSize, -1, onGet, onRelease) { }
-        public CachePool(string name, T original, int maxSize, float cacheTime,
-            Action<T> onGet, Action<T> onRelease)
         {
             _name = name;
             _original = original;
             _maxSize = maxSize;
             _lastUseTime = cacheTime < 0 ? 0 : Time.time;
             _cacheTime = cacheTime;
-            _cache = new SimplePool<T>(original.name, maxSize);
+            _cache = new SimplePool<T>(original.name, maxSize, AutoCreate);
             _usingObjects = new HashSet<T>();
-            _onGet = onGet;
-            _onRelease = onRelease;
 
             Capacity += _maxSize;
         }
@@ -88,8 +83,8 @@ namespace Game
             else
                 obj = _cache.Get();
             _usingObjects.Add(obj);
-            if (_onGet != null)
-                _onGet(obj);
+            if (OnGet != null)
+                OnGet(obj);
             return obj;
         }
         public virtual bool Release(T obj)
@@ -100,8 +95,8 @@ namespace Game
             _usingObjects.Remove(obj);
             _cache.Release(obj);
             _lastUseTime = Time.time;
-            if (_onRelease != null)
-                _onRelease(obj);
+            if (OnRelease != null)
+                OnRelease(obj);
             return true;
         }
         public virtual void ReleaseAllUsing()
@@ -112,8 +107,8 @@ namespace Game
                 var obj = usingObjs[i];
                 _usingObjects.Remove(obj);
                 _cache.Release(obj);
-                if (_onRelease != null)
-                    _onRelease(obj);
+                if (OnRelease != null)
+                    OnRelease(obj);
             }
             _lastUseTime = Time.time;
         }

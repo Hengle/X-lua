@@ -21,7 +21,7 @@ namespace Game
             }
         }
         static GameManager _instance;
-        protected GameManager() { }
+        public GameManager() { }
 
         enum LaunchState
         {
@@ -147,7 +147,7 @@ namespace Game
         public IEnumerator LoadResource()
         {
             Debug.Log("Is PreLoad Done?");
-            while (!ResourceManager.Instance.IsPreLoadDone)
+            while (!Manager.ResMgr.IsPreLoadDone)
                 yield return new WaitForEndOfFrame();
             Debug.Log("Load Done!");
             //场景加载
@@ -157,8 +157,8 @@ namespace Game
         public void StartGame()
         {
             //GameObject.Destroy(_dlgRes);
-            LuaManager.Instance.AddLuaSearchPath(AppConst.LuaDir);
-            LuaManager.Instance.StartGame();
+            Manager.LuaMgr.AddLuaSearchPath(AppConst.LuaDir);
+            Manager.LuaMgr.StartGame();
 
             UpdateManager.Instance.SetProgressValue("开始游戏", 1f);
         }

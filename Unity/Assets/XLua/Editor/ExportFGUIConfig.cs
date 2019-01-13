@@ -45,7 +45,6 @@ public static class ExportFGUIConfig
         typeof(RelationType),
         typeof(UIConfig),
 
-        typeof(Timers),
         typeof(GTween),
         typeof(GTweener),
         typeof(EaseType),

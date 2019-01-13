@@ -11,7 +11,7 @@ namespace Game
         public static Dictionary<int, string> hash_name_map = new Dictionary<int, string>();
         public static void Init()
         {
-            name_hash_map = LuaManager.Instance.LuaEnv.NewTable();
+            name_hash_map = Manager.LuaMgr.LuaEnv.NewTable();
         }
         public static void StringToHash(string name)
         {
@@ -24,7 +24,7 @@ namespace Game
         }
         public static bool HasScript(string viewName)
         {
-            return LuaManager.Instance.HasScript(viewName);
+            return Manager.LuaMgr.HasScript(viewName);
         }
     }
 }

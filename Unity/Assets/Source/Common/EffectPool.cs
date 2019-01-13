@@ -16,7 +16,8 @@ namespace Game
     {
         public static int MaxCount = 5;
         public static float CacheTime = 100;
-        public EffectPoolItem(string path,GameObject originaleffect) {
+        public EffectPoolItem(string path, GameObject originaleffect)
+        {
             this.path = path;
             this.originaleffect = originaleffect;
             this.originaleffect.SetActive(false);
@@ -26,10 +27,11 @@ namespace Game
         public float lastusetime = 0;
         public string path;
         public GameObject originaleffect;
-        ObjectPool<GameObject> effectpool = new ObjectPool<GameObject>(MaxCount, false);
+        SimplePool<GameObject> effectpool = new SimplePool<GameObject>(MaxCount);
         HashSet<GameObject> usingeffects = new HashSet<GameObject>();
 
-        public bool IsFull() {
+        public bool IsFull()
+        {
             return effectpool.Count + usingeffects.Count >= MaxCount;
         }
 
@@ -38,31 +40,35 @@ namespace Game
             return effectpool.Count > 0 || !IsFull();
         }
 
-        public GameObject Clone() {
+        public GameObject Clone()
+        {
             var effect = Util.Copy(originaleffect);
             GameObject.DontDestroyOnLoad(effect);
             return effect;
         }
-//
+        //
 
-        public GameObject Get() {
+        public GameObject Get()
+        {
             if (!HasEffect())
             {
                 return null;
             }
             var effect = effectpool.Get();
-            if (effect == null) {
+            if (effect == null)
+            {
                 effect = Clone();
             }
             usingeffects.Add(effect);
             //Util.LogColor("green", "EffectPoolItem:Get " + path+Time.time);
             return effect;
         }
-        
+
         public void Put(GameObject effect)
         {
-            if (usingeffects.Contains(effect)) {
-                effectpool.Put(effect);
+            if (usingeffects.Contains(effect))
+            {
+                effectpool.Release(effect);
                 usingeffects.Remove(effect);
                 lastusetime = Time.time;
                 //Util.LogColor("white", "EffectPoolItem:Put " + path + Time.time);
@@ -70,14 +76,16 @@ namespace Game
         }
 
 
-        public bool IsUnused() {
+        public bool IsUnused()
+        {
             return usingeffects.Count == 0 && Time.time - lastusetime > CacheTime;
         }
 
         public void Release()
         {
             var del = effectpool.Get();
-            while (del != null) {
+            while (del != null)
+            {
                 Object.Destroy(del);
                 del = effectpool.Get();
             }
@@ -90,22 +98,25 @@ namespace Game
     public class EffectPool
     {
         static int MaxCount = 10;
-		static Dictionary<string, EffectPoolItem> CachedEffect= new Dictionary<string, EffectPoolItem>();
+        static Dictionary<string, EffectPoolItem> CachedEffect = new Dictionary<string, EffectPoolItem>();
         static float _cleanupLastTime = 0;
 
 
-        public static string GetStandardlize(string path) {
+        public static string GetStandardlize(string path)
+        {
             return path.Replace(@"\", @"/").ToLower();
         }
         //是否有特效缓存
-        public static bool HasEffectPoolItem(string path) {
+        public static bool HasEffectPoolItem(string path)
+        {
             return CachedEffect.ContainsKey(GetStandardlize(path));
         }
 
-        public static EffectPoolItem GetEffectPoolItem(string path) {
+        public static EffectPoolItem GetEffectPoolItem(string path)
+        {
             return CachedEffect[GetStandardlize(path)];
         }
-        
+
         public static void AddEffectPoolItem(string path, GameObject assetobj)
         {
             if (!HasEffectPoolItem(path))
@@ -119,8 +130,10 @@ namespace Game
 
         }
 
-        public static void DestroyEffectPoolItem(string path) {
-            if (HasEffectPoolItem(path)) {
+        public static void DestroyEffectPoolItem(string path)
+        {
+            if (HasEffectPoolItem(path))
+            {
                 var item = GetEffectPoolItem(path);
                 item.Release();
                 CachedEffect.Remove(item.path);
@@ -147,7 +160,8 @@ namespace Game
             return GetEffectPoolItem(path).Clone();
         }
 
-        public static void ReleaseAll() {
+        public static void ReleaseAll()
+        {
             foreach (var pairs in CachedEffect)
             {
                 pairs.Value.Release();
@@ -172,8 +186,10 @@ namespace Game
             if (CachedEffect.Count > MaxCount)
             {
                 var unusedeffectpools = new List<EffectPoolItem>();
-                foreach (var pair in CachedEffect) {
-                    if (pair.Value.IsUnused()) {
+                foreach (var pair in CachedEffect)
+                {
+                    if (pair.Value.IsUnused())
+                    {
                         unusedeffectpools.Add(pair.Value);
                     }
                 }
@@ -190,5 +206,5 @@ namespace Game
 
     }
 
-    
+
 }

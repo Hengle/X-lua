@@ -13,29 +13,23 @@ namespace Game
         public float CacheTime { get { return _cacheTime; } }
         public T Original { get { return _original; } }
 
-        private string _name = "Null";
-        private float _lastUseTime = 0;
+        protected string _name = "Null";
+        protected float _lastUseTime = 0;
         /// <summary>
-        /// time < 0时,不做记时处理;反之,计时处理
+        /// time 小于 0时,不做记时处理;反之,计时处理
         /// </summary>
-        private float _cacheTime = -1;
-        private T _original;
-        private Action<T> _onGet;
-        private Action<T> _onRelease;
+        protected float _cacheTime = -1;
+        protected T _original;
+        public Action<T> OnGet;
+        public Action<T> OnRelease;
+
 
         public CacheObject(string name, T original, float cacheTime = -1)
-            : this(name, original, cacheTime, null, null) { }
-        public CacheObject(string name, T original, Action<T> onGet, Action<T> onRelease)
-             : this(name, original, -1, onGet, onRelease) { }
-        public CacheObject(string name, T original, float cacheTime,
-            Action<T> onGet, Action<T> onRelease)
         {
             _name = name;
             _original = original;
             _lastUseTime = cacheTime < 0 ? 0 : Time.time;
             _cacheTime = cacheTime;
-            _onGet = onGet;
-            _onRelease = onRelease;
         }
 
         public virtual bool CanCleanup()
@@ -52,15 +46,15 @@ namespace Game
 
         public virtual T Get()
         {
-            if (_onGet != null)
-                _onGet(_original);
+            if (OnGet != null)
+                OnGet(_original);
             return _original;
         }
         public virtual bool Release(T obj)
         {
             _lastUseTime = Time.time;
-            if (_onRelease != null)
-                _onRelease(_original);
+            if (OnRelease != null)
+                OnRelease(_original);
             return true;
         }
     }

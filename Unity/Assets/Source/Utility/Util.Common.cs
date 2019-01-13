@@ -174,7 +174,7 @@ namespace Game
             {
                 var mr = gameObj.SetDefaultComponent<ManagedResource>();
                 mr.bundlename = path.Replace(@"\", @"/").ToLower();
-                Game.ResourceManager.Instance.AddRefCount(mr.bundlename);
+                Game.Manager.ResMgr.AddRefCount(mr.bundlename);
 
                 var mc = gameObj.GetComponent<MecanimControl>();
                 if (mc != null)
@@ -193,7 +193,7 @@ namespace Game
                 var mr = gameObj.GetComponent<ManagedResource>();
                 if (mr != null)
                 {
-                    Game.ResourceManager.Instance.AddRefCount(mr.bundlename);
+                    Game.Manager.ResMgr.AddRefCount(mr.bundlename);
                 }
 
                 var mc = gameObj.GetComponent<MecanimControl>();

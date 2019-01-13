@@ -2772,7 +2772,7 @@ namespace XLua.CSObjectWrap
 		    Utils.BeginObjectRegister(typeof(Game.ResourceLoadType), L, translator, 0, 0, 0, 0);
 			Utils.EndObjectRegister(typeof(Game.ResourceLoadType), L, translator, null, null, null, null, null);
 			
-			Utils.BeginClassRegister(typeof(Game.ResourceLoadType), L, null, 9, 0, 0);
+			Utils.BeginClassRegister(typeof(Game.ResourceLoadType), L, null, 8, 0, 0);
             
             Utils.RegisterObject(L, translator, Utils.CLS_IDX, "Default", Game.ResourceLoadType.Default);
             
@@ -2781,8 +2781,6 @@ namespace XLua.CSObjectWrap
             Utils.RegisterObject(L, translator, Utils.CLS_IDX, "Cache", Game.ResourceLoadType.Cache);
             
             Utils.RegisterObject(L, translator, Utils.CLS_IDX, "UnLoad", Game.ResourceLoadType.UnLoad);
-            
-            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "Immediate", Game.ResourceLoadType.Immediate);
             
             Utils.RegisterObject(L, translator, Utils.CLS_IDX, "LoadBundleFromFile", Game.ResourceLoadType.LoadBundleFromFile);
             
@@ -2822,10 +2820,6 @@ namespace XLua.CSObjectWrap
 				else if (LuaAPI.xlua_is_eq_str(L, 1, "UnLoad"))
                 {
                     translator.PushGameResourceLoadType(L, Game.ResourceLoadType.UnLoad);
-                }
-				else if (LuaAPI.xlua_is_eq_str(L, 1, "Immediate"))
-                {
-                    translator.PushGameResourceLoadType(L, Game.ResourceLoadType.Immediate);
                 }
 				else if (LuaAPI.xlua_is_eq_str(L, 1, "LoadBundleFromFile"))
                 {

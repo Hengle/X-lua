@@ -9,17 +9,7 @@ namespace Game
 {
     public class LuaManager : IManager
     {
-        public static LuaManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new LuaManager();
-                return _instance;
-            }
-        }
-        static LuaManager _instance;
-        protected LuaManager() { }
+        public LuaManager() { }
 
         private LuaEnv _luaEnv;
         private List<string> _searchPaths = new List<string>();
@@ -44,7 +34,6 @@ namespace Game
                     _searchPaths.Clear();
                     _luaEnv.Dispose();
                     _luaEnv = null;
-                    _instance = null;
                 }
                 catch (Exception e)
                 {

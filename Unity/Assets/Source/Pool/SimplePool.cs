@@ -10,19 +10,23 @@ namespace Game
     /// </summary>
     public class SimplePool<T> where T : class
     {
-        public string Name { get; private set; }
-        public int Capacity { get; private set; }
+        public string Name { get { return _name; } }
+        public int Capacity { get { return _capacity; } }
         public int Count { get { return _cache.Count; } }
+        public Func<T> AutoCreate;
 
 
+        private string _name;
+        private int _capacity;
         private Queue<T> _cache = new Queue<T>();
 
-        public SimplePool() : this("SimplePool") { }
-        public SimplePool(string name) : this(name, 10) { }
-        public SimplePool(string name, int capacity)
+        public SimplePool() : this(5) { }
+        public SimplePool(int capacity) : this("", capacity) { }
+        public SimplePool(string name, int capacity, Func<T> autoCreate = null)
         {
-            Name = name;
-            Capacity = capacity;
+            _name = name;
+            _capacity = capacity;
+            AutoCreate = autoCreate;
         }
 
         public T Get()
@@ -32,6 +36,8 @@ namespace Game
                 T obj = _cache.Dequeue();
                 return obj;
             }
+            if (AutoCreate != null)
+                return AutoCreate();
             return null;
         }
         public bool Release(T obj)
@@ -51,7 +57,7 @@ namespace Game
                 _cache.Enqueue(obj);
                 return true;
             }
-            
+
             //如果不做处理,可能会出现资源无法释放的问题;
             //如果系统能处理,也可能出现系统集中释放资源,导致卡顿.
             //To Dispose
