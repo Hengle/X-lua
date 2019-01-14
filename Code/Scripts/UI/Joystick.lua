@@ -3,6 +3,7 @@ local Class = require("Common.Class")
 local GRoot = GRoot
 local Vector2 = Vector2
 local Mathf = Mathf
+local handler = handler
 
 ---@class Joystick
 local Joystick = Class:new("Joystick")
@@ -42,20 +43,20 @@ function Joystick:Init(params)
     self.initPos.y = self.center.y + self.center.height / 2
 
     ---@param context FairyGUI.EventContext
-    self.touchArea.onTouchBegin:Add(function(obj, context)
+    self.touchArea.onTouchBegin:Add(handler(self, function(obj, context)
         printyellow("------onTouchBegin------")
         DoMoveStart(obj, context)
-    end, self)
+    end))
     ---@param context FairyGUI.EventContext
-    self.touchArea.onTouchMove:Add(function(obj, context)
+    self.touchArea.onTouchMove:Add(function(context)
         printyellow("------onTouchMove------")
-        DoMove(obj, context)
-    end, self)
+        DoMove(self, context)
+    end)
     ---@param context FairyGUI.EventContext
-    self.touchArea.onTouchEnd:Add(function(obj, context)
+    self.touchArea.onTouchEnd:Add(handler(self, function(obj, context)
         printyellow("------onTouchEnd------")
         DoMoveEnd(obj, context)
-    end, self)
+    end))
 end
 
 DoMoveStart = function(joystick, context)

@@ -39,7 +39,7 @@ Vector3.__index = function(t,k)
 	if var ~= nil then
 		return var(t)
 	end
-	
+
 	return rawget(unity_vector3, k)
 end
 
