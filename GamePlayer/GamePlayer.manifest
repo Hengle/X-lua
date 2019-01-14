@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2347178124
+CRC: 860736492
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -9,23 +9,8 @@ AssetBundleManifest:
       Name: ui/atlas/icon.bundle
       Dependencies: {}
     Info_2:
-      Name: ui/bag.bundle
-      Dependencies: {}
-    Info_3:
-      Name: ui/basics.bundle
-      Dependencies: {}
-    Info_4:
-      Name: ui/cooldown.bundle
-      Dependencies: {}
-    Info_5:
-      Name: ui/guide.bundle
-      Dependencies: {}
-    Info_6:
-      Name: ui/memoji.bundle
-      Dependencies: {}
-    Info_7:
       Name: ui/mjoystick.bundle
       Dependencies: {}
-    Info_8:
+    Info_3:
       Name: ui/atlas/font.bundle
       Dependencies: {}

@@ -12,7 +12,6 @@ local Mathf = Mathf
 local Vector3 = Vector3
 
 local Plane = {}
-local unity_plane = CS.UnityEngine.Plane
 
 Plane.__index = function(t,k)
 	return rawget(Plane, k)	

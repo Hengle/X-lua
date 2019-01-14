@@ -43,6 +43,7 @@ XUtil = require 'xlua.util'
 XProfiler = require 'xlua.profiler'
 XMemory = require 'xlua.memory'
 
+Time		= require "UnityEngine.Time"
 Mathf		= require "UnityEngine.Mathf"
 Vector3 	= require "UnityEngine.Vector3"
 Quaternion	= require "UnityEngine.Quaternion"
@@ -55,7 +56,7 @@ RaycastHit	= require "UnityEngine.RaycastHit"
 Touch		= require "UnityEngine.Touch"
 LayerMask	= require "UnityEngine.LayerMask"
 Plane		= require "UnityEngine.Plane"
-Time		= require "UnityEngine.Time"
+
 
 require "Local"
 -----------------------------------------------------------

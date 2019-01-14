@@ -32,6 +32,7 @@ end
 function Joystick:Init(params)
     ---@type FairyGUI.GButton
     self.button = params.joystick
+    self.button.changeStateOnClick = false
     ---@type FairyGUI.GObject
     self.touchArea = params.touchArea
     ---@type FairyGUI.GObject
@@ -44,17 +45,15 @@ function Joystick:Init(params)
 
     ---@param context FairyGUI.EventContext
     self.touchArea.onTouchBegin:Add(handler(self, function(obj, context)
-        printyellow("------onTouchBegin------")
         DoMoveStart(obj, context)
+        context:CaptureTouch()
     end))
     ---@param context FairyGUI.EventContext
-    self.touchArea.onTouchMove:Add(function(context)
-        printyellow("------onTouchMove------")
-        DoMove(self, context)
-    end)
+    self.touchArea.onTouchMove:Add(handler(self, function(obj, context)
+        DoMove(obj, context)
+    end))
     ---@param context FairyGUI.EventContext
     self.touchArea.onTouchEnd:Add(handler(self, function(obj, context)
-        printyellow("------onTouchEnd------")
         DoMoveEnd(obj, context)
     end))
 end
@@ -68,10 +67,13 @@ DoMoveStart = function(joystick, context)
             joystick.tweener:Kill()
             joystick.tweener = nil
         end
+        local button = joystick.button
+        local center = joystick.center
 
         local pointer = GRoot.inst:GlobalToLocal(Vector2(evt.x, evt.y))
         local x = pointer.x
         local y = pointer.y
+        button.selected = true
 
         if x < 0 then
             x = 0
@@ -89,18 +91,14 @@ DoMoveStart = function(joystick, context)
         joystick.startPos.x = x
         joystick.startPos.y = y
 
-        local button = joystick.button
-        local center = joystick.center
         center.visible = true
         center:SetXY(x - center.width / 2, y - center.height / 2)
-        button.selected = true
         button:SetXY(x - button.width / 2, y - button.height / 2)
 
         local dtx = x - joystick.initPos.x
         local dty = y - joystick.initPos.y
         local degrees = Mathf.Atan2(dtx, dty) * 180 / Mathf.PI
         joystick.thumb.rotation = degrees + 90
-        context:CaptureTouch()
 
         if joystick.onMoveStart then
             joystick.onMoveStart()

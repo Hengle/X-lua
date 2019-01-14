@@ -12,7 +12,6 @@ local rawget = rawget
 local setmetatable = setmetatable
 
 local LayerMask = {}
-local unity_layermask = CS.UnityEngine.LayerMask
 
 LayerMask.__index = function(t,k)
 	return rawget(LayerMask, k)	

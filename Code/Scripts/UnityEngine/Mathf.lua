@@ -8,10 +8,11 @@
 -- 1、已经被修改，别从tolua轻易替换来做升级
 
 local math = math
+local rawget = rawget
 local floor = math.floor
 local abs = math.abs
 local Mathf = {}
-local unity_mathf = CS.UnityEngine.Mathf
+setmetatable(Mathf, Mathf)
 
 Mathf.Deg2Rad = math.rad(1)
 Mathf.Epsilon = 1.4013e-45
@@ -24,7 +25,6 @@ Mathf.Abs = math.abs
 Mathf.Acos = math.acos
 Mathf.Asin = math.asin
 Mathf.Atan = math.atan
-Mathf.Atan2 = math.atan2
 Mathf.Ceil = math.ceil
 Mathf.Cos = math.cos
 Mathf.Exp = math.exp
@@ -41,8 +41,19 @@ Mathf.Deg = math.deg
 Mathf.Rad = math.rad
 Mathf.Random = math.random
 
+local unity_mathf = CS.UnityEngine.Mathf
+
+Mathf.__index = function(t, m)
+	local var = rawget(t, m)
+	if var ~= nil then
+		return var
+	end
+
+	return rawget(unity_mathf, m)
+end
+
 function Mathf.Approximately(a, b)
-	return abs(b - a) < math.max(1e-6 * math.max(abs(a), abs(b)), 1.121039e-44)
+	return abs(b - a) < Mathf.Max(1e-6 * Mathf.Max(abs(a), abs(b)), 1.121039e-44)
 end
 
 function Mathf.Clamp(value, min, max)
@@ -88,7 +99,7 @@ function Mathf.Gamma(value, absmax, gamma)
         return (not flag) and num or -num
     end
 	
-    local num2 = math.pow(num / absmax, gamma) * absmax
+    local num2 = Mathf.Pow(num / absmax, gamma) * absmax
     return (not flag) and num2 or -num2
 end
 
@@ -216,14 +227,14 @@ function Mathf.SmoothStep(from, to, t)
     return to * t + from * (1 - t)
 end
 
-function Mathf.HorizontalAngle(dir) 
-	return math.deg(math.atan2(dir.x, dir.z))
+function Mathf.HorizontalAngle(dir)
+	return math.deg(math.atan(dir.x, dir.z))
 end
 
 function Mathf.IsNan(number)
 	return not (number == number)
 end
 
-Mathf.unity_mathf = CS.UnityEngine.Mathf
+Mathf.unity_mathf = unity_mathf
 CS.UnityEngine.Mathf = Mathf
 return Mathf

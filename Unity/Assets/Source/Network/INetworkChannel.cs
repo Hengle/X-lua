@@ -171,8 +171,7 @@ namespace Game
         /// <summary>
         /// 向远程主机发送消息包。
         /// </summary>
-        /// <typeparam name="T">消息包类型。</typeparam>
         /// <param name="packet">要发送的消息包。</param>
-        void Send<T>(T packet) where T : Packet;
+        void Send(Packet packet);
     }
 }

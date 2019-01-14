@@ -37,7 +37,7 @@ local function Init(param)
     joystick.onMove = OnMove
     joystick.onMoveEnd = OnMoveEnd
     local thumb = fields.Button_Joystick:GetChild('thumb')
-    joystick:Init({ button = fields.Button_Joystick,
+    joystick:Init({ joystick = fields.Button_Joystick,
                     touchArea = fields.Graph_Area,
                     center = fields.Image_Center,
                     thumb = thumb })

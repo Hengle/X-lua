@@ -1,5 +1,5 @@
 ---@field public List_BagGrid FairyGUI.GList
----@field public Loader_Selected MyLoader
+---@field public Loader_Selected FairyGUI.GLoader
 ---@field public TextField_Name FairyGUI.GTextField
 ---@class UI.Bag.DlgBag
 local m = {}
