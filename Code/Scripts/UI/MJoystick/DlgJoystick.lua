@@ -24,7 +24,7 @@ local function Destroy()
 end
 
 local function OnMove(x, y)
-    local angle = Mathf.Atan2(x, y) * 180 / Mathf.PI
+    local angle = Mathf.Atan2(y, x) * 180 / Mathf.PI + 90
     fields.TextField_Degree.text = tostring(angle)
 end
 local function OnMoveEnd()

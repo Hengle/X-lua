@@ -7,9 +7,8 @@ namespace Game
     {
         private sealed class ReceiveState : IDisposable
         {
-            private const int DefaultBufferLength = 1024 * 8;
             private MemoryStream m_Stream;
-            private PacketHeader m_PacketHeader;
+            private NetworkChannelHelper m_PacketHeader;
             private bool m_Disposed;
 
             public ReceiveState()
@@ -27,7 +26,7 @@ namespace Game
                 }
             }
 
-            public PacketHeader PacketHeader
+            public NetworkChannelHelper PacketHeader
             {
                 get
                 {
@@ -40,7 +39,7 @@ namespace Game
                 Reset(packetHeaderLength, null);
             }
 
-            public void PrepareForPacket(PacketHeader packetHeader)
+            public void PrepareForPacket(NetworkChannelHelper packetHeader)
             {
                 if (packetHeader == null)
                 {
@@ -75,7 +74,7 @@ namespace Game
                 m_Disposed = true;
             }
 
-            private void Reset(int targetLength, PacketHeader packetHeader)
+            private void Reset(int targetLength, NetworkChannelHelper packetHeader)
             {
                 if (targetLength < 0)
                 {

@@ -7,7 +7,6 @@ namespace Game
     {
         private sealed class SendState : IDisposable
         {
-            private const int DefaultBufferLength = 1024 * 8;
             private MemoryStream m_Stream;
             private bool m_Disposed;
 

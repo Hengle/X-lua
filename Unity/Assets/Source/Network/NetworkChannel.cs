@@ -31,8 +31,8 @@ namespace Game
     public partial class NetworkChannel : INetworkChannel, IDisposable
     {
 
+        private const int DefaultBufferLength = 1024 * 8;
         private const float DefaultHeartBeatInterval = 30f;
-        private const int DefaultPacketHeaderLength = 16;
 
         private readonly string m_Name;
         private readonly Queue<Packet> m_SendPacketPool;
@@ -41,6 +41,7 @@ namespace Game
         private bool m_ResetHeartBeatElapseSecondsWhenReceivePacket;
         private float m_HeartBeatInterval;
         private Socket m_Socket;
+        private readonly NetworkChannelHelper m_Helper;
         private readonly SendState m_SendState;
         private readonly ReceiveState m_ReceiveState;
         private readonly HeartBeatState m_HeartBeatState;
@@ -70,6 +71,7 @@ namespace Game
             m_ResetHeartBeatElapseSecondsWhenReceivePacket = false;
             m_HeartBeatInterval = DefaultHeartBeatInterval;
             m_Socket = null;
+            m_Helper = new NetworkChannelHelper();
             m_SendState = new SendState();
             m_ReceiveState = new ReceiveState();
             m_HeartBeatState = new HeartBeatState();
@@ -493,7 +495,7 @@ namespace Game
             }
 
             m_SendState.Reset();
-            m_ReceiveState.PrepareForPacketHeader(DefaultPacketHeaderLength);
+            m_ReceiveState.PrepareForPacketHeader(m_Helper.PacketHeaderLength);
 
             try
             {
@@ -556,8 +558,7 @@ namespace Game
         /// <summary>
         /// 向远程主机发送消息包。
         /// </summary>
-        /// <typeparam name="T">消息包类型。</typeparam>
-        /// <param name="packet">要发送的消息包。</param>
+        /// <param name="packet">要发送的消息包.直接在lua层封装.</param>
         public void Send(Packet packet)
         {
             if (m_Socket == null)
@@ -687,10 +688,9 @@ namespace Game
                 lock (m_SendPacketPool)
                 {
                     packet = m_SendPacketPool.Dequeue();
-                }
 
-                //--将lua层封装好的数据包写入发送数据流
-                //TODO
+                    //lua 层数据发送
+                }
             }
 
             m_SendState.Stream.Position = 0L;
@@ -703,14 +703,14 @@ namespace Game
             try
             {
                 object customErrorData = null;
-                PacketHeader packetHeader = PacketHeader.Deserialize(m_ReceiveState.Stream);
+                m_Helper.DecodeHeader(m_ReceiveState.Stream);
 
                 if (customErrorData != null && NetworkChannelCustomError != null)
                 {
                     NetworkChannelCustomError(this, customErrorData);
                 }
 
-                if (packetHeader == null)
+                if (m_Helper.PacketLength < 0)
                 {
                     string errorMessage = "Packet header is invalid.";
                     if (NetworkChannelError != null)
@@ -722,8 +722,8 @@ namespace Game
                     throw new Exception(errorMessage);
                 }
 
-                m_ReceiveState.PrepareForPacket(packetHeader);
-                if (packetHeader.PacketLength <= 0)
+                m_ReceiveState.PrepareForPacket(m_Helper);
+                if (m_Helper.PacketLength <= 0)
                 {
                     ProcessPacket();
                 }
@@ -756,7 +756,7 @@ namespace Game
                 Packet packet = new Packet(bs, bs.Length);
                 m_ReceivePacketPool.Enqueue(packet);
 
-                m_ReceiveState.PrepareForPacketHeader(DefaultPacketHeaderLength);
+                m_ReceiveState.PrepareForPacketHeader(m_Helper.PacketHeaderLength);
             }
             catch (Exception exception)
             {

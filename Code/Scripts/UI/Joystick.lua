@@ -67,6 +67,7 @@ DoMoveStart = function(joystick, context)
             joystick.tweener:Kill()
             joystick.tweener = nil
         end
+        ---@type FairyGUI.GButton
         local button = joystick.button
         local center = joystick.center
 
@@ -80,8 +81,8 @@ DoMoveStart = function(joystick, context)
         elseif x > joystick.touchArea.width then
             x = joystick.touchArea.width
         end
-        if y < 0 then
-            y = 0
+        if y < joystick.touchArea.y then
+            y = joystick.touchArea.y
         elseif y > GRoot.inst.height then
             y = GRoot.inst.height
         end
@@ -97,7 +98,7 @@ DoMoveStart = function(joystick, context)
 
         local dtx = x - joystick.initPos.x
         local dty = y - joystick.initPos.y
-        local degrees = Mathf.Atan2(dtx, dty) * 180 / Mathf.PI
+        local degrees = Mathf.Atan2(dty, dtx) * 180 / Mathf.PI
         joystick.thumb.rotation = degrees + 90
 
         if joystick.onMoveStart then
@@ -108,56 +109,58 @@ end
 DoMove = function(joystick, context)
     local evt = context.data
     if joystick.touchId ~= -1 and evt.touchId == joystick.touchId then
+        local lastPos = joystick.lastPos
+        local startPos = joystick.startPos
+        local button = joystick.button
+        local thumb = joystick.thumb
+
         local pointer = GRoot.inst:GlobalToLocal(Vector2(evt.x, evt.y))
         local x = pointer.x
         local y = pointer.y
-        local lastPos = joystick.lastPos
-        local button = joystick.button
-        local thumb = joystick.thumb
-        local startPos = joystick.startPos
         local movex = x - lastPos.x
         local movey = y - lastPos.y
         lastPos.x = x
         lastPos.y = y
-        local buttonx = button.x + movex
-        local buttony = button.y + movey
+        local buttonX = button.x + movex
+        local buttonY = button.y + movey
 
-        local offsetx = buttonx + button.width / 2 - startPos.x
-        local offsety = buttony + button.height / 2 - startPos.y
-        local rad = Mathf.Atan2(offsetx, offsety)
+        local offsetX = buttonX + button.width / 2 - startPos.x
+        local offsetY = buttonY + button.height / 2 - startPos.y
+        local rad = Mathf.Atan2(offsetY, offsetX)
         local degrees = rad * 180 / Mathf.PI
         thumb.rotation = degrees + 90
 
-        local maxx = joystick.radius * Mathf.Cos(rad)
-        local maxy = joystick.radius * Mathf.Sin(rad)
-        if Mathf.Abs(offsetx) > Mathf.Abs(maxx) then
-            offsetx = maxx
+        local maxX = joystick.radius * Mathf.Cos(rad)
+        local maxY = joystick.radius * Mathf.Sin(rad)
+        if Mathf.Abs(offsetX) > Mathf.Abs(maxX) then
+            offsetX = maxX
         end
-        if Mathf.Abs(offsety) > Mathf.Abs(maxy) then
-            offsety = maxy
+        if Mathf.Abs(offsetY) > Mathf.Abs(maxY) then
+            offsetY = maxY
         end
-        buttonx = startPos.x + offsetx
-        buttony = startPos.y + offsety
-        if buttony < 0 then
-            buttony = 0
+        buttonX = startPos.x + offsetX
+        buttonY = startPos.y + offsetY
+        if buttonY < 0 then
+            buttonY = 0
         end
-        if buttonx > GRoot.inst.height then
-            buttonx = GRoot.inst.height
+        if buttonX > GRoot.inst.height then
+            buttonX = GRoot.inst.height
         end
-        button:SetXY(buttonx - button.width / 2, buttony - button.height / 2)
+        button:SetXY(buttonX - button.width / 2, buttonY - button.height / 2)
 
         if joystick.onMove then
-            joystick.onMove(offsetx, offsety)
+            joystick.onMove(offsetX, offsetY)
         end
     end
 end
 DoMoveEnd = function(joystick, context)
     local evt = context.data
     if joystick.touchId ~= -1 and evt.touchId == joystick.touchId then
-        joystick.touchId = -1
         local thumb = joystick.thumb
         local button = joystick.button
         local center = joystick.center
+
+        joystick.touchId = -1
         thumb.rotation = thumb.rotation + 180
         center.visible = false
         local dst = joystick.initPos - Vector2(button.width / 2, button.height / 2)
