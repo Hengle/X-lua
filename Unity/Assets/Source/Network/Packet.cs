@@ -14,7 +14,6 @@ namespace Game
         MemoryStream _stream = null;
         BinaryWriter _writer = null;
         BinaryReader _reader = null;
-        int _length = -1;
 
         public Packet()
         {
@@ -22,7 +21,7 @@ namespace Game
             _writer = new BinaryWriter(_stream);
         }
 
-        public Packet(byte[] data, int length)
+        public Packet(byte[] data)
         {
             if (data != null)
             {
@@ -90,14 +89,9 @@ namespace Game
 
         public void WriteBytes(byte[] v)
         {
-            _writer.Write((int)v.Length);
+            _writer.Write(v.Length);
             _writer.Write(v);
         }
-
-        //public void WriteBuffer(LuaByteBuffer strBuffer)
-        //{
-        //    WriteBytes(strBuffer.buffer);
-        //}
 
         public byte ReadByte()
         {
@@ -143,14 +137,9 @@ namespace Game
 
         public byte[] ReadBytes()
         {
-            return _reader.ReadBytes(_length);
+            int len = ReadInt();
+            return _reader.ReadBytes(len);
         }
-
-        //public LuaByteBuffer ReadBuffer()
-        //{
-        //    byte[] bytes = ReadBytes();
-        //    return new LuaByteBuffer(bytes);
-        //}
 
         public byte[] ToBytes()
         {
@@ -162,6 +151,5 @@ namespace Game
         {
             _writer.Flush();
         }
-
     }
 }

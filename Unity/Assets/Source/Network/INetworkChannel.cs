@@ -161,7 +161,7 @@ namespace Game
         /// <param name="ipAddress">远程主机的 IP 地址。</param>
         /// <param name="port">远程主机的端口号。</param>
         /// <param name="userData">用户自定义数据。</param>
-        void Connect(IPAddress ipAddress, int port, object userData);
+        void Connect(IPAddress ipAddress, int port, int sendBuffer, int receiveBuffer, object userData);
 
         /// <summary>
         /// 关闭网络频道。
@@ -172,6 +172,6 @@ namespace Game
         /// 向远程主机发送消息包。
         /// </summary>
         /// <param name="packet">要发送的消息包。</param>
-        void Send(Packet packet);
+        void Send(int type, byte[] msg);
     }
 }

@@ -9,33 +9,33 @@ namespace Game
     {
         public virtual int PacketHeaderLength
         {
-            get { return 16; }
+            get { return 4; }
         }
         /// <summary>
         /// 获取网络消息包长度。
-        /// 注:值为-1时,包头无效
         /// </summary>
-        public int PacketLength
+        public ushort PacketLength
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 包协议类型
+        /// </summary>
+        public ushort PacketType
         {
             get;
             private set;
         }
 
         public NetworkChannelHelper() { }
-
-        /// <summary>
-        /// 包头编码
-        /// </summary>
-        /// <returns></returns>
-        public virtual byte[] EncodeHeader()
-        {
-            Packet packet = new Packet();
-            packet.WriteInt(PacketLength);
-            return packet.ReadBytes();
-        }
+   
         public virtual void DecodeHeader(Stream stream)
         {
-            PacketLength = stream.Length == 0 ? -1 : stream.ReadByte();
+            BinaryReader reader = new BinaryReader(stream);
+            PacketType = reader.ReadUInt16();
+            PacketLength = reader.ReadUInt16();
         }
         /// <summary>
         /// 发送数据到Lua层解析数据

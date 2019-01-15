@@ -445,7 +445,8 @@ namespace Game
         /// <param name="port">远程主机的端口号。</param>
         public void Connect(IPAddress ipAddress, int port)
         {
-            Connect(ipAddress, port, null);
+            int size = DefaultBufferLength * 2;
+            Connect(ipAddress, port, size, size, null);
         }
 
         /// <summary>
@@ -454,7 +455,7 @@ namespace Game
         /// <param name="ipAddress">远程主机的 IP 地址。</param>
         /// <param name="port">远程主机的端口号。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void Connect(IPAddress ipAddress, int port, object userData)
+        public void Connect(IPAddress ipAddress, int port, int sendBuffer, int receiveBuffer, object userData)
         {
             if (m_Socket != null)
             {
@@ -482,6 +483,8 @@ namespace Game
             }
 
             m_Socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            m_Socket.SendBufferSize = sendBuffer;
+            m_Socket.ReceiveBufferSize = receiveBuffer;
             if (m_Socket == null)
             {
                 string errorMessage = "Initialize network channel failure.";
@@ -559,7 +562,7 @@ namespace Game
         /// 向远程主机发送消息包。
         /// </summary>
         /// <param name="packet">要发送的消息包.直接在lua层封装.</param>
-        public void Send(Packet packet)
+        public void Send(int type, byte[] msg)
         {
             if (m_Socket == null)
             {
@@ -585,18 +588,9 @@ namespace Game
                 throw new Exception(errorMessage);
             }
 
-            if (packet == null)
-            {
-                string errorMessage = "Packet is invalid.";
-                if (NetworkChannelError != null)
-                {
-                    NetworkChannelError(this, NetworkErrorCode.SendError, errorMessage);
-                    return;
-                }
-
-                throw new Exception(errorMessage);
-            }
-
+            Packet packet = new Packet();
+            packet.WriteInt(type);
+            packet.WriteBytes(msg);
             lock (m_SendPacketPool)
             {
                 m_SendPacketPool.Enqueue(packet);
@@ -688,8 +682,24 @@ namespace Game
                 lock (m_SendPacketPool)
                 {
                     packet = m_SendPacketPool.Dequeue();
+                }
 
-                    //lua 层数据发送
+                try
+                {
+                    ///是否会出现发送数据量>1024*8的情况?
+                    byte[] buffer = packet.ToBytes();
+                    m_SendState.Stream.Write(buffer, 0, buffer.Length);
+                    packet.Close();
+                }
+                catch (Exception exception)
+                {
+                    m_Active = false;
+                    if (NetworkChannelError != null)
+                    {
+                        NetworkChannelError(this, NetworkErrorCode.SerializeError, exception.ToString());
+                        return;
+                    }
+                    throw;
                 }
             }
 
@@ -702,13 +712,7 @@ namespace Game
         {
             try
             {
-                object customErrorData = null;
                 m_Helper.DecodeHeader(m_ReceiveState.Stream);
-
-                if (customErrorData != null && NetworkChannelCustomError != null)
-                {
-                    NetworkChannelCustomError(this, customErrorData);
-                }
 
                 if (m_Helper.PacketLength < 0)
                 {
@@ -723,7 +727,7 @@ namespace Game
                 }
 
                 m_ReceiveState.PrepareForPacket(m_Helper);
-                if (m_Helper.PacketLength <= 0)
+                if (m_Helper.PacketLength > 0)
                 {
                     ProcessPacket();
                 }
@@ -752,8 +756,8 @@ namespace Game
 
             try
             {
-                byte[] bs = m_ReceiveState.Stream.GetBuffer();
-                Packet packet = new Packet(bs, bs.Length);
+                byte[] bs = m_ReceiveState.Stream.ToArray();
+                Packet packet = new Packet(bs);
                 m_ReceivePacketPool.Enqueue(packet);
 
                 m_ReceiveState.PrepareForPacketHeader(m_Helper.PacketHeaderLength);
