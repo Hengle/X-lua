@@ -54,8 +54,7 @@ namespace Game
         public Action<NetworkChannel> NetworkChannelClosed;
         public Action<NetworkChannel, int> NetworkChannelMissHeartBeat;
         public Action<NetworkChannel, NetworkErrorCode, string> NetworkChannelError;
-        //---解析协议包错误,应该定义在lua层
-        public Action<NetworkChannel, object> NetworkChannelCustomError;
+        public Action<ushort, byte[]> NetworkReceive;
 
         /// <summary>
         /// 初始化网络频道的新实例。
@@ -79,12 +78,6 @@ namespace Game
             m_ReceivedPacketCount = 0;
             m_Active = false;
             m_Disposed = false;
-
-            NetworkChannelConnected = null;
-            NetworkChannelClosed = null;
-            NetworkChannelMissHeartBeat = null;
-            NetworkChannelError = null;
-            NetworkChannelCustomError = null;
         }
 
         /// <summary>
@@ -375,9 +368,14 @@ namespace Game
             var iterRec = m_ReceivePacketPool.GetEnumerator();
             while (iterRec.MoveNext())
             {
+                //转发至Lua层
                 Packet packet = iterRec.Current;
-                //---发送到Lua层
-                //TODO
+                ushort type = packet.ReadShort();
+                byte[] msg = packet.ReadBytes();
+                if (NetworkReceive != null)
+                    NetworkReceive(type, msg);
+                else
+                    Debug.LogError(Name + "无法将消息转发至lua层");
             }
 
             if (m_HeartBeatInterval > 0f)
@@ -443,10 +441,10 @@ namespace Game
         /// </summary>
         /// <param name="ipAddress">远程主机的 IP 地址。</param>
         /// <param name="port">远程主机的端口号。</param>
-        public void Connect(IPAddress ipAddress, int port)
+        public void Connect(string ip, int port)
         {
             int size = DefaultBufferLength * 2;
-            Connect(ipAddress, port, size, size, null);
+            Connect(ip, port, size, size, null);
         }
 
         /// <summary>
@@ -455,7 +453,7 @@ namespace Game
         /// <param name="ipAddress">远程主机的 IP 地址。</param>
         /// <param name="port">远程主机的端口号。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void Connect(IPAddress ipAddress, int port, int sendBuffer, int receiveBuffer, object userData)
+        public void Connect(string ip, int port, int sendBuffer, int receiveBuffer, object userData)
         {
             if (m_Socket != null)
             {
@@ -463,6 +461,7 @@ namespace Game
                 m_Socket = null;
             }
 
+            IPAddress ipAddress = IPAddress.Parse(ip);
             switch (ipAddress.AddressFamily)
             {
                 case AddressFamily.InterNetwork:
@@ -549,6 +548,7 @@ namespace Game
                 {
                     m_Socket.Close();
                     m_Socket = null;
+                    NetworkReceive = null;
 
                     if (NetworkChannelClosed != null)
                     {
@@ -622,6 +622,11 @@ namespace Game
                 Close();
                 m_SendState.Dispose();
                 m_ReceiveState.Dispose();
+
+                NetworkChannelConnected = null;
+                NetworkChannelClosed = null;
+                NetworkChannelMissHeartBeat = null;
+                NetworkChannelError = null;
             }
 
             m_Disposed = true;
@@ -756,8 +761,7 @@ namespace Game
 
             try
             {
-                byte[] bs = m_ReceiveState.Stream.ToArray();
-                Packet packet = new Packet(bs);
+                Packet packet = m_Helper.Decode(m_ReceiveState.Stream);
                 m_ReceivePacketPool.Enqueue(packet);
 
                 m_ReceiveState.PrepareForPacketHeader(m_Helper.PacketHeaderLength);

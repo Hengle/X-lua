@@ -151,17 +151,17 @@ namespace Game
         /// <summary>
         /// 连接到远程主机。
         /// </summary>
-        /// <param name="ipAddress">远程主机的 IP 地址。</param>
+        /// <param name="ip">远程主机的 IP 地址。</param>
         /// <param name="port">远程主机的端口号。</param>
-        void Connect(IPAddress ipAddress, int port);
+        void Connect(string ip, int port);
 
         /// <summary>
         /// 连接到远程主机。
         /// </summary>
-        /// <param name="ipAddress">远程主机的 IP 地址。</param>
+        /// <param name="ip">远程主机的 IP 地址。</param>
         /// <param name="port">远程主机的端口号。</param>
         /// <param name="userData">用户自定义数据。</param>
-        void Connect(IPAddress ipAddress, int port, int sendBuffer, int receiveBuffer, object userData);
+        void Connect(string ip, int port, int sendBuffer, int receiveBuffer, object userData);
 
         /// <summary>
         /// 关闭网络频道。

@@ -3,7 +3,8 @@
 namespace Game
 {
     /// <summary>
-    /// 网络消息包头接口。---------------可重复利用
+    /// 网络消息包头接口
+    /// |PacketLength|ProtocolType|ProtocolMsg
     /// </summary>
     public class NetworkChannelHelper
     {
@@ -20,29 +21,20 @@ namespace Game
             private set;
         }
 
-        /// <summary>
-        /// 包协议类型
-        /// </summary>
-        public ushort PacketType
-        {
-            get;
-            private set;
-        }
-
         public NetworkChannelHelper() { }
-   
+
         public virtual void DecodeHeader(Stream stream)
         {
             BinaryReader reader = new BinaryReader(stream);
-            PacketType = reader.ReadUInt16();
             PacketLength = reader.ReadUInt16();
         }
         /// <summary>
-        /// 发送数据到Lua层解析数据
+        /// 打包协议
         /// </summary>
-        public virtual void DecodeBody()
+        public virtual Packet Decode(MemoryStream stream)
         {
-
+            Packet packet = new Packet(stream.ToArray());
+            return packet;
         }
     }
 }

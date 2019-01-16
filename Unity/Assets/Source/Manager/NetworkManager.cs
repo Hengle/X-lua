@@ -25,7 +25,6 @@ namespace Game
                 nc.NetworkChannelClosed -= OnNetworkChannelClosed;
                 nc.NetworkChannelMissHeartBeat -= OnNetworkChannelMissHeartBeat;
                 nc.NetworkChannelError -= OnNetworkChannelError;
-                nc.NetworkChannelCustomError -= OnNetworkChannelCustomError;
                 nc.Destroy();
             }
             m_NetworkChannels.Clear();
@@ -38,7 +37,6 @@ namespace Game
         private Action<NetworkChannel> m_NetworkClosedEventHandler;
         private Action<NetworkChannel, int> m_NetworkMissHeartBeatEventHandler;
         private Action<NetworkChannel, NetworkErrorCode, string> m_NetworkErrorEventHandler;
-        private Action<NetworkChannel, object> m_NetworkCustomErrorEventHandler;
 
         /// <summary>
         /// 初始化网络管理器的新实例。
@@ -51,7 +49,6 @@ namespace Game
             m_NetworkClosedEventHandler = null;
             m_NetworkMissHeartBeatEventHandler = null;
             m_NetworkErrorEventHandler = null;
-            m_NetworkCustomErrorEventHandler = null;
         }
 
         /// <summary>
@@ -122,21 +119,6 @@ namespace Game
             remove
             {
                 m_NetworkErrorEventHandler -= value;
-            }
-        }
-
-        /// <summary>
-        /// 用户自定义网络错误事件。
-        /// </summary>
-        public event Action<NetworkChannel, object> NetworkCustomError
-        {
-            add
-            {
-                m_NetworkCustomErrorEventHandler += value;
-            }
-            remove
-            {
-                m_NetworkCustomErrorEventHandler -= value;
             }
         }
 
@@ -231,7 +213,6 @@ namespace Game
             networkChannel.NetworkChannelClosed += OnNetworkChannelClosed;
             networkChannel.NetworkChannelMissHeartBeat += OnNetworkChannelMissHeartBeat;
             networkChannel.NetworkChannelError += OnNetworkChannelError;
-            networkChannel.NetworkChannelCustomError += OnNetworkChannelCustomError;
             m_NetworkChannels.Add(name, networkChannel);
             return networkChannel;
         }
@@ -250,7 +231,6 @@ namespace Game
                 networkChannel.NetworkChannelClosed -= OnNetworkChannelClosed;
                 networkChannel.NetworkChannelMissHeartBeat -= OnNetworkChannelMissHeartBeat;
                 networkChannel.NetworkChannelError -= OnNetworkChannelError;
-                networkChannel.NetworkChannelCustomError -= OnNetworkChannelCustomError;
                 networkChannel.Destroy();
                 return m_NetworkChannels.Remove(name);
             }
@@ -293,24 +273,14 @@ namespace Game
 
         private void OnNetworkChannelError(NetworkChannel networkChannel, NetworkErrorCode errorCode, string errorMessage)
         {
-            if (m_NetworkErrorEventHandler != null)
-            {
-                lock (m_NetworkErrorEventHandler)
-                {
-                    m_NetworkErrorEventHandler(networkChannel, errorCode, errorMessage);
-                }
-            }
-        }
-
-        private void OnNetworkChannelCustomError(NetworkChannel networkChannel, object customErrorData)
-        {
-            if (m_NetworkCustomErrorEventHandler != null)
-            {
-                lock (m_NetworkCustomErrorEventHandler)
-                {
-                    m_NetworkCustomErrorEventHandler(networkChannel, customErrorData);
-                }
-            }
+            Debug.LogErrorFormat("ErrorCode:{0}.{1}", errorCode, errorMessage);
+            //if (m_NetworkErrorEventHandler != null)
+            //{
+            //    lock (m_NetworkErrorEventHandler)
+            //    {
+            //        m_NetworkErrorEventHandler(networkChannel, errorCode, errorMessage);
+            //    }
+            //}
         }
     }
 }
