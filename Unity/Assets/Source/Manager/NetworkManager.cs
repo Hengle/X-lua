@@ -20,22 +20,39 @@ namespace Game
             IEnumerator iter = m_NetworkChannels.GetEnumerator();
             while (iter.MoveNext())
             {
-                NetworkChannel nc = iter.Current as NetworkChannel;
+                NetworkChannel nc = ((KeyValuePair<string, NetworkChannel>)iter.Current).Value;
+                if (nc == null) continue;
                 nc.NetworkChannelConnected -= OnNetworkChannelConnected;
                 nc.NetworkChannelClosed -= OnNetworkChannelClosed;
                 nc.NetworkChannelMissHeartBeat -= OnNetworkChannelMissHeartBeat;
                 nc.NetworkChannelError -= OnNetworkChannelError;
-                nc.Destroy();
+                nc.Dispose();
             }
             m_NetworkChannels.Clear();
+
+            OnNetworkConnected = null;
+            OnNetworkClosed = null;
+            OnNetworkMissHeartBeat = null;
+
+            m_NetworkErrorEventHandler = null;
         }
 
 
         private readonly Dictionary<string, NetworkChannel> m_NetworkChannels;
 
-        private Action<NetworkChannel, object> m_NetworkConnectedEventHandler;
-        private Action<NetworkChannel> m_NetworkClosedEventHandler;
-        private Action<NetworkChannel, int> m_NetworkMissHeartBeatEventHandler;
+        /// <summary>
+        /// 网络连接成功事件。
+        /// </summary>
+        public Action<NetworkChannel> OnNetworkConnected;
+        /// <summary>
+        /// 网络连接关闭事件。
+        /// </summary>
+        public Action<NetworkChannel> OnNetworkClosed;
+        /// <summary>
+        /// 网络心跳包丢失事件。
+        /// </summary>
+        public Action<NetworkChannel, int> OnNetworkMissHeartBeat;
+        
         private Action<NetworkChannel, NetworkErrorCode, string> m_NetworkErrorEventHandler;
 
         /// <summary>
@@ -44,11 +61,6 @@ namespace Game
         public NetworkManager()
         {
             m_NetworkChannels = new Dictionary<string, NetworkChannel>();
-
-            m_NetworkConnectedEventHandler = null;
-            m_NetworkClosedEventHandler = null;
-            m_NetworkMissHeartBeatEventHandler = null;
-            m_NetworkErrorEventHandler = null;
         }
 
         /// <summary>
@@ -59,51 +71,6 @@ namespace Game
             get
             {
                 return m_NetworkChannels.Count;
-            }
-        }
-
-        /// <summary>
-        /// 网络连接成功事件。
-        /// </summary>
-        public event Action<NetworkChannel, object> NetworkConnected
-        {
-            add
-            {
-                m_NetworkConnectedEventHandler += value;
-            }
-            remove
-            {
-                m_NetworkConnectedEventHandler -= value;
-            }
-        }
-
-        /// <summary>
-        /// 网络连接关闭事件。
-        /// </summary>
-        public event Action<NetworkChannel> NetworkClosed
-        {
-            add
-            {
-                m_NetworkClosedEventHandler += value;
-            }
-            remove
-            {
-                m_NetworkClosedEventHandler -= value;
-            }
-        }
-
-        /// <summary>
-        /// 网络心跳包丢失事件。
-        /// </summary>
-        public event Action<NetworkChannel, int> NetworkMissHeartBeat
-        {
-            add
-            {
-                m_NetworkMissHeartBeatEventHandler += value;
-            }
-            remove
-            {
-                m_NetworkMissHeartBeatEventHandler -= value;
             }
         }
 
@@ -231,49 +198,49 @@ namespace Game
                 networkChannel.NetworkChannelClosed -= OnNetworkChannelClosed;
                 networkChannel.NetworkChannelMissHeartBeat -= OnNetworkChannelMissHeartBeat;
                 networkChannel.NetworkChannelError -= OnNetworkChannelError;
-                networkChannel.Destroy();
+                networkChannel.Dispose();
                 return m_NetworkChannels.Remove(name);
             }
 
             return false;
         }
 
-        private void OnNetworkChannelConnected(NetworkChannel networkChannel, object userData)
+        private void OnNetworkChannelConnected(NetworkChannel networkChannel)
         {
-            if (m_NetworkConnectedEventHandler != null)
+            if (OnNetworkConnected != null)
             {
-                lock (m_NetworkConnectedEventHandler)
+                lock (OnNetworkConnected)
                 {
-                    m_NetworkConnectedEventHandler(networkChannel, userData);
+                    OnNetworkConnected(networkChannel);
                 }
             }
         }
 
         private void OnNetworkChannelClosed(NetworkChannel networkChannel)
         {
-            if (m_NetworkClosedEventHandler != null)
+            if (OnNetworkClosed != null)
             {
-                lock (m_NetworkClosedEventHandler)
+                lock (OnNetworkClosed)
                 {
-                    m_NetworkClosedEventHandler(networkChannel);
+                    OnNetworkClosed(networkChannel);
                 }
             }
         }
 
         private void OnNetworkChannelMissHeartBeat(NetworkChannel networkChannel, int missHeartBeatCount)
         {
-            if (m_NetworkMissHeartBeatEventHandler != null)
+            if (OnNetworkMissHeartBeat != null)
             {
-                lock (m_NetworkMissHeartBeatEventHandler)
+                lock (OnNetworkMissHeartBeat)
                 {
-                    m_NetworkMissHeartBeatEventHandler(networkChannel, missHeartBeatCount);
+                    OnNetworkMissHeartBeat(networkChannel, missHeartBeatCount);
                 }
             }
         }
 
         private void OnNetworkChannelError(NetworkChannel networkChannel, NetworkErrorCode errorCode, string errorMessage)
         {
-            Debug.LogErrorFormat("ErrorCode:{0}.{1}", errorCode, errorMessage);
+            Debug.LogErrorFormat("{0}.ErrorCode:{1}", errorCode, errorMessage);
             //if (m_NetworkErrorEventHandler != null)
             //{
             //    lock (m_NetworkErrorEventHandler)

@@ -32,7 +32,6 @@ AppConst = Game.AppConst
 LuaHelper = Game.LuaHelper
 Interface = Game.Platform.Interface
 ResMgr = Game.Manager.ResMgr
-NetworkMgr = Game.Manager.NetworkMgr
 --SoundMgr = Game.Manager
 --NetworkMgr = Game.Manager.Instance
 LuaWindow = Game.LuaWindow
@@ -74,6 +73,7 @@ Easing = require "Common.Easing"
 GameEvent = require "Common.GameEvent"
 
 require "Common.Timer"
+
 
 unpack = table.unpack
 

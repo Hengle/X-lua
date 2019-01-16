@@ -6,9 +6,6 @@ local GameEvent = GameEvent
 local LogError = LogError
 
 local Time = Time
-local UpdateBeat = UpdateBeat
-local LateUpdateBeat = LateUpdateBeat
-local FixedUpdateBeat = FixedUpdateBeat
 
 local function InitModule()
     for _, name in ipairs(modules) do

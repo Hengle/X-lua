@@ -1,14 +1,16 @@
-local NetworkMgr = NetworkMgr
 local Event = Event
+local GameEvent = GameEvent
+---@type Game.NetworkManager
+local Network = Game.Manager.NetworkMgr
 
 ---@class NetworkManager
 local NetworkManager = {}
 local networkEvt = Event.NewSimple('NetworkEvent')
 ---@type Game.NetworkChannel
-local network
+local channel
 
-local onChannelConnected = function(channel, userData)
-
+local onChannelConnected = function(channel)
+    printyellow(channel.Name .. "正常连接到服务器")
 end
 local onChannelClosed = function(channel)
 
@@ -25,18 +27,18 @@ local onReceive = function(type, msg)
     printyellow(type, msg)
 end
 
-local ip = "127.0.0.1"
-local port = 86868
+local ip = "192.168.50.90"
+local port = 8686
 
 function NetworkManager.Init()
-    --NetworkMgr.NetworkConnected = onChannelConnected
-    --NetworkMgr.NetworkClosed = onChannelClosed
-    --NetworkMgr.NetworkMissHeartBeat = onMissHeartBeat
+    Network.OnNetworkConnected = onChannelConnected
+    Network.OnNetworkClosed = onChannelClosed
+    Network.OnNetworkMissHeartBeat = onMissHeartBeat
 
-    local channel = NetworkMgr:CreateNetworkChannel('NetworkChannel')
-    network = channel
-    --channel.NetworkReceive = onReceive
+    channel = Network:CreateNetworkChannel('NetworkChannel')
+    channel.NetworkReceive = onReceive
     channel:Connect(ip, port)
+    --GameEvent.DestroyEvent:Add(NetworkManager.Destroy)
 end
 
 ---@param msg table
@@ -45,8 +47,7 @@ function NetworkManager.Send(msg)
 end
 
 function NetworkManager.Destroy()
-    --network:Dispose()
-    --NetworkMgr:Dispose()
+    Network:DestroyNetworkChannel(channel.Name)
 end
 
 return NetworkManager

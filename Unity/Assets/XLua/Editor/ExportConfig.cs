@@ -25,6 +25,7 @@ public static class ExportConfig
         typeof(Action<float>),
         typeof(Action<float, float>),
         typeof(Action<ushort, byte[]>),
+        typeof(Action<NetworkChannel>),
     };
 
     [LuaCallCSharp]
@@ -37,6 +38,7 @@ public static class ExportConfig
         typeof(Comparison<int>),
         typeof(Func<int, int>),
         typeof(Action<ushort, byte[]>),
+        typeof(Action<NetworkChannel>),
 
         typeof(System.Object),
         typeof(UnityEngine.Object),
@@ -130,6 +132,7 @@ public static class ExportConfig
         typeof(ResourceLoadType),
         typeof(SoundManager),
         typeof(NetworkManager),
+        typeof(NetworkChannel),
         typeof(Manager),
         typeof(Game.Platform.CustomInterface),
         typeof(Game.Platform.Interface),

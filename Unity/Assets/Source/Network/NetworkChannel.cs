@@ -50,7 +50,7 @@ namespace Game
         private bool m_Active;
         private bool m_Disposed;
 
-        public Action<NetworkChannel, object> NetworkChannelConnected;
+        public Action<NetworkChannel> NetworkChannelConnected;
         public Action<NetworkChannel> NetworkChannelClosed;
         public Action<NetworkChannel, int> NetworkChannelMissHeartBeat;
         public Action<NetworkChannel, NetworkErrorCode, string> NetworkChannelError;
@@ -405,38 +405,6 @@ namespace Game
         }
 
         /// <summary>
-        /// 关闭网络频道。
-        /// </summary>
-        public void Destroy()
-        {
-            Close();
-            m_ReceivePacketPool.Clear();
-        }
-
-        ///// <summary>
-        ///// 注册网络消息包处理函数。
-        ///// </summary>
-        ///// <param name="handler">要注册的网络消息包处理函数。</param>
-        //public void RegisterHandler(PacketHandler handler)
-        //{
-        //    if (handler == null)
-        //    {
-        //        throw new Exception("Packet handler is invalid.");
-        //    }
-
-        //    m_ReceivePacketPool.Subscribe(handler.ID, handler.Handle);
-        //}
-
-        ///// <summary>
-        ///// 设置默认事件处理函数。
-        ///// </summary>
-        ///// <param name="handler">要设置的默认事件处理函数。</param>
-        //public void SetDefaultHandler(EventHandler<Packet> handler)
-        //{
-        //    m_ReceivePacketPool.SetDefaultHandler(handler);
-        //}
-
-        /// <summary>
         /// 连接到远程主机。
         /// </summary>
         /// <param name="ipAddress">远程主机的 IP 地址。</param>
@@ -547,8 +515,7 @@ namespace Game
                 finally
                 {
                     m_Socket.Close();
-                    m_Socket = null;
-                    NetworkReceive = null;
+                    m_Socket = null;                   
 
                     if (NetworkChannelClosed != null)
                     {
@@ -627,6 +594,7 @@ namespace Game
                 NetworkChannelClosed = null;
                 NetworkChannelMissHeartBeat = null;
                 NetworkChannelError = null;
+                NetworkReceive = null;
             }
 
             m_Disposed = true;
@@ -815,7 +783,7 @@ namespace Game
 
             if (NetworkChannelConnected != null)
             {
-                NetworkChannelConnected(this, socketUserData.UserData);
+                NetworkChannelConnected(this);
             }
 
             Receive();

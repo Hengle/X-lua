@@ -15,10 +15,11 @@ namespace Game
 
         List<IManager> _managers = new List<IManager>()
         {
+             Manager.NetworkMgr,
+             Manager.ResMgr,
              Manager.LuaMgr,
             //UpdateManager.Instance,
             //GameManager.Instance,
-             Manager.ResMgr,
         };
         void Awake()
         {
