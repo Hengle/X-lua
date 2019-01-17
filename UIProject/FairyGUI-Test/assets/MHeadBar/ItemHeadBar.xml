@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="209,106">
+  <displayList>
+    <component id="n2_jior" name="ProgressBar_hp" src="jior1" fileName="ProgressBar_hp.xml" xy="34,86">
+      <ProgressBar value="39" max="100"/>
+    </component>
+    <loader id="n5_jior" name="n5" xy="79,1" size="50,50" url="ui://i8la6ifqjior1u"/>
+    <richtext id="n6_jior" name="RichTextField_Name" xy="-1,57" pivot="0.5,0.5" size="210,29" fontSize="25" color="#ff6600" ubb="true" autoSize="none" strokeColor="#000000" text="Long [color=#FFFFFF]Long[/color][img]ui://i8la6ifqm1wz1h[/img]Name"/>
+  </displayList>
+</component>

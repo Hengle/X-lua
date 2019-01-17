@@ -31,13 +31,13 @@ local ip = "192.168.50.90"
 local port = 8686
 
 function NetworkManager.Init()
-    Network.OnNetworkConnected = onChannelConnected
-    Network.OnNetworkClosed = onChannelClosed
-    Network.OnNetworkMissHeartBeat = onMissHeartBeat
+    --Network.OnNetworkConnected = onChannelConnected
+    --Network.OnNetworkClosed = onChannelClosed
+    --Network.OnNetworkMissHeartBeat = onMissHeartBeat
 
-    channel = Network:CreateNetworkChannel('NetworkChannel')
-    channel.NetworkReceive = onReceive
-    channel:Connect(ip, port)
+    --channel = Network:CreateNetworkChannel('NetworkChannel')
+    --channel.NetworkReceive = onReceive
+    --channel:Connect(ip, port)
     --GameEvent.DestroyEvent:Add(NetworkManager.Destroy)
 end
 

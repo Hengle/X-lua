@@ -513,9 +513,14 @@ function UIManager.DestroyView(viewName)
     if data.isShow then
         this.HideImmediate(viewName)
     end
-    this.Call(viewName, "Destroy")
+
     ---@type Game.LuaWindow
     local window = data.base
+    if not window then
+        _views[viewName] = nil
+        return
+    end
+    this.Call(viewName, "Destroy")
     data.base = nil
     --clear(data)
     _views[viewName] = nil

@@ -324,6 +324,12 @@ namespace Game
                 ptList = new List<uint>();
                 ptList.Add(parentTaskId);
             }
+            if (!_assetDependencies.ContainsKey(lowerFile))
+            {
+                Debug.LogErrorFormat("资源列表中不存在资源{0}", lowerFile);
+                return 0;
+            }
+            
             string[] deps = _assetDependencies[lowerFile];
             var task = _assetLoadTaskPool.Get();
             {

@@ -67,6 +67,9 @@
     <movieclip id="m1wz1r" name="hxiu.jta" path="/emoji/" exported="true"/>
     <image id="mpyf0" name="joystick_bg.png" path="/images/" exported="true"/>
     <image id="mpyf1" name="joystick_opt.png" path="/images/" exported="true"/>
+    <image id="jior1s" name="0.png" path="/headBar/" exported="true"/>
+    <image id="jior1t" name="1.png" path="/headBar/" exported="true"/>
+    <image id="jior1u" name="task.png" path="/headBar/" exported="true"/>
   </resources>
   <publish name="Icon" path="..\..\Unity\Assets\Interface\Atlas"/>
 </packageDescription>
