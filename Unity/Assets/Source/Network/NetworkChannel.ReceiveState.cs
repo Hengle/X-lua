@@ -8,13 +8,13 @@ namespace Game
         private sealed class ReceiveState : IDisposable
         {
             private MemoryStream m_Stream;
-            private NetworkChannelHelper m_PacketHeader;
             private bool m_Disposed;
+            private bool m_HasHeader;
 
             public ReceiveState()
             {
                 m_Stream = new MemoryStream(DefaultBufferLength);
-                m_PacketHeader = null;
+                m_HasHeader = false;
                 m_Disposed = false;
             }
 
@@ -26,27 +26,24 @@ namespace Game
                 }
             }
 
-            public NetworkChannelHelper PacketHeader
+            public bool HasHeader
             {
                 get
                 {
-                    return m_PacketHeader;
+                    return m_HasHeader;
                 }
             }
 
             public void PrepareForPacketHeader(int packetHeaderLength)
             {
-                Reset(packetHeaderLength, null);
+                m_HasHeader = true;
+                Reset(packetHeaderLength);
             }
 
-            public void PrepareForPacket(NetworkChannelHelper packetHeader)
+            public void PrepareForPacket(int packetBodyLength)
             {
-                if (packetHeader == null)
-                {
-                    throw new Exception("Packet header is invalid.");
-                }
-
-                Reset(packetHeader.PacketLength, packetHeader);
+                m_HasHeader = false; 
+                Reset(packetBodyLength);
             }
 
             public void Dispose()
@@ -74,7 +71,7 @@ namespace Game
                 m_Disposed = true;
             }
 
-            private void Reset(int targetLength, NetworkChannelHelper packetHeader)
+            private void Reset(int targetLength)
             {
                 if (targetLength < 0)
                 {
@@ -83,7 +80,6 @@ namespace Game
 
                 m_Stream.Position = 0L;
                 m_Stream.SetLength(targetLength);
-                m_PacketHeader = packetHeader;
             }
         }
     }

@@ -35,8 +35,8 @@ namespace Game
         private const float DefaultHeartBeatInterval = 30f;
 
         private readonly string m_Name;
-        private readonly Queue<Packet> m_SendPacketPool;
-        private readonly Queue<Packet> m_ReceivePacketPool;
+        private readonly Queue<Protocol> m_SendPacketPool;
+        private readonly Queue<Protocol> m_ReceivePacketPool;
         private NetworkType m_NetworkType;
         private bool m_ResetHeartBeatElapseSecondsWhenReceivePacket;
         private float m_HeartBeatInterval;
@@ -54,7 +54,7 @@ namespace Game
         public Action<NetworkChannel> NetworkChannelClosed;
         public Action<NetworkChannel, int> NetworkChannelMissHeartBeat;
         public Action<NetworkChannel, NetworkErrorCode, string> NetworkChannelError;
-        public Action<ushort, byte[]> NetworkReceive;
+        public Action<int, byte[]> NetworkReceive;
 
         /// <summary>
         /// 初始化网络频道的新实例。
@@ -64,8 +64,8 @@ namespace Game
         public NetworkChannel(string name)
         {
             m_Name = name ?? string.Empty;
-            m_SendPacketPool = new Queue<Packet>();
-            m_ReceivePacketPool = new Queue<Packet>();
+            m_SendPacketPool = new Queue<Protocol>();
+            m_ReceivePacketPool = new Queue<Protocol>();
             m_NetworkType = NetworkType.Unknown;
             m_ResetHeartBeatElapseSecondsWhenReceivePacket = false;
             m_HeartBeatInterval = DefaultHeartBeatInterval;
@@ -369,9 +369,10 @@ namespace Game
             while (iterRec.MoveNext())
             {
                 //转发至Lua层
-                Packet packet = iterRec.Current;
-                ushort type = packet.ReadShort();
-                byte[] msg = packet.ReadBytes();
+                Protocol packet = iterRec.Current;
+                int type = packet.ReadInt();
+                int length = packet.ReadInt();
+                byte[] msg = packet.ReadBytes(length);
                 if (NetworkReceive != null)
                     NetworkReceive(type, msg);
                 else
@@ -465,7 +466,7 @@ namespace Game
             }
 
             m_SendState.Reset();
-            m_ReceiveState.PrepareForPacketHeader(m_Helper.PacketHeaderLength);
+            m_ReceiveState.PrepareForPacketHeader(m_Helper.HeaderLength);
 
             try
             {
@@ -555,7 +556,7 @@ namespace Game
                 throw new Exception(errorMessage);
             }
 
-            Packet packet = new Packet();
+            Protocol packet = new Protocol();
             packet.WriteInt(type);
             packet.WriteBytes(msg);
             lock (m_SendPacketPool)
@@ -627,7 +628,9 @@ namespace Game
         {
             try
             {
-                m_Socket.BeginReceive(m_ReceiveState.Stream.GetBuffer(), (int)m_ReceiveState.Stream.Position, (int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position), SocketFlags.None, ReceiveCallback, m_Socket);
+                m_Socket.BeginReceive(m_ReceiveState.Stream.GetBuffer(),
+                    (int)m_ReceiveState.Stream.Position, (int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position),
+                    SocketFlags.None, ReceiveCallback, m_Socket);
             }
             catch (Exception exception)
             {
@@ -653,8 +656,8 @@ namespace Game
             {
                 try
                 {
-                    ///是否会出现发送数据量>1024*8的情况?.
-                    Packet packet = m_SendPacketPool.Dequeue();
+                    ///是否会出现发送数据量>1024*8的情况?待测试....
+                    Protocol packet = m_SendPacketPool.Dequeue();
                     byte[] buffer = packet.ToBytes();
                     m_SendState.Stream.Write(buffer, 0, buffer.Length);
                     packet.Close();
@@ -680,9 +683,9 @@ namespace Game
         {
             try
             {
-                m_Helper.DecodePacket(m_ReceiveState.Stream);
+                m_Helper.DecodeHeader(m_ReceiveState.Stream);
 
-                if (m_Helper.PacketLength < 0)
+                if (m_Helper.MsgType < 0)
                 {
                     string errorMessage = "Packet header is invalid.";
                     if (NetworkChannelError != null)
@@ -694,10 +697,11 @@ namespace Game
                     throw new Exception(errorMessage);
                 }
 
-                m_ReceiveState.PrepareForPacket(m_Helper);
-                if (m_Helper.PacketLength > 0)
+                m_ReceiveState.PrepareForPacket(m_Helper.MsgLength);
+                if (m_Helper.MsgLength <= 0)
                 {
-                    ProcessPacket();
+                    //空消息,直接解析Body
+                    ProcessPacketBody();
                 }
             }
             catch (Exception exception)
@@ -715,7 +719,7 @@ namespace Game
             return true;
         }
 
-        private bool ProcessPacket()
+        private bool ProcessPacketBody()
         {
             lock (m_HeartBeatState)
             {
@@ -724,10 +728,10 @@ namespace Game
 
             try
             {
-                Packet packet = m_Helper.Decode(m_ReceiveState.Stream);
+                Protocol packet = m_Helper.Decode(m_ReceiveState.Stream);
                 m_ReceivePacketPool.Enqueue(packet);
 
-                m_ReceiveState.PrepareForPacketHeader(m_Helper.PacketHeaderLength);
+                m_ReceiveState.PrepareForPacketHeader(m_Helper.HeaderLength);
             }
             catch (Exception exception)
             {
@@ -860,14 +864,10 @@ namespace Game
             m_ReceiveState.Stream.Position = 0L;
 
             bool processSuccess = false;
-            if (m_ReceiveState.PacketHeader != null)
-            {
-                processSuccess = ProcessPacket();
-            }
-            else
-            {
+            if (!m_ReceiveState.HasHeader)
                 processSuccess = ProcessPacketHeader();
-            }
+            else
+                processSuccess = ProcessPacketBody();
 
             if (processSuccess)
             {

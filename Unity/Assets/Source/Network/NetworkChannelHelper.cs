@@ -4,18 +4,27 @@ namespace Game
 {
     /// <summary>
     /// 网络消息包头接口
-    /// |PacketLength|ProtocolType|ProtocolMsg
+    /// |Type|Length|Msg
     /// </summary>
     public class NetworkChannelHelper
     {
-        public virtual int PacketHeaderLength
+        public virtual int HeaderLength
         {
-            get { return 4; }
+            get { return 8; }
         }
+
         /// <summary>
         /// 获取网络消息包长度。
         /// </summary>
-        public ushort PacketLength
+        public int MsgLength
+        {
+            get;
+            private set;
+        }
+        /// <summary>
+        /// 网络消息类型
+        /// </summary>
+        public int MsgType
         {
             get;
             private set;
@@ -23,17 +32,21 @@ namespace Game
 
         public NetworkChannelHelper() { }
 
-        public virtual void DecodePacket(Stream stream)
+        public virtual void DecodeHeader(Stream stream)
         {
             BinaryReader reader = new BinaryReader(stream);
-            PacketLength = reader.ReadUInt16();
+            MsgType = reader.ReadInt32();
+            MsgLength = reader.ReadInt32();
         }
         /// <summary>
         /// 打包协议
         /// </summary>
-        public virtual Packet Decode(MemoryStream stream)
+        public virtual Protocol Decode(MemoryStream stream)
         {
-            Packet packet = new Packet(stream.ToArray());
+            BinaryReader reader = new BinaryReader(stream);
+            Protocol packet = new Protocol();
+            packet.WriteInt(MsgType);
+            packet.WriteBytes(reader.ReadBytes(MsgLength));
             return packet;
         }
     }

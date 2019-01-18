@@ -6,22 +6,19 @@ using System.Text;
 using UnityEngine;
 namespace Game
 {
-    /// <summary>
-    /// 包可重复利用
-    /// </summary>
-    public class Packet
+    public class Protocol
     {
         MemoryStream _stream = null;
         BinaryWriter _writer = null;
         BinaryReader _reader = null;
 
-        public Packet()
+        public Protocol()
         {
             _stream = new MemoryStream();
             _writer = new BinaryWriter(_stream);
         }
 
-        public Packet(byte[] data)
+        public Protocol(byte[] data)
         {
             if (data != null)
             {
@@ -135,10 +132,9 @@ namespace Game
             return Encoding.UTF8.GetString(buffer);
         }
 
-        public byte[] ReadBytes()
+        public byte[] ReadBytes(int length)
         {
-            int len = ReadInt();
-            return _reader.ReadBytes(len);
+            return _reader.ReadBytes(length);
         }
 
         public byte[] ToBytes()
