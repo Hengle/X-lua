@@ -23,7 +23,7 @@ namespace Game
 
         public NetworkChannelHelper() { }
 
-        public virtual void DecodeHeader(Stream stream)
+        public virtual void DecodePacket(Stream stream)
         {
             BinaryReader reader = new BinaryReader(stream);
             PacketLength = reader.ReadUInt16();

@@ -515,7 +515,7 @@ namespace Game
                 finally
                 {
                     m_Socket.Close();
-                    m_Socket = null;                   
+                    m_Socket = null;
 
                     if (NetworkChannelClosed != null)
                     {
@@ -651,15 +651,10 @@ namespace Game
 
             while (m_SendPacketPool.Count > 0)
             {
-                Packet packet = null;
-                lock (m_SendPacketPool)
-                {
-                    packet = m_SendPacketPool.Dequeue();
-                }
-
                 try
                 {
-                    ///是否会出现发送数据量>1024*8的情况?
+                    ///是否会出现发送数据量>1024*8的情况?.
+                    Packet packet = m_SendPacketPool.Dequeue();
                     byte[] buffer = packet.ToBytes();
                     m_SendState.Stream.Write(buffer, 0, buffer.Length);
                     packet.Close();
@@ -685,7 +680,7 @@ namespace Game
         {
             try
             {
-                m_Helper.DecodeHeader(m_ReceiveState.Stream);
+                m_Helper.DecodePacket(m_ReceiveState.Stream);
 
                 if (m_Helper.PacketLength < 0)
                 {
