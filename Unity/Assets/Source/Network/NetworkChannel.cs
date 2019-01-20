@@ -34,6 +34,9 @@ namespace Game
         private const int DefaultBufferLength = 1024 * 8;
         private const float DefaultHeartBeatInterval = 30f;
 
+        private const int ChannelConnectedState = -100;
+        private const int ChannelClosedState = -200;
+
         private readonly string m_Name;
         private readonly Queue<Protocol> m_SendPacketPool;
         private readonly Queue<Protocol> m_ReceivePacketPool;
@@ -54,7 +57,9 @@ namespace Game
         public Action<NetworkChannel> NetworkChannelClosed;
         public Action<NetworkChannel, int> NetworkChannelMissHeartBeat;
         public Action<NetworkChannel, NetworkErrorCode, string> NetworkChannelError;
-        public Action<int, byte[]> NetworkReceive;
+        public Action<int, string> NetworkReceive;
+
+        private bool m_trigger = false;
 
         /// <summary>
         /// 初始化网络频道的新实例。
@@ -365,18 +370,28 @@ namespace Game
             }
 
             ProcessSend();
-            var iterRec = m_ReceivePacketPool.GetEnumerator();
-            while (iterRec.MoveNext())
+            while (m_ReceivePacketPool.Count > 0)
             {
                 //转发至Lua层
-                Protocol packet = iterRec.Current;
-                int type = packet.ReadInt();
-                int length = packet.ReadInt();
-                byte[] msg = packet.ReadBytes(length);
+                Protocol packet = m_ReceivePacketPool.Dequeue();
                 if (NetworkReceive != null)
-                    NetworkReceive(type, msg);
+                    NetworkReceive(packet.Type, 
+                        System.Text.Encoding.UTF8.GetString(packet.Msg, 0, packet.Msg.Length));
                 else
-                    Debug.LogError(Name + "无法将消息转发至lua层");
+                {
+                    switch (packet.Type)
+                    {
+                        case ChannelConnectedState:
+                            NetworkChannelConnected(this);
+                            break;
+                        case ChannelClosedState:
+                            NetworkChannelClosed(this);
+                            break;
+                        default:
+                            Debug.LogError(Name + "无法将消息转发至lua层");
+                            break;
+                    }
+                }
             }
 
             if (m_HeartBeatInterval > 0f)
@@ -453,6 +468,7 @@ namespace Game
             m_Socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             m_Socket.SendBufferSize = sendBuffer;
             m_Socket.ReceiveBufferSize = receiveBuffer;
+            m_Socket.NoDelay = true;
             if (m_Socket == null)
             {
                 string errorMessage = "Initialize network channel failure.";
@@ -520,7 +536,7 @@ namespace Game
 
                     if (NetworkChannelClosed != null)
                     {
-                        NetworkChannelClosed(this);
+                        m_ReceivePacketPool.Enqueue(new Protocol(ChannelClosedState, null));
                     }
                 }
             }
@@ -556,13 +572,14 @@ namespace Game
                 throw new Exception(errorMessage);
             }
 
-            Protocol packet = new Protocol();
-            packet.WriteInt(type);
-            packet.WriteBytes(msg);
             lock (m_SendPacketPool)
             {
-                m_SendPacketPool.Enqueue(packet);
+                m_SendPacketPool.Enqueue(new Protocol(type, msg));
             }
+        }
+        public void Send(int type, string msg)
+        {
+            Send(type, System.Text.Encoding.UTF8.GetBytes(msg));
         }
 
         /// <summary>
@@ -656,11 +673,7 @@ namespace Game
             {
                 try
                 {
-                    ///是否会出现发送数据量>1024*8的情况?待测试....
-                    Protocol packet = m_SendPacketPool.Dequeue();
-                    byte[] buffer = packet.ToBytes();
-                    m_SendState.Stream.Write(buffer, 0, buffer.Length);
-                    packet.Close();
+                    m_Helper.EnCode(m_SendState.Writer, m_SendPacketPool.Dequeue());
                 }
                 catch (Exception exception)
                 {
@@ -683,7 +696,7 @@ namespace Game
         {
             try
             {
-                m_Helper.DecodeHeader(m_ReceiveState.Stream);
+                m_Helper.DecodeHeader(m_ReceiveState.Reader);
 
                 if (m_Helper.MsgType < 0)
                 {
@@ -728,7 +741,7 @@ namespace Game
 
             try
             {
-                Protocol packet = m_Helper.Decode(m_ReceiveState.Stream);
+                Protocol packet = m_Helper.Decode(m_ReceiveState.Reader);
                 m_ReceivePacketPool.Enqueue(packet);
 
                 m_ReceiveState.PrepareForPacketHeader(m_Helper.HeaderLength);
@@ -782,7 +795,7 @@ namespace Game
 
             if (NetworkChannelConnected != null)
             {
-                NetworkChannelConnected(this);
+                m_ReceivePacketPool.Enqueue(new Protocol(ChannelConnectedState, null));
             }
 
             Receive();
@@ -864,7 +877,7 @@ namespace Game
             m_ReceiveState.Stream.Position = 0L;
 
             bool processSuccess = false;
-            if (!m_ReceiveState.HasHeader)
+            if (!m_Helper.HasReadHeader)
                 processSuccess = ProcessPacketHeader();
             else
                 processSuccess = ProcessPacketBody();

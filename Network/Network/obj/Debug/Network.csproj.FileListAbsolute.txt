@@ -1,0 +1,9 @@
+E:\__Github\X-lua\Network\Network\bin\Debug\Network.exe.config
+E:\__Github\X-lua\Network\Network\bin\Debug\Network.exe
+E:\__Github\X-lua\Network\Network\bin\Debug\Network.pdb
+E:\__Github\X-lua\Network\Network\bin\Debug\LitJson.dll
+E:\__Github\X-lua\Network\Network\obj\Debug\Network.csprojAssemblyReference.cache
+E:\__Github\X-lua\Network\Network\obj\Debug\Network.csproj.CoreCompileInputs.cache
+E:\__Github\X-lua\Network\Network\obj\Debug\Network.csproj.CopyComplete
+E:\__Github\X-lua\Network\Network\obj\Debug\Network.exe
+E:\__Github\X-lua\Network\Network\obj\Debug\Network.pdb

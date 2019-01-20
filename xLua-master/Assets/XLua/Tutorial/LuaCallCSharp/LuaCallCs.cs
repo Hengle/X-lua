@@ -14,173 +14,209 @@ using System.Collections.Generic;
 
 namespace Tutorial
 {
-    [LuaCallCSharp]
-    public class BaseClass
+	[LuaCallCSharp]
+	public class BaseClass
+	{
+		public static void BSFunc()
+		{
+			Debug.Log("Derived Static Func, BSF = " + BSF);
+		}
+
+		public static int BSF = 1;
+
+		public void BMFunc()
+		{
+			Debug.Log("Derived Member Func, BMF = " + BMF);
+		}
+
+		public int BMF { get; set; }
+	}
+
+	public struct Param1
+	{
+		public int x;
+		public string y;
+	}
+
+	[LuaCallCSharp]
+	public enum TestEnum
+	{
+		E1,
+		E2
+	}
+
+	[LuaCallCSharp]
+	public class PrivateOverrideClass
+	{
+
+		public void TestFunc(int i)
+		{
+			Debug.Log("TestFunc(int i), i = " + i);
+		}
+
+		public void TestFunc(string i)
+		{
+			Debug.Log("TestFunc(string i), i = " + i);
+		}
+
+		private void TestFunc(double i)
+		{
+			Debug.Log("TestFunc(double i), i = " + i);
+		}
+
+		public void TestFunc3(int i)
+		{
+			Debug.Log("TestFunc(int i), i = " + i);
+		}
+
+		public void TestFunc2(string i)
+		{
+			Debug.Log("TestFunc(string i), i = " + i);
+		}
+
+		private void TestFunc2(double i)
+		{
+			Debug.Log("TestFunc(double i), i = " + i);
+		}
+	}
+
+	[LuaCallCSharp]
+	public class DerivedClass : BaseClass
+	{
+		[LuaCallCSharp]
+		public enum TestEnumInner
+		{
+			E3,
+			E4
+		}
+
+		public void DMFunc()
+		{
+			Debug.Log("Derived Member Func, DMF = " + DMF);
+		}
+
+		public int DMF { get; set; }
+
+		public double ComplexFunc(Param1 p1, ref int p2, out string p3, Action luafunc, out Action csfunc)
+		{
+			Debug.Log("P1 = {x=" + p1.x + ",y=" + p1.y + "},p2 = " + p2);
+			luafunc();
+			p2 = p2 * p1.x;
+			p3 = "hello " + p1.y;
+			csfunc = () =>
+			{
+				Debug.Log("csharp callback invoked!");
+			};
+			return 1.23;
+		}
+
+		public void TestFunc(int i)
+		{
+			Debug.Log("TestFunc(int i)");
+		}
+
+		public void TestFunc(string i)
+		{
+			Debug.Log("TestFunc(string i)");
+		}
+
+		public static DerivedClass operator +(DerivedClass a, DerivedClass b)
+		{
+            DerivedClass ret = new DerivedClass();
+			ret.DMF = a.DMF + b.DMF;
+			return ret;
+		}
+
+		public void DefaultValueFunc(int a = 100, string b = "cccc", string c = null)
+		{
+			UnityEngine.Debug.Log("DefaultValueFunc: a=" + a + ",b=" + b + ",c=" + c);
+		}
+
+		public void VariableParamsFunc(int a, params string[] strs)
+		{
+			UnityEngine.Debug.Log("VariableParamsFunc: a =" + a);
+			foreach (var str in strs)
+			{
+				UnityEngine.Debug.Log("str:" + str);
+			}
+		}
+
+		public TestEnum EnumTestFunc(TestEnum e)
+		{
+			Debug.Log("EnumTestFunc: e=" + e);
+			return TestEnum.E2;
+		}
+
+		public Action<string> TestDelegate = (param) =>
+		{
+			Debug.Log("TestDelegate in c#:" + param);
+		};
+
+		public event Action TestEvent;
+
+		public void CallEvent()
+		{
+			TestEvent();
+		}
+
+		public ulong TestLong(long n)
+		{
+			return (ulong)(n + 1);
+		}
+
+		class InnerCalc : ICalc
+		{
+			public int add(int a, int b)
+			{
+				return a + b;
+			}
+
+			public int id = 100;
+		}
+
+		public ICalc GetCalc()
+		{
+			return new InnerCalc();
+		}
+
+		public void GenericMethod<T>()
+		{
+			Debug.Log("GenericMethod<" + typeof(T) + ">");
+		}
+	}
+
+	[LuaCallCSharp]
+	public interface ICalc
+	{
+		int add(int a, int b);
+	}
+
+	[LuaCallCSharp]
+	public static class DerivedClassExtensions
     {
-        public static void BSFunc()
-        {
-            Debug.Log("Driven Static Func, BSF = "+ BSF);
-        }
+		public static int GetSomeData(this DerivedClass obj)
+		{
+			Debug.Log("GetSomeData ret = " + obj.DMF);
+			return obj.DMF;
+		}
 
-        public static int BSF = 1;
+		public static int GetSomeBaseData(this BaseClass obj)
+		{
+			Debug.Log("GetSomeBaseData ret = " + obj.BMF);
+			return obj.BMF;
+		}
 
-        public void BMFunc()
-        {
-            Debug.Log("Driven Member Func, BMF = " + BMF);
-        }
-
-        public int BMF { get; set; }
-    }
-
-    public struct Param1
-    {
-        public int x;
-        public string y;
-    }
-
-    [LuaCallCSharp]
-    public enum TestEnum
-    {
-        E1,
-        E2
-    }
-
-    [LuaCallCSharp]
-    public class DrivenClass : BaseClass
-    {
-        [LuaCallCSharp]
-        public enum TestEnumInner
-        {
-            E3,
-            E4
-        }
-
-        public void DMFunc()
-        {
-            Debug.Log("Driven Member Func, DMF = " + DMF);
-        }
-
-        public int DMF { get; set; }
-
-        public double ComplexFunc(Param1 p1, ref int p2, out string p3, Action luafunc, out Action csfunc)
-        {
-            Debug.Log("P1 = {x=" + p1.x + ",y=" + p1.y + "},p2 = "+ p2);
-            luafunc();
-            p2 = p2 * p1.x;
-            p3 = "hello " + p1.y;
-            csfunc = () =>
-            {
-                Debug.Log("csharp callback invoked!");
-            };
-            return 1.23;
-        }
-
-        public void TestFunc(int i)
-        {
-            Debug.Log("TestFunc(int i)");
-        }
-
-        public void TestFunc(string i)
-        {
-            Debug.Log("TestFunc(string i)");
-        }
-
-        public static DrivenClass operator +(DrivenClass a, DrivenClass b)
-        {
-            DrivenClass ret = new DrivenClass();
-            ret.DMF = a.DMF + b.DMF;
-            return ret;
-        }
-
-        public void DefaultValueFunc(int a = 100, string b = "cccc", string c = null)
-        {
-            UnityEngine.Debug.Log("DefaultValueFunc: a=" + a + ",b=" + b + ",c=" + c);
-        }
-
-        public void VariableParamsFunc(int a, params string[] strs)
-        {
-            UnityEngine.Debug.Log("VariableParamsFunc: a =" + a);
-            foreach (var str in strs)
-            {
-                UnityEngine.Debug.Log("str:" + str);
-            }
-        }
-
-        public TestEnum EnumTestFunc(TestEnum e)
-        {
-            Debug.Log("EnumTestFunc: e=" + e);
-            return TestEnum.E2;
-        }
-
-        public Action<string> TestDelegate = (param) =>
-        {
-            Debug.Log("TestDelegate in c#:" + param);
-        };
-
-        public event Action TestEvent;
-
-        public void CallEvent()
-        {
-            TestEvent();
-        }
-
-        public ulong TestLong(long n)
-        {
-            return (ulong)(n + 1);
-        }
-
-        class InnerCalc : ICalc
-        {
-            public int add(int a, int b)
-            {
-                return a + b;
-            }
-
-            public int id = 100;
-        }
-
-        public ICalc GetCalc()
-        {
-            return new InnerCalc();
-        }
-
-        public void GenericMethod<T>()
-        {
-            Debug.Log("GenericMethod<" + typeof(T) + ">");
-        }
-    }
-
-    [LuaCallCSharp]
-    public interface ICalc
-    {
-        int add(int a, int b);
-    }
-
-    [LuaCallCSharp]
-    public static class DrivenClassExtensions
-    {
-        public static int GetSomeData(this DrivenClass obj)
-        {
-            Debug.Log("GetSomeData ret = " + obj.DMF);
-            return obj.DMF;
-        }
-
-        public static int GetSomeBaseData(this BaseClass obj)
-        {
-            Debug.Log("GetSomeBaseData ret = " + obj.BMF);
-            return obj.BMF;
-        }
-
-        public static void GenericMethodOfString(this DrivenClass obj)
-        {
-            obj.GenericMethod<string>();
-        }
-    }
+		public static void GenericMethodOfString(this DerivedClass obj)
+		{
+			obj.GenericMethod<string>();
+		}
+	}
 }
 
-public class LuaCallCs : MonoBehaviour {
-    LuaEnv luaenv = null;
-    string script = @"
+public class LuaCallCs : MonoBehaviour
+{
+	LuaEnv luaenv = null;
+	string script = @"
         function demo()
             --new C#对象
             local newGameObj = CS.UnityEngine.GameObject()
@@ -194,16 +230,16 @@ public class LuaCallCs : MonoBehaviour {
             print('helloworld', GameObject.Find('helloworld')) --静态方法调用
 
             --访问成员属性，方法
-            local DrivenClass = CS.Tutorial.DrivenClass
-            local testobj = DrivenClass()
+            local DerivedClass = CS.Tutorial.DerivedClass
+            local testobj = DerivedClass()
             testobj.DMF = 1024--设置成员属性
             print(testobj.DMF)--读取成员属性
             testobj:DMFunc()--成员方法
 
             --基类属性，方法
-            print(DrivenClass.BSF)--读基类静态属性
-            DrivenClass.BSF = 2048--写基类静态属性
-            DrivenClass.BSFunc();--基类静态方法
+            print(DerivedClass.BSF)--读基类静态属性
+            DerivedClass.BSF = 2048--写基类静态属性
+            DerivedClass.BSFunc();--基类静态方法
             print(testobj.BMF)--读基类成员属性
             testobj.BMF = 4096--写基类成员属性
             testobj:BMFunc()--基类方法调用
@@ -218,9 +254,18 @@ public class LuaCallCs : MonoBehaviour {
            --重载方法调用
            testobj:TestFunc(100)
            testobj:TestFunc('hello')
+		   
+		   --xlua.private_accessible访问私有方法
+		   local PrivateOverrideClass = CS.Tutorial.PrivateOverrideClass
+		   local priObj=PrivateOverrideClass()
+		   priObj:TestFunc(100.0)
+	       priObj:TestFunc('hello')
+		   xlua.private_accessible(PrivateOverrideClass);
+		   priObj:TestFunc(100.0)
+		   priObj:TestFunc('hello')
 
            --操作符
-           local testobj2 = DrivenClass()
+           local testobj2 = DerivedClass()
            testobj2.DMF = 2048
            print('(testobj + testobj2).DMF = ', (testobj + testobj2).DMF)
 
@@ -240,7 +285,7 @@ public class LuaCallCs : MonoBehaviour {
            local e = testobj:EnumTestFunc(CS.Tutorial.TestEnum.E1)
            print(e, e == CS.Tutorial.TestEnum.E2)
            print(CS.Tutorial.TestEnum.__CastFrom(1), CS.Tutorial.TestEnum.__CastFrom('E1'))
-           print(CS.Tutorial.DrivenClass.TestEnumInner.E3)
+           print(CS.Tutorial.DerivedClass.TestEnumInner.E3)
            assert(CS.Tutorial.BaseClass.TestEnumInner == nil)
 
            --Delegate
@@ -290,22 +335,24 @@ public class LuaCallCs : MonoBehaviour {
        assert(coroutine.resume(co))
     ";
 
-    // Use this for initialization
-    void Start () {
-        luaenv = new LuaEnv();
-        luaenv.DoString(script);
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        if (luaenv != null)
-        {
-            luaenv.Tick();
-        }
-    }
+	// Use this for initialization
+	void Start()
+	{
+		luaenv = new LuaEnv();
+		luaenv.DoString(script);
+	}
 
-    void OnDestroy()
-    {
-        luaenv.Dispose();
-    }
+	// Update is called once per frame
+	void Update()
+	{
+		if (luaenv != null)
+		{
+			luaenv.Tick();
+		}
+	}
+
+	void OnDestroy()
+	{
+		luaenv.Dispose();
+	}
 }

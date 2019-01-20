@@ -74,7 +74,6 @@ GameEvent = require "Common.GameEvent"
 
 require "Common.Timer"
 
-
 unpack = table.unpack
 
 IsEditor = Application.isEditor

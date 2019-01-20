@@ -22,6 +22,8 @@ endif ()
 
 option ( UINT_ESPECIALLY "using custom ulong" OFF )
 option ( USING_LUAJIT "using luajit" OFF )
+option ( GC64 "using gc64" OFF )
+option ( LUAC_COMPATIBLE_FORMAT "compatible format" OFF )
 
 find_path(XLUA_PROJECT_DIR NAMES SConstruct
     PATHS 
@@ -33,6 +35,19 @@ MARK_AS_ADVANCED(XLUA_PROJECT_DIR)
 
 set(LUA_SRC_PATH lua-5.3.5/src)
 set(LUAJIT_SRC_PATH luajit-2.1.0b3/src)
+
+#begin lua-rapidjson
+set (RAPIDJSON_SRC lua-rapidjson/source/rapidjson.cpp)
+set_property(
+	SOURCE ${RAPIDJSON_SRC}
+	APPEND
+	PROPERTY COMPILE_DEFINITIONS
+	LUA_LIB
+)
+list(APPEND THIRDPART_INC  lua-rapidjson/include)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${RAPIDJSON_SRC})
+#end lua-rapidjson
+
 
 if (USING_LUAJIT)
 	
@@ -108,6 +123,10 @@ set ( XLUA_CORE
     xlua.c
 )
 
+if (NOT USING_LUAJIT)
+    list (APPEND XLUA_CORE memory_leak_checker.c)
+endif ( )
+
 macro(source_group_by_dir proj_dir source_files)
     if(MSVC OR APPLE)
         get_filename_component(sgbd_cur_dir ${proj_dir} ABSOLUTE)
@@ -142,7 +161,7 @@ if (APPLE)
         )
 		set_xcode_property (xlua IPHONEOS_DEPLOYMENT_TARGET "7.0")
     else ()
-        set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_32_64_BIT)")
+        set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_64_BIT)")
         add_library(xlua MODULE
             ${LUA_CORE}
             ${LUA_LIB}
@@ -154,6 +173,14 @@ if (APPLE)
         #set_target_properties ( xlua PROPERTIES FRAMEWORK TRUE )
         #set_target_properties ( xlua PROPERTIES MACOSX_RPATH TRUE )
     endif ()
+elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Switch")
+    add_library(xlua STATIC
+        ${LUA_CORE}
+        ${LUA_LIB}
+        ${XLUA_CORE}
+        ${THIRDPART_SRC}
+    )
+    target_compile_options(xlua PRIVATE -m64 -mcpu=cortex-a57+fp+simd+crypto+crc -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fPIC -fms-extensions)
 else ( )
     add_library(xlua SHARED
         ${LUA_CORE}
@@ -167,6 +194,14 @@ endif ( )
 if ( WIN32 AND NOT CYGWIN )
     target_compile_definitions (xlua PRIVATE LUA_BUILD_AS_DLL)
 endif ( )
+
+if (GC64 AND USING_LUAJIT)
+    target_compile_definitions (xlua PRIVATE LUAJIT_ENABLE_GC64)
+endif ()
+
+if (LUAC_COMPATIBLE_FORMAT AND NOT USING_LUAJIT)
+    target_compile_definitions (xlua PRIVATE LUAC_COMPATIBLE_FORMAT)
+endif ()
 
 set_property(
 	SOURCE ${LUA_SOCKET}
@@ -206,3 +241,4 @@ else ( )
         )
     endif()
 endif ( )
+

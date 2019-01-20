@@ -15,14 +15,12 @@ namespace Game
         private List<string> _searchPaths = new List<string>();
         private XLuaDelegate _luaDelegate;
         public LuaEnv LuaEnv { get { return _luaEnv; } }
-        [DoNotGen]
         public void Init()
         {
             _luaEnv = new LuaEnv();
-            _luaEnv.AddLoader(CustomLoader);
+            _luaEnv.AddLoader(CustomLoader);            
             LuaHelper.Init();
         }
-        [DoNotGen]
         public void Dispose()
         {
             if (_luaEnv != null)
@@ -41,12 +39,11 @@ namespace Game
                 }
             }
         }
-        [DoNotGen]
         public void AddLuaSearchPath(string path)
         {
             _searchPaths.Add(path);
         }
-        [DoNotGen]
+
         public bool HasScript(string viewName)
         {
             return _searchPaths.Exists(s => s.Equals(viewName));
@@ -84,6 +81,7 @@ namespace Game
             _luaDelegate.Init(luaMain);
             luaMain.Dispose();
         }
-    }
+     
+    }    
 
 }

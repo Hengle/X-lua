@@ -8,11 +8,13 @@ namespace Game
         private sealed class SendState : IDisposable
         {
             private MemoryStream m_Stream;
+            private BinaryWriter m_Writer;
             private bool m_Disposed;
 
             public SendState()
             {
                 m_Stream = new MemoryStream(DefaultBufferLength);
+                m_Writer = new BinaryWriter(m_Stream);
                 m_Disposed = false;
             }
 
@@ -23,7 +25,13 @@ namespace Game
                     return m_Stream;
                 }
             }
-
+            public BinaryWriter Writer
+            {
+                get
+                {
+                    return m_Writer;
+                }
+            }
             public void Reset()
             {
                 m_Stream.Position = 0L;
@@ -47,8 +55,10 @@ namespace Game
                 {
                     if (m_Stream != null)
                     {
+                        m_Writer.Close();
                         m_Stream.Dispose();
                         m_Stream = null;
+                        m_Writer = null;
                     }
                 }
 

@@ -633,10 +633,20 @@ namespace XLua
         }
 #endif
 
+#if !UNITY_SWITCH || UNITY_EDITOR
         [MonoPInvokeCallback(typeof(LuaCSFunction))]
         internal static int LoadSocketCore(RealStatePtr L)
         {
             return LuaAPI.luaopen_socket_core(L);
+        }
+#endif
+
+        [MonoPInvokeCallback(typeof(LuaCSFunction))]
+        internal static int LoadCS(RealStatePtr L)
+        {
+            LuaAPI.xlua_pushasciistring(L, LuaEnv.CSHARP_NAMESPACE);
+            LuaAPI.lua_rawget(L, LuaIndexes.LUA_REGISTRYINDEX);
+            return 1;
         }
 
         [MonoPInvokeCallback(typeof(LuaCSFunction))]
@@ -874,14 +884,14 @@ namespace XLua
                 string className = LuaAPI.lua_tostring(L, 1);
                 if (className.EndsWith("<>")) className = className.Substring(0, className.Length - 2);
                 Type genericDef = translator.FindType(className + "`" + (top - 1));
-                if (genericDef == null || !genericDef.IsGenericTypeDefinition)
+                if (genericDef == null || !genericDef.IsGenericTypeDefinition())
                 {
                     LuaAPI.lua_pushnil(L);
                 }
                 else
                 {
                     Type[] typeArguments = new Type[top - 1];
-                    for(int i = 2; i <= top; i++)
+                    for (int i = 2; i <= top; i++)
                     {
 
                         typeArguments[i - 2] = getType(L, translator, i);
@@ -1030,10 +1040,10 @@ namespace XLua
                     return LuaAPI.luaL_error(L, "xlua.private_accessible, can not find c# type");
                 }
 
-                while(type != null)
+                while (type != null)
                 {
                     translator.PrivateAccessible(L, type);
-                    type = type.BaseType;
+                    type = type.BaseType();
                 }
                 return 0;
             }
@@ -1139,7 +1149,7 @@ namespace XLua
                 translator.Get(L, LuaAPI.xlua_upvalueindex(1), out genericMethod);
                 int n = LuaAPI.lua_gettop(L);
                 Type[] typeArguments = new Type[n];
-                for(int i = 0; i < n; i++)
+                for (int i = 0; i < n; i++)
                 {
                     Type type = getType(L, translator, i + 1);
                     if (type == null)
@@ -1177,7 +1187,7 @@ namespace XLua
                 }
                 System.Collections.Generic.List<MethodInfo> matchMethods = new System.Collections.Generic.List<MethodInfo>();
                 var allMethods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
-                for(int i = 0; i < allMethods.Length; i++)
+                for (int i = 0; i < allMethods.Length; i++)
                 {
                     var method = allMethods[i];
                     if (method.Name == methodName && method.IsGenericMethodDefinition)
@@ -1222,6 +1232,12 @@ namespace XLua
             {
                 return LuaAPI.luaL_error(L, "c# exception in ReleaseCsObject: " + e);
             }
+        }
+
+        [MonoPInvokeCallback(typeof(LuaDLL.lua_CSFunction))]
+        public static int LoadRapidJson(System.IntPtr L)
+        {
+            return LuaAPI.luaopen_rapidjson(L);
         }
     }
 }

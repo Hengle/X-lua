@@ -8,13 +8,13 @@ namespace Game
         private sealed class ReceiveState : IDisposable
         {
             private MemoryStream m_Stream;
+            private BinaryReader m_Reader;
             private bool m_Disposed;
-            private bool m_HasHeader;
 
             public ReceiveState()
             {
                 m_Stream = new MemoryStream(DefaultBufferLength);
-                m_HasHeader = false;
+                m_Reader = new BinaryReader(m_Stream);
                 m_Disposed = false;
             }
 
@@ -25,24 +25,21 @@ namespace Game
                     return m_Stream;
                 }
             }
-
-            public bool HasHeader
+            public BinaryReader Reader
             {
                 get
                 {
-                    return m_HasHeader;
+                    return m_Reader;
                 }
             }
 
             public void PrepareForPacketHeader(int packetHeaderLength)
             {
-                m_HasHeader = true;
                 Reset(packetHeaderLength);
             }
 
             public void PrepareForPacket(int packetBodyLength)
             {
-                m_HasHeader = false; 
                 Reset(packetBodyLength);
             }
 
@@ -63,8 +60,10 @@ namespace Game
                 {
                     if (m_Stream != null)
                     {
+                        m_Reader.Close();
                         m_Stream.Dispose();
                         m_Stream = null;
+                        m_Reader = null;
                     }
                 }
 

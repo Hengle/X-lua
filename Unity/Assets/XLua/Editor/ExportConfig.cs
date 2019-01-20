@@ -24,8 +24,6 @@ public static class ExportConfig
         typeof(Action),
         typeof(Action<float>),
         typeof(Action<float, float>),
-        typeof(Action<ushort, byte[]>),
-        typeof(Action<NetworkChannel>),
     };
 
     [LuaCallCSharp]
@@ -37,7 +35,7 @@ public static class ExportConfig
         typeof(Predicate<int>),
         typeof(Comparison<int>),
         typeof(Func<int, int>),
-        typeof(Action<ushort, byte[]>),
+        typeof(Action<int, byte[]>),
         typeof(Action<NetworkChannel>),
 
         typeof(System.Object),

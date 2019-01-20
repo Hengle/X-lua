@@ -54,6 +54,7 @@ namespace Game
         void Update()
         {
             Manager.ResMgr.Update();
+            Manager.NetworkMgr.Update();
         }
 
         void OnDestroy()
@@ -63,5 +64,7 @@ namespace Game
             _managers.Clear();
             Instance = null;
         }
+
+
     }
 }

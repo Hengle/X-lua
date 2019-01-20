@@ -94,11 +94,11 @@ namespace Game
         /// </summary>
         /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        public void Update(float elapseSeconds, float realElapseSeconds)
+        public void Update()
         {
             foreach (KeyValuePair<string, NetworkChannel> networkChannel in m_NetworkChannels)
             {
-                networkChannel.Value.Update(elapseSeconds, realElapseSeconds);
+                networkChannel.Value.Update(Time.time, Time.realtimeSinceStartup);
             }
         }
 
@@ -205,13 +205,13 @@ namespace Game
             return false;
         }
 
-        private void OnNetworkChannelConnected(NetworkChannel networkChannel)
+        private void OnNetworkChannelConnected(NetworkChannel channel)
         {
             if (OnNetworkConnected != null)
             {
                 lock (OnNetworkConnected)
                 {
-                    OnNetworkConnected(networkChannel);
+                    OnNetworkConnected(channel);
                 }
             }
         }
@@ -222,7 +222,7 @@ namespace Game
             {
                 lock (OnNetworkClosed)
                 {
-                    OnNetworkClosed(networkChannel);
+                    //OnNetworkClosed(networkChannel);
                 }
             }
         }
@@ -233,7 +233,7 @@ namespace Game
             {
                 lock (OnNetworkMissHeartBeat)
                 {
-                    OnNetworkMissHeartBeat(networkChannel, missHeartBeatCount);
+                    //OnNetworkMissHeartBeat(networkChannel, missHeartBeatCount);
                 }
             }
         }

@@ -21,8 +21,8 @@ local function Init()
     Util.Myxpcall(InitModule)
     printcolor("orange", 'lua framework init successful.')
 
-    local UIMgr = require('Manager.UIManager')
-    Util.Myxpcall(UIMgr.Show, 'MJoystick.DlgJoystick')
+    --local UIMgr = require('Manager.UIManager')
+    --Util.Myxpcall(UIMgr.Show, 'MJoystick.DlgJoystick')
 
     Util.Myxpcall(TEST)
     --local demo = require "UIExample.UIDemo"

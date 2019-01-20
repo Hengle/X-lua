@@ -30,24 +30,37 @@ namespace Game
             private set;
         }
 
+        public bool HasReadHeader
+        {
+            get;
+            private set;
+        }
+
+
         public NetworkChannelHelper() { }
 
-        public virtual void DecodeHeader(Stream stream)
+        public virtual void DecodeHeader(BinaryReader reader)
         {
-            BinaryReader reader = new BinaryReader(stream);
             MsgType = reader.ReadInt32();
             MsgLength = reader.ReadInt32();
+            HasReadHeader = true;
         }
         /// <summary>
-        /// 打包协议
+        /// 解码协议
         /// </summary>
-        public virtual Protocol Decode(MemoryStream stream)
+        public virtual Protocol Decode(BinaryReader reader)
         {
-            BinaryReader reader = new BinaryReader(stream);
-            Protocol packet = new Protocol();
-            packet.WriteInt(MsgType);
-            packet.WriteBytes(reader.ReadBytes(MsgLength));
-            return packet;
+            HasReadHeader = false;
+            return new Protocol(MsgType, reader.ReadBytes(MsgLength));
+        }
+        /// <summary>
+        /// 编码协议
+        /// </summary>
+        public virtual void EnCode(BinaryWriter writer, Protocol protocol)
+        {
+            writer.Write(protocol.Type);
+            writer.Write(protocol.Msg.Length);
+            writer.Write(protocol.Msg, 0, protocol.Msg.Length);
         }
     }
 }
