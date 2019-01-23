@@ -5,6 +5,8 @@ class 字段顺序排列,则数据在json中也顺序排列
 借鉴M10项目
 --]]
 local Json = require('rapidjson')
+local pb = require "pb"
+local protoc = require "protoc"
 local Event = Event
 local GameEvent = GameEvent
 ---@type Game.NetworkManager

@@ -117,6 +117,7 @@ namespace XLua
 #endif
 
             AddBuildin("rapidjson", StaticLuaCallbacks.LoadRapidJson);
+            AddBuildin("pb", StaticLuaCallbacks.LoadPb);
             AddBuildin("CS", StaticLuaCallbacks.LoadCS);
 
             LuaAPI.lua_newtable(rawL); //metatable of indexs and newindexs functions

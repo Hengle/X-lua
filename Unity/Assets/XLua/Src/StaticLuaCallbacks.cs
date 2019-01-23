@@ -1239,5 +1239,10 @@ namespace XLua
         {
             return LuaAPI.luaopen_rapidjson(L);
         }
+        [MonoPInvokeCallback(typeof(LuaDLL.lua_CSFunction))]
+        public static int LoadPb(System.IntPtr L)
+        {
+            return LuaAPI.luaopen_pb(L);
+        }
     }
 }
