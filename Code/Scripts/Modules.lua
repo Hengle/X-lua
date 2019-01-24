@@ -1,5 +1,5 @@
 return {
     "Manager.CfgManager",
-    "Manager.NetworkManager",
+    --"Manager.NetworkManager",
     "Manager.UIManager",
 }

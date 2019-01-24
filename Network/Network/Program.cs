@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using LitJson;
+using System.IO;
 
 namespace Network
 {
@@ -14,10 +15,14 @@ namespace Network
         private static int myProt = 8686;   //端口 
         static Socket serverSocket;
         static Random random = new Random(321561);
+        static bool isJson = false;
+
+
         static void Main(string[] args)
         {
             //服务器IP地址 
-            IPAddress ip = IPAddress.Parse("192.168.50.90");
+            //IPAddress ip = IPAddress.Parse("192.168.50.90");
+            IPAddress ip = IPAddress.Parse("192.168.0.132");
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(new IPEndPoint(ip, myProt));  //绑定IP地址：端口 
             serverSocket.Listen(10);    //设定最多10个排队连接请求      
@@ -76,6 +81,27 @@ namespace Network
                     //sendMsg.WriteBytes(msg);
                     //serverSocket.Send(sendMsg.ToBytes());
                     //Console.WriteLine("[{0}]{1} {2}", DateTime.Now, type, json);
+
+
+                    Person person = new Person()
+                    {
+                        name = "大傻",
+                        age = random.Next(1, 123456),
+                        address = "天宫地府",
+                    };
+                    person.contacts.AddRange(new List<Phone>()
+                    {
+                         new Phone(){ name = "黑社会", phonenumber = 110},
+                         new Phone(){ name = "警察", phonenumber = 120},
+                         new Phone(){ name = "土匪", phonenumber = 321},
+                    });
+                    var stream = new MemoryStream();
+                    ProtoBuf.Serializer.Serialize<Person>(stream, person);
+                    Protocol sendMsg = new Protocol();
+                    int type = random.Next(1, 100);
+                    sendMsg.WriteInt(type);
+                    sendMsg.WriteBytes(stream.GetBuffer());
+                    serverSocket.Send(sendMsg.ToBytes());
                 }
                 catch (ObjectDisposedException)
                 {
@@ -108,14 +134,28 @@ namespace Network
                     int receiveNumber = serverSocket.Receive(result);
                     if (receiveNumber > 0)
                     {
+
                         Console.WriteLine("Send:{0}\nReceive:{1}", serverSocket.SendBufferSize, serverSocket.ReceiveBufferSize);
-                        Protocol protocol = new Protocol(result);
-                        int type = protocol.ReadInt();
-                        int length = protocol.ReadInt();
-                        byte[] msg = protocol.ReadBytes(length);
-                        Console.WriteLine("{0}-{1} + msg:{2} - real:{3}", type, length, msg.Length, receiveNumber);
-                        string content = Encoding.UTF8.GetString(msg, 0, length);
-                        Console.WriteLine("[Receive:{0}]{1}-{2}", serverSocket.RemoteEndPoint.ToString(), type, content);
+                        if (isJson)
+                        {
+                            Protocol protocol = new Protocol(result);
+                            int type = protocol.ReadInt();
+                            int length = protocol.ReadInt();
+                            byte[] msg = protocol.ReadBytes(length);
+                            Console.WriteLine("{0}-{1} + msg:{2} - real:{3}", type, length, msg.Length, receiveNumber);
+                            string content = Encoding.UTF8.GetString(msg, 0, length);
+                            Console.WriteLine("[Receive:{0}]{1}-{2}", serverSocket.RemoteEndPoint.ToString(), type, content);
+                        }
+                        else
+                        {
+                            Protocol protocol = new Protocol(result);
+                            int type = protocol.ReadInt();
+                            int length = protocol.ReadInt();
+                            byte[] msg = protocol.ReadBytes(length);
+                            Person person = ProtoBuf.Serializer.Deserialize<Person>(new MemoryStream(msg));
+                            Console.WriteLine("{0}\tname:{1}\tage:{2}\taddress:{3}\tcontacts:{4}", "Person", person.name, person.age,
+                                person.address, person.contacts.Count);
+                        }
                     }
                 }
                 catch (Exception ex)

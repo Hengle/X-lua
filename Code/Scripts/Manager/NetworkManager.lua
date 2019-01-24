@@ -20,16 +20,17 @@ local channel
 
 ---@param channel Game.NetworkChannel
 local onChannelConnected = function(channel)
-    printyellow(channel.Name, "正常连接到服务器")
+    printcolor('orange', channel.Name .. "正常连接到服务器",
+            channel.RemoteIPAddress, channel.RemotePort)
 end
 ---@param channel Game.NetworkChannel
 local onChannelClosed = function(channel)
-    printyellow(channel.Name, "Channel Closed")
+    printcolor('orange', channel.Name .. "Channel Closed")
 end
 ---@param channel Game.NetworkChannel
 ---@param count number
 local onMissHeartBeat = function(channel, count)
-    printyellow(channel.Name, 'Miss Heart Beat', count)
+    printcolor('orange', channel.Name .. 'Miss Heart Beat', count)
 end
 local onProtocolError = function(msg)
 
@@ -37,41 +38,33 @@ end
 ---@param type int
 ---@param msg byte[]
 local onReceive = function(type, data)
-    local msg = Json.decode(data)
-    printt(msg, type)
+    local msg = pb.decode("Person", data)
+    printyellow(dump(msg, 'Person'))
 end
 
 local function SecondUpdate()
-    local t = { a = Mathf.Random(-10, -1), b = Mathf.Random(1, 10) }
-    channel:Send(Mathf.Random(1, 100), Json.encode(t))
+
 end
 
-local ip = "192.168.50.90"
+--local ip = "192.168.50.90"
+local ip = "192.168.0.132"
 local port = 8686
 
 function NetworkManager.Init()
-    Network.OnNetworkConnected = onChannelConnected
-    Network.OnNetworkClosed = onChannelClosed
-    Network.OnNetworkMissHeartBeat = onMissHeartBeat
-
     channel = Network:CreateNetworkChannel("NetworkChannel")
     channel.NetworkReceive = onReceive
     channel.NetworkChannelConnected = onChannelConnected
+    channel.NetworkChannelClosed = onChannelClosed
+    channel.NetworkChannelMissHeartBeat = onMissHeartBeat
     channel:Connect(ip, port)
 
     local secondTimer = Timer:new(SecondUpdate, 1, -1, false)
     secondTimer:Start()
-
-    local t = { 1, 2, 3, 'nil', 4, 5 }
-    local json = Json.encode(t)
-    printyellow(json)
-    local t1 = Json.decode(json)
-    printyellow(dump(t1, "json"))
 end
 
 ---@param msg table
 function NetworkManager.Send(type, msg)
-    local encode = Json.encode(msg)
+    local encode = pb.encode("Person", msg)
     channel:Send(type, encode)
 end
 
@@ -80,3 +73,34 @@ function NetworkManager.Destroy()
 end
 
 return NetworkManager
+
+
+---lua-protobuf
+--assert(protoc:load([[
+--    message Phone {
+--      optional string name        = 1;
+--      optional int64  phonenumber = 2;
+--    }
+--    message Person {
+--      optional string name     = 1;
+--      optional int32  age      = 2;
+--      optional string address  = 3;
+--      repeated Phone  contacts = 4;
+--    }
+--    ]]))
+--
+--local data = {
+--    name = "ilse",
+--    age = 18,
+--    address = "黄河大道西",
+--    contacts = {
+--        { name = "alice", phonenumber = 12312341234 },
+--        { name = "bob", phonenumber = 45645674567 }
+--    }
+--}
+---Json
+--local t = { 1, 2, 3, 'nil', 4, 5 }
+--local json = Json.encode(t)
+--printyellow(json)
+--local t1 = Json.decode(json)
+--printyellow(dump(t1, "json"))

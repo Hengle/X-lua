@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using UnityEngine;
 
 namespace Game
@@ -27,6 +28,7 @@ namespace Game
         /// </summary>
         IPv6,
     }
+
 
     public partial class NetworkChannel : INetworkChannel, IDisposable
     {
@@ -57,9 +59,10 @@ namespace Game
         public Action<NetworkChannel> NetworkChannelClosed;
         public Action<NetworkChannel, int> NetworkChannelMissHeartBeat;
         public Action<NetworkChannel, NetworkErrorCode, string> NetworkChannelError;
-        public Action<int, string> NetworkReceive;
+        public Action<int, object> NetworkReceive;
 
-        private bool m_trigger = false;
+        private bool m_IsJson = false;
+
 
         /// <summary>
         /// 初始化网络频道的新实例。
@@ -375,46 +378,54 @@ namespace Game
                 //转发至Lua层
                 Protocol packet = m_ReceivePacketPool.Dequeue();
                 if (NetworkReceive != null)
-                    NetworkReceive(packet.Type, 
-                        System.Text.Encoding.UTF8.GetString(packet.Msg, 0, packet.Msg.Length));
-                else
                 {
-                    switch (packet.Type)
-                    {
-                        case ChannelConnectedState:
-                            NetworkChannelConnected(this);
-                            break;
-                        case ChannelClosedState:
-                            NetworkChannelClosed(this);
-                            break;
-                        default:
-                            Debug.LogError(Name + "无法将消息转发至lua层");
-                            break;
-                    }
-                }
-            }
 
-            if (m_HeartBeatInterval > 0f)
-            {
-                bool sendHeartBeat = false;
-                int missHeartBeatCount = 0;
-                lock (m_HeartBeatState)
-                {
-                    m_HeartBeatState.HeartBeatElapseSeconds += realElapseSeconds;
-                    if (m_HeartBeatState.HeartBeatElapseSeconds >= m_HeartBeatInterval)
+                    if (packet.Type > 0)
                     {
-                        sendHeartBeat = true;
-                        missHeartBeatCount = m_HeartBeatState.MissHeartBeatCount;
-                        m_HeartBeatState.HeartBeatElapseSeconds = 0f;
-                        m_HeartBeatState.MissHeartBeatCount++;
+                        if (m_IsJson)
+                            NetworkReceive(packet.Type, Encoding.UTF8.GetString(packet.Msg, 0, packet.Msg.Length));
+                        else
+                            NetworkReceive(packet.Type, packet.Msg);
                     }
-                }
-
-                if (sendHeartBeat && SendHeartBeat())
-                {
-                    if (missHeartBeatCount > 0 && NetworkChannelMissHeartBeat != null)
+                    else
                     {
-                        NetworkChannelMissHeartBeat(this, missHeartBeatCount);
+                        switch (packet.Type)
+                        {
+                            case ChannelConnectedState:
+                                NetworkChannelConnected(this);
+                                break;
+                            case ChannelClosedState:
+                                NetworkChannelClosed(this);
+                                break;
+                            default:
+                                Debug.LogError(Name + "无法将消息转发至lua层");
+                                break;
+                        }
+                    }
+
+                    if (m_HeartBeatInterval > 0f)
+                    {
+                        bool sendHeartBeat = false;
+                        int missHeartBeatCount = 0;
+                        lock (m_HeartBeatState)
+                        {
+                            m_HeartBeatState.HeartBeatElapseSeconds += realElapseSeconds;
+                            if (m_HeartBeatState.HeartBeatElapseSeconds >= m_HeartBeatInterval)
+                            {
+                                sendHeartBeat = true;
+                                missHeartBeatCount = m_HeartBeatState.MissHeartBeatCount;
+                                m_HeartBeatState.HeartBeatElapseSeconds = 0f;
+                                m_HeartBeatState.MissHeartBeatCount++;
+                            }
+                        }
+
+                        if (sendHeartBeat && SendHeartBeat())
+                        {
+                            if (missHeartBeatCount > 0 && NetworkChannelMissHeartBeat != null)
+                            {
+                                NetworkChannelMissHeartBeat(this, missHeartBeatCount);
+                            }
+                        }
                     }
                 }
             }
@@ -548,6 +559,7 @@ namespace Game
         /// <param name="packet">要发送的消息包.直接在lua层封装.</param>
         public void Send(int type, byte[] msg)
         {
+            m_IsJson = false;
             if (m_Socket == null)
             {
                 string errorMessage = "You must connect first.";
@@ -577,9 +589,13 @@ namespace Game
                 m_SendPacketPool.Enqueue(new Protocol(type, msg));
             }
         }
+        /// <summary>
+        /// Json形式发送数据
+        /// </summary>
         public void Send(int type, string msg)
         {
             Send(type, System.Text.Encoding.UTF8.GetBytes(msg));
+            m_IsJson = true;
         }
 
         /// <summary>

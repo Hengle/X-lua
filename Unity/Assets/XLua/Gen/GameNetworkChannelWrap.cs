@@ -722,7 +722,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 Game.NetworkChannel gen_to_be_invoked = (Game.NetworkChannel)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.NetworkReceive = translator.GetDelegate<System.Action<int, string>>(L, 2);
+                gen_to_be_invoked.NetworkReceive = translator.GetDelegate<System.Action<int, object>>(L, 2);
             
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);

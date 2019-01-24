@@ -2,6 +2,8 @@ using Game.Platform;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -9,11 +11,13 @@ namespace Game
 {
     public class Main : MonoBehaviour
     {
+        public string file = "hotfix.txt";
+
         public static Main Instance { get; private set; }
 
         List<IManager> _managers = new List<IManager>()
         {
-             Manager.NetworkMgr,
+             //Manager.NetworkMgr,
              Manager.ResMgr,
              Manager.LuaMgr,
             //UpdateManager.Instance,
@@ -35,6 +39,8 @@ namespace Game
 
             Interface.Create();
             Interface.Instance.Init();
+
+            StartDownload();
         }
 
         IEnumerator Start()
@@ -65,6 +71,53 @@ namespace Game
             Instance = null;
         }
 
+        void StartDownload()
+        {
+            string uri = "http://localhost:8081/";
+            string save = Application.dataPath + "/../" + file;
+            Download(uri + file, Application.dataPath + "/../" + file);
+            var builder = new System.Text.StringBuilder();
+            for (int i = 0; i < 1024 * 1024 * 20; i++)
+            {
+                builder.AppendLine("0");
+            }
+            //File.WriteAllText(Application.dataPath + "/../" + "TEST.txt", builder.ToString());
+        }
 
+        void Download(string uri, string file)
+        {
+            HttpWebRequest httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(new System.Uri(uri));
+            httpWebRequest.Timeout = 2 * 60 * 1000;
+            httpWebRequest.KeepAlive = false;
+            HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            byte[] buffer = new byte[4096];
+            using (FileStream fs = new FileStream(file, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (Stream stream = httpWebResponse.GetResponseStream())
+            {
+                int readTotalSize = 0;
+                int size = stream.Read(buffer, 0, buffer.Length);
+                while (size > 0)
+                {
+                    //只将读出的字节写入文件
+                    fs.Write(buffer, 0, size);
+                    readTotalSize += size;
+                    size = stream.Read(buffer, 0, buffer.Length);
+                }
+            }
+            httpWebRequest.Abort();
+            httpWebRequest = null;
+            httpWebResponse.Close();
+            httpWebResponse = null;
+
+            if (File.Exists(file))
+            {
+                string txt = File.ReadAllText(file);
+                Debug.LogError(txt);
+            }
+            else
+            {
+                Debug.LogError("Not Found File " + file);
+            }
+        }
     }
 }

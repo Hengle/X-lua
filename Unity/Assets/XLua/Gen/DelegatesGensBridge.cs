@@ -151,7 +151,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp6(int p0, string p1)
+		public void __Gen_Delegate_Imp6(int p0, object p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -159,9 +159,9 @@ namespace XLua
 #endif
                 RealStatePtr L = luaEnv.rawL;
                 int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
-                
+                ObjectTranslator translator = luaEnv.translator;
                 LuaAPI.xlua_pushinteger(L, p0);
-                LuaAPI.lua_pushstring(L, p1);
+                translator.PushAny(L, p1);
                 
                 PCall(L, 2, 0, errFunc);
                 
@@ -1031,9 +1031,9 @@ namespace XLua
 			    return new System.Action<Game.NetworkChannel, Game.NetworkErrorCode, string>(__Gen_Delegate_Imp5);
 			}
 		
-		    if (type == typeof(System.Action<int, string>))
+		    if (type == typeof(System.Action<int, object>))
 			{
-			    return new System.Action<int, string>(__Gen_Delegate_Imp6);
+			    return new System.Action<int, object>(__Gen_Delegate_Imp6);
 			}
 		
 		    if (type == typeof(System.AsyncCallback))

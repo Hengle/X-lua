@@ -52,7 +52,7 @@ namespace Game
         /// 网络心跳包丢失事件。
         /// </summary>
         public Action<NetworkChannel, int> OnNetworkMissHeartBeat;
-        
+
         private Action<NetworkChannel, NetworkErrorCode, string> m_NetworkErrorEventHandler;
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Game
             {
                 lock (OnNetworkClosed)
                 {
-                    //OnNetworkClosed(networkChannel);
+                    OnNetworkClosed(networkChannel);
                 }
             }
         }
@@ -233,7 +233,7 @@ namespace Game
             {
                 lock (OnNetworkMissHeartBeat)
                 {
-                    //OnNetworkMissHeartBeat(networkChannel, missHeartBeatCount);
+                    OnNetworkMissHeartBeat(networkChannel, missHeartBeatCount);
                 }
             }
         }
