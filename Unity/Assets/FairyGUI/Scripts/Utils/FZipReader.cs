@@ -5,12 +5,12 @@ namespace FairyGUI.Utils
 	/// <summary>
 	/// 一个简单的Zip文件处理类。不处理解压。
 	/// </summary>
-	public class ZipReader
+	public class FZipReader
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public class ZipEntry
+		public class FZipEntry
 		{
 			public string name;
 			public int compress;
@@ -30,7 +30,7 @@ namespace FairyGUI.Utils
 		/// 
 		/// </summary>
 		/// <param name="stream"></param>
-		public ZipReader(byte[] data)
+		public FZipReader(byte[] data)
 		{
 			_stream = new ByteBuffer(data);
 			_stream.littleEndian = true;
@@ -54,7 +54,7 @@ namespace FairyGUI.Utils
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public bool GetNextEntry(ZipEntry entry)
+		public bool GetNextEntry(FZipEntry entry)
 		{
 			if (_index >= _entryCount)
 				return false;
@@ -101,7 +101,7 @@ namespace FairyGUI.Utils
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		public byte[] GetEntryData(ZipEntry entry)
+		public byte[] GetEntryData(FZipEntry entry)
 		{
 			byte[] data = new byte[entry.size];
 			if (entry.size > 0)

@@ -46,9 +46,8 @@ namespace Game
         IEnumerator Start()
         {
             //yield return GameManager.Instance.InitSDK();
-            //yield return GameManager.Instance.DowmloadUnZip();
-            //yield return GameManager.Instance.UnZipFile();
-            //yield return GameManager.Instance.UpdateAppVersion();
+            //yield return GameManager.Instance.CheckUnzipData();
+            //yield return GameManager.Instance.CheckVersion();
             //yield return GameManager.Instance.UpdateResVersion();
             //yield return GameManager.Instance.GetServerList();
             yield return GameManager.Instance.LoadResource();

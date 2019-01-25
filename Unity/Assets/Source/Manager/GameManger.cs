@@ -160,7 +160,7 @@ namespace Game
             Manager.LuaMgr.AddLuaSearchPath(AppConst.LuaDir);
             Manager.LuaMgr.StartGame();
 
-            UpdateManager.Instance.SetProgressValue("开始游戏", 1f);
+            SetProgressValue("开始游戏", 1f);
         }
 
         void RefreshLaunch(LaunchState state, float value)
@@ -171,7 +171,13 @@ namespace Game
                 Debug.LogErrorFormat("_launcher[{0}] = null ~", state.ToString());
                 return;
             }
-            UpdateManager.Instance.SetProgressValue(name, value);
+            SetProgressValue(name, value);
+        }
+
+
+        void SetProgressValue(string name, float value)
+        {
+
         }
     }
 }
