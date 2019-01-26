@@ -352,8 +352,8 @@ namespace Flux
     //		private Transform _transform = null;
     //		public Transform Transform { get { return _transform; } }
     //
-    //		private Transform _parent = null;
-    //		public Transform Parent { get { return _parent; } }
+    //		private Transform _updater = null;
+    //		public Transform Parent { get { return _updater; } }
     //
     //		private Vector3 _localPosition;
     //		public Vector3 LocalPosition { get { return _localPosition; } }
@@ -371,7 +371,7 @@ namespace Flux
     //		public TransformSnapshot( Transform transform )
     //		{
     //			_transform = transform;
-    //			_parent = _transform.parent;
+    //			_updater = _transform.parent;
     //			_localPosition = _transform.localPosition;
     //			_localRotation = _transform.localRotation;
     //			_localScale = _transform.localScale;
@@ -380,8 +380,8 @@ namespace Flux
     //		/// @brief Restores the transform state.
     //		public void Restore()
     //		{
-    //			if( _parent != _transform.parent )
-    //				_transform.parent = _parent;
+    //			if( _updater != _transform.parent )
+    //				_transform.parent = _updater;
     //			_transform.localRotation = _localRotation;
     //			_transform.localPosition = _localPosition;
     //			_transform.localScale = _localScale;

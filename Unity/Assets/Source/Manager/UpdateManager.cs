@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
+using System.Threading;
 using UnityEngine;
 
 namespace Game
@@ -11,24 +13,44 @@ namespace Game
     /// 游戏热更新管理器
     /// 注:必须在资源管理器初始化完毕,确保能加载AB资源
     /// </summary>
-    public class UpdateManager : IManager
+    public partial class UpdateManager : IManager
     {
-        public string LocalResVersion { get { return _localResVersion; } }
-        public string LocalAppVersion { get { return _localAppVersion; } }
-        public string RemoteResVersion { get { return _remoteResVersion; } }
-        public string RemoteAppVersion { get { return _remoteAppVersion; } }
+        public int LocalResVersion { get { return _localResVersion; } }
+        public int LocalAppVersion { get { return _localAppVersion; } }
+        public int RemoteResVersion { get { return _remoteResVersion; } }
+        public int RemoteAppVersion { get { return _remoteAppVersion; } }
 
+        private string _localVersion;
+        private string _remoteVersion;
 
-        private string _localResVersion;
-        private string _localAppVersion;
-        private string _remoteResVersion;
-        private string _remoteAppVersion;
+        private int _localResVersion;
+        private int _localAppVersion;
+        private int _remoteResVersion;
+        private int _remoteAppVersion;
+        /// <summary>
+        /// 单位字节
+        /// </summary>
         private long _downloadSize = 0;
+        /// <summary>
+        /// 单位字节
+        /// </summary>
         private long _totalDownloadSize = 0;
 
-        private Dictionary<string, AssetInfo> _localMD5Table = new Dictionary<string, AssetInfo>();
-        private Dictionary<string, AssetInfo> _remoteMD5Table = new Dictionary<string, AssetInfo>();
-        private HashSet<string> _hasDownload = new HashSet<string>();
+
+        private List<string> _downloadList = new List<string>();
+        private List<string> _redownloadList = new List<string>();
+
+        private readonly ConcurrentQueue<Action> _taskCompleted = new ConcurrentQueue<Action>();
+        private ConcurrentQueue<DownloadTask> _taskQueue = new ConcurrentQueue<DownloadTask>();
+
+        private Dictionary<string, AssetInfo> _localMD5Table;
+        private Dictionary<string, AssetInfo> _remoteMD5Table;
+        /// <summary>
+        /// 当前版本下,持续化目录下载的资源
+        /// </summary>
+        private HashSet<string> _hasDownload;
+
+        private string _urlRoot = "http://localhost:8086/";
 
         /// <summary>
         /// 格式:a.r.t;
@@ -36,7 +58,7 @@ namespace Game
         /// r:资源版本号
         /// t:当前版本资源构建时间,yymmddhh年月日时
         /// </summary>
-        private string _resVersionFile = "version.txt";
+        private readonly string _resVersionFile = "version.txt";
         /// <summary>
         /// 资源版本信息记录格式:path,md5,pathtype,size
         /// path:资源相对路径
@@ -44,15 +66,20 @@ namespace Game
         /// pathtype:路径类型.r:流目录[只读];rw:持续化目录[读写]
         /// size:文件大小,单位字节
         /// </summary>
-        private string _resMD5File = "resmd5.txt";
+        private readonly string _resMD5File = "resmd5.txt";
         /// <summary>
         /// 当前已下载资源名称,中断后不重复下载
         /// </summary>
-        private string _hasDownloadFile = "hasdownload.txt";
-        private string _urlRoot = "http://localhost:8086/";
+        private readonly string _hasDownloadFile = "hasdownload.txt";
+        private readonly object _obj = new object();
+        private readonly int _threadNum = 5;
 
-        private bool _downloadOK = true;
-
+        /// <summary>
+        /// 下载完毕
+        /// </summary>
+        private bool _downloadOver = true;
+        private int _overThreadNum;
+        public bool HasdownloadFile { get { return File.Exists(Util.DataPath + _hasDownloadFile); } }
 
         public void Init()
         {
@@ -65,20 +92,80 @@ namespace Game
 
         public void Update()
         {
-
+            while (true)
+            {
+                Action onComplete;
+                if (_taskCompleted.TryDequeue(out onComplete))
+                    onComplete();
+                else
+                    break;
+            }
         }
 
-        public bool HasdownloadFile { get { return File.Exists(Util.DataPath + _hasDownloadFile); } }
         public IEnumerator CheckVersion()
         {
-            string path = Util.DataPath + _resVersionFile;
+            //#if UNITY_EDITOR
+            //            yield return null;
+            //#endif
+            _localVersion = LoadLocalFile(_resVersionFile);
+            string[] nodes = _localVersion.Split(",".ToCharArray());
+            _localAppVersion = Convert.ToInt32(nodes[0]);
+            _localResVersion = Convert.ToInt32(nodes[1]);
 
-            string version = File.ReadAllText(path);
-            string[] nodes = version.Split(",".ToCharArray());
-            _localAppVersion = nodes[0];
-            _localResVersion = nodes[1];
-            yield return DwonloadRemoteVersion("");
+            _downloadOver = false;
+            for (int i = 0; !_downloadOver && i < 3; i++)
+                yield return DwonloadRemoteVersion();
+            if (!_downloadOver)
+            {
+                Debug.LogError(_resVersionFile + "下载失败!");
+                yield break;
+            }
+
+            if (_localAppVersion < _remoteAppVersion)
+            {
+                //1.直接下载,退出安装App
+                //2.给定链接去下载安装App
+                yield break;
+            }
+
+            if (_localResVersion >= _remoteResVersion)
+                yield break;
+
+            _localMD5Table = PaseMD5Table(LoadLocalFile(_resMD5File));
+
+            _downloadOver = false;
+            for (int i = 0; !_downloadOver && i < 3; i++)
+                yield return DwonloadRemoteMD5Table();
+            if (!_downloadOver)
+            {
+                Debug.LogError(_resMD5File + "下载失败!");
+                yield break;
+            }
+            string hasDownloadText = LoadLocalFile(_hasDownloadFile);
+            string[] files = hasDownloadText.Split("\r\n".ToCharArray());
+            _hasDownload = new HashSet<string>(files);
+
+            _downloadOver = false;
+            DeleteUselessFiles();
+            CollectDownloadList();
+            if (!_downloadOver)
+            {
+                //移动网络时,大于10MB提示是否直接下载
+                if (_totalDownloadSize > 10485760)
+                {
+                    yield return BeginDownloadAssets();
+                }
+                else
+                {
+                    yield return BeginDownloadAssets();
+                }
+            }
+
+            SaveTableFile(_hasDownload, Util.DataPath + _hasDownloadFile);
+            SaveTableFile(_remoteMD5Table.Values, Util.DataPath + _resMD5File);
+            File.WriteAllText(Util.DataPath + _resVersionFile, _remoteVersion);
         }
+
         IEnumerator BeginDownloadApplication()
         {
             yield return null;
@@ -87,10 +174,112 @@ namespace Game
         {
             ServicePointManager.DefaultConnectionLimit = 50;
 
-            yield return null;
+            Debug.Log("Begin Download Assets Time = " + Time.realtimeSinceStartup);
+            for (int i = 0; !_downloadOver && i < 3; i++)//可提供多路径下载
+            {
+                _taskQueue.Clear();
+                _redownloadList.Clear();
+                for (int j = 0; j < _downloadList.Count; j++)
+                {
+                    string file = _downloadList[j];
+                    string url = GetRemotePath(file);
+                    var remoteInfo = _remoteMD5Table[file];
+                    url += "?version=" + remoteInfo.MD5;
+                    DownloadTask task = new DownloadTask(url, remoteInfo, this);
+                    _taskQueue.Enqueue(task);
+                }
+
+                if (_taskQueue.Count > 0)
+                {
+                    _overThreadNum = 0;
+                    for (int k = 0; k < 5; ++k)
+                    {
+                        Thread thread = new Thread(DownloadThreadProc);
+                        thread.Name = "DownloadThread:" + k;
+                        thread.Start();
+                    }
+
+                    while (_overThreadNum < 5 || _taskCompleted.Count > 0)
+                        yield return null;
+                }
+
+                if (_redownloadList.Count > 0)
+                {
+                    _downloadList.Clear();
+                    _downloadList.AddRange(_redownloadList.ToArray());
+                }
+                else
+                {
+                    Debug.Log("End Download Assets Time = " + Time.realtimeSinceStartup);
+                    _downloadOver = true;
+                    //下载完毕
+
+                    yield break;
+                }
+            }
         }
 
+        IEnumerator DwonloadRemoteVersion()
+        {
+            string url = GetRemotePath(_resVersionFile);
+            using (WWW www = new WWW(url))
+            {
+                yield return www;
+                if (www.error != null)
+                {
+                    _downloadOver = false;
+                    yield break;
+                }
+                _remoteVersion = www.text.Trim();
+                string[] nodes = _remoteVersion.Split(",".ToCharArray());
+                _remoteAppVersion = Convert.ToInt32(nodes[0]);
+                _remoteResVersion = Convert.ToInt32(nodes[1]);
+            }
+            _downloadOver = true;
+        }
+        IEnumerator DwonloadRemoteMD5Table()
+        {
+            string url = GetRemotePath(_resMD5File);
+            using (WWW www = new WWW(url))
+            {
+                yield return www;
+                if (www.error != null)
+                {
+                    _downloadOver = false;
+                    yield break;
+                }
+                _remoteMD5Table = PaseMD5Table(www.text);
+            }
+            _downloadOver = true;
+        }
 
+        void DownloadThreadProc()
+        {
+            while (true)
+            {
+                DownloadTask task = null;
+                if (_taskQueue.TryDequeue(out task))
+                    task.BeginDownload();
+                else
+                    break;
+            }
+            lock (_obj)
+            {
+                _overThreadNum++;
+            }
+        }
+
+        string GetRemotePath(string file)
+        {
+#if UNITY_ANDROID
+            string path = string.Format("{0}android/{1}", _urlRoot, file);
+#elif UNITY_IPHONE
+            string path = string.Format("{0}ios/{1}", _urlRoot, file);
+#else
+            string path = "";
+#endif
+            return path;
+        }
         string LoadLocalFile(string localFile)
         {
             string file = Util.DataPath + localFile;
@@ -99,7 +288,7 @@ namespace Game
             {
                 content = File.ReadAllText(file);
                 if (!string.IsNullOrEmpty(content))
-                    return content.Trim();
+                    return content;
             }
             catch (Exception e)
             {
@@ -108,28 +297,78 @@ namespace Game
             }
             return content;
         }
-        IEnumerator DwonloadRemoteVersion(string remoteFile)
+        Dictionary<string, AssetInfo> PaseMD5Table(string md5Table)
         {
-            string url = _urlRoot + remoteFile;
-            using (WWW www = new WWW(url))
+            var table = new Dictionary<string, AssetInfo>();
+            string[] lines = md5Table.Split("\r\n".ToCharArray());
+            char[] splits = new char[] { ';' };
+            for (int i = 0; i < lines.Length; i++)
             {
-                yield return www;
-                if (www.error != null)
+                string[] nodes = lines[i].Split(splits);
+                if (!table.ContainsKey(nodes[0]))
+                    table.Add(nodes[0], new AssetInfo()
+                    {
+                        RelPath = nodes[0],
+                        MD5 = nodes[1],
+                        Size = long.Parse(nodes[2]),
+                    });
+            }
+            return table;
+        }
+        void DeleteUselessFiles()
+        {
+            if (_remoteMD5Table.Count == 0)
+                return;
+
+            List<string> delete = new List<string>();
+            var iter = _localMD5Table.Keys.GetEnumerator();
+            while (iter.MoveNext())
+            {
+                string key = iter.Current;
+                if (_remoteMD5Table.ContainsKey(key))
+                    continue;
+
+                if (_hasDownload.Contains(key))
                 {
-                    _downloadOK = false;
-                    yield break;
+                    _hasDownload.Remove(key);
+                    delete.Add(key);
                 }
             }
+
+            for (int i = 0; i < delete.Count; i++)
+            {
+                string file = Util.DataPath + delete[i];
+                if (File.Exists(file))
+                    File.Delete(file);
+            }
         }
-
-
-        void SaveHasDownloadInfo()
+        void CollectDownloadList()
         {
+            _downloadList.Clear();
+            foreach (var key in _remoteMD5Table.Keys)
+            {
+                AssetInfo info = null;
+                _localMD5Table.TryGetValue(key, out info);
+                if (info != null)
+                {
+                    if (info.MD5.Equals(_remoteMD5Table[key].MD5))
+                        continue;
+                }
 
+                _downloadList.Add(key);
+                _totalDownloadSize += _remoteMD5Table[key].Size;
+            }
+
+            _downloadOver = _downloadList.Count == 0;
+            Debug.Log("DownloadList Count = " + _downloadList.Count + ", Size = " + _totalDownloadSize);
         }
-        void SaveMD5Table()
+        void SaveTableFile(IEnumerable enumerable, string path)
         {
-
+            var sb = new StringBuilder();
+            var iter = enumerable.GetEnumerator();
+            while (iter.MoveNext())
+                sb.AppendLine(iter.Current.ToString());
+            File.WriteAllText(path, sb.ToString());
         }
     }
 }

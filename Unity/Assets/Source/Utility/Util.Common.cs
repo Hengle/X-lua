@@ -13,7 +13,7 @@ namespace Game
         /// <summary>
         /// 计算字符串的MD5值
         /// </summary>
-        public static string md5(string source)
+        public static string ComputeMD5(string source)
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             byte[] data = System.Text.Encoding.UTF8.GetBytes(source);
@@ -32,7 +32,7 @@ namespace Game
         /// <summary>
         /// 计算文件的MD5值
         /// </summary>
-        public static string md5file(string file)
+        public static string ComputeMD5File(string file)
         {
             try
             {

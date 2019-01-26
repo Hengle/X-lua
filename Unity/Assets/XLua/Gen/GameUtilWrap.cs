@@ -99,7 +99,7 @@ namespace XLua.CSObjectWrap
                 {
                     string _source = LuaAPI.lua_tostring(L, 1);
                     
-                        string gen_ret = Game.Util.md5( _source );
+                        string gen_ret = Game.Util.ComputeMD5( _source );
                         LuaAPI.lua_pushstring(L, gen_ret);
                     
                     
@@ -124,7 +124,7 @@ namespace XLua.CSObjectWrap
                 {
                     string _file = LuaAPI.lua_tostring(L, 1);
                     
-                        string gen_ret = Game.Util.md5file( _file );
+                        string gen_ret = Game.Util.ComputeMD5File( _file );
                         LuaAPI.lua_pushstring(L, gen_ret);
                     
                     

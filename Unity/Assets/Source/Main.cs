@@ -17,10 +17,10 @@ namespace Game
 
         List<IManager> _managers = new List<IManager>()
         {
-             //Manager.NetworkMgr,
              Manager.ResMgr,
              Manager.LuaMgr,
-            //UpdateManager.Instance,
+             //Manager.UpdateMgr,
+             Manager.NetworkMgr,
             //GameManager.Instance,
         };
         void Awake()
@@ -40,7 +40,8 @@ namespace Game
             Interface.Create();
             Interface.Instance.Init();
 
-            StartDownload();
+            //StartDownload();
+            Debug.LogError(Application.persistentDataPath);
         }
 
         IEnumerator Start()
@@ -48,7 +49,6 @@ namespace Game
             //yield return GameManager.Instance.InitSDK();
             //yield return GameManager.Instance.CheckUnzipData();
             //yield return GameManager.Instance.CheckVersion();
-            //yield return GameManager.Instance.UpdateResVersion();
             //yield return GameManager.Instance.GetServerList();
             yield return GameManager.Instance.LoadResource();
 
@@ -59,6 +59,7 @@ namespace Game
         void Update()
         {
             Manager.ResMgr.Update();
+            Manager.UpdateMgr.Update();
             Manager.NetworkMgr.Update();
         }
 
@@ -82,7 +83,6 @@ namespace Game
             }
             //File.WriteAllText(Application.dataPath + "/../" + "TEST.txt", builder.ToString());
         }
-
         void Download(string uri, string file)
         {
             HttpWebRequest httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(new System.Uri(uri));
