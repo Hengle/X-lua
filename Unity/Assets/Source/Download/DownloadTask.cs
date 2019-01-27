@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Net;
 using UnityEngine;
 
@@ -16,54 +14,7 @@ namespace Game
         {
             return string.Format("{0},{1},{2}", RelPath, MD5, Size);
         }
-    }
-
-    internal sealed class ConcurrentQueue<T>
-    {
-        private readonly Queue<T> _inner = new Queue<T>();
-        private readonly object _obj = new object();
-
-        public bool TryDequeue(out T item)
-        {
-            lock (_obj)
-            {
-                if (_inner.Count == 0)
-                {
-                    item = default(T);
-                    return false;
-                }
-                item = _inner.Dequeue();
-                return true;
-            }
-        }
-
-        public void Enqueue(T item)
-        {
-            lock (_obj)
-            {
-                _inner.Enqueue(item);
-            }
-        }
-
-        public int Count
-        {
-            get
-            {
-                lock (_obj)
-                {
-                    return _inner.Count;
-                }
-            }
-        }
-
-        public void Clear()
-        {
-            lock (_obj)
-            {
-                _inner.Clear();
-            }
-        }
-    }
+    } 
 
     public partial class UpdateManager
     {
@@ -149,7 +100,7 @@ namespace Game
 
         private void AppendMd5File(AssetInfo remoteInfo)
         {
-            string file = Util.DataPath + _resMD5File;
+            string file = Util.DataPath + ConstSetting.ResMD5File;
             try
             {
                 using (var writer = new StreamWriter(new FileStream(file, FileMode.Append)))
@@ -164,7 +115,7 @@ namespace Game
         }
         private void AppendHasDownloadFile(string relPath)
         {
-            string file = Util.DataPath + _hasDownloadFile;
+            string file = Util.DataPath + ConstSetting.HasDownloadFile;
             try
             {
                 using (var writer = new StreamWriter(new FileStream(file, FileMode.Append)))

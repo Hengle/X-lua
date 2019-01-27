@@ -12,7 +12,7 @@ public class MyLoader : GLoader
     {
         int index = url.LastIndexOf('/') + 1;
         string path = url.Insert(index, "t_") + ".bundle";
-        Game.Manager.ResMgr.AddTask(path, (tex) =>
+        Game.Client.ResMgr.AddTask(path, (tex) =>
         {
             Texture content = tex as Texture;
             if (content != null)

@@ -144,7 +144,6 @@ namespace Game
             }
         }
 
-
         /// <summary>
         /// 网络可用
         /// </summary>
@@ -174,7 +173,7 @@ namespace Game
             {
                 var mr = gameObj.SetDefaultComponent<ManagedResource>();
                 mr.bundlename = path.Replace(@"\", @"/").ToLower();
-                Game.Manager.ResMgr.AddRefCount(mr.bundlename);
+                Client.ResMgr.AddRefCount(mr.bundlename);
 
                 var mc = gameObj.GetComponent<MecanimControl>();
                 if (mc != null)
@@ -193,7 +192,7 @@ namespace Game
                 var mr = gameObj.GetComponent<ManagedResource>();
                 if (mr != null)
                 {
-                    Game.Manager.ResMgr.AddRefCount(mr.bundlename);
+                    Game.Client.ResMgr.AddRefCount(mr.bundlename);
                 }
 
                 var mc = gameObj.GetComponent<MecanimControl>();

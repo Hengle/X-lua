@@ -122,7 +122,7 @@ public static class ExportConfig
 
 
         typeof(Util),
-        typeof(AppConst),
+        typeof(ConstSetting),
         typeof(LuaHelper),
         typeof(GameManager),
         typeof(LuaManager),
@@ -131,7 +131,6 @@ public static class ExportConfig
         typeof(SoundManager),
         typeof(NetworkManager),
         typeof(NetworkChannel),
-        typeof(Manager),
         typeof(Game.Platform.CustomInterface),
         typeof(Game.Platform.Interface),
 

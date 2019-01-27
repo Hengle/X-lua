@@ -25,10 +25,10 @@ namespace XLua.CSObjectWrap
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Init", _m_Init);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Dispose", _m_Dispose);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddLuaSearchPath", _m_AddLuaSearchPath);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddSearchPath", _m_AddSearchPath);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "HasScript", _m_HasScript);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Tick", _m_Tick);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "StartGame", _m_StartGame);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "InitScripts", _m_InitScripts);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "LuaEnv", _g_get_LuaEnv);
@@ -133,7 +133,7 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_AddLuaSearchPath(RealStatePtr L)
+        static int _m_AddSearchPath(RealStatePtr L)
         {
 		    try {
             
@@ -147,7 +147,7 @@ namespace XLua.CSObjectWrap
                 {
                     string _path = LuaAPI.lua_tostring(L, 2);
                     
-                    gen_to_be_invoked.AddLuaSearchPath( _path );
+                    gen_to_be_invoked.AddSearchPath( _path );
                     
                     
                     
@@ -217,7 +217,7 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_StartGame(RealStatePtr L)
+        static int _m_InitScripts(RealStatePtr L)
         {
 		    try {
             
@@ -230,7 +230,7 @@ namespace XLua.CSObjectWrap
                 
                 {
                     
-                    gen_to_be_invoked.StartGame(  );
+                    gen_to_be_invoked.InitScripts(  );
                     
                     
                     

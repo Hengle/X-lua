@@ -21,7 +21,7 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(Game.ResourceManager);
-			Utils.BeginObjectRegister(type, L, translator, 0, 13, 2, 1);
+			Utils.BeginObjectRegister(type, L, translator, 0, 14, 3, 1);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Init", _m_Init);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "IsLoading", _m_IsLoading);
@@ -36,10 +36,12 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CleanupBundlesInterval", _m_CleanupBundlesInterval);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CleanupBundlesNow", _m_CleanupBundlesNow);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Dispose", _m_Dispose);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "CheckUnzipData", _m_CheckUnzipData);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "MaxTaskCount", _g_get_MaxTaskCount);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "IsPreLoadDone", _g_get_IsPreLoadDone);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "Progress", _g_get_Progress);
             
 			Utils.RegisterFunc(L, Utils.SETTER_IDX, "MaxTaskCount", _s_set_MaxTaskCount);
             
@@ -491,6 +493,34 @@ namespace XLua.CSObjectWrap
             
         }
         
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_CheckUnzipData(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                Game.ResourceManager gen_to_be_invoked = (Game.ResourceManager)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    
+                        System.Collections.IEnumerator gen_ret = gen_to_be_invoked.CheckUnzipData(  );
+                        translator.PushAny(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
         
         
         
@@ -516,6 +546,20 @@ namespace XLua.CSObjectWrap
 			
                 Game.ResourceManager gen_to_be_invoked = (Game.ResourceManager)translator.FastGetCSObj(L, 1);
                 LuaAPI.lua_pushboolean(L, gen_to_be_invoked.IsPreLoadDone);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_Progress(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                Game.ResourceManager gen_to_be_invoked = (Game.ResourceManager)translator.FastGetCSObj(L, 1);
+                LuaAPI.xlua_pushinteger(L, gen_to_be_invoked.Progress);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }

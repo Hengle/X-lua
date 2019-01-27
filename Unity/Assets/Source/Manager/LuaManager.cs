@@ -39,7 +39,7 @@ namespace Game
                 }
             }
         }
-        public void AddLuaSearchPath(string path)
+        public void AddSearchPath(string path)
         {
             _searchPaths.Add(path);
         }
@@ -68,13 +68,13 @@ namespace Game
                 _luaEnv.FullGc();
             }
         }
-        public void StartGame()
+        public void InitScripts()
         {
             _luaEnv.DoString("require 'Main'", "Main", _luaEnv.Global);
             LuaTable luaMain = _luaEnv.Global.GetInPath<LuaTable>("Main");
             luaMain.Get<Action>("Init")();
 
-            var main = Main.Instance.gameObject;
+            var main = Client.Ins.gameObject;
             _luaDelegate = main.GetComponent<XLuaDelegate>();
             if (_luaDelegate == null)
                 _luaDelegate = main.AddComponent<XLuaDelegate>();

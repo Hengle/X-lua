@@ -32,8 +32,8 @@ namespace XLua.CSObjectWrap
 			    null, null, null);
 
 		    Utils.BeginClassRegister(type, L, __CreateInstance, 14, 4, 0);
-			Utils.RegisterFunc(L, Utils.CLS_IDX, "md5", _m_md5_xlua_st_);
-            Utils.RegisterFunc(L, Utils.CLS_IDX, "md5file", _m_md5file_xlua_st_);
+			Utils.RegisterFunc(L, Utils.CLS_IDX, "ComputeMD5", _m_ComputeMD5_xlua_st_);
+            Utils.RegisterFunc(L, Utils.CLS_IDX, "ComputeMD5File", _m_ComputeMD5File_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "StandardlizePath", _m_StandardlizePath_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "SetResolution", _m_SetResolution_xlua_st_);
             Utils.RegisterFunc(L, Utils.CLS_IDX, "ClearChild", _m_ClearChild_xlua_st_);
@@ -89,7 +89,7 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_md5_xlua_st_(RealStatePtr L)
+        static int _m_ComputeMD5_xlua_st_(RealStatePtr L)
         {
 		    try {
             
@@ -114,7 +114,7 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_md5file_xlua_st_(RealStatePtr L)
+        static int _m_ComputeMD5File_xlua_st_(RealStatePtr L)
         {
 		    try {
             

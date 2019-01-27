@@ -13,7 +13,7 @@ public class ManagedResource : MonoBehaviour
     public string bundlename;
     public void OnDestroy()
     {
-        Game.Manager.ResMgr.RemoveRefCount(bundlename);
+        Game.Client.ResMgr.RemoveRefCount(bundlename);
     }
 }
 
@@ -186,7 +186,7 @@ namespace Game
                 AssetBundle ab = obj as AssetBundle;
                 var pkg = UIPackage.AddPackage(ab);
                 pkg.LoadAllAssets();
-                Main.Instance.StartCoroutine(AsyncUnload(ab));
+                Client.Ins.StartCoroutine(AsyncUnload(ab));
             }
         }
         /// <summary>
@@ -396,7 +396,7 @@ namespace Game
             _currentTaskCount += 1;
             if ((task.loadType & (int)ResourceLoadType.LoadBundleFromWWW) != 0)
             {
-                Main.Instance.StartCoroutine(LoadBundleFromWWW(task));
+                Client.Ins.StartCoroutine(LoadBundleFromWWW(task));
             }
             else if ((task.loadType & (int)ResourceLoadType.LoadBundleFromFile) != 0)
             {
@@ -600,7 +600,7 @@ namespace Game
             {
                 _canStartCleanupMemeory = false;
                 _cleanupMemoryLastTime = Time.realtimeSinceStartup;
-                Main.Instance.StartCoroutine(CleanupMemoryAsync());
+                Client.Ins.StartCoroutine(CleanupMemoryAsync());
             }
         }
         private IEnumerator CleanupMemoryAsync()
@@ -740,7 +740,7 @@ namespace Game
         int _unzipProgress = 0;
         public IEnumerator CheckUnzipData()
         {
-            if (Manager.UpdateMgr.HasdownloadFile)
+            if (Client.UpdateMgr.HasdownloadFile)
                 yield break;
 
             string zip = Util.StreamingPath + "data.zip";

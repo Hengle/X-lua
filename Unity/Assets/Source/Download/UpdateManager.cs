@@ -51,26 +51,6 @@ namespace Game
         private HashSet<string> _hasDownload;
 
         private string _urlRoot = "http://localhost:8086/";
-
-        /// <summary>
-        /// 格式:a.r.t;
-        /// a:app版本号
-        /// r:资源版本号
-        /// t:当前版本资源构建时间,yymmddhh年月日时
-        /// </summary>
-        private readonly string _resVersionFile = "version.txt";
-        /// <summary>
-        /// 资源版本信息记录格式:path,md5,pathtype,size
-        /// path:资源相对路径
-        /// md5:文件MD5信息
-        /// pathtype:路径类型.r:流目录[只读];rw:持续化目录[读写]
-        /// size:文件大小,单位字节
-        /// </summary>
-        private readonly string _resMD5File = "resmd5.txt";
-        /// <summary>
-        /// 当前已下载资源名称,中断后不重复下载
-        /// </summary>
-        private readonly string _hasDownloadFile = "hasdownload.txt";
         private readonly object _obj = new object();
         private readonly int _threadNum = 5;
 
@@ -79,7 +59,7 @@ namespace Game
         /// </summary>
         private bool _downloadOver = true;
         private int _overThreadNum;
-        public bool HasdownloadFile { get { return File.Exists(Util.DataPath + _hasDownloadFile); } }
+        public bool HasdownloadFile { get { return File.Exists(Util.DataPath + ConstSetting.HasDownloadFile); } }
 
         public void Init()
         {
@@ -107,17 +87,20 @@ namespace Game
             //#if UNITY_EDITOR
             //            yield return null;
             //#endif
-            _localVersion = LoadLocalFile(_resVersionFile);
+            _localVersion = LoadLocalFile(ConstSetting.ResVersionFile);
             string[] nodes = _localVersion.Split(",".ToCharArray());
             _localAppVersion = Convert.ToInt32(nodes[0]);
             _localResVersion = Convert.ToInt32(nodes[1]);
 
             _downloadOver = false;
-            for (int i = 0; !_downloadOver && i < 3; i++)
+            for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResUrls.Count; i++)
+            {
+                _urlRoot = Client.ServerMgr.UpdateResUrls[i];
                 yield return DwonloadRemoteVersion();
+            }
             if (!_downloadOver)
             {
-                Debug.LogError(_resVersionFile + "下载失败!");
+                Debug.LogError(ConstSetting.ResVersionFile + "下载失败!");
                 yield break;
             }
 
@@ -131,17 +114,20 @@ namespace Game
             if (_localResVersion >= _remoteResVersion)
                 yield break;
 
-            _localMD5Table = PaseMD5Table(LoadLocalFile(_resMD5File));
+            _localMD5Table = PaseMD5Table(LoadLocalFile(ConstSetting.ResMD5File));
 
             _downloadOver = false;
-            for (int i = 0; !_downloadOver && i < 3; i++)
+            for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResUrls.Count; i++)
+            {
+                _urlRoot = Client.ServerMgr.UpdateResUrls[i];
                 yield return DwonloadRemoteMD5Table();
+            }
             if (!_downloadOver)
             {
-                Debug.LogError(_resMD5File + "下载失败!");
+                Debug.LogError(ConstSetting.ResMD5File + "下载失败!");
                 yield break;
             }
-            string hasDownloadText = LoadLocalFile(_hasDownloadFile);
+            string hasDownloadText = LoadLocalFile(ConstSetting.HasDownloadFile);
             string[] files = hasDownloadText.Split("\r\n".ToCharArray());
             _hasDownload = new HashSet<string>(files);
 
@@ -161,9 +147,9 @@ namespace Game
                 }
             }
 
-            SaveTableFile(_hasDownload, Util.DataPath + _hasDownloadFile);
-            SaveTableFile(_remoteMD5Table.Values, Util.DataPath + _resMD5File);
-            File.WriteAllText(Util.DataPath + _resVersionFile, _remoteVersion);
+            SaveTableFile(_hasDownload, Util.DataPath + ConstSetting.HasDownloadFile);
+            SaveTableFile(_remoteMD5Table.Values, Util.DataPath + ConstSetting.ResMD5File);
+            File.WriteAllText(Util.DataPath + ConstSetting.ResVersionFile, _remoteVersion);
         }
 
         IEnumerator BeginDownloadApplication()
@@ -175,8 +161,9 @@ namespace Game
             ServicePointManager.DefaultConnectionLimit = 50;
 
             Debug.Log("Begin Download Assets Time = " + Time.realtimeSinceStartup);
-            for (int i = 0; !_downloadOver && i < 3; i++)//可提供多路径下载
+            for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResUrls.Count; i++)
             {
+                _urlRoot = Client.ServerMgr.UpdateResUrls[i];
                 _taskQueue.Clear();
                 _redownloadList.Clear();
                 for (int j = 0; j < _downloadList.Count; j++)
@@ -221,7 +208,7 @@ namespace Game
 
         IEnumerator DwonloadRemoteVersion()
         {
-            string url = GetRemotePath(_resVersionFile);
+            string url = GetRemotePath(ConstSetting.ResVersionFile);
             using (WWW www = new WWW(url))
             {
                 yield return www;
@@ -239,7 +226,7 @@ namespace Game
         }
         IEnumerator DwonloadRemoteMD5Table()
         {
-            string url = GetRemotePath(_resMD5File);
+            string url = GetRemotePath(ConstSetting.ResMD5File);
             using (WWW www = new WWW(url))
             {
                 yield return www;

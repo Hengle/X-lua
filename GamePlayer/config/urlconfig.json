@@ -1,0 +1,10 @@
+{
+    "UpdateAppUrl": "http://xxdl.autopatch.173.com/xx/updateapp.txt",
+    "UpdateResUrls": [
+        "http://xxws.autopatch.173.com/xxx/",
+        "http://xxdl.autopatch.173.com/xxx/",
+        "http://120.132.45.44/xxx/"
+    ],
+    "AndroidServerListUrl": "http://xxws.autopatch.173.com/xx/updateapp.txt",
+    "IosServerListUrl": "http://xxdl.autopatch.173.com/xxx/updateapp.txt"
+}
