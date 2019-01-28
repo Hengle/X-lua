@@ -41,7 +41,7 @@ namespace XLua.CSObjectWrap
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "MaxTaskCount", _g_get_MaxTaskCount);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "IsPreLoadDone", _g_get_IsPreLoadDone);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "Progress", _g_get_Progress);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "PreloadPrograss", _g_get_PreloadPrograss);
             
 			Utils.RegisterFunc(L, Utils.SETTER_IDX, "MaxTaskCount", _s_set_MaxTaskCount);
             
@@ -553,13 +553,13 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_Progress(RealStatePtr L)
+        static int _g_get_PreloadPrograss(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
                 Game.ResourceManager gen_to_be_invoked = (Game.ResourceManager)translator.FastGetCSObj(L, 1);
-                LuaAPI.xlua_pushinteger(L, gen_to_be_invoked.Progress);
+                LuaAPI.lua_pushnumber(L, gen_to_be_invoked.PreloadPrograss);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }

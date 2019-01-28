@@ -32,8 +32,8 @@ namespace Game
         private string _serverList;
 
         public void Init() { }
-        public void Dispose() { }
-        public IEnumerator LoadServerList()
+        public void Dispose() { _config = null; }
+        public IEnumerator GetServerList()
         {
             string file = string.Format("{0}config/{1}", Util.DataPath, ConstSetting.UrlConfig);
             string json = File.ReadAllText(file);

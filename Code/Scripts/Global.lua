@@ -31,9 +31,9 @@ CSUtil = Game.Util
 AppConst = Game.AppConst
 LuaHelper = Game.LuaHelper
 Interface = Game.Platform.Interface
-ResMgr = Game.Manager.ResMgr
---SoundMgr = Game.Manager
---NetworkMgr = Game.Manager.Instance
+ResMgr = Game.Client.ResMgr
+NetworkMgr = Game.Client.NetworkMgr
+SceneMgr = Game.Client.SceneMgr
 LuaWindow = Game.LuaWindow
 
 local require = require

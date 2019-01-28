@@ -18,7 +18,7 @@ namespace Game
         public void Init()
         {
             _luaEnv = new LuaEnv();
-            _luaEnv.AddLoader(CustomLoader);            
+            _luaEnv.AddLoader(CustomLoader);
             LuaHelper.Init();
         }
         public void Dispose()
@@ -70,8 +70,7 @@ namespace Game
         }
         public void InitScripts()
         {
-            _luaEnv.DoString("require 'Main'", "Main", _luaEnv.Global);
-            LuaTable luaMain = _luaEnv.Global.GetInPath<LuaTable>("Main");
+            var luaMain = GetTable("Main");
             luaMain.Get<Action>("Init")();
 
             var main = Client.Ins.gameObject;
@@ -81,7 +80,12 @@ namespace Game
             _luaDelegate.Init(luaMain);
             luaMain.Dispose();
         }
-     
-    }    
+        public LuaTable GetTable(string name)
+        {
+            string require = string.Format("require '{0}'", name);
+            _luaEnv.DoString(require, name, _luaEnv.Global);
+            return _luaEnv.Global.GetInPath<LuaTable>(name);
+        }
+    }
 
 }

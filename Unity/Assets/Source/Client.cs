@@ -6,13 +6,15 @@ namespace Game
     {
         public static Client Ins { get; private set; }
 
-        public static NetworkManager NetworkMgr = new NetworkManager();
         public static ServerListManager ServerMgr = new ServerListManager();
         public static UpdateManager UpdateMgr = new UpdateManager();
         public static ResourceManager ResMgr = new ResourceManager();
-        public static GameManager GameMgr = new GameManager();
-        public static PoolManager PoolMgr = new PoolManager();
         public static LuaManager LuaMgr = new LuaManager();
+        public static GameManager GameMgr = new GameManager();
+
+        public static SceneManager SceneMgr = new SceneManager();
+        public static PoolManager PoolMgr = new PoolManager();
+        public static NetworkManager NetworkMgr = new NetworkManager();
 
         void Awake()
         {
@@ -33,8 +35,8 @@ namespace Game
 
         void Update()
         {
-            ResMgr.Update();
             UpdateMgr.Update();
+            ResMgr.Update();
             NetworkMgr.Update();
         }
 
@@ -44,10 +46,12 @@ namespace Game
             ServerMgr.Dispose();
             UpdateMgr.Dispose();
             ResMgr.Dispose();
-            GameMgr.Dispose();
             PoolMgr.Dispose();
             LuaMgr.Dispose();
+            SceneMgr.Dispose();
+            GameMgr.Dispose();
 
+            SceneMgr = null;
             NetworkMgr = null;
             ServerMgr = null;
             UpdateMgr = null;
@@ -55,6 +59,7 @@ namespace Game
             GameMgr = null;
             PoolMgr = null;
             LuaMgr = null;
+
             Ins = null;
         }
     }

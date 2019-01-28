@@ -6,6 +6,11 @@ local GameEvent = GameEvent
 local LogError = LogError
 
 local Time = Time
+local initModulesCount = 0
+
+function GetInitedNum()
+    return initModulesCount
+end
 
 local function InitModule()
     for _, name in ipairs(modules) do
@@ -15,11 +20,14 @@ local function InitModule()
         else
             LogError("module %s init fail!", name)
         end
+        initModulesCount = initModulesCount + 1
     end
 end
 local function Init()
     Util.Myxpcall(InitModule)
     printcolor("orange", 'lua framework init successful.')
+
+    --注册登入完成事件
 
     --local UIMgr = require('Manager.UIManager')
     --Util.Myxpcall(UIMgr.Show, 'MJoystick.DlgJoystick')
@@ -77,7 +85,7 @@ Main = {
     Update = Update,
     LateUpdate = LateUpdate,
     FixedUpdate = FixedUpdate,
-    OnDestroy = OnDestroy
+    OnDestroy = OnDestroy,
 }
 
 

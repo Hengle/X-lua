@@ -15,24 +15,23 @@ using System.Collections.Generic;
 namespace XLua.CSObjectWrap
 {
     using Utils = XLua.Utils;
-    public class GameLuaManagerWrap 
+    public class GameSceneManagerWrap 
     {
         public static void __Register(RealStatePtr L)
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			System.Type type = typeof(Game.LuaManager);
-			Utils.BeginObjectRegister(type, L, translator, 0, 7, 1, 0);
+			System.Type type = typeof(Game.SceneManager);
+			Utils.BeginObjectRegister(type, L, translator, 0, 5, 2, 0);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Init", _m_Init);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Release", _m_Release);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Dispose", _m_Dispose);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "AddSearchPath", _m_AddSearchPath);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "HasScript", _m_HasScript);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Tick", _m_Tick);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "InitScripts", _m_InitScripts);
-			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetTable", _m_GetTable);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "RegisteOnSceneLoadFinish", _m_RegisteOnSceneLoadFinish);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ChangeMap", _m_ChangeMap);
 			
 			
-			Utils.RegisterFunc(L, Utils.GETTER_IDX, "LuaEnv", _g_get_LuaEnv);
+			Utils.RegisterFunc(L, Utils.GETTER_IDX, "SceneName", _g_get_SceneName);
+            Utils.RegisterFunc(L, Utils.GETTER_IDX, "AsyncOpt", _g_get_AsyncOpt);
             
 			
 			
@@ -58,7 +57,7 @@ namespace XLua.CSObjectWrap
 				if(LuaAPI.lua_gettop(L) == 1)
 				{
 					
-					Game.LuaManager gen_ret = new Game.LuaManager();
+					Game.SceneManager gen_ret = new Game.SceneManager();
 					translator.Push(L, gen_ret);
                     
 					return 1;
@@ -68,7 +67,7 @@ namespace XLua.CSObjectWrap
 			catch(System.Exception gen_e) {
 				return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
 			}
-            return LuaAPI.luaL_error(L, "invalid arguments to Game.LuaManager constructor!");
+            return LuaAPI.luaL_error(L, "invalid arguments to Game.SceneManager constructor!");
             
         }
         
@@ -87,13 +86,40 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
             
             
-                Game.LuaManager gen_to_be_invoked = (Game.LuaManager)translator.FastGetCSObj(L, 1);
+                Game.SceneManager gen_to_be_invoked = (Game.SceneManager)translator.FastGetCSObj(L, 1);
             
             
                 
                 {
                     
                     gen_to_be_invoked.Init(  );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_Release(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                Game.SceneManager gen_to_be_invoked = (Game.SceneManager)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    
+                    gen_to_be_invoked.Release(  );
                     
                     
                     
@@ -114,7 +140,7 @@ namespace XLua.CSObjectWrap
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
             
             
-                Game.LuaManager gen_to_be_invoked = (Game.LuaManager)translator.FastGetCSObj(L, 1);
+                Game.SceneManager gen_to_be_invoked = (Game.SceneManager)translator.FastGetCSObj(L, 1);
             
             
                 
@@ -134,21 +160,21 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_AddSearchPath(RealStatePtr L)
+        static int _m_RegisteOnSceneLoadFinish(RealStatePtr L)
         {
 		    try {
             
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
             
             
-                Game.LuaManager gen_to_be_invoked = (Game.LuaManager)translator.FastGetCSObj(L, 1);
+                Game.SceneManager gen_to_be_invoked = (Game.SceneManager)translator.FastGetCSObj(L, 1);
             
             
                 
                 {
-                    string _path = LuaAPI.lua_tostring(L, 2);
+                    System.Action<bool> _action = translator.GetDelegate<System.Action<bool>>(L, 2);
                     
-                    gen_to_be_invoked.AddSearchPath( _path );
+                    gen_to_be_invoked.RegisteOnSceneLoadFinish( _action );
                     
                     
                     
@@ -162,49 +188,21 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_HasScript(RealStatePtr L)
+        static int _m_ChangeMap(RealStatePtr L)
         {
 		    try {
             
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
             
             
-                Game.LuaManager gen_to_be_invoked = (Game.LuaManager)translator.FastGetCSObj(L, 1);
+                Game.SceneManager gen_to_be_invoked = (Game.SceneManager)translator.FastGetCSObj(L, 1);
             
             
                 
                 {
-                    string _viewName = LuaAPI.lua_tostring(L, 2);
+                    string _sceneName = LuaAPI.lua_tostring(L, 2);
                     
-                        bool gen_ret = gen_to_be_invoked.HasScript( _viewName );
-                        LuaAPI.lua_pushboolean(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_Tick(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                Game.LuaManager gen_to_be_invoked = (Game.LuaManager)translator.FastGetCSObj(L, 1);
-            
-            
-                
-                {
-                    
-                    gen_to_be_invoked.Tick(  );
+                    gen_to_be_invoked.ChangeMap( _sceneName );
                     
                     
                     
@@ -217,73 +215,31 @@ namespace XLua.CSObjectWrap
             
         }
         
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_InitScripts(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                Game.LuaManager gen_to_be_invoked = (Game.LuaManager)translator.FastGetCSObj(L, 1);
-            
-            
-                
-                {
-                    
-                    gen_to_be_invoked.InitScripts(  );
-                    
-                    
-                    
-                    return 0;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_GetTable(RealStatePtr L)
-        {
-		    try {
-            
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-            
-            
-                Game.LuaManager gen_to_be_invoked = (Game.LuaManager)translator.FastGetCSObj(L, 1);
-            
-            
-                
-                {
-                    string _name = LuaAPI.lua_tostring(L, 2);
-                    
-                        XLua.LuaTable gen_ret = gen_to_be_invoked.GetTable( _name );
-                        translator.Push(L, gen_ret);
-                    
-                    
-                    
-                    return 1;
-                }
-                
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            
-        }
-        
         
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_LuaEnv(RealStatePtr L)
+        static int _g_get_SceneName(RealStatePtr L)
         {
 		    try {
                 ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			
-                Game.LuaManager gen_to_be_invoked = (Game.LuaManager)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.LuaEnv);
+                Game.SceneManager gen_to_be_invoked = (Game.SceneManager)translator.FastGetCSObj(L, 1);
+                LuaAPI.lua_pushstring(L, gen_to_be_invoked.SceneName);
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            return 1;
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _g_get_AsyncOpt(RealStatePtr L)
+        {
+		    try {
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			
+                Game.SceneManager gen_to_be_invoked = (Game.SceneManager)translator.FastGetCSObj(L, 1);
+                translator.Push(L, gen_to_be_invoked.AsyncOpt);
             } catch(System.Exception gen_e) {
                 return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
             }

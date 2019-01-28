@@ -183,6 +183,10 @@ namespace Game.Platform
         public virtual void SendWeChat(string content)
         {
         }
+        /// <summary>
+        /// 获取设备内存信息,单位:字节
+        /// </summary>
+        /// <returns></returns>
         public virtual long GetMemInfo()
         {
             return 0;

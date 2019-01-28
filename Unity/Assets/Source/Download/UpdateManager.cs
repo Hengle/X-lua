@@ -53,12 +53,12 @@ namespace Game
         private string _urlRoot = "http://localhost:8086/";
         private readonly object _obj = new object();
         private readonly int _threadNum = 5;
+        private int _overThreadNum;
 
         /// <summary>
-        /// 下载完毕
+        /// 对应资源下载完毕
         /// </summary>
         private bool _downloadOver = true;
-        private int _overThreadNum;
         public bool HasdownloadFile { get { return File.Exists(Util.DataPath + ConstSetting.HasDownloadFile); } }
 
         public void Init()
@@ -67,7 +67,13 @@ namespace Game
 
         public void Dispose()
         {
-
+            _downloadList.Clear();
+            _redownloadList.Clear();
+            _taskCompleted.Clear();
+            _taskQueue.Clear();
+            _localMD5Table.Clear();
+            _remoteMD5Table.Clear();
+            _hasDownload.Clear();
         }
 
         public void Update()
@@ -84,9 +90,11 @@ namespace Game
 
         public IEnumerator CheckVersion()
         {
-            //#if UNITY_EDITOR
-            //            yield return null;
-            //#endif
+#if UNITY_EDITOR
+            yield return null;
+#endif
+
+            Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 0.2f);
             _localVersion = LoadLocalFile(ConstSetting.ResVersionFile);
             string[] nodes = _localVersion.Split(",".ToCharArray());
             _localAppVersion = Convert.ToInt32(nodes[0]);
@@ -97,12 +105,15 @@ namespace Game
             {
                 _urlRoot = Client.ServerMgr.UpdateResUrls[i];
                 yield return DwonloadRemoteVersion();
+                Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 0.3f + i * 0.1f);
             }
             if (!_downloadOver)
             {
                 Debug.LogError(ConstSetting.ResVersionFile + "下载失败!");
+                Launcher.Ins.SetLaunchState(LaunchState.DownloadVersionFailed, 1f);
                 yield break;
             }
+            Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 1f);
 
             if (_localAppVersion < _remoteAppVersion)
             {
@@ -125,6 +136,7 @@ namespace Game
             if (!_downloadOver)
             {
                 Debug.LogError(ConstSetting.ResMD5File + "下载失败!");
+                Launcher.Ins.SetLaunchState(LaunchState.DownloadMD5TableFailed, 1f);
                 yield break;
             }
             string hasDownloadText = LoadLocalFile(ConstSetting.HasDownloadFile);
@@ -159,7 +171,10 @@ namespace Game
         IEnumerator BeginDownloadAssets()
         {
             ServicePointManager.DefaultConnectionLimit = 50;
+            float unit = 1024 * 1024 * 1024;//mb
+            float totalSize = _totalDownloadSize / unit;
 
+            Launcher.Ins.SetLaunchState(LaunchState.DownloadHotfixRes, 0f);
             Debug.Log("Begin Download Assets Time = " + Time.realtimeSinceStartup);
             for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResUrls.Count; i++)
             {
@@ -187,7 +202,11 @@ namespace Game
                     }
 
                     while (_overThreadNum < 5 || _taskCompleted.Count > 0)
+                    {
+                        Launcher.Ins.SetLaunchState(LaunchState.DownloadHotfixRes, _downloadSize * 1f / _totalDownloadSize);
+                        Launcher.Ins.SetSubtitle(string.Format("{0:N2}MB/{1:N2}MB", _downloadSize / unit, totalSize));
                         yield return null;
+                    }
                 }
 
                 if (_redownloadList.Count > 0)
@@ -201,6 +220,7 @@ namespace Game
                     _downloadOver = true;
                     //下载完毕
 
+                    Launcher.Ins.SetLaunchState(LaunchState.DownloadHotfixRes, 1f);
                     yield break;
                 }
             }

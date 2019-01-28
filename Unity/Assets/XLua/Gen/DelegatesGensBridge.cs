@@ -82,7 +82,28 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp3(Game.NetworkChannel p0)
+		public int __Gen_Delegate_Imp3()
+		{
+#if THREAD_SAFE || HOTFIX_ENABLE
+            lock (luaEnv.luaEnvLock)
+            {
+#endif
+                RealStatePtr L = luaEnv.rawL;
+                int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
+                
+                
+                PCall(L, 0, 1, errFunc);
+                
+                
+                int __gen_ret = LuaAPI.xlua_tointeger(L, errFunc + 1);
+                LuaAPI.lua_settop(L, errFunc - 1);
+                return  __gen_ret;
+#if THREAD_SAFE || HOTFIX_ENABLE
+            }
+#endif
+		}
+        
+		public void __Gen_Delegate_Imp4(Game.NetworkChannel p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -104,7 +125,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp4(Game.NetworkChannel p0, int p1)
+		public void __Gen_Delegate_Imp5(Game.NetworkChannel p0, int p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -127,7 +148,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp5(Game.NetworkChannel p0, Game.NetworkErrorCode p1, string p2)
+		public void __Gen_Delegate_Imp6(Game.NetworkChannel p0, Game.NetworkErrorCode p1, string p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -151,7 +172,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp6(int p0, object p1)
+		public void __Gen_Delegate_Imp7(int p0, object p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -174,7 +195,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp7(System.IAsyncResult p0)
+		public void __Gen_Delegate_Imp8(System.IAsyncResult p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -196,7 +217,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp8(string p0, bool p1, string p2)
+		public void __Gen_Delegate_Imp9(string p0, bool p1, string p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -220,7 +241,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp9(string p0, string p1, UnityEngine.LogType p2)
+		public void __Gen_Delegate_Imp10(string p0, string p1, UnityEngine.LogType p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -244,7 +265,7 @@ namespace XLua
 #endif
 		}
         
-		public bool __Gen_Delegate_Imp10()
+		public bool __Gen_Delegate_Imp11()
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -265,7 +286,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp11(float[] p0)
+		public void __Gen_Delegate_Imp12(float[] p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -287,7 +308,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp12(int p0)
+		public void __Gen_Delegate_Imp13(int p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -309,7 +330,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp13(UnityEngine.AsyncOperation p0)
+		public void __Gen_Delegate_Imp14(UnityEngine.AsyncOperation p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -331,7 +352,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp14(UnityEngine.RectTransform p0)
+		public void __Gen_Delegate_Imp15(UnityEngine.RectTransform p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -353,7 +374,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp15(UnityEngine.Object p0)
+		public void __Gen_Delegate_Imp16(UnityEngine.Object p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -375,7 +396,29 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp16(FairyGUI.EventContext p0)
+		public void __Gen_Delegate_Imp17(bool p0)
+		{
+#if THREAD_SAFE || HOTFIX_ENABLE
+            lock (luaEnv.luaEnvLock)
+            {
+#endif
+                RealStatePtr L = luaEnv.rawL;
+                int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
+                
+                LuaAPI.lua_pushboolean(L, p0);
+                
+                PCall(L, 1, 0, errFunc);
+                
+                
+                
+                LuaAPI.lua_settop(L, errFunc - 1);
+                
+#if THREAD_SAFE || HOTFIX_ENABLE
+            }
+#endif
+		}
+        
+		public void __Gen_Delegate_Imp18(FairyGUI.EventContext p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -397,7 +440,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp17(FairyGUI.UIPackage p0)
+		public void __Gen_Delegate_Imp19(FairyGUI.UIPackage p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -419,7 +462,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp18(object p0)
+		public void __Gen_Delegate_Imp20(object p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -441,7 +484,7 @@ namespace XLua
 #endif
 		}
         
-		public InvokeLua.ICalc __Gen_Delegate_Imp19(int p0, string[] p1)
+		public InvokeLua.ICalc __Gen_Delegate_Imp21(int p0, string[] p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -464,7 +507,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp20(int p0)
+		public int __Gen_Delegate_Imp22(int p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -486,7 +529,7 @@ namespace XLua
 #endif
 		}
         
-		public UnityEngine.Vector3 __Gen_Delegate_Imp21(UnityEngine.Vector3 p0)
+		public UnityEngine.Vector3 __Gen_Delegate_Imp23(UnityEngine.Vector3 p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -508,7 +551,7 @@ namespace XLua
 #endif
 		}
         
-		public XLuaTest.MyStruct __Gen_Delegate_Imp22(XLuaTest.MyStruct p0)
+		public XLuaTest.MyStruct __Gen_Delegate_Imp24(XLuaTest.MyStruct p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -530,7 +573,7 @@ namespace XLua
 #endif
 		}
         
-		public XLuaTest.MyEnum __Gen_Delegate_Imp23(XLuaTest.MyEnum p0)
+		public XLuaTest.MyEnum __Gen_Delegate_Imp25(XLuaTest.MyEnum p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -552,7 +595,7 @@ namespace XLua
 #endif
 		}
         
-		public decimal __Gen_Delegate_Imp24(decimal p0)
+		public decimal __Gen_Delegate_Imp26(decimal p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -574,7 +617,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp25(System.Array p0)
+		public void __Gen_Delegate_Imp27(System.Array p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -596,29 +639,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp26(bool p0)
-		{
-#if THREAD_SAFE || HOTFIX_ENABLE
-            lock (luaEnv.luaEnvLock)
-            {
-#endif
-                RealStatePtr L = luaEnv.rawL;
-                int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
-                
-                LuaAPI.lua_pushboolean(L, p0);
-                
-                PCall(L, 1, 0, errFunc);
-                
-                
-                
-                LuaAPI.lua_settop(L, errFunc - 1);
-                
-#if THREAD_SAFE || HOTFIX_ENABLE
-            }
-#endif
-		}
-        
-		public int __Gen_Delegate_Imp27(object p0, int p1, int p2)
+		public int __Gen_Delegate_Imp28(object p0, int p1, int p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -642,7 +663,7 @@ namespace XLua
 #endif
 		}
         
-		public UnityEngine.Vector3 __Gen_Delegate_Imp28(object p0, UnityEngine.Vector3 p1, UnityEngine.Vector3 p2)
+		public UnityEngine.Vector3 __Gen_Delegate_Imp29(object p0, UnityEngine.Vector3 p1, UnityEngine.Vector3 p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -666,7 +687,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp29(object p0, int p1, out double p2, ref string p3)
+		public int __Gen_Delegate_Imp30(object p0, int p1, out double p2, ref string p3)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -692,7 +713,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp30(object p0, int p1, out double p2, ref string p3, object p4)
+		public int __Gen_Delegate_Imp31(object p0, int p1, out double p2, ref string p3, object p4)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -719,7 +740,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp31(object p0, int p1)
+		public void __Gen_Delegate_Imp32(object p0, int p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -742,7 +763,7 @@ namespace XLua
 #endif
 		}
         
-		public string __Gen_Delegate_Imp32(object p0)
+		public string __Gen_Delegate_Imp33(object p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -764,7 +785,7 @@ namespace XLua
 #endif
 		}
         
-		public UnityEngine.GameObject __Gen_Delegate_Imp33(StructTest p0, int p1, object p2)
+		public UnityEngine.GameObject __Gen_Delegate_Imp34(StructTest p0, int p1, object p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -788,7 +809,7 @@ namespace XLua
 #endif
 		}
         
-		public string __Gen_Delegate_Imp34(StructTest p0)
+		public string __Gen_Delegate_Imp35(StructTest p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -810,7 +831,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp35(StructTest p0, object p1)
+		public void __Gen_Delegate_Imp36(StructTest p0, object p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -833,7 +854,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp36(object p0)
+		public int __Gen_Delegate_Imp37(object p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -855,7 +876,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp37(object p0, object p1)
+		public void __Gen_Delegate_Imp38(object p0, object p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -878,7 +899,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp38(object p0, object p1)
+		public int __Gen_Delegate_Imp39(object p0, object p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -901,7 +922,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp39(object p0, object p1, int p2)
+		public void __Gen_Delegate_Imp40(object p0, object p1, int p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -925,7 +946,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp40(int p0, int p1)
+		public void __Gen_Delegate_Imp41(int p0, int p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -948,7 +969,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp41(object p0, int p1, int p2)
+		public void __Gen_Delegate_Imp42(object p0, int p1, int p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -1016,124 +1037,129 @@ namespace XLua
 			    return new System.Action<float, float>(__Gen_Delegate_Imp2);
 			}
 		
+		    if (type == typeof(System.Func<int>))
+			{
+			    return new System.Func<int>(__Gen_Delegate_Imp3);
+			}
+		
 		    if (type == typeof(System.Action<Game.NetworkChannel>))
 			{
-			    return new System.Action<Game.NetworkChannel>(__Gen_Delegate_Imp3);
+			    return new System.Action<Game.NetworkChannel>(__Gen_Delegate_Imp4);
 			}
 		
 		    if (type == typeof(System.Action<Game.NetworkChannel, int>))
 			{
-			    return new System.Action<Game.NetworkChannel, int>(__Gen_Delegate_Imp4);
+			    return new System.Action<Game.NetworkChannel, int>(__Gen_Delegate_Imp5);
 			}
 		
 		    if (type == typeof(System.Action<Game.NetworkChannel, Game.NetworkErrorCode, string>))
 			{
-			    return new System.Action<Game.NetworkChannel, Game.NetworkErrorCode, string>(__Gen_Delegate_Imp5);
+			    return new System.Action<Game.NetworkChannel, Game.NetworkErrorCode, string>(__Gen_Delegate_Imp6);
 			}
 		
 		    if (type == typeof(System.Action<int, object>))
 			{
-			    return new System.Action<int, object>(__Gen_Delegate_Imp6);
+			    return new System.Action<int, object>(__Gen_Delegate_Imp7);
 			}
 		
 		    if (type == typeof(System.AsyncCallback))
 			{
-			    return new System.AsyncCallback(__Gen_Delegate_Imp7);
+			    return new System.AsyncCallback(__Gen_Delegate_Imp8);
 			}
 		
 		    if (type == typeof(UnityEngine.Application.AdvertisingIdentifierCallback))
 			{
-			    return new UnityEngine.Application.AdvertisingIdentifierCallback(__Gen_Delegate_Imp8);
+			    return new UnityEngine.Application.AdvertisingIdentifierCallback(__Gen_Delegate_Imp9);
 			}
 		
 		    if (type == typeof(UnityEngine.Application.LogCallback))
 			{
-			    return new UnityEngine.Application.LogCallback(__Gen_Delegate_Imp9);
+			    return new UnityEngine.Application.LogCallback(__Gen_Delegate_Imp10);
 			}
 		
 		    if (type == typeof(System.Func<bool>))
 			{
-			    return new System.Func<bool>(__Gen_Delegate_Imp10);
+			    return new System.Func<bool>(__Gen_Delegate_Imp11);
 			}
 		
 		    if (type == typeof(UnityEngine.AudioClip.PCMReaderCallback))
 			{
-			    return new UnityEngine.AudioClip.PCMReaderCallback(__Gen_Delegate_Imp11);
+			    return new UnityEngine.AudioClip.PCMReaderCallback(__Gen_Delegate_Imp12);
 			}
 		
 		    if (type == typeof(UnityEngine.AudioClip.PCMSetPositionCallback))
 			{
-			    return new UnityEngine.AudioClip.PCMSetPositionCallback(__Gen_Delegate_Imp12);
+			    return new UnityEngine.AudioClip.PCMSetPositionCallback(__Gen_Delegate_Imp13);
 			}
 		
 		    if (type == typeof(System.Action<UnityEngine.AsyncOperation>))
 			{
-			    return new System.Action<UnityEngine.AsyncOperation>(__Gen_Delegate_Imp13);
+			    return new System.Action<UnityEngine.AsyncOperation>(__Gen_Delegate_Imp14);
 			}
 		
 		    if (type == typeof(UnityEngine.RectTransform.ReapplyDrivenProperties))
 			{
-			    return new UnityEngine.RectTransform.ReapplyDrivenProperties(__Gen_Delegate_Imp14);
+			    return new UnityEngine.RectTransform.ReapplyDrivenProperties(__Gen_Delegate_Imp15);
 			}
 		
 		    if (type == typeof(System.Action<UnityEngine.Object>))
 			{
-			    return new System.Action<UnityEngine.Object>(__Gen_Delegate_Imp15);
-			}
-		
-		    if (type == typeof(FairyGUI.EventCallback1))
-			{
-			    return new FairyGUI.EventCallback1(__Gen_Delegate_Imp16);
-			}
-		
-		    if (type == typeof(System.Action<FairyGUI.UIPackage>))
-			{
-			    return new System.Action<FairyGUI.UIPackage>(__Gen_Delegate_Imp17);
-			}
-		
-		    if (type == typeof(FairyGUI.TimerCallback))
-			{
-			    return new FairyGUI.TimerCallback(__Gen_Delegate_Imp18);
-			}
-		
-		    if (type == typeof(InvokeLua.CalcNew))
-			{
-			    return new InvokeLua.CalcNew(__Gen_Delegate_Imp19);
-			}
-		
-		    if (type == typeof(XLuaTest.IntParam))
-			{
-			    return new XLuaTest.IntParam(__Gen_Delegate_Imp20);
-			}
-		
-		    if (type == typeof(XLuaTest.Vector3Param))
-			{
-			    return new XLuaTest.Vector3Param(__Gen_Delegate_Imp21);
-			}
-		
-		    if (type == typeof(XLuaTest.CustomValueTypeParam))
-			{
-			    return new XLuaTest.CustomValueTypeParam(__Gen_Delegate_Imp22);
-			}
-		
-		    if (type == typeof(XLuaTest.EnumParam))
-			{
-			    return new XLuaTest.EnumParam(__Gen_Delegate_Imp23);
-			}
-		
-		    if (type == typeof(XLuaTest.DecimalParam))
-			{
-			    return new XLuaTest.DecimalParam(__Gen_Delegate_Imp24);
-			}
-		
-		    if (type == typeof(XLuaTest.ArrayAccess))
-			{
-			    return new XLuaTest.ArrayAccess(__Gen_Delegate_Imp25);
+			    return new System.Action<UnityEngine.Object>(__Gen_Delegate_Imp16);
 			}
 		
 		    if (type == typeof(System.Action<bool>))
 			{
-			    return new System.Action<bool>(__Gen_Delegate_Imp26);
+			    return new System.Action<bool>(__Gen_Delegate_Imp17);
+			}
+		
+		    if (type == typeof(FairyGUI.EventCallback1))
+			{
+			    return new FairyGUI.EventCallback1(__Gen_Delegate_Imp18);
+			}
+		
+		    if (type == typeof(System.Action<FairyGUI.UIPackage>))
+			{
+			    return new System.Action<FairyGUI.UIPackage>(__Gen_Delegate_Imp19);
+			}
+		
+		    if (type == typeof(FairyGUI.TimerCallback))
+			{
+			    return new FairyGUI.TimerCallback(__Gen_Delegate_Imp20);
+			}
+		
+		    if (type == typeof(InvokeLua.CalcNew))
+			{
+			    return new InvokeLua.CalcNew(__Gen_Delegate_Imp21);
+			}
+		
+		    if (type == typeof(XLuaTest.IntParam))
+			{
+			    return new XLuaTest.IntParam(__Gen_Delegate_Imp22);
+			}
+		
+		    if (type == typeof(XLuaTest.Vector3Param))
+			{
+			    return new XLuaTest.Vector3Param(__Gen_Delegate_Imp23);
+			}
+		
+		    if (type == typeof(XLuaTest.CustomValueTypeParam))
+			{
+			    return new XLuaTest.CustomValueTypeParam(__Gen_Delegate_Imp24);
+			}
+		
+		    if (type == typeof(XLuaTest.EnumParam))
+			{
+			    return new XLuaTest.EnumParam(__Gen_Delegate_Imp25);
+			}
+		
+		    if (type == typeof(XLuaTest.DecimalParam))
+			{
+			    return new XLuaTest.DecimalParam(__Gen_Delegate_Imp26);
+			}
+		
+		    if (type == typeof(XLuaTest.ArrayAccess))
+			{
+			    return new XLuaTest.ArrayAccess(__Gen_Delegate_Imp27);
 			}
 		
 		    return null;

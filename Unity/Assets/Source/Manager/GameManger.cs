@@ -20,7 +20,7 @@ namespace Game
         {
             yield return Launcher.Ins.StartLaunch();
 
-            yield return InitSDK();
+            yield return CheckDevice();
             yield return CheckUnzipData();//解压zip中script和config到持续化目录
             yield return GetServerList();//加载本地Url配置信息
             yield return CheckVersion();//检查资源版本,判断是否需要更新
@@ -29,80 +29,72 @@ namespace Game
             yield return StartGame();//进入游戏登入场景,并且销毁资源更新场景
         }
 
-        IEnumerator InitSDK()
+        IEnumerator CheckDevice()
         {
-            Launcher.Ins.RefreshLaunch(LaunchState.InitSDK, 0.4f);
+            Launcher.Ins.SetLaunchState(LaunchState.CheckDevice, 0.4f);
             while (!Interface.Instance.IsSDKFinished())
-            {
-                yield return new WaitForEndOfFrame();
-
-            }
+                yield return null;
             //获取设备内存大小,如果不足,则提示内存不足.
             long memorysize = Interface.Instance.GetMemInfo();
-
-#if UNITY_ANDROID
-            if (memorysize < 1500000)
+#if UNITY_ANDROID || UNITY_IPHONE
+            if (memorysize < 1073741824)
             {
-                _status.text = _launcher[LaunchState.CheckMemerySize.ToString()];
-                yield return new WaitForSeconds(1);
+                Launcher.Ins.RefreshLaunch(LaunchState.CheckDevice, 0.8f);
+                yield return null;
             }
-#elif UNITY_IPHONE
-            if (memorysize < 1000000)
-            {
-                _status.text = _launcher[LaunchState.CheckMemerySize.ToString()];
-                yield return new WaitForSeconds(1);
-            }
-#elif UNITY_STANDALONE_WIN
-            yield break;
-#else
-            yield return new WaitForSeconds(1);
 #endif
+            Launcher.Ins.SetLaunchState(LaunchState.CheckDevice, 1f);
         }
         IEnumerator CheckUnzipData()
         {
-            Launcher.Ins.RefreshLaunch(LaunchState.CheckUnzipData, 1f);
-            yield return null;
+#if UNITY_ANDROID || UNITY_IPHONE
+            yield return Client.ResMgr.CheckUnzipData();
+#endif
+            Launcher.Ins.SetLaunchState(LaunchState.CheckUnzipData, 1f);
+            yield break;
         }
         IEnumerator GetServerList()
         {
-            yield return new WaitForEndOfFrame();
+            Launcher.Ins.SetLaunchState(LaunchState.GetServerList, 0.4f);
+            yield return Client.ServerMgr.GetServerList();
+            Launcher.Ins.SetLaunchState(LaunchState.GetServerList, 1f);
         }
         IEnumerator CheckVersion()
         {
-            Launcher.Ins.RefreshLaunch(LaunchState.CheckVersion, 0.2f);
-            //与服务器版本号进行对比
-            //TODO
-            yield return null;
-            if (true)
-            {
-                //下载资源-数据资源
-                //TODO
-            }
-            //资源更新列表加快资源存在性检查速度;初始化资源管理器
-            //TODO;在读写路径下存一个文件
-            Launcher.Ins.RefreshLaunch(LaunchState.CheckVersion, 0.2f);
+            yield return Client.UpdateMgr.CheckVersion();
         }
         IEnumerator PreloadAssets()
         {
-            Debug.Log("Is PreLoad Done?");
+            Client.ResMgr.Init();
             while (!Client.ResMgr.IsPreLoadDone)
-                yield return new WaitForEndOfFrame();
-            Debug.Log("Load Done!");
+            {
+                yield return null;
+                Launcher.Ins.SetLaunchState(LaunchState.PreloadAssets, Client.ResMgr.PreloadPrograss);
+            }
         }
         IEnumerator InitLua()
         {
             Client.LuaMgr.AddSearchPath(ConstSetting.LuaDir);
             Client.LuaMgr.InitScripts();
-            yield break;
+            var modules = Client.LuaMgr.LuaEnv.Global.GetInPath<XLua.LuaTable>("Modules");
+            var GetInitedNum = Client.LuaMgr.LuaEnv.Global.GetInPath<System.Func<int>>("GetInitedNum");
+            while (GetInitedNum() != modules.Length)
+            {
+                yield return null;
+                Launcher.Ins.SetLaunchState(LaunchState.InitScripts, GetInitedNum() * 1f / modules.Length);
+            }
+
+            GetInitedNum = null;
+            modules.Dispose();
+            modules = null;
         }
         IEnumerator StartGame()
         {
-            //GameObject.Destroy(_dlgRes);
-
-            Launcher.Ins.RefreshLaunch(LaunchState.StartGame, 1);
+            //加载登入场景
+            Launcher.Ins.SetLaunchState(LaunchState.StartGame, 1);
             yield break;
         }
- 
+
         public void Dispose()
         {
             Resources.UnloadUnusedAssets();

@@ -266,6 +266,9 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(Game.NetworkChannel), GameNetworkChannelWrap.__Register);
         
         
+            translator.DelayWrapLoader(typeof(Game.SceneManager), GameSceneManagerWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(Game.Platform.CustomInterface), GamePlatformCustomInterfaceWrap.__Register);
         
         
@@ -328,13 +331,13 @@ namespace XLua.CSObjectWrap
         
             translator.DelayWrapLoader(typeof(FairyGUI.GComponent), FairyGUIGComponentWrap.__Register);
         
-        
-            translator.DelayWrapLoader(typeof(FairyGUI.GList), FairyGUIGListWrap.__Register);
-        
         }
         
         static void wrapInit2(LuaEnv luaenv, ObjectTranslator translator)
         {
+        
+            translator.DelayWrapLoader(typeof(FairyGUI.GList), FairyGUIGListWrap.__Register);
+        
         
             translator.DelayWrapLoader(typeof(FairyGUI.GRoot), FairyGUIGRootWrap.__Register);
         

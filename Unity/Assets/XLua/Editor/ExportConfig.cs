@@ -24,6 +24,7 @@ public static class ExportConfig
         typeof(Action),
         typeof(Action<float>),
         typeof(Action<float, float>),
+        typeof(Func<int>),
     };
 
     [LuaCallCSharp]
@@ -31,12 +32,14 @@ public static class ExportConfig
     {
         typeof(Action),
         typeof(Action<int>),
+        typeof(Action<bool>),
         typeof(Action<string>),
-        typeof(Predicate<int>),
-        typeof(Comparison<int>),
-        typeof(Func<int, int>),
         typeof(Action<int, byte[]>),
         typeof(Action<NetworkChannel>),
+        typeof(Func<int, int>),
+        typeof(Predicate<int>),
+        typeof(Comparison<int>),
+
 
         typeof(System.Object),
         typeof(UnityEngine.Object),
@@ -61,7 +64,7 @@ public static class ExportConfig
         typeof(Graphics),
         typeof(Resources),
         typeof(Application),
-        typeof(SleepTimeout),        
+        typeof(SleepTimeout),
 
         typeof(Collider),
         typeof(BoxCollider),
@@ -131,6 +134,7 @@ public static class ExportConfig
         typeof(SoundManager),
         typeof(NetworkManager),
         typeof(NetworkChannel),
+        typeof(SceneManager),
         typeof(Game.Platform.CustomInterface),
         typeof(Game.Platform.Interface),
 
