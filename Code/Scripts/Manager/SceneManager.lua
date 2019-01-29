@@ -1,15 +1,95 @@
-local SceneMgr = SceneMgr
+local ipairs = ipairs
 
+---@type Game.SceneManager
+local SceneMgr = Game.Client.SceneMgr
+local UIMgr = require("Manager.UIManager")
+local GameEvent = require("Common.GameEvent")
+
+---@class SceneManager
 local SceneManager = {}
 
-local isLoading = false
+local _isLoading = false
+local _mapId
+local _sceneName
 
-function SceneManager.LoadScene(sceneName, params, callback)
-    --SceneMgr.
+local EVENT_LOAD_SCENE_START = "LoadScene_Start"
+local EVENT_LOAD_SCENE_END = "LoadScene_End"
+
+local function LoadBySceneName(sceneName)
+    if sceneName then
+        _sceneName = sceneName
+        SceneManager:ChangeMap(sceneName)
+    else
+        --返回默认场景
+        _sceneName = ""
+        --SceneManager:ChangeMap("maincity_01")
+    end
+end
+local function OnLoad(sceneName, callback)
+    --加载/配置场景相关参数
+    --隐藏销毁进度条dlgloading
+    GameEvent.NotifyEvent:Trigger(EVENT_LOAD_SCENE_END, { sceneName = sceneName })
+    _isLoading = false
+
+    if callback then
+        callback()
+    end
+end
+local function Transition2Scene(sceneName, views, callback)
+    SceneMgr:RegisteOnSceneLoadFinish(function(result)
+        if result then
+            OnLoad(sceneName, callback)
+        else
+            LoadBySceneName(sceneName)
+        end
+    end)
+    LoadBySceneName(sceneName)
+    for _, v in ipairs(views) do
+        UIMgr.Show(v)
+    end
+end
+---@param views UI界面名称数组
+---@param callback 回调函数
+function SceneManager.LoadScene(sceneName, views, callback)
+    --显示加载进度条dlgloading
+    _isLoading = true
+    UIMgr.DestroyAllDlgs()
+    GameEvent.NotifyEvent:Trigger(EVENT_LOAD_SCENE_START, { sceneName = sceneName })
+    SceneMgr:RegisteOnSceneLoadFinish(function(result)
+        if result then
+            LuaGC()
+            Transition2Scene(sceneName, views, callback)
+        else
+            --登出游戏到选人界面[可设定条件]
+            LoadBySceneName(sceneName)
+        end
+    end)
+    SceneManager:ChangeMap("Transition")
 end
 
+function SceneManager.LoadLoginScene()
+    SceneMgr:RegisteOnSceneLoadFinish(function(result)
+        if result then
+            printcolor('orange', 'Game Start,Ready Go!!')
+        else
+            SceneMgr:ChangeMap("Login")
+        end
+    end)
+    SceneManager.LoadScene("Login", {})
+end
+
+function SceneManager.GetMapId()
+    return _mapId
+end
+function SceneManager.GetSceneName()
+    return _sceneName
+end
 function SceneManager.IsLoadingScene()
-    return isLoading
+    return _isLoading
+end
+
+function SceneManager.Init()
+
 end
 
 return SceneManager

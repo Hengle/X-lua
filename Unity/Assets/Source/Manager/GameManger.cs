@@ -25,7 +25,7 @@ namespace Game
             yield return GetServerList();//加载本地Url配置信息
             yield return CheckVersion();//检查资源版本,判断是否需要更新
             yield return PreloadAssets();//开始初始化lua
-            yield return InitLua();//开始初始化lua
+            yield return InitScripts();//开始初始化lua
             yield return StartGame();//进入游戏登入场景,并且销毁资源更新场景
         }
 
@@ -72,7 +72,7 @@ namespace Game
                 Launcher.Ins.SetLaunchState(LaunchState.PreloadAssets, Client.ResMgr.PreloadPrograss);
             }
         }
-        IEnumerator InitLua()
+        IEnumerator InitScripts()
         {
             Client.LuaMgr.AddSearchPath(ConstSetting.LuaDir);
             Client.LuaMgr.InitScripts();
@@ -90,9 +90,11 @@ namespace Game
         }
         IEnumerator StartGame()
         {
-            //加载登入场景
-            Launcher.Ins.SetLaunchState(LaunchState.StartGame, 1);
-            yield break;
+            while (!Client.SceneMgr.AsyncOpt.isDone)
+            {
+                yield return null;
+                Launcher.Ins.SetLaunchState(LaunchState.StartGame, Client.SceneMgr.AsyncOpt.progress);
+            }
         }
 
         public void Dispose()

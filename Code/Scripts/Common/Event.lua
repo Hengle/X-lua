@@ -91,7 +91,11 @@ function _event:Dump(name)
     print('dump event list..', '\n' .. table.concat(r, '\n'))
 end
 
-local global = _event:new("__global")
+local function New(name)
+    return _event:new(name)
+end
+
+local global = New("__globalEvent")
 -- 如果不指定事件名,则创建一个匿名事件
 local function NewSimple(name)
     name = name or ""
@@ -120,6 +124,10 @@ local function NewSimple(name)
     return evt
 end
 
+
 return {
+    ---独立事件列表
+    New = New,
+    ---共用__global事件列表
     NewSimple = NewSimple,
 }

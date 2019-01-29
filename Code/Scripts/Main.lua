@@ -27,8 +27,10 @@ local function Init()
     Util.Myxpcall(InitModule)
     printcolor("orange", 'lua framework init successful.')
 
-    --注册登入完成事件
+    local sceneManager = require "Manager.SceneManager"
+    sceneManager.LoadLoginScene()
 
+    --注册登入完成事件
     --local UIMgr = require('Manager.UIManager')
     --Util.Myxpcall(UIMgr.Show, 'MJoystick.DlgJoystick')
 

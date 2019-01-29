@@ -13,6 +13,7 @@
     using Cfg;
     using Vec3 = UnityEngine.Vector3;
     using Flux;
+    using GameEditor;
 
     [GlobalConfig("ActorDesigner/ModelEditor/Editor", UseAsset = true)]
     internal class ActionHomeConfig : GlobalConfig<ActionHomeConfig>
@@ -85,16 +86,15 @@
             CfgManager.ConfigDir = ConfigDir;
             CfgManager.LoadAll();
 
-
             //--初始化资源路径
-            EditorUtil.GetAssetsInSubFolderRecursively(_config.CharacterRelativeDir, "*.prefab", ref AllCharacters);
-            EditorUtil.GetAssetsInSubFolderRecursively(_config.AvatarRelativeDir, "*.prefab", ref AllAvatars);
-            EditorUtil.GetAssetsInSubFolderRecursively(_config.EffectRelativeDir, "*.prefab", ref AllEffects);
+            EUtil.GetAssetsInSubFolderRecursively(_config.CharacterRelativeDir, "*.prefab", ref AllCharacters);
+            EUtil.GetAssetsInSubFolderRecursively(_config.AvatarRelativeDir, "*.prefab", ref AllAvatars);
+            EUtil.GetAssetsInSubFolderRecursively(_config.EffectRelativeDir, "*.prefab", ref AllEffects);
             foreach (var item in AllCharacters)
             {
                 string searchDir = item.Value.Substring(0, item.Value.LastIndexOf(@"/prefab")) + "/clips";
                 var selfClips = new Dictionary<string, string>();
-                EditorUtil.GetAssetsInSubFolderRecursively(searchDir, "*.anim", ref selfClips);
+                EUtil.GetAssetsInSubFolderRecursively(searchDir, "*.anim", ref selfClips);
                 AllCharacterClips[item.Key] = selfClips;
             }
 

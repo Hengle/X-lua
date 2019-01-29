@@ -20,7 +20,7 @@ namespace Game
         //TODO
   
 
-        public void Init() { }
+        public void Init() { _asyncOpt = new AsyncOperation(); }
         public void Release()
         {
             System.GC.Collect();

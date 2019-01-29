@@ -10,7 +10,7 @@ local protoc = require "protoc"
 local Event = Event
 local GameEvent = GameEvent
 ---@type Game.NetworkManager
-local Network = Game.Manager.NetworkMgr
+local NetworkMgr = Game.Manager.NetworkMgr
 
 ---@class NetworkManager
 local NetworkManager = {}
@@ -51,7 +51,7 @@ local ip = "192.168.0.132"
 local port = 8686
 
 function NetworkManager.Init()
-    channel = Network:CreateNetworkChannel("NetworkChannel")
+    channel = NetworkMgr:CreateNetworkChannel("NetworkChannel")
     channel.NetworkReceive = onReceive
     channel.NetworkChannelConnected = onChannelConnected
     channel.NetworkChannelClosed = onChannelClosed
@@ -69,7 +69,7 @@ function NetworkManager.Send(type, msg)
 end
 
 function NetworkManager.Destroy()
-    Network:DestroyNetworkChannel(channel.Name)
+    NetworkMgr:DestroyNetworkChannel(channel.Name)
 end
 
 return NetworkManager

@@ -63,6 +63,9 @@ namespace Game
             //--加载界面
         }
 
+        /// <summary>
+        /// 释放启动过程中无用资源
+        /// </summary>
         public void Dispose()
         {
 

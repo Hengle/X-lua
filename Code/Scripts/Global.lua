@@ -22,7 +22,7 @@ Input = UnityEngine.Input
 KeyCode = UnityEngine.KeyCode
 CharacterController = UnityEngine.CharacterController
 SkinnedMeshRenderer = UnityEngine.SkinnedMeshRenderer
-Rect        = UnityEngine.Rect
+Rect = UnityEngine.Rect
 ---@type UnityEngine.RuntimePlatform
 RuntimePlatform = UnityEngine.RuntimePlatform
 
@@ -32,8 +32,7 @@ AppConst = Game.AppConst
 LuaHelper = Game.LuaHelper
 Interface = Game.Platform.Interface
 ResMgr = Game.Client.ResMgr
-NetworkMgr = Game.Client.NetworkMgr
-SceneMgr = Game.Client.SceneMgr
+
 LuaWindow = Game.LuaWindow
 
 local require = require
@@ -43,20 +42,19 @@ XUtil = require 'xlua.util'
 XProfiler = require 'xlua.profiler'
 XMemory = require 'xlua.memory'
 
-Time		= require "UnityEngine.Time"
-Mathf		= require "UnityEngine.Mathf"
-Vector3 	= require "UnityEngine.Vector3"
-Quaternion	= require "UnityEngine.Quaternion"
-Vector2		= require "UnityEngine.Vector2"
-Vector4		= require "UnityEngine.Vector4"
-Color		= require "UnityEngine.Color"
-Ray			= require "UnityEngine.Ray"
-Bounds		= require "UnityEngine.Bounds"
-RaycastHit	= require "UnityEngine.RaycastHit"
-Touch		= require "UnityEngine.Touch"
-LayerMask	= require "UnityEngine.LayerMask"
-Plane		= require "UnityEngine.Plane"
-
+Time = require "UnityEngine.Time"
+Mathf = require "UnityEngine.Mathf"
+Vector3 = require "UnityEngine.Vector3"
+Quaternion = require "UnityEngine.Quaternion"
+Vector2 = require "UnityEngine.Vector2"
+Vector4 = require "UnityEngine.Vector4"
+Color = require "UnityEngine.Color"
+Ray = require "UnityEngine.Ray"
+Bounds = require "UnityEngine.Bounds"
+RaycastHit = require "UnityEngine.RaycastHit"
+Touch = require "UnityEngine.Touch"
+LayerMask = require "UnityEngine.LayerMask"
+Plane = require "UnityEngine.Plane"
 
 require "Local"
 -----------------------------------------------------------
@@ -80,5 +78,9 @@ IsEditor = Application.isEditor
 IsAndroid = Application.platform == RuntimePlatform.Android
 IsIPhone = Application.platform == RuntimePlatform.IPhonePlayer
 
-
-
+function LuaGC()
+    local before = collectgarbage("count")
+    collectgarbage("collect")
+    local after = collectgarbage("count")
+    print(string.format("GC Before:%.1fKB, After %.1fKB", before, after))
+end

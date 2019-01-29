@@ -26,6 +26,10 @@ namespace Game
         {
             return Client.LuaMgr.HasScript(viewName);
         }
+        public static void DestroyLauncherResource()
+        {
+            Launcher.Ins.Dispose();
+        }
     }
 }
 

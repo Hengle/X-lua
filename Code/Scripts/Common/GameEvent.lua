@@ -1,15 +1,11 @@
 local Event = Event
 
-local UpdateEvent = Event.NewSimple("Update")
-local SecondUpdateEvent = Event.NewSimple("SecondUpdate")
-local LateUpdateEvent = Event.NewSimple("LateUpdate")
-local FixedUpdateEvent = Event.NewSimple("FixedUpdate")
-local DestroyEvent = Event.NewSimple("Destroy")
-
 return {
-    UpdateEvent = UpdateEvent,
-    SecondUpdateEvent = SecondUpdateEvent,
-    LateUpdateEvent = LateUpdateEvent,
-    FixedUpdateEvent = FixedUpdateEvent,
-    DestroyEvent = DestroyEvent,
+    UpdateEvent = Event.NewSimple("Update"),
+    LateUpdateEvent = Event.NewSimple("LateUpdate"),
+    FixedUpdateEvent = Event.NewSimple("FixedUpdate"),
+    DestroyEvent = Event.NewSimple("Destroy"),
+
+    NotifyEvent = Event.New("Notify"),
+    SystemEvent = Event.New("System"),
 }
