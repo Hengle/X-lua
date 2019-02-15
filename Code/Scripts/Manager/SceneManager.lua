@@ -15,6 +15,9 @@ local _sceneName
 local EVENT_LOAD_SCENE_START = "LoadScene_Start"
 local EVENT_LOAD_SCENE_END = "LoadScene_End"
 
+----------------------------------------------------
+-----------加载场景方法
+----------------------------------------------------
 local function LoadBySceneName(sceneName)
     if sceneName then
         _sceneName = sceneName
@@ -78,6 +81,9 @@ function SceneManager.LoadLoginScene()
     SceneManager.LoadScene("Login", {})
 end
 
+----------------------------------------------------
+-----------场景信息
+----------------------------------------------------
 function SceneManager.GetMapId()
     return _mapId
 end

@@ -1,34 +1,10 @@
 ManifestFileVersion: 0
-CRC: 3220825931
+CRC: 2392908737
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: ui/atlas/basesprite.bundle
+      Name: scene/s_transition.bundle
       Dependencies: {}
     Info_1:
-      Name: ui/atlas/icon.bundle
-      Dependencies: {}
-    Info_2:
-      Name: ui/bag.bundle
-      Dependencies: {}
-    Info_3:
-      Name: ui/basics.bundle
-      Dependencies: {}
-    Info_4:
-      Name: ui/cooldown.bundle
-      Dependencies: {}
-    Info_5:
-      Name: ui/guide.bundle
-      Dependencies: {}
-    Info_6:
-      Name: ui/memoji.bundle
-      Dependencies: {}
-    Info_7:
-      Name: ui/mheadbar.bundle
-      Dependencies: {}
-    Info_8:
-      Name: ui/mjoystick.bundle
-      Dependencies: {}
-    Info_9:
-      Name: ui/atlas/font.bundle
+      Name: scene/s_login.bundle
       Dependencies: {}

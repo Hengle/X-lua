@@ -43,8 +43,8 @@ namespace Game
         private readonly ConcurrentQueue<Action> _taskCompleted = new ConcurrentQueue<Action>();
         private ConcurrentQueue<DownloadTask> _taskQueue = new ConcurrentQueue<DownloadTask>();
 
-        private Dictionary<string, AssetInfo> _localMD5Table;
-        private Dictionary<string, AssetInfo> _remoteMD5Table;
+        private Dictionary<string, AssetInfo> _localMD5Table = new Dictionary<string, AssetInfo>();
+        private Dictionary<string, AssetInfo> _remoteMD5Table = new Dictionary<string, AssetInfo>();
         /// <summary>
         /// 当前版本下,持续化目录下载的资源
         /// </summary>
@@ -88,6 +88,9 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// 检查资源版本号,判断是否需要更新资源
+        /// </summary>
         public IEnumerator CheckVersion()
         {
 #if UNITY_EDITOR
