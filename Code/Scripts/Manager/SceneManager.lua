@@ -1,7 +1,7 @@
 local ipairs = ipairs
 
 ---@type Game.SceneManager
-local SceneMgr = Game.Client.SceneMgr
+local Mgr = Game.Client.SceneMgr
 local UIMgr = require("Manager.UIManager")
 local GameEvent = require("Common.GameEvent")
 
@@ -21,11 +21,11 @@ local EVENT_LOAD_SCENE_END = "LoadScene_End"
 local function LoadBySceneName(sceneName)
     if sceneName then
         _sceneName = sceneName
-        SceneManager:ChangeMap(sceneName)
+        Mgr:ChangeMap(sceneName)
     else
         --返回默认场景
         _sceneName = ""
-        --SceneManager:ChangeMap("maincity_01")
+        --Mgr:ChangeMap("maincity_01")
     end
 end
 local function OnLoad(sceneName, callback)
@@ -39,7 +39,7 @@ local function OnLoad(sceneName, callback)
     end
 end
 local function Transition2Scene(sceneName, views, callback)
-    SceneMgr:RegisteOnSceneLoadFinish(function(result)
+    Mgr:RegisteOnSceneLoadFinish(function(result)
         if result then
             OnLoad(sceneName, callback)
         else
@@ -58,7 +58,7 @@ function SceneManager.LoadScene(sceneName, views, callback)
     _isLoading = true
     UIMgr.DestroyAllDlgs()
     GameEvent.NotifyEvent:Trigger(EVENT_LOAD_SCENE_START, { sceneName = sceneName })
-    SceneMgr:RegisteOnSceneLoadFinish(function(result)
+    Mgr:RegisteOnSceneLoadFinish(function(result)
         if result then
             LuaGC()
             Transition2Scene(sceneName, views, callback)
@@ -67,15 +67,15 @@ function SceneManager.LoadScene(sceneName, views, callback)
             LoadBySceneName(sceneName)
         end
     end)
-    SceneManager:ChangeMap("Transition")
+    Mgr:ChangeMap("Transition")
 end
 
 function SceneManager.LoadLoginScene()
-    SceneMgr:RegisteOnSceneLoadFinish(function(result)
+    Mgr:RegisteOnSceneLoadFinish(function(result)
         if result then
             printcolor('orange', 'Game Start,Ready Go!!')
         else
-            SceneMgr:ChangeMap("Login")
+            Mgr:ChangeMap("Login")
         end
     end)
     SceneManager.LoadScene("Login", {})

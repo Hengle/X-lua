@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
+using GameEditor;
 
 public partial class ExportResource
 {
@@ -60,7 +60,7 @@ public partial class ExportResource
                 path = string.Format("{0}/../../{1}/{2}", Application.dataPath, GetPlatfomrPath(target), relativePath);
                 break;
             default:
-                path = string.Format("{0}/../../{1}/Data/{2}", Application.dataPath, GetPlatfomrPath(target), relativePath);
+                path = string.Format("{0}/../../{1}/{2}", Application.dataPath, GetPlatfomrPath(target), relativePath);
                 break;
         }
         return path;
@@ -144,12 +144,119 @@ public partial class ExportResource
 
         BuildPipeline.BuildAssetBundles(dir, options, target);
 
-        string[] allNames = AssetDatabase.GetAllAssetBundleNames();
-        for (int i = 0; i < allNames.Length; i++)
+        ResetAssetBundleNames();
+        SaveDependency(target);
+    }
+    /// <summary>
+    /// 对有依赖的资源做依赖资源路径记录
+    /// </summary>
+    /// <param name="target"></param>
+    static void SaveDependency(BuildTarget target)
+    {
+        string dir = GetBundleSaveDir(target);
+        string depfile = dir.Substring(dir.TrimEnd('/').LastIndexOf("/") + 1);
+        depfile = depfile.TrimEnd('/');
+        string path = GetBundleSavePath(target, depfile);
+
+        AssetBundle ab = AssetBundle.LoadFromFile(path);
+
+        AssetBundleManifest manifest = (AssetBundleManifest)ab.LoadAsset("AssetBundleManifest");
+
+        ab.Unload(false);
+
+        Dictionary<string, List<string>> dic = new Dictionary<string, List<string>>();
+
+        LoadOldDependency(target, dic);
+
+        Debug.LogError("Length:" + manifest.GetAllAssetBundles().Length);
+        foreach (string asset in manifest.GetAllAssetBundles())
         {
-            AssetDatabase.RemoveAssetBundleName(allNames[i], true);
+            List<string> list = new List<string>();
+            string[] deps = manifest.GetDirectDependencies(asset);
+            foreach (string dep in deps)
+            {
+                list.Add(dep);
+            }
+            if (deps.Length > 0)
+                dic[asset] = list;
+            else if (dic.ContainsKey(asset))
+                dic.Remove(asset);
+        }
+
+        WriteDependenceConfig(target, dic);
+    }
+    static void LoadOldDependency(BuildTarget target, Dictionary<string, List<string>> dic)
+    {
+        string dataPath = GetBundleSavePath(target, "config/dependency");
+        if (!File.Exists(dataPath))
+        {
+            return;
+        }
+
+        FileStream fs = new FileStream(dataPath, FileMode.Open, FileAccess.Read);
+        BinaryReader br = new BinaryReader(fs);
+
+        int size = br.ReadInt32();
+        string resname;
+        string textureBundleName;
+
+        for (int i = 0; i < size; i++)
+        {
+            resname = br.ReadString();
+            int count = br.ReadInt32();
+            if (!dic.ContainsKey(resname))
+                dic[resname] = new List<string>();
+            //Debug.Log(sfxname + "  " + count);
+            for (int j = 0; j < count; ++j)
+            {
+                textureBundleName = br.ReadString();
+                dic[resname].Add(textureBundleName);
+            }
+        }
+        br.Close();
+        fs.Close();
+    }
+    static void WriteDependenceConfig(BuildTarget target, Dictionary<string, List<string>> m_Dependencies)
+    {
+        string fileName = GetBundleSavePath(target, "config/dependency");
+        Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+        FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
+        BinaryWriter w = new BinaryWriter(fs);
+        w.Write(m_Dependencies.Count);
+
+        foreach (KeyValuePair<string, List<string>> pair in m_Dependencies)
+        {
+            w.Write(pair.Key);
+            w.Write(pair.Value.Count);
+            foreach (string s in pair.Value)
+            {
+                w.Write(s);
+            }
+        }
+        w.Close();
+        fs.Close();
+
+        if (true)
+        {
+            using (StreamWriter sw = File.CreateText(fileName + "text"))
+            {
+                sw.WriteLine("size = " + m_Dependencies.Count);
+
+                foreach (KeyValuePair<string, List<string>> pair in m_Dependencies)
+                {
+                    sw.WriteLine(pair.Key);
+                    sw.WriteLine(pair.Value.Count);
+                    foreach (string s in pair.Value)
+                    {
+                        sw.WriteLine(s);
+                    }
+                }
+                sw.Close();
+            }
+
         }
     }
+
     /// <summary>
     /// 标准化路径,'\'转化'/'
     /// </summary>
@@ -157,19 +264,8 @@ public partial class ExportResource
     /// <returns></returns>
     static string StandardlizePath(UnityEngine.Object obj)
     {
-        return StandardlizePath(AssetDatabase.GetAssetPath(obj));
-    }
-    /// <summary>
-    /// 标准化路径,'\'转化'/'
-    /// </summary>
-    /// <param name="path">资源路径</param>
-    /// <returns></returns>
-    public static string StandardlizePath(string path)
-    {
-        string pathReplace = path.Replace(@"\", @"/");
-        string pathLower = pathReplace.ToLower();
-        return pathLower;
-    }
+        return EUtil.StandardlizePath(AssetDatabase.GetAssetPath(obj));
+    }  
     /// <summary>
     /// 限定选择的资源必须在指定范围内
     /// </summary>
@@ -204,7 +300,7 @@ public partial class ExportResource
     /// <param name="assets"></param>
     static void GetAssetsRecursively(string srcFolder, string searchPattern, string dstFolder, string prefix, ref Dictionary<string, string> assets)
     {
-        string searchFolder = StandardlizePath(srcFolder);
+        string searchFolder = EUtil.StandardlizePath(srcFolder);
         if (!Directory.Exists(searchFolder))
             return;
 
@@ -213,7 +309,7 @@ public partial class ExportResource
         string[] files = Directory.GetFiles(srcDir, searchPattern);
         foreach (string oneFile in files)
         {
-            string srcFile = StandardlizePath(oneFile);
+            string srcFile = EUtil.StandardlizePath(oneFile);
             if (!File.Exists(srcFile))
                 continue;
 
@@ -226,7 +322,7 @@ public partial class ExportResource
             {
                 dstFile = Path.Combine(dstFolder, string.Format("{0}_{1}.{2}", prefix, Path.GetFileNameWithoutExtension(srcFile), suffix));
             }
-            dstFile = StandardlizePath(dstFile);
+            dstFile = EUtil.StandardlizePath(dstFile);
             assets[srcFile] = dstFile;
 
             //UnityEngine.Debug.Log("srcFile: " + srcFile + " => dstFile: " + dstFile);

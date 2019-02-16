@@ -6,11 +6,6 @@ local GameEvent = GameEvent
 local LogError = LogError
 
 local Time = Time
-local initModulesCount = 0
-
-function GetInitedNum()
-    return initModulesCount
-end
 
 local function InitModule()
     for _, name in ipairs(modules) do
@@ -20,7 +15,6 @@ local function InitModule()
         else
             LogError("module %s init fail!", name)
         end
-        initModulesCount = initModulesCount + 1
     end
 end
 local function Init()

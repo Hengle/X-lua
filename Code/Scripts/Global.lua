@@ -82,5 +82,5 @@ function LuaGC()
     local before = collectgarbage("count")
     collectgarbage("collect")
     local after = collectgarbage("count")
-    print(string.format("GC Before:%.1fKB, After %.1fKB", before, after))
+    print(string.format("GC Before:%.1fKB, After %.1fKB, -%.1fKB", before, after, before - after))
 end

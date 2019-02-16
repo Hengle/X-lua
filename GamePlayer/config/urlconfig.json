@@ -1,10 +1,10 @@
 {
-    "UpdateAppUrl": "http://xxdl.autopatch.173.com/xx/updateapp.txt",
+    "UpdateAppUrl": "http://127.0.0.1:8081/updateapp.txt",
     "UpdateResUrls": [
-        "http://xxws.autopatch.173.com/xxx/",
-        "http://xxdl.autopatch.173.com/xxx/",
-        "http://120.132.45.44/xxx/"
+        "http://127.0.0.1:8081/",
+        "http://127.0.0.1:8081/",
+        "http://127.0.0.1:8081/"
     ],
-    "AndroidServerListUrl": "http://xxws.autopatch.173.com/xx/updateapp.txt",
-    "IosServerListUrl": "http://xxdl.autopatch.173.com/xxx/updateapp.txt"
+    "AndroidServerListUrl": "http://127.0.0.1:8081/Android/server.txt",
+    "IosServerListUrl": "http://127.0.0.1:8081/IOS/server.txt"
 }

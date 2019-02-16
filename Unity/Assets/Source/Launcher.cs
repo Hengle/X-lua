@@ -40,20 +40,20 @@ namespace Game
         private static Launcher _ins;
         private Dictionary<LaunchState, string> _launcher = new Dictionary<LaunchState, string>()
         {
-            {LaunchState.CheckDevice                         ,  "检查设备"},
-            {LaunchState.CheckUnzipData                      ,  "检查解压数据"},
-            {LaunchState.GetServerList                       ,  "加载服务器列表"},
-            {LaunchState.CheckVersion                        ,  "检查版本"},
+            {LaunchState.CheckDevice                                 ,  "检查设备"},
+            {LaunchState.CheckUnzipData                              ,  "检查解压数据"},
+            {LaunchState.GetServerList                               ,  "加载服务器列表"},
+            {LaunchState.CheckVersion                                ,  "检查版本"},
             {LaunchState.DownloadHotfixRes                           ,  "下载热更资源"},
-            {LaunchState.PreloadAssets                       ,  "预加载资源"},
-            {LaunchState.InitScripts                             ,  "初始化脚本"},
-            {LaunchState.StartGame                           ,  "开始游戏"},
+            {LaunchState.PreloadAssets                               ,  "预加载资源"},
+            {LaunchState.InitScripts                                 ,  "初始化Lua脚本"},
+            {LaunchState.StartGame                                   ,  "开始游戏"},
 
-            {LaunchState.MemeryNotEnough                     ,  "内存不足"},
-            {LaunchState.Offline                             ,  "网络断线"},
-            {LaunchState.DownloadVersionFailed               ,  "无法正常下载Version信息"},
-            {LaunchState.DownloadMD5TableFailed              ,  "无法正常下载MD5Table信息"},
-            {LaunchState.ServerListFailed                    ,  "服务器列表加载失败"},//区服列表信息
+            {LaunchState.MemeryNotEnough                             ,  "内存不足"},
+            {LaunchState.Offline                                     ,  "网络断线"},
+            {LaunchState.DownloadVersionFailed                       ,  "无法正常下载Version信息"},
+            {LaunchState.DownloadMD5TableFailed                      ,  "无法正常下载MD5Table信息"},
+            {LaunchState.ServerListFailed                            ,  "服务器列表加载失败"},//区服列表信息
         };
 
         public IEnumerator StartLaunch()
@@ -79,13 +79,14 @@ namespace Game
         public void SetLaunchState(LaunchState state, float value)
         {
             string name = "";
-            if (_launcher.TryGetValue(state, out name))
+            if (!_launcher.TryGetValue(state, out name))
             {
                 Debug.LogErrorFormat("_launcher[{0}] = null ~", state);
                 return;
             }
             //--设置状态标题
             //--设置百分比
+            Debug.LogFormat("[{0}]{1}\t{2}", state, name, value);
         }
         /// <summary>
         /// 设置启动器子标题

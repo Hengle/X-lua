@@ -7,16 +7,6 @@ namespace Game
 {
     public class PoolManager : IManager
     {
-        public static PoolManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new PoolManager();
-                return _instance;
-            }
-        }
-        static PoolManager _instance;
         public PoolManager() { }
 
         public int Count { get { return _objectPools.Count; } }

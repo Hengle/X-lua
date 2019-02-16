@@ -20,7 +20,7 @@ namespace Game
         //TODO
   
 
-        public void Init() { _asyncOpt = new AsyncOperation(); }
+        public void Init() { _asyncOpt = null; }
         public void Release()
         {
             System.GC.Collect();
@@ -28,7 +28,6 @@ namespace Game
         }
         public void Dispose()
         {
-            _sceneBundle.Unload(true);
             _sceneBundle = null;
             _asyncOpt = null;
             _onSceneLoadFinish = null;
@@ -50,6 +49,7 @@ namespace Game
                 if (action != null)
                 {
                     action(result);
+                    action = null;
                 }
             };
         }
@@ -60,7 +60,7 @@ namespace Game
         {
             _sceneName = sceneName;
 
-            string sceneFile = string.Format("scene/scene_{0}.bundle", sceneName);
+            string sceneFile = string.Format("scene/s_{0}.bundle", sceneName);
             Client.ResMgr.AddTask(sceneFile, LoadFinishedEventHandler,
                     (int)(ResourceLoadType.LoadBundleFromFile) | (int)(ResourceLoadType.ReturnAssetBundle));
             Release();
@@ -89,7 +89,6 @@ namespace Game
 
             if (_asyncOpt.isDone && _onSceneLoadFinish != null)
                 _onSceneLoadFinish(true);
-            _asyncOpt = null;
         }
     }
 }

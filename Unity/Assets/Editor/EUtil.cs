@@ -19,12 +19,19 @@ namespace GameEditor
             }
             return Application.dataPath + path.Substring(0, 6);
         }
-        /// <summary>
-        /// \ 转换 /
-        /// </summary>
+
         public static string StandardlizePath(string path)
         {
-            return path.Replace(@"\", @"/");
+            return StandardlizePath(path, false);
+        }
+        /// <summary>
+        /// 标准化路径,'\'转化'/'
+        /// </summary>
+        /// <param name="path">资源路径</param>
+        public static string StandardlizePath(string path, bool toLower = true)
+        {
+            string pathReplace = path.Replace(@"\", @"/");
+            return toLower ? pathReplace.ToLower() : pathReplace;
         }
 
         /// <summary>

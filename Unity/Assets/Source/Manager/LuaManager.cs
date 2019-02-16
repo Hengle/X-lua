@@ -86,6 +86,10 @@ namespace Game
             _luaEnv.DoString(require, name, _luaEnv.Global);
             return _luaEnv.Global.GetInPath<LuaTable>(name);
         }
+        public T GetLuaFunc<T>(string name)
+        {
+            return _luaEnv.Global.Get<T>(name);
+        }
     }
 
 }

@@ -30,7 +30,7 @@ namespace Game
 
             GameMgr.Init();
 
-            Debug.LogError(Application.persistentDataPath);
+            //Debug.LogError(Application.persistentDataPath);
         }
 
         void Update()

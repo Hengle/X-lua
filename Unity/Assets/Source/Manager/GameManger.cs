@@ -13,6 +13,9 @@ namespace Game
             Interface.Create();
             Interface.Instance.Init();
 
+            Client.LuaMgr.Init();
+            Client.SceneMgr.Init();
+            Client.PoolMgr.Init();
             Client.Ins.StartCoroutine(Start());
         }
 
@@ -25,8 +28,7 @@ namespace Game
             yield return GetServerList();//加载本地Url配置信息
             yield return CheckVersion();//检查资源版本,判断是否需要更新
             yield return PreloadAssets();//开始初始化lua
-            yield return InitScripts();//开始初始化lua
-            yield return StartGame();//进入游戏登入场景,并且销毁资源更新场景
+            yield return StartGame();//开始初始化lua,进入游戏登入场景,并且销毁资源更新场景
         }
 
         IEnumerator CheckDevice()
@@ -61,6 +63,7 @@ namespace Game
         }
         IEnumerator CheckVersion()
         {
+            Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 0f);
             yield return Client.UpdateMgr.CheckVersion();
         }
         IEnumerator PreloadAssets()
@@ -72,28 +75,18 @@ namespace Game
                 Launcher.Ins.SetLaunchState(LaunchState.PreloadAssets, Client.ResMgr.PreloadPrograss);
             }
         }
-        IEnumerator InitScripts()
+        IEnumerator StartGame()
         {
             Client.LuaMgr.AddSearchPath(ConstSetting.LuaDir);
             Client.LuaMgr.InitScripts();
-            var modules = Client.LuaMgr.LuaEnv.Global.GetInPath<XLua.LuaTable>("Modules");
-            var GetInitedNum = Client.LuaMgr.LuaEnv.Global.GetInPath<System.Func<int>>("GetInitedNum");
-            while (GetInitedNum() != modules.Length)
-            {
-                yield return null;
-                Launcher.Ins.SetLaunchState(LaunchState.InitScripts, GetInitedNum() * 1f / modules.Length);
-            }
+            Launcher.Ins.SetLaunchState(LaunchState.InitScripts, 1);
 
-            GetInitedNum = null;
-            modules.Dispose();
-            modules = null;
-        }
-        IEnumerator StartGame()
-        {
-            while (!Client.SceneMgr.AsyncOpt.isDone)
+            var sceneMgr = Client.SceneMgr;
+            while (sceneMgr.AsyncOpt == null || !sceneMgr.AsyncOpt.isDone)
             {
                 yield return null;
-                Launcher.Ins.SetLaunchState(LaunchState.StartGame, Client.SceneMgr.AsyncOpt.progress);
+                float value = sceneMgr.AsyncOpt == null ? 0 : sceneMgr.AsyncOpt.progress;
+                Launcher.Ins.SetLaunchState(LaunchState.StartGame, value);
             }
         }
 

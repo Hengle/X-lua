@@ -1,10 +1,10 @@
 ManifestFileVersion: 0
-CRC: 2392908737
+CRC: 231550965
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: scene/s_transition.bundle
+      Name: scene/s_login.bundle
       Dependencies: {}
     Info_1:
-      Name: scene/s_login.bundle
+      Name: scene/s_transition.bundle
       Dependencies: {}

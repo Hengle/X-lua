@@ -84,14 +84,15 @@ namespace Game
         private Queue<CompleteTask> _delayLoadTask = new Queue<CompleteTask>();
 
         //所有资源的依赖信息,由OnlyRead目录和ReadWrite目录组合
-        private Dictionary<string, string[]> _assetDependencies = new Dictionary<string, string[]>();
+        private Dictionary<string, List<string>> _assetDependencies = new Dictionary<string, List<string>>();
 
         private bool _canStartCleanupMemeory = true;
         private const float _cleanupMemInterval = 180;
         private const float _cleanupCacheInterval = 120;
         private const float _cleanupBundleInterval = 30;
 
-        private string _preloadListPath = "config/preloadlist.txt";
+        private const string _dependencyPath = "config/dependency";
+        private const string _preloadListPath = "config/preloadlist.txt";
         private List<string> _preloadList = new List<string>();
         private int _currentPreLoadCount = 0;
 
@@ -125,27 +126,39 @@ namespace Game
             _assetLoadTaskPool.AutoCreate = () => new AssetLoadTask();
             _loadTaskPool.AutoCreate = () => new CompleteTask();
 
-            byte[] stream = null;
-            string path = "";
-#if UNITY_EDITOR || UNITY_EDITOR_WIN
-            path = GetResPath("GamePlayer");
-#elif UNITY_ANDROID
-            path = GetResPath("Android");
-#elif UNITY_IOS
-            path = GetResPath("IOS");
-#endif
-            if (!File.Exists(path)) return;
-            stream = File.ReadAllBytes(path);
-            var assetbundle = AssetBundle.LoadFromMemory(stream);
-            AssetBundleManifest manifest = assetbundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-            string[] assets = manifest.GetAllAssetBundles();
-            for (int i = 0; i < assets.Length; i++)
-            {
-                string[] dependencies = manifest.GetAllDependencies(assets[i]);
-                _assetDependencies.Add(assets[i], dependencies);
-            }
-
+            LoadDependencyConfig();
             PreLoadResource();
+        }
+
+        private void LoadDependencyConfig()
+        {
+            string dataPath = GetResPath(_dependencyPath);
+
+            if (!File.Exists(dataPath))
+                return;
+
+            FileStream fs = new FileStream(dataPath, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fs);
+
+            int size = br.ReadInt32();
+            string resname;
+            string depname;
+
+            for (int i = 0; i < size; i++)
+            {
+                resname = br.ReadString();
+                int count = br.ReadInt32();
+                if (!_assetDependencies.ContainsKey(resname))
+                    _assetDependencies[resname] = new List<string>();
+                for (int j = 0; j < count; ++j)
+                {
+                    depname = br.ReadString();
+                    _assetDependencies[resname].Add(depname);
+                }
+
+            }
+            br.Close();
+            fs.Close();
         }
 
         /*
@@ -221,10 +234,10 @@ namespace Game
 
         public void AddRefCount(string bundlename)
         {
-            string[] dependencies = _assetDependencies[bundlename];
-            if (dependencies != null && dependencies.Length > 0)
+            if (_assetDependencies.ContainsKey(bundlename))
             {
-                for (int i = 0; i < dependencies.Length; i++)
+                List<string> dependencies = _assetDependencies[bundlename];
+                for (int i = 0; i < dependencies.Count; i++)
                 {
                     string depname = dependencies[i];
                     if (!_persistantObjects.ContainsKey(depname))
@@ -240,10 +253,10 @@ namespace Game
         }
         public void RemoveRefCount(string bundlename)
         {
-            string[] dependencies = _assetDependencies[bundlename];
-            if (dependencies != null && dependencies.Length > 0)
+            if (_assetDependencies.ContainsKey(bundlename))
             {
-                for (int i = 0; i < dependencies.Length; i++)
+                List<string> dependencies = _assetDependencies[bundlename];
+                for (int i = 0; i < dependencies.Count; i++)
                 {
                     string depname = dependencies[i];
                     if (_refCount.ContainsKey(depname))
@@ -325,13 +338,7 @@ namespace Game
                 ptList = new List<uint>();
                 ptList.Add(parentTaskId);
             }
-            if (!_assetDependencies.ContainsKey(lowerFile))
-            {
-                Debug.LogErrorFormat("资源列表中不存在资源{0}", lowerFile);
-                return 0;
-            }
 
-            string[] deps = _assetDependencies[lowerFile];
             var task = _assetLoadTaskPool.Get();
             {
                 task.id = id;
@@ -339,7 +346,7 @@ namespace Game
                 task.path = lowerFile;
                 task.loadType = loadType;
                 task.actions = action;
-                task.dependencies = deps == null ? null : new List<string>(deps);
+                task.dependencies = _assetDependencies.ContainsKey(lowerFile) ? _assetDependencies[lowerFile] : null;
                 task.loadedDependenciesCount = 0;
             };
             _loadingFiles[lowerFile] = task;
@@ -492,8 +499,7 @@ namespace Game
         //Asset加载完毕,可能是依赖资源,也可能是主资源
         private void OnAseetsLoaded(AssetLoadTask task, AssetBundle ab, Object obj)
         {
-            string[] dependencies = _assetDependencies[task.path];
-            if (dependencies == null || dependencies.Length == 0)
+            if (_assetDependencies.ContainsKey(task.path))
             {
                 RemoveRefCount(task.path);
             }

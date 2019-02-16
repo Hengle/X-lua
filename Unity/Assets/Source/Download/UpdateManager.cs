@@ -48,7 +48,7 @@ namespace Game
         /// <summary>
         /// 当前版本下,持续化目录下载的资源
         /// </summary>
-        private HashSet<string> _hasDownload;
+        private HashSet<string> _hasDownload = new HashSet<string>();
 
         private string _urlRoot = "http://localhost:8086/";
         private readonly object _obj = new object();
@@ -94,7 +94,8 @@ namespace Game
         public IEnumerator CheckVersion()
         {
 #if UNITY_EDITOR
-            yield return null;
+            Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 1f);
+            yield break;
 #endif
 
             Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 0.2f);

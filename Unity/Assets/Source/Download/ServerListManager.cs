@@ -18,7 +18,7 @@ namespace Game
         /// <summary>
         /// 服务器区服列表
         /// </summary>
-        public string ServerList { get { return _serverList; } }
+        public string ServerTable { get { return _serverTable; } }
 
         internal class UrlConfig
         {
@@ -29,7 +29,7 @@ namespace Game
             public string IosServerListUrl;
         }
         private UrlConfig _config;
-        private string _serverList;
+        private string _serverTable;
 
         public void Init() { }
         public void Dispose() { _config = null; }
@@ -49,11 +49,9 @@ namespace Game
             WWW www = new WWW(url);
             yield return www;
             if (www.error != null)
-            {
-                Debug.LogErrorFormat("服务无{0}配置文件.", url);
-                yield break;
-            }
-            _serverList = www.text;
+                Debug.LogErrorFormat("服务器无{0}配置文件.\n{1}", url, www.error);
+            else
+                _serverTable = www.text;
         }
     }
 }
