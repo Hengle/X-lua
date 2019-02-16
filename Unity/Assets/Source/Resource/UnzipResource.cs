@@ -2,29 +2,49 @@
 using UnityEngine;
 using System.Collections;
 using ICSharpCode.SharpZipLib.Zip;
+using System.Threading;
 
 namespace Game
 {
     public partial class ResourceManager
     {
-
-
-
+        byte[] _dataZip = null;
+        string _dataPath = null;
         public IEnumerator CheckUnzipData()
         {
+#if UNITY_EDITOR && !GAME_SIMULATION
+            yield break;
+#endif
             if (Client.UpdateMgr.HasdownloadFile)
                 yield break;
 
             string zip = Util.StreamingPath + "data.zip";
+#if GAME_SIMULATION
+            zip = Application.streamingAssetsPath + "/data.zip";
+#endif
+            Debug.LogError(zip);
             WWW www = new WWW(zip);
             yield return www;
             if (www.error != null)
             {
-                Debug.LogError("解压data.zip失败!");
+                Debug.LogError("解压data.zip失败!\n" + www.error);
                 yield break;
             }
 
-            MemoryStream stream = new MemoryStream(www.bytes);
+            _dataZip = www.bytes;
+            _dataPath = Util.DataPath;
+            www.Dispose();
+            www = null;
+            Thread thread = new Thread(UnzipRaw);
+            thread.Start();
+
+            while (_dataZip != null)
+                yield return null;
+        }
+
+        private void UnzipRaw()
+        {
+            MemoryStream stream = new MemoryStream(_dataZip);
             using (ZipFile zfile = new ZipFile(stream))
             {
                 long count = zfile.Count;
@@ -38,7 +58,7 @@ namespace Game
                     if (string.IsNullOrEmpty(filePath))
                         continue;
 
-                    filePath = Util.DataPath + filePath;
+                    filePath = _dataPath + filePath;
                     string subDirectoryName = Path.GetDirectoryName(filePath);
                     if (!string.IsNullOrEmpty(subDirectoryName) && !Directory.Exists(subDirectoryName))
                     {
@@ -72,6 +92,9 @@ namespace Game
                 }
                 zfile.Close();
             }
+
+            _dataZip = null;
+            _dataPath = null;
         }
 
         private void ClearDataPath()

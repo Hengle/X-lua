@@ -1,0 +1,10 @@
+{
+    "UpdateAppUrl": "http://127.0.0.1:8081/updateapp.txt",
+    "UpdateResUrls": [
+        "http://127.0.0.1:8081/",
+        "http://127.0.0.1:8081/",
+        "http://127.0.0.1:8081/"
+    ],
+    "AndroidServerListUrl": "http://127.0.0.1:8081/Android/server.txt",
+    "IosServerListUrl": "http://127.0.0.1:8081/IOS/server.txt"
+}

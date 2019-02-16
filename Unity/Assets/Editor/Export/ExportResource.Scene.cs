@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GameEditor;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 
@@ -8,11 +9,18 @@ public partial class ExportResource
     //TODO
 
     static Dictionary<string, string> assetScenes = new Dictionary<string, string>();
-
+    static List<string> excludeScenes = new List<string>() { "ResourcesUpdate", "TEST" };
     static void GetSceneAssets()
     {
         assetScenes.Clear();
         GetAssetsRecursively("Assets/Environment/Scenes/", "*.unity", "scene/", "s", ref assetScenes);
+        for (int i = 0; i < excludeScenes.Count; i++)
+        {
+            string path = EUtil.StandardlizePath("Assets/Environment/Scenes/" + excludeScenes[i] + ".unity");
+            path = EUtil.UnityPath2FilePath(path);
+            if (assetScenes.ContainsKey(path))
+                assetScenes.Remove(path);
+        }
     }
 
     static void ExportAllScenes(BuildTarget target)

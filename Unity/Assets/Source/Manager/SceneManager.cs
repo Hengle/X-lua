@@ -47,10 +47,7 @@ namespace Game
                     _sceneBundle.Unload(false);
                 }
                 if (action != null)
-                {
-                    action(result);
-                    action = null;
-                }
+                    action(result);                  
             };
         }
         /// <summary>

@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Game
 {
+    //GAME_SIMULATION:游戏模拟正式操作宏,例如热更,解压等操作
+
     public class ConstSetting
     {
         #region 游戏配置
@@ -42,12 +44,12 @@ namespace Game
         /// <summary>
         /// 服务器Url配置
         /// </summary>
-        public static readonly string UrlConfig = "urlconfig.json";
+        public static readonly string UrlConfig       = "urlconfig.json";
         #endregion
 
 
 #if UNITY_EDITOR
-        public static readonly string LuaDir          = Util.DataPath + "../Code/Scripts";
+        public static readonly string LuaDir          = Util.DataPath + "../../Code/Scripts";
 #else
         public static readonly string LuaDir          = Util.DataPath + "Scripts"; 
 #endif

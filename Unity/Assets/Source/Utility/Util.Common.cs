@@ -90,6 +90,8 @@ namespace Game
             }
         }
 
+        private static string _dataPath;
+        private static string _streamingPath;
         /// <summary>
         /// 热更后资源读取目录
         /// 取得数据存放目录-可读写目录(可包含美术资源,脚本,配置)
@@ -98,22 +100,30 @@ namespace Game
         {
             get
             {
-                string path = string.Empty;
+                if (_dataPath != null)
+                    return _dataPath;
+
                 switch (Application.platform)
                 {
                     case RuntimePlatform.Android:
                     case RuntimePlatform.IPhonePlayer:
-                        path = Application.persistentDataPath + "/";
+                        _dataPath = Application.persistentDataPath + "/Data/";
                         break;
                     case RuntimePlatform.WindowsPlayer:
-                        path = "file://" + Application.persistentDataPath + "/";
+                        _dataPath = "file://" + Application.persistentDataPath + "/Data/";
                         break;
                     case RuntimePlatform.WindowsEditor:
                     case RuntimePlatform.OSXEditor:
-                        path = Application.dataPath + "/../../GamePlayer/";
+#if UNITY_EDITOR && !GAME_SIMULATION
+                        _dataPath = Application.dataPath + "/../../GamePlayer/Data/";
+#else
+                        _dataPath = Application.dataPath + "/../../Hotfix/Data/";
+                        if (!File.Exists(_dataPath))
+                            Debug.LogError("热更路径不存在!\n" + _dataPath);
+#endif
                         break;
                 }
-                return path;
+                return _dataPath;
             }
         }
         /// <summary>
@@ -123,25 +133,32 @@ namespace Game
         {
             get
             {
-                string path = string.Empty;
+                if (_streamingPath != null)
+                    return _streamingPath;
+
                 switch (Application.platform)
                 {
                     case RuntimePlatform.Android:
-                        path = "jar:file://" + Application.dataPath + "!/assets/";
+                        _streamingPath = "jar:file://" + Application.dataPath + "!/assets/Data/";
                         break;
                     case RuntimePlatform.IPhonePlayer:
-                        path = Application.dataPath + "/Raw/";
+                        _streamingPath = Application.dataPath + "/Raw/Data/";
                         break;
                     case RuntimePlatform.WindowsPlayer:
-                        path = "file://" + Application.streamingAssetsPath + "/";
+                        _streamingPath = "file://" + Application.streamingAssetsPath + "/Data/";
                         break;
                     case RuntimePlatform.WindowsEditor:
                     case RuntimePlatform.OSXEditor:
-                        path = Application.dataPath + "/../../GamePlayer/";
+                        _streamingPath = Application.dataPath + "/../../GamePlayer/Data/";
                         break;
                 }
-                return path;
+                return _streamingPath;
             }
+        }
+        public static void ResetPath()
+        {
+            _dataPath = null;
+            _streamingPath = null;
         }
 
         /// <summary>
@@ -153,7 +170,7 @@ namespace Game
             {
                 return Application.internetReachability != NetworkReachability.NotReachable;
             }
-        } 
+        }
 
         /// <summary>
         /// 是否是无线

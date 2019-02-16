@@ -30,7 +30,7 @@ namespace Game
 
             GameMgr.Init();
 
-            //Debug.LogError(Application.persistentDataPath);
+            Debug.LogError(Util.DataPath);
         }
 
         void Update()
@@ -47,8 +47,8 @@ namespace Game
             UpdateMgr.Dispose();
             ResMgr.Dispose();
             PoolMgr.Dispose();
-            LuaMgr.Dispose();
             SceneMgr.Dispose();
+            LuaMgr.Dispose();
             GameMgr.Dispose();
 
             SceneMgr = null;
@@ -61,6 +61,11 @@ namespace Game
             LuaMgr = null;
 
             Ins = null;
+        }
+
+        private void OnGUI()
+        {
+            Launcher.Ins.OnGUI();
         }
     }
 }

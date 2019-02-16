@@ -93,11 +93,6 @@ namespace Game
         /// </summary>
         public IEnumerator CheckVersion()
         {
-#if UNITY_EDITOR
-            Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 1f);
-            yield break;
-#endif
-
             Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 0.2f);
             _localVersion = LoadLocalFile(ConstSetting.ResVersionFile);
             string[] nodes = _localVersion.Split(",".ToCharArray());

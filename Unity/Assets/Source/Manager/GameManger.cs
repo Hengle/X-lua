@@ -49,11 +49,8 @@ namespace Game
         }
         IEnumerator CheckUnzipData()
         {
-#if UNITY_ANDROID || UNITY_IPHONE
             yield return Client.ResMgr.CheckUnzipData();
-#endif
             Launcher.Ins.SetLaunchState(LaunchState.CheckUnzipData, 1f);
-            yield break;
         }
         IEnumerator GetServerList()
         {
@@ -63,7 +60,10 @@ namespace Game
         }
         IEnumerator CheckVersion()
         {
-            Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 0f);
+#if UNITY_EDITOR && !GAME_SIMULATION
+            Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 1f);
+            yield break;
+#endif
             yield return Client.UpdateMgr.CheckVersion();
         }
         IEnumerator PreloadAssets()
@@ -92,6 +92,7 @@ namespace Game
 
         public void Dispose()
         {
+            Util.ResetPath();
             Resources.UnloadUnusedAssets();
         }
     }

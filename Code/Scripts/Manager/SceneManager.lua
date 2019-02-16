@@ -64,7 +64,7 @@ function SceneManager.LoadScene(sceneName, views, callback)
             Transition2Scene(sceneName, views, callback)
         else
             --登出游戏到选人界面[可设定条件]
-            LoadBySceneName(sceneName)
+            --LoadBySceneName(sceneName)
         end
     end)
     Mgr:ChangeMap("Transition")
@@ -75,7 +75,8 @@ function SceneManager.LoadLoginScene()
         if result then
             printcolor('orange', 'Game Start,Ready Go!!')
         else
-            Mgr:ChangeMap("Login")
+            --返回默认场景
+            --Mgr:ChangeMap("Login")
         end
     end)
     SceneManager.LoadScene("Login", {})

@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3520960482
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: scene/s_login.bundle
+      Dependencies: {}
+    Info_1:
+      Name: scene/s_resourcesupdate.bundle
+      Dependencies: {}
+    Info_2:
+      Name: scene/s_test.bundle
+      Dependencies: {}
+    Info_3:
+      Name: scene/s_transition.bundle
+      Dependencies: {}

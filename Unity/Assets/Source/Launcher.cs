@@ -86,7 +86,10 @@ namespace Game
             }
             //--设置状态标题
             //--设置百分比
-            Debug.LogFormat("[{0}]{1}\t{2}", state, name, value);
+
+            //Debug.LogFormat("[{0}]{1}\t{2}", state, name, value);
+            _title = name;
+            _progress = value;
         }
         /// <summary>
         /// 设置启动器子标题
@@ -99,6 +102,16 @@ namespace Game
         public void DisableSubtitle()
         {
 
+        }
+
+        string _title = "";
+        float _progress = 0f;
+
+        public void OnGUI()
+        {
+            float height = Screen.height * 0.1f;
+            GUILayout.Label(_title, GUILayout.Height(height));
+            GUILayout.Label(_progress.ToString("P"), GUILayout.Height(height), GUILayout.Width(200));
         }
     }
 }

@@ -31,14 +31,14 @@ public partial class ExportResource
         switch (target)
         {
             case BuildTarget.Android:
-                platformPath = "Dist/Android";
+                platformPath = "Dist/Android/Data";
                 break;
             case BuildTarget.iOS:
-                platformPath = "Dist/IOS";
+                platformPath = "Dist/IOS/Data";
                 break;
             default:
                 {
-                    platformPath = "GamePlayer";
+                    platformPath = "GamePlayer/Data";
                 }
                 break;
         }
@@ -324,8 +324,7 @@ public partial class ExportResource
             }
             dstFile = EUtil.StandardlizePath(dstFile);
             assets[srcFile] = dstFile;
-
-            //UnityEngine.Debug.Log("srcFile: " + srcFile + " => dstFile: " + dstFile);
+            UnityEngine.Debug.Log("srcFile: " + srcFile + " => dstFile: " + dstFile);
         }
 
         string[] dirs = Directory.GetDirectories(searchFolder);
