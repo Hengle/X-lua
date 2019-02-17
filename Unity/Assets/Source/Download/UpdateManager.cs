@@ -40,7 +40,7 @@ namespace Game
         private List<string> _downloadList = new List<string>();
         private List<string> _redownloadList = new List<string>();
 
-        private readonly ConcurrentQueue<Action> _taskCompleted = new ConcurrentQueue<Action>();
+        private ConcurrentQueue<Action> _taskCompleted = new ConcurrentQueue<Action>();
         private ConcurrentQueue<DownloadTask> _taskQueue = new ConcurrentQueue<DownloadTask>();
 
         private Dictionary<string, AssetInfo> _localMD5Table = new Dictionary<string, AssetInfo>();
@@ -49,20 +49,28 @@ namespace Game
         /// 当前版本下,持续化目录下载的资源
         /// </summary>
         private HashSet<string> _hasDownload = new HashSet<string>();
+        private List<Thread> _threads = new List<Thread>();
 
-        private string _urlRoot = "http://localhost:8086/";
+        private string _urlRoot = "http://localhost:8081/";
         private readonly object _obj = new object();
         private readonly int _threadNum = 5;
         private int _overThreadNum;
+
+        private string _resMD5FileRelPath;
+        private string _resVersionFileRelPath;
+        private string _hasDownloadFileRelPath;
 
         /// <summary>
         /// 对应资源下载完毕
         /// </summary>
         private bool _downloadOver = true;
-        public bool HasdownloadFile { get { return File.Exists(Util.DataPath + ConstSetting.HasDownloadFile); } }
+        public bool HasdownloadFile { get { return File.Exists(string.Format("{0}/../{1}", Util.DataPath, ConstSetting.HasDownloadFile)); } }
 
         public void Init()
         {
+            _resMD5FileRelPath = "../" + ConstSetting.ResMD5File;
+            _resVersionFileRelPath = "../" + ConstSetting.ResVersionFile;
+            _hasDownloadFileRelPath = "../" + ConstSetting.HasDownloadFile;
         }
 
         public void Dispose()
@@ -76,15 +84,14 @@ namespace Game
             _hasDownload.Clear();
         }
 
-        public void Update()
+        IEnumerator Update()
         {
             while (true)
             {
+                yield return null;
                 Action onComplete;
                 if (_taskCompleted.TryDequeue(out onComplete))
                     onComplete();
-                else
-                    break;
             }
         }
 
@@ -94,15 +101,15 @@ namespace Game
         public IEnumerator CheckVersion()
         {
             Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 0.2f);
-            _localVersion = LoadLocalFile(ConstSetting.ResVersionFile);
-            string[] nodes = _localVersion.Split(",".ToCharArray());
+            _localVersion = LoadLocalFile(_resVersionFileRelPath);
+            string[] nodes = _localVersion.Split(".".ToCharArray());
             _localAppVersion = Convert.ToInt32(nodes[0]);
             _localResVersion = Convert.ToInt32(nodes[1]);
 
             _downloadOver = false;
-            for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResUrls.Count; i++)
+            for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResServer.Count; i++)
             {
-                _urlRoot = Client.ServerMgr.UpdateResUrls[i];
+                _urlRoot = Client.ServerMgr.UpdateResServer[i];
                 yield return DwonloadRemoteVersion();
                 Launcher.Ins.SetLaunchState(LaunchState.CheckVersion, 0.3f + i * 0.1f);
             }
@@ -124,12 +131,13 @@ namespace Game
             if (_localResVersion >= _remoteResVersion)
                 yield break;
 
-            _localMD5Table = PaseMD5Table(LoadLocalFile(ConstSetting.ResMD5File));
+            string localMD5File = LoadLocalFile(_resMD5FileRelPath);
+            _localMD5Table = PaseMD5Table(localMD5File);
 
             _downloadOver = false;
-            for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResUrls.Count; i++)
+            for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResServer.Count; i++)
             {
-                _urlRoot = Client.ServerMgr.UpdateResUrls[i];
+                _urlRoot = Client.ServerMgr.UpdateResServer[i];
                 yield return DwonloadRemoteMD5Table();
             }
             if (!_downloadOver)
@@ -138,8 +146,9 @@ namespace Game
                 Launcher.Ins.SetLaunchState(LaunchState.DownloadMD5TableFailed, 1f);
                 yield break;
             }
-            string hasDownloadText = LoadLocalFile(ConstSetting.HasDownloadFile);
-            string[] files = hasDownloadText.Split("\r\n".ToCharArray());
+
+            string localHasDownloadTxt = LoadLocalFile(_hasDownloadFileRelPath);
+            string[] files = localHasDownloadTxt.Split("\r\n".ToCharArray());
             _hasDownload = new HashSet<string>(files);
 
             _downloadOver = false;
@@ -158,9 +167,9 @@ namespace Game
                 }
             }
 
-            SaveTableFile(_hasDownload, Util.DataPath + ConstSetting.HasDownloadFile);
-            SaveTableFile(_remoteMD5Table.Values, Util.DataPath + ConstSetting.ResMD5File);
-            File.WriteAllText(Util.DataPath + ConstSetting.ResVersionFile, _remoteVersion);
+            SaveTableFile(_hasDownload, Util.DataPath + _hasDownloadFileRelPath);
+            SaveTableFile(_remoteMD5Table.Values, Util.DataPath + _resMD5FileRelPath);
+            File.WriteAllText(Util.DataPath + _resVersionFileRelPath, _remoteVersion);
         }
 
         IEnumerator BeginDownloadApplication()
@@ -170,14 +179,15 @@ namespace Game
         IEnumerator BeginDownloadAssets()
         {
             ServicePointManager.DefaultConnectionLimit = 50;
-            float unit = 1024 * 1024 * 1024;//mb
+            float unit = 1024 * 1024;//mb
             float totalSize = _totalDownloadSize / unit;
 
+            Client.Ins.StartCoroutine(Update());
             Launcher.Ins.SetLaunchState(LaunchState.DownloadHotfixRes, 0f);
-            Debug.Log("Begin Download Assets Time = " + Time.realtimeSinceStartup);
-            for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResUrls.Count; i++)
+            Debug.LogFormat("Begin Download Assets Time = {0}", Time.realtimeSinceStartup);
+            for (int i = 0; !_downloadOver && i < Client.ServerMgr.UpdateResServer.Count; i++)
             {
-                _urlRoot = Client.ServerMgr.UpdateResUrls[i];
+                _urlRoot = Client.ServerMgr.UpdateResServer[i];
                 _taskQueue.Clear();
                 _redownloadList.Clear();
                 for (int j = 0; j < _downloadList.Count; j++)
@@ -193,14 +203,15 @@ namespace Game
                 if (_taskQueue.Count > 0)
                 {
                     _overThreadNum = 0;
-                    for (int k = 0; k < 5; ++k)
+                    for (int k = 0; k < _threadNum; ++k)
                     {
                         Thread thread = new Thread(DownloadThreadProc);
                         thread.Name = "DownloadThread:" + k;
                         thread.Start();
+                        _threads.Add(thread);
                     }
 
-                    while (_overThreadNum < 5 || _taskCompleted.Count > 0)
+                    while (_overThreadNum < _threadNum || _taskCompleted.Count > 0)
                     {
                         Launcher.Ins.SetLaunchState(LaunchState.DownloadHotfixRes, _downloadSize * 1f / _totalDownloadSize);
                         Launcher.Ins.SetSubtitle(string.Format("{0:N2}MB/{1:N2}MB", _downloadSize / unit, totalSize));
@@ -220,14 +231,18 @@ namespace Game
                     //下载完毕
 
                     Launcher.Ins.SetLaunchState(LaunchState.DownloadHotfixRes, 1f);
-                    yield break;
+                    break;
                 }
             }
+
+            Client.Ins.StopCoroutine(Update());
+            for (int i = 0; i < _threads.Count; i++)
+                _threads[i].Abort();
         }
 
         IEnumerator DwonloadRemoteVersion()
         {
-            string url = GetRemotePath(ConstSetting.ResVersionFile);
+            string url = GetRemotePath(_resVersionFileRelPath);
             using (WWW www = new WWW(url))
             {
                 yield return www;
@@ -237,7 +252,7 @@ namespace Game
                     yield break;
                 }
                 _remoteVersion = www.text.Trim();
-                string[] nodes = _remoteVersion.Split(",".ToCharArray());
+                string[] nodes = _remoteVersion.Split(".".ToCharArray());
                 _remoteAppVersion = Convert.ToInt32(nodes[0]);
                 _remoteResVersion = Convert.ToInt32(nodes[1]);
             }
@@ -245,7 +260,7 @@ namespace Game
         }
         IEnumerator DwonloadRemoteMD5Table()
         {
-            string url = GetRemotePath(ConstSetting.ResMD5File);
+            string url = GetRemotePath(_resMD5FileRelPath);
             using (WWW www = new WWW(url))
             {
                 yield return www;
@@ -278,10 +293,12 @@ namespace Game
         string GetRemotePath(string file)
         {
 #if UNITY_ANDROID
-            string path = string.Format("{0}android/{1}", _urlRoot, file);
+            string path = string.Format("{0}Android/Data/{1}", _urlRoot, file);
 #elif UNITY_IPHONE
-            string path = string.Format("{0}ios/{1}", _urlRoot, file);
-#else
+            string path = string.Format("{0}IOS/Data/{1}", _urlRoot, file);
+#elif GAME_SIMULATION
+            string path = string.Format("{0}PC/Data/{1}", _urlRoot, file);
+#elif UNITY_EDITOR && !GAME_SIMULATION
             string path = "";
 #endif
             return path;
@@ -307,9 +324,12 @@ namespace Game
         {
             var table = new Dictionary<string, AssetInfo>();
             string[] lines = md5Table.Split("\r\n".ToCharArray());
-            char[] splits = new char[] { ';' };
+            char[] splits = new char[] { ',' };
             for (int i = 0; i < lines.Length; i++)
             {
+                if (string.IsNullOrEmpty(lines[i]))
+                    continue;
+
                 string[] nodes = lines[i].Split(splits);
                 if (!table.ContainsKey(nodes[0]))
                     table.Add(nodes[0], new AssetInfo()
@@ -366,7 +386,7 @@ namespace Game
             }
 
             _downloadOver = _downloadList.Count == 0;
-            Debug.Log("DownloadList Count = " + _downloadList.Count + ", Size = " + _totalDownloadSize);
+            Debug.LogFormat("DownloadList Count = {0}, Size = {1:F2} MB", _downloadList.Count, _totalDownloadSize / 1024f / 1024f);
         }
         void SaveTableFile(IEnumerable enumerable, string path)
         {

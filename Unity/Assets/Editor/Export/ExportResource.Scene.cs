@@ -17,7 +17,6 @@ public partial class ExportResource
         for (int i = 0; i < excludeScenes.Count; i++)
         {
             string path = EUtil.StandardlizePath("Assets/Environment/Scenes/" + excludeScenes[i] + ".unity");
-            path = EUtil.UnityPath2FilePath(path);
             if (assetScenes.ContainsKey(path))
                 assetScenes.Remove(path);
         }

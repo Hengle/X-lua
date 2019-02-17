@@ -17,7 +17,7 @@ namespace GameEditor
                 Debug.LogError("非UnityPath - " + path);
                 return path;
             }
-            return Application.dataPath + path.Substring(0, 6);
+            return Application.dataPath + path.Substring(6, path.Length - 6);
         }
 
         public static string StandardlizePath(string path)

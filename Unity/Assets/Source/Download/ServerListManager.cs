@@ -14,7 +14,7 @@ namespace Game
         /// <summary>
         /// 资源更新列表
         /// </summary>
-        public List<string> UpdateResUrls { get { return _config.UpdateResUrls; } }
+        public List<string> UpdateResServer { get { return _config.UpdateResServer; } }
         /// <summary>
         /// 服务器区服列表
         /// </summary>
@@ -23,10 +23,11 @@ namespace Game
         internal class UrlConfig
         {
             public string UpdateAppUrl;
-            public List<string> UpdateResUrls;
+            public List<string> UpdateResServer;
 
             public string AndroidServerListUrl;
             public string IosServerListUrl;
+            public string PCServerListUrl;
         }
         private UrlConfig _config;
         private string _serverTable;
@@ -44,12 +45,27 @@ namespace Game
                 yield break;
             }
 
-            string url = Application.platform == RuntimePlatform.Android ?
-              _config.AndroidServerListUrl : _config.IosServerListUrl;
+            string url = "";
+            switch (Application.platform)
+            {
+                case RuntimePlatform.Android:
+                    url = _config.AndroidServerListUrl;
+                    break;
+                case RuntimePlatform.IPhonePlayer:
+                    url = _config.IosServerListUrl;
+                    break;
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.WindowsEditor:
+                    url = _config.PCServerListUrl;
+                    break;
+                default:
+                    Debug.LogErrorFormat("URL配置中未定义平台{0}!", Application.platform);
+                    break;
+            }
             WWW www = new WWW(url);
             yield return www;
             if (www.error != null)
-                Debug.LogErrorFormat("服务器无{0}配置文件.\n{1}", url, www.error);
+                Debug.LogErrorFormat("无法正常加载{0}配置文件.\n{1}", url, www.error);
             else
                 _serverTable = www.text;
         }

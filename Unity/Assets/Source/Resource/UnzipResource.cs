@@ -22,7 +22,7 @@ namespace Game
 #if GAME_SIMULATION
             zip = Application.streamingAssetsPath + "/data.zip";
 #endif
-            Debug.LogError(zip);
+            Debug.Log("解压data:" + zip);
             WWW www = new WWW(zip);
             yield return www;
             if (www.error != null)
@@ -32,7 +32,7 @@ namespace Game
             }
 
             _dataZip = www.bytes;
-            _dataPath = Util.DataPath;
+            _dataPath = Util.DataPath + "../";
             www.Dispose();
             www = null;
             Thread thread = new Thread(UnzipRaw);
@@ -40,6 +40,8 @@ namespace Game
 
             while (_dataZip != null)
                 yield return null;
+
+            thread.Abort();
         }
 
         private void UnzipRaw()
@@ -50,6 +52,10 @@ namespace Game
                 long count = zfile.Count;
                 int i = 0;
 
+                string resmd5 = "Data/" + ConstSetting.ResMD5File;
+                string version = "Data/" + ConstSetting.ResVersionFile;
+                string hasDownload = "Data/" + ConstSetting.HasDownloadFile;
+
                 var iter = zfile.GetEnumerator();
                 while (iter.MoveNext())
                 {
@@ -58,7 +64,16 @@ namespace Game
                     if (string.IsNullOrEmpty(filePath))
                         continue;
 
-                    filePath = _dataPath + filePath;
+                    if (filePath == resmd5)
+                        filePath = _dataPath + ConstSetting.ResMD5File;
+                    else if (filePath == version)
+                        filePath = _dataPath + ConstSetting.ResVersionFile;
+                    else if (filePath == hasDownload)
+                        filePath = _dataPath + ConstSetting.HasDownloadFile;
+                    else
+                        filePath = _dataPath + filePath;
+
+                    Debug.LogFormat("{0}", filePath);
                     string subDirectoryName = Path.GetDirectoryName(filePath);
                     if (!string.IsNullOrEmpty(subDirectoryName) && !Directory.Exists(subDirectoryName))
                     {

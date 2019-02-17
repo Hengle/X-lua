@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Assembly-CSharp" type="Lua_net">
+    <CLASSES>
+      <root url="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

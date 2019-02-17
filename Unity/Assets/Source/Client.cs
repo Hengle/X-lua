@@ -35,7 +35,6 @@ namespace Game
 
         void Update()
         {
-            UpdateMgr.Update();
             ResMgr.Update();
             NetworkMgr.Update();
         }

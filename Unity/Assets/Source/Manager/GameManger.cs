@@ -13,6 +13,7 @@ namespace Game
             Interface.Create();
             Interface.Instance.Init();
 
+            Client.UpdateMgr.Init();
             Client.LuaMgr.Init();
             Client.SceneMgr.Init();
             Client.PoolMgr.Init();
@@ -77,6 +78,9 @@ namespace Game
         }
         IEnumerator StartGame()
         {
+#if GAME_SIMULATION
+            Client.LuaMgr.AddSearchPath(Util.DataPath + "Scripts");
+#endif
             Client.LuaMgr.AddSearchPath(ConstSetting.LuaDir);
             Client.LuaMgr.InitScripts();
             Launcher.Ins.SetLaunchState(LaunchState.InitScripts, 1);

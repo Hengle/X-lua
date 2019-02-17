@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="FairyGUIApi" type="Lua">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

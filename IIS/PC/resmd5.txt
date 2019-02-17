@@ -1,0 +1,93 @@
+data,64e709cd88c81425cfcd52455cd25d8b,1554
+data.manifest,7c9d9171766ac4d9aee50515991d1170,221
+gameplayer,ab383ae98d3a16a361265d66ada494d1,1554
+gameplayer.manifest,520843b28d7137b9b1221c7550d58f5c,230
+config/dependency,f1d3ff8443297732862df21dc4e57262,4
+config/dependencytext,3846a459b3a57f3ad113677fe46fe782,10
+config/preloadlist.txt,57f61ecff4527ac661e5cc65df9f2d43,72
+config/urlconfig.json,8757753b0f6480b5b69a0873b0335195,399
+config/csv/alltype/allclass.data,69b595b7c5a2c97a338b9d8c863656e0,1194
+config/csv/character/model.data,8be879af99c06b57d4f36c9bbd3af75e,411
+config/csv/skill/actorconfig.data,32c7aa76bbc516e27d9adb0ce56aed55,529
+scene/s_login.bundle,e8fe31bf3b64dbd9355ddd315d19e690,101515
+scene/s_login.bundle.manifest,3c83ab9e42f75579ac758eb9522e45ae,652
+scene/s_transition.bundle,65a7122bb2b9eafa51054133b0a7a96f,101014
+scene/s_transition.bundle.manifest,79c719dc1c55610fb94870210d04fa7f,583
+test/1 - 副本 (10) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (10).txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (11) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (11).txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (15) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (16) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (17) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (18) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (19) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (20) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (21) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (22) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (23) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (24) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (25) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (26) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (27) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (28) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (29) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (30) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (31) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (32) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (33) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (34) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (35) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (36) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (37) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (38) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (39) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (40) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (41) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (42) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (43) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (44) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (45) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (46) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (47) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (48) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (49) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (50) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (51) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (52) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (53) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (54) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (55) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (56) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (57) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (58) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (59) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (60) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (61) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (62) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+texture/t_r0.bundle,af4cde2db44167bb72cffc747829cc00,12784
+texture/t_r0.bundle.manifest,b80993032b5a264913d3da955a2255a1,348
+texture/t_r1.bundle,d4a616d3ee3f05d1816be430454a4ccc,12694
+texture/t_r1.bundle.manifest,6b5c0a03e0e4d8d7726df445c2b9cbdc,348
+ui/bag.bundle,1b08d46326b91415cbffb6f551674846,3141
+ui/bag.bundle.manifest,02e4d1568b777cc9127935f890a3e59b,360
+ui/basics.bundle,3a341ae09daa4bf8b16311476d5354e4,12982
+ui/basics.bundle.manifest,ce40c61e42cd5016bbd5c6eb9939f1a4,363
+ui/cooldown.bundle,b075c6fa14d9d1d50e8cf2dd0fd26934,2012
+ui/cooldown.bundle.manifest,42a2eb2951a0def63834b662b10fdd47,365
+ui/guide.bundle,0086a03d12411f4d6d55d47a3b8aee17,2166
+ui/guide.bundle.manifest,09a581156ae2e7037c66f082ba6bcf15,362
+ui/memoji.bundle,4af8c5e8eb866b4a7ec0906606a958ad,3649
+ui/memoji.bundle.manifest,9202cc4c687065b35f1e13e67acb6ba9,363
+ui/mheadbar.bundle,5e7160164a82091e798fe158b884a99c,1764
+ui/mheadbar.bundle.manifest,baf075c2bf583748542ea67fb71cd5eb,365
+ui/mjoystick.bundle,2892c7984992a5af08cf2cb0343f0b0b,1836
+ui/mjoystick.bundle.manifest,9ffd8b353a6f99545a20592158d2ff32,365
+ui/atlas/basesprite.bundle,1c8c22e6f1332f9d3eee6e07019565ca,1570250
+ui/atlas/basesprite.bundle.manifest,009b2aa7edea6f80ad5c949ddfda92fc,457
+ui/atlas/font.bundle,ecb7b3204dcda904c354c9d6ce547ed1,1511698
+ui/atlas/font.bundle.manifest,cb44bd7ef54d470bdc9579e57dc83298,476
+ui/atlas/icon.bundle,207cbf58e06ccfe84253da947185ae84,488915
+ui/atlas/icon.bundle.manifest,07a3d0c37ff208963499a084c0cc81d0,444

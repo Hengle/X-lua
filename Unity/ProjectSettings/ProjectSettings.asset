@@ -539,7 +539,7 @@ PlayerSettings:
   webGLCompressionFormat: 1
   webGLLinkerTarget: 1
   scriptingDefineSymbols:
-    1: ODIN_INSPECTOR
+    1: ODIN_INSPECTOR;GAME_SIMULATION
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}

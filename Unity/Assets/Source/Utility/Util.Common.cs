@@ -118,8 +118,6 @@ namespace Game
                         _dataPath = Application.dataPath + "/../../GamePlayer/Data/";
 #else
                         _dataPath = Application.dataPath + "/../../Hotfix/Data/";
-                        if (!File.Exists(_dataPath))
-                            Debug.LogError("热更路径不存在!\n" + _dataPath);
 #endif
                         break;
                 }
