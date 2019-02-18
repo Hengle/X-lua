@@ -1,27 +1,46 @@
 data,64e709cd88c81425cfcd52455cd25d8b,1554
-data.manifest,7c9d9171766ac4d9aee50515991d1170,221
+data.manifest,95162df66fd791a5b2a852c53ff6d111,231
 gameplayer,ab383ae98d3a16a361265d66ada494d1,1554
-gameplayer.manifest,520843b28d7137b9b1221c7550d58f5c,230
-config/dependency,f1d3ff8443297732862df21dc4e57262,4
-config/dependencytext,3846a459b3a57f3ad113677fe46fe782,10
-config/preloadlist.txt,57f61ecff4527ac661e5cc65df9f2d43,72
-config/urlconfig.json,8757753b0f6480b5b69a0873b0335195,399
-config/csv/alltype/allclass.data,69b595b7c5a2c97a338b9d8c863656e0,1194
-config/csv/character/model.data,8be879af99c06b57d4f36c9bbd3af75e,411
-config/csv/skill/actorconfig.data,32c7aa76bbc516e27d9adb0ce56aed55,529
-scene/s_login.bundle,e8fe31bf3b64dbd9355ddd315d19e690,101515
-scene/s_login.bundle.manifest,3c83ab9e42f75579ac758eb9522e45ae,652
-scene/s_transition.bundle,65a7122bb2b9eafa51054133b0a7a96f,101014
-scene/s_transition.bundle.manifest,79c719dc1c55610fb94870210d04fa7f,583
+gameplayer.manifest,4a367fe1de96c880fe4e7b572d321250,220
+ui/bag.bundle,1b08d46326b91415cbffb6f551674846,3141
+ui/bag.bundle.manifest,1198df3fa8e6ce44be758156a50965db,344
+ui/basics.bundle,3a341ae09daa4bf8b16311476d5354e4,12982
+ui/basics.bundle.manifest,3eafce261af065487ba9cc7fb49ecdf9,347
+ui/cooldown.bundle,b075c6fa14d9d1d50e8cf2dd0fd26934,2012
+ui/cooldown.bundle.manifest,5aa36ac99cbc8ca91bcd38d708ef8fe5,349
+ui/guide.bundle,0086a03d12411f4d6d55d47a3b8aee17,2166
+ui/guide.bundle.manifest,2418b04dd8feaa5f201b5334bd93f86f,346
+ui/memoji.bundle,4af8c5e8eb866b4a7ec0906606a958ad,3649
+ui/memoji.bundle.manifest,307ae9161fab50dda3496e005007c1ab,347
+ui/mheadbar.bundle,5e7160164a82091e798fe158b884a99c,1764
+ui/mheadbar.bundle.manifest,49e0a865833cdab23e25ae0e125ecb9f,349
+ui/mjoystick.bundle,2892c7984992a5af08cf2cb0343f0b0b,1836
+ui/mjoystick.bundle.manifest,1bf3c5899225de67538c23ffbaa10f40,349
+ui/atlas/basesprite.bundle,1c8c22e6f1332f9d3eee6e07019565ca,1570250
+ui/atlas/basesprite.bundle.manifest,adaf4b2bc3feb1e8dcd1ba7cf9f8f57e,438
+ui/atlas/font.bundle,ecb7b3204dcda904c354c9d6ce547ed1,1511698
+ui/atlas/font.bundle.manifest,e7e57d34f0a41e97d4124e8f66734cdd,454
+ui/atlas/icon.bundle,207cbf58e06ccfe84253da947185ae84,488915
+ui/atlas/icon.bundle.manifest,3b3d66d68cd4422d48860a85914345f3,425
+texture/t_r0.bundle,af4cde2db44167bb72cffc747829cc00,12784
+texture/t_r0.bundle.manifest,b80993032b5a264913d3da955a2255a1,348
+texture/t_r1.bundle,d4a616d3ee3f05d1816be430454a4ccc,12694
+texture/t_r1.bundle.manifest,6b5c0a03e0e4d8d7726df445c2b9cbdc,348
 test/1 - 副本 (10) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本 (10).txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (11) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本 (11).txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (12) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (13) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (14) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本 (15) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本 (16) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (17) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (18) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (19) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (2) - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (2) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (2).txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本 (20) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (21) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (22) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
@@ -32,6 +51,9 @@ test/1 - 副本 (26) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (27) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (28) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (29) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (3) - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (3) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (3).txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本 (30) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (31) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (32) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
@@ -42,6 +64,9 @@ test/1 - 副本 (36) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (37) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (38) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (39) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (4) - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (4) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (4).txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本 (40) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (41) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (42) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
@@ -52,6 +77,9 @@ test/1 - 副本 (46) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (47) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (48) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (49) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (5) - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (5) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (5).txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本 (50) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (51) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (52) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
@@ -62,32 +90,109 @@ test/1 - 副本 (56) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (57) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (58) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (59) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (6) - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (6) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (6).txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本 (60) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (61) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
 test/1 - 副本 (62) - 副本.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 (7) - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (7) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (7).txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (8) - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (8) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (8).txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (9) - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (9) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 (9).txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
+test/1 - 副本 - 副本 (2) - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 - 副本 (2).txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 - 副本 (3).txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
+test/1 - 副本 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1 - 副本.txt,98eae17f9d58f2940f1392c4a0cba778,30788209
 test/1.txt,a5b17a475fc5fdca57a2fcdf73a5f65e,17024
-texture/t_r0.bundle,af4cde2db44167bb72cffc747829cc00,12784
-texture/t_r0.bundle.manifest,b80993032b5a264913d3da955a2255a1,348
-texture/t_r1.bundle,d4a616d3ee3f05d1816be430454a4ccc,12694
-texture/t_r1.bundle.manifest,6b5c0a03e0e4d8d7726df445c2b9cbdc,348
-ui/bag.bundle,1b08d46326b91415cbffb6f551674846,3141
-ui/bag.bundle.manifest,02e4d1568b777cc9127935f890a3e59b,360
-ui/basics.bundle,3a341ae09daa4bf8b16311476d5354e4,12982
-ui/basics.bundle.manifest,ce40c61e42cd5016bbd5c6eb9939f1a4,363
-ui/cooldown.bundle,b075c6fa14d9d1d50e8cf2dd0fd26934,2012
-ui/cooldown.bundle.manifest,42a2eb2951a0def63834b662b10fdd47,365
-ui/guide.bundle,0086a03d12411f4d6d55d47a3b8aee17,2166
-ui/guide.bundle.manifest,09a581156ae2e7037c66f082ba6bcf15,362
-ui/memoji.bundle,4af8c5e8eb866b4a7ec0906606a958ad,3649
-ui/memoji.bundle.manifest,9202cc4c687065b35f1e13e67acb6ba9,363
-ui/mheadbar.bundle,5e7160164a82091e798fe158b884a99c,1764
-ui/mheadbar.bundle.manifest,baf075c2bf583748542ea67fb71cd5eb,365
-ui/mjoystick.bundle,2892c7984992a5af08cf2cb0343f0b0b,1836
-ui/mjoystick.bundle.manifest,9ffd8b353a6f99545a20592158d2ff32,365
-ui/atlas/basesprite.bundle,1c8c22e6f1332f9d3eee6e07019565ca,1570250
-ui/atlas/basesprite.bundle.manifest,009b2aa7edea6f80ad5c949ddfda92fc,457
-ui/atlas/font.bundle,ecb7b3204dcda904c354c9d6ce547ed1,1511698
-ui/atlas/font.bundle.manifest,cb44bd7ef54d470bdc9579e57dc83298,476
-ui/atlas/icon.bundle,207cbf58e06ccfe84253da947185ae84,488915
-ui/atlas/icon.bundle.manifest,07a3d0c37ff208963499a084c0cc81d0,444
+scripts/define.lua,006db435a719997a71a525b1a142ffb7,1083
+scripts/global.lua,58257c97b4aa569d54e425a5e0380ac5,2701
+scripts/local.lua,f8e2f9bc3a9140b6a667960d74685e99,536
+scripts/login.lua,3d902ee6189dd648c267a33599b7aecd,418
+scripts/main.lua,500b2f99f5d90bf3573f0b25855fcb5a,2204
+scripts/modules.lua,23b0c3f5785a892368b8dd4d39103545,126
+scripts/protoc.lua,3565381ddbcb9c8f76e8a359cfd6e233,33094
+scripts/xlua/coroutine.lua,3042f6682c95e5d85a64e2ad812d9a6d,3205
+scripts/xlua/extend.lua,2803506147f52b861f7ac0f63301c1cb,22793
+scripts/xlua/memory.lua,df31419f5c361fe3cd2ec037f8269ccc,1595
+scripts/xlua/profiler.lua,c7364d86f5bc3796352db8fdc0396d3d,4487
+scripts/xlua/tdr.lua,d599595081b1af5c8e59f1a760008240,3280
+scripts/xlua/tiny.lua,116dfd0cc66807f11f0f750f1d2be7fa,30226
+scripts/xlua/util.lua,67b5be8718edfa4560238e194b19fbd9,6162
+scripts/unityengine/bounds.lua,f49be1b55fc65b854a5ee98f3dbd6bd8,4677
+scripts/unityengine/color.lua,7fe9ee5cd9f84f756ccb203afe8e950e,6315
+scripts/unityengine/layermask.lua,c1a2c9300a650dafbfd4e0dfcacd9549,1330
+scripts/unityengine/mathf.lua,56ce2b0edf4905aff71dfc87141931b0,5463
+scripts/unityengine/plane.lua,3dd119245d952259197266a1196712dd,2080
+scripts/unityengine/quaternion.lua,c79201c6a3da2f6f31d06f8b937191fa,15202
+scripts/unityengine/ray.lua,6bc639374c319c893add29bbc371df79,1577
+scripts/unityengine/raycasthit.lua,bbb6ccd1c0c5f2e30588993f4b06c3ca,2130
+scripts/unityengine/time.lua,d9a659730c567d8589ecbe3a8f087460,3149
+scripts/unityengine/touch.lua,c27ee245d90f6f989f1988f5c5ea17f9,2300
+scripts/unityengine/vector2.lua,14bed3f1b21c025d292527fb78066e32,7147
+scripts/unityengine/vector3.lua,ed19bb4f32e236c8b511688dcc4500c5,11695
+scripts/unityengine/vector4.lua,24374fa91f3d94986a4bd546133380b3,5027
+scripts/ui/dlgguide.lua,364a5e59cbf0909855994c9637524d2d,374
+scripts/ui/joystick.lua,290fee17b32cc7dc106455c00068c337,5773
+scripts/ui/mjoystick/dlgjoystick.lua,c4e17f8c40b6ebd064aa7913dc896ba6,1116
+scripts/ui/mheadbar/dlgheadbar.lua,1d541296ffc84864e0265b64ac4122b8,822
+scripts/ui/memoji/dlgemoji.lua,ef8d56ff93f7d1232ffe9a6537af71f7,3359
+scripts/ui/guide/dlgguidelayer.lua,0acf18cee8ad15da2b158931662cbba2,979
+scripts/ui/guide/dlgnormaltest.lua,a98fb4b8a2e3cdac261fe7635b5997e1,694
+scripts/ui/cooldown/dlgcooltime.lua,6b7ed045b231686353815943156d8860,911
+scripts/ui/basics/dlgbasics.lua,cb8c4c7d291f9e8320cc532ac7b01d38,4843
+scripts/ui/bag/dlgbag.lua,089ed17b4c60317cca0598ce5ff1a125,1086
+scripts/ui/bag/dlgbagenter.lua,6220a1dbb2e7342b6ad1e47f50eaf288,511
+scripts/systems/transformsystem.lua,c08330f7bd84f26233d1e707f0295da5,124
+scripts/manager/cfgmanager.lua,70ea50afa3c57913e2bf88c9bc6ffd55,794
+scripts/manager/networkmanager.lua,f86bd80524c6687e3adf336d2eebe478,2906
+scripts/manager/scenemanager.lua,3e881997fbb3dd8431270c672613e9c8,2781
+scripts/manager/touchmanager.lua,c22087b9f468fed04ac000d26e39464c,9622
+scripts/manager/uimanager.lua,8aaaad5590005fcaf62aaccfaf7fea15,18837
+scripts/core/componentmanager.lua,ee6c65b2b22d7b23311a533733e4356a,1896
+scripts/core/componentstruct.lua,b6b10d3f659cd7c600fd7345ed52864d,197
+scripts/core/entity.lua,c6295edcce4af2dd1eb3665ecc4a9167,2464
+scripts/core/filter.lua,379a7b9478818cccee6bf3158eebbe38,4291
+scripts/core/group.lua,e13cd4d2a58f2e90ca5b654ac68f19c3,1407
+scripts/core/system.lua,c75537b4681982f2947756992857a8f5,1780
+scripts/core/world.lua,9ebedc7e9f59d18c2d91d2c76022cd80,8488
+scripts/components/transformcomponent.lua,c08330f7bd84f26233d1e707f0295da5,124
+scripts/common/class.lua,9267904ec84fbddcd498e82287786c10,1100
+scripts/common/easing.lua,a96833ae225ee5a26f733b7dbc76a37d,8649
+scripts/common/event.lua,34f399a85065c0a54b2e0527b118a200,3509
+scripts/common/fairygui.lua,3df8460ce476249edc8eeb191ac9a5b0,1769
+scripts/common/function.lua,b69429bc0fa171fdba449d4e98bf38d6,3326
+scripts/common/gameevent.lua,164d2734937e53cc5e702a43812971d8,320
+scripts/common/list.lua,d818f5afd6b019c2f854e3aefed7526a,4105
+scripts/common/objectpool.lua,5e6fa0ba749d032d1540b3faf26733f9,859
+scripts/common/timer.lua,e8cd886544f95f01e63b4ca054777613,3068
+scripts/common/timeutil.lua,fc421d71e6217d81bd902fae6e64e8d0,5896
+scripts/common/util.lua,6d82f2140eee59ec6f548f74f6b88811,5074
+scripts/common/viewutil.lua,c0ee26f0b449d5c822b471d2cb2b6056,3074
+scripts/character/character.lua,d41d8cd98f00b204e9800998ecf8427e,0
+scripts/cfg/config.lua,d29734888c1e5e28663325f419123af1,704
+scripts/cfg/datastream.lua,4e7bbab5711bb3a8bd0bfeb258c50db8,1917
+scripts/cfg/datastruct.lua,894600e9e1581e7252be0b8c30cd9bac,11319
+scripts/.idea/modules.xml,09ebbba580852e03acdcd245bc17b489,266
+scripts/.idea/scripts.iml,1364fe8e5361f8e94212e06608b18470,501
+scripts/.idea/workspace.xml,19cb09457203643c170d3ee9da2ed6c5,26030
+scripts/.idea/libraries/fairyguiapi.xml,517d4d208cd7b5e86ffca919ded22c6f,230
+scripts/.idea/libraries/unityengineapi.xml,2320b6d35ad44cabe0b91f116e928f51,236
+scene/s_login.bundle,e8fe31bf3b64dbd9355ddd315d19e690,101515
+scene/s_login.bundle.manifest,e0344ad8dd85de11b1de3428476c3838,684
+scene/s_transition.bundle,65a7122bb2b9eafa51054133b0a7a96f,101014
+scene/s_transition.bundle.manifest,594715d2fe4e2b3322b0933c440bd615,611
+config/dependency,f1d3ff8443297732862df21dc4e57262,4
+config/dependencytext,3846a459b3a57f3ad113677fe46fe782,10
+config/preloadlist.txt,57f61ecff4527ac661e5cc65df9f2d43,72
+config/urlconfig.json,8757753b0f6480b5b69a0873b0335195,399
+config/csv/skill/actorconfig.data,32c7aa76bbc516e27d9adb0ce56aed55,529
+config/csv/character/model.data,8be879af99c06b57d4f36c9bbd3af75e,411
+config/csv/alltype/allclass.data,69b595b7c5a2c97a338b9d8c863656e0,1194

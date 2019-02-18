@@ -16,7 +16,7 @@ namespace ToolFactory
             var fs = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories);
             for (int i = 0; i < fs.Length; i++)
             {
-                string path = fs[i].Replace(dir, "").TrimStart('/').TrimStart('\\');
+                string path = fs[i].Replace(dir, "").TrimStart('/').TrimStart('\\').ToLower();
                 string md5 = ComputeMD5File(fs[i]);
                 FileInfo info = new FileInfo(fs[i]);
                 sb.AppendFormat("{0},{1},{2}\n", Util.StandardlizePath(path), md5, info.Length);

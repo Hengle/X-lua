@@ -5,8 +5,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="UnityEngine" level="project" />
-    <orderEntry type="library" name="Assembly-CSharp" level="project" />
-    <orderEntry type="library" name="FairyGUIApi" level="project" />
+    <orderEntry type="library" exported="" name="FairyGUIApi" level="project" />
+    <orderEntry type="library" exported="" name="UnityEngineApi" level="project" />
   </component>
 </module>

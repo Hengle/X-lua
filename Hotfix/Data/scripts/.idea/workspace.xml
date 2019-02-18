@@ -1,122 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9d2f1bc3-2f46-42a8-b000-bc75b9f28394" name="Default Changelist" comment="引导遮罩设计">
-      <change afterPath="$PROJECT_DIR$/protoc.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Manager/NetworkManager.lua" beforeDir="false" afterPath="$PROJECT_DIR$/Manager/NetworkManager.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Unity/Assets/Plugins/x86_64/xlua.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../../Unity/Assets/Plugins/x86_64/xlua.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Unity/Assets/XLua/Src/LuaDLL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Unity/Assets/XLua/Src/LuaDLL.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Unity/Assets/XLua/Src/LuaEnv.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Unity/Assets/XLua/Src/LuaEnv.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Unity/Assets/XLua/Src/StaticLuaCallbacks.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Unity/Assets/XLua/Src/StaticLuaCallbacks.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../xLua-master/build/plugin_lua53/Plugins/x86_64/xlua.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../../xLua-master/build/plugin_lua53/Plugins/x86_64/xlua.dll" afterDir="false" />
-    </list>
+    <list default="true" id="894c4734-e15a-4643-adb0-80418d99fea7" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-185309751">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="19" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.6" value="6" />
-          <entry key="project.open.time.7" value="7" />
-          <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="20" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="lua" value="185" />
-          <entry key="xml" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="XML" value="1" />
-          <entry key="lua" value="185" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="dummy" value="7" />
-          <entry key="lua" value="11437" />
-          <entry key="txt" value="60" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="PLAIN_TEXT" value="67" />
-          <entry key="lua" value="11437" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file leaf-file-name="SceneManager.lua" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Manager/SceneManager.lua">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="603">
+              <caret line="77" column="20" selection-start-line="77" selection-start-column="20" selection-end-line="77" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="230">
+              <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
               <folding>
-                <element signature="e#177#386#0" />
-                <element signature="e#215#382#0" />
-                <element signature="e#271#275#0" />
-                <element signature="e#310#314#0" />
-                <element signature="e#310#314#0" />
-                <element signature="e#374#377#0" />
-                <element signature="e#783#872#0" />
-                <element signature="e#913#979#0" />
-                <element signature="e#1036#1117#0" />
-                <element signature="e#1147#1148#0" />
-                <element signature="e#1264#1267#0" />
-                <element signature="e#1269#1380#0" />
-                <element signature="e#1397#1836#0" />
-                <element signature="e#1848#1975#1" />
+                <element signature="e#1021#1110#0" />
+                <element signature="e#1151#1217#0" />
+                <element signature="e#1274#1355#0" />
+                <element signature="e#1507#1618#0" />
+                <element signature="e#1635#2074#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Manager/UIManager.lua">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3136">
-              <caret line="112" column="4" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Manager/NetworkManager.lua">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Global.lua">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file leaf-file-name="Modules.lua" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Modules.lua">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+            <state relative-caret-position="175">
+              <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -127,109 +51,45 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="NewLua" />
-        <option value="UITemplate" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>LuaWindow</find>
-      <find>Destroy</find>
-      <find>title</find>
-      <find>Time</find>
-      <find>GTime</find>
-      <find>TimerCallback</find>
-      <find>not loaded! can't call method</find>
-      <find>Update</find>
-      <find>SetFixedDelta</find>
-      <find>realtimeSinceStartup</find>
-      <find>table.insert</find>
-      <find>_Event</find>
-      <find>dump</find>
-      <find>globalModalWaiting</find>
-      <find>comps.RichTextField_LMsg.text</find>
-      <find>[</find>
-      <find>Begine</find>
-      <find>self</find>
-      <find>onBegin</find>
-      <find>EventCallback1</find>
-      <find>EventDelegates</find>
-      <find>internal</find>
-      <find>this.G</find>
-      <find>ot loaded! can't call method:Destroy</find>
-      <find>atan</find>
-      <find>Atan2</find>
-      <find>Atan</find>
-      <find>De</find>
-      <find>can't call method:Destroy</find>
+      <find>local</find>
+      <find>scene_</find>
+      <find>ChangeMap</find>
     </findStrings>
-    <replaceStrings>
-      <replace>insert</replace>
-      <replace>Event</replace>
-      <replace>msg</replace>
-      <replace>&lt;</replace>
-      <replace>Begin</replace>
-      <replace>joystick</replace>
-      <replace>Delegates</replace>
-      <replace>this</replace>
-      <replace>G</replace>
-      <replace>Atan</replace>
-      <replace>Atan2</replace>
-    </replaceStrings>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/UI/Bag/DlgBag.lua" />
-        <option value="$PROJECT_DIR$/Common/ViewUtil.lua" />
-        <option value="$PROJECT_DIR$/Common/Util.lua" />
-        <option value="$PROJECT_DIR$/Common/TimeUtil.lua" />
-        <option value="$PROJECT_DIR$/Common/ObjectPool.lua" />
-        <option value="$PROJECT_DIR$/UnityEngine/Time.lua" />
-        <option value="$PROJECT_DIR$/event.lua" />
-        <option value="$PROJECT_DIR$/UnityEngine/Timer.lua" />
+        <option value="$PROJECT_DIR$/Manager/NetworkManager.lua" />
+        <option value="$PROJECT_DIR$/Manager/UIManager.lua" />
+        <option value="$PROJECT_DIR$/Common/Event.lua" />
         <option value="$PROJECT_DIR$/Common/GameEvent.lua" />
         <option value="$PROJECT_DIR$/Common/Timer.lua" />
-        <option value="$PROJECT_DIR$/Common/Event.lua" />
-        <option value="$PROJECT_DIR$/UI/CoolDown/DlgCoolTime.lua" />
-        <option value="$PROJECT_DIR$/UI/Guide/DlgGuide.lua" />
-        <option value="$PROJECT_DIR$/Common/Function.lua" />
-        <option value="$PROJECT_DIR$/UI/Guide/DlgNormalTest.lua" />
-        <option value="$PROJECT_DIR$/UI/Guide/DlgGuideLayer.lua" />
-        <option value="$PROJECT_DIR$/UI/Emoji/DlgEmoji.lua" />
-        <option value="$PROJECT_DIR$/xlua/extend.lua" />
-        <option value="$PROJECT_DIR$/UI/MEmoji/DlgEmoji.lua" />
-        <option value="$PROJECT_DIR$/UI/MJoystick/Joystick.lua" />
-        <option value="$PROJECT_DIR$/Common/FairyGUI.lua" />
-        <option value="$PROJECT_DIR$/UnityEngine/Plane.lua" />
-        <option value="$PROJECT_DIR$/UnityEngine/LayerMask.lua" />
-        <option value="$PROJECT_DIR$/UnityEngine/Mathf.lua" />
-        <option value="$PROJECT_DIR$/UI/MJoystick/DlgJoystick.lua" />
-        <option value="$PROJECT_DIR$/UI/Joystick.lua" />
-        <option value="$PROJECT_DIR$/Manager/UIManager.lua" />
-        <option value="$PROJECT_DIR$/UI/MHeadBar/DlgHeadBar.lua" />
-        <option value="$PROJECT_DIR$/Main.lua" />
+        <option value="$PROJECT_DIR$/Login.lua" />
         <option value="$PROJECT_DIR$/Modules.lua" />
         <option value="$PROJECT_DIR$/Global.lua" />
-        <option value="$PROJECT_DIR$/Manager/NetworkManager.lua" />
+        <option value="$PROJECT_DIR$/Main.lua" />
+        <option value="$PROJECT_DIR$/Manager/SceneManager.lua" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="447" />
-    <option name="y" value="32" />
-    <option name="width" value="1430" />
-    <option name="height" value="985" />
+    <option name="x" value="-1727" />
+    <option name="y" value="4" />
+    <option name="width" value="1605" />
+    <option name="height" value="1080" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -237,42 +97,18 @@
               <item name="Scripts" type="b2602c69:ProjectViewProjectNode" />
               <item name="Scripts" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Scripts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
-              <item name="Manager" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="UIManager&#9;FILE&#9;file://E:/__Github/X-lua/Code/Scripts/Manager/UIManager.lua" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547974931520" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../FairyGUIApi.zip!/" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_opened_file_path" value="E:/TSSJ_5.5.6/code/scripts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\__Github\X-lua\Code\Scripts\Manager" />
-      <recent name="E:\__Github\X-lua\Code\Scripts" />
-      <recent name="E:\__Github\X-lua\Code\Scripts\UI" />
-      <recent name="E:\__Github\X-lua\Code\Scripts\Systems" />
-      <recent name="E:\__Github\X-lua\Code\Scripts\Common" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\__Github\X-lua\Code\Scripts" />
-      <recent name="E:\__Github\X-lua\Code\Scripts\xlua" />
-      <recent name="E:\__Github\X-lua\Code\Scripts\Common" />
-      <recent name="E:\__Github\X-lua\Code\Scripts\UnityEngine" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -286,494 +122,358 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9d2f1bc3-2f46-42a8-b000-bc75b9f28394" name="Default Changelist" comment="" />
-      <created>1545746261487</created>
+      <changelist id="894c4734-e15a-4643-adb0-80418d99fea7" name="Default" comment="" />
+      <created>1548728945532</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1545746261487</updated>
+      <updated>1548728945532</updated>
     </task>
-    <task id="LOCAL-00001" summary="完成技能冷却案例.">
-      <created>1545840947484</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1545840947484</updated>
-    </task>
-    <task id="LOCAL-00002" summary="引导遮罩设计">
-      <created>1546352132283</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1546352132283</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="358" y="26" width="1144" height="788" extended-state="0" />
+    <frame x="-1727" y="4" width="1605" height="1080" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17495395" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.21702127" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="LuaCheck" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25877193" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Maven Projects" order="7" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info anchor="bottom" id="LuaCheck" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.121682845" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17629482" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.19270073" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="LuaCheck" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25877193" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Maven Projects" order="7" />
-    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="完成技能冷却案例." />
-    <MESSAGE value="引导遮罩设计" />
-    <option name="LAST_COMMIT_MESSAGE" value="引导遮罩设计" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="lua-line">
-          <url>file://$PROJECT_DIR$/UnityEngine/Mathf.lua</url>
-          <line>46</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/UnityEngine/RaycastHit.lua">
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.PrimitiveType.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="775">
-          <caret line="49" column="3" lean-forward="true" selection-start-line="49" selection-start-column="3" selection-end-line="49" selection-end-column="3" />
+        <state relative-caret-position="35">
+          <caret line="1" column="45" selection-start-line="1" selection-start-column="45" selection-end-line="1" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Common/TimeUtil.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2791">
-          <caret line="145" column="28" selection-start-line="145" selection-start-column="28" selection-end-line="145" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/ObjectPool.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="5" column="20" lean-forward="true" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/event.lua" />
-    <entry file="file://$PROJECT_DIR$/Common/GameEvent.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/CoolDown/DlgCoolTime.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="30" column="23" lean-forward="true" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/Class.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/List.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="176" column="12" lean-forward="true" selection-start-line="176" selection-start-column="12" selection-end-line="176" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/Guide/AC.lua" />
-    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/UI.Guide.DlgGuideLayer.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="29" selection-start-column="17" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/Function.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/Timer.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-120">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/Guide/DlgGuideLayer.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/Guide/DlgNormalTest.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="16" column="24" lean-forward="true" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/FairyGUI.GTextField.lua" />
-    <entry file="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/FairyGUI.GRoot.lua" />
-    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/UI.Emoji.DlgEmoji.lua" />
-    <entry file="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/FairyGUI.TweenManager.TweenEngine.lua" />
-    <entry file="file://$PROJECT_DIR$/UnityEngine/Vector2.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2000" />
-      </provider>
-    </entry>
-    <entry file="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/FairyGUI.GObject.lua" />
-    <entry file="file://$PROJECT_DIR$/UI/MEmoji/DlgEmoji.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="72" column="29" lean-forward="true" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/ViewUtil.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="8" column="9" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_PLUGINS_DIR$/EmmyLua/lib/EmmyLua-1.2.5-IDEA182.jar!/std/Lua53/global.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="227" column="9" selection-start-line="227" selection-start-column="9" selection-end-line="227" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/Util.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/FairyGUI.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="48" column="42" lean-forward="true" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Manager/TouchManager.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="329" column="37" lean-forward="true" selection-start-line="329" selection-start-column="37" selection-end-line="329" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UnityEngine/Bounds.lua">
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.QueueMode.lua">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnityEngine/Color.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-420" />
-      </provider>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Plane.lua">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnityEngine/LayerMask.lua">
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Ping.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.PointEffector2D.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-868">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="350">
+          <caret line="10" column="38" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnityEngine/Plane.lua">
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Playables.ScriptPlayableBinding.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Playables.PlayableOutput.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Random.State.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.RectTransform.ns.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.RemoteSettings.ns.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Rendering.AsyncGPUReadbackRequest.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Rendering.CommandBuffer.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Rendering.OpaqueSortMode.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Rendering.ReflectionProbeClearFlags.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Rendering.RenderTargetIdentifier.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.RenderingPath.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Resolution.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.RuntimeAnimatorController.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.SceneManagement.SceneManager.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="-1015">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_PLUGINS_DIR$/EmmyLua/lib/EmmyLua-1.2.5-IDEA182.jar!/std/Lua53/math.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="45" column="18" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="18" />
-        </state>
-      </provider>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.ScreenOrientation.lua">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnityEngine/Time.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2912">
-          <caret line="10" column="16" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="16" />
-        </state>
-      </provider>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.SelectionBaseAttribute.lua">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnityEngine/Vector3.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-        </state>
-      </provider>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.Serialization.ListSerializationSurrogate.lua">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Common/Event.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1820">
-          <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
-        </state>
-      </provider>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.ShadowProjection.lua">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/UI/MJoystick/DlgJoystick.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="868">
-          <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
-        </state>
-      </provider>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.ShadowQuality.lua">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnityEngine/Mathf.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
-          <folding>
-            <element signature="e#1253#1353#0" />
-            <element signature="e#1296#1300#0" />
-            <element signature="e#1316#1322#0" />
-            <element signature="e#1335#1339#0" />
-            <element signature="e#1359#1362#0" />
-            <element signature="e#1387#1476#0" />
-            <element signature="e#1428#1432#0" />
-            <element signature="e#1445#1451#0" />
-            <element signature="e#1462#1466#0" />
-            <element signature="e#1482#1485#0" />
-            <element signature="e#1523#1633#0" />
-            <element signature="e#1618#1622#0" />
-            <element signature="e#1642#1645#0" />
-            <element signature="e#1681#1967#0" />
-            <element signature="e#1748#1752#0" />
-            <element signature="e#1781#1784#0" />
-            <element signature="e#1836#1840#0" />
-            <element signature="e#1891#1894#0" />
-            <element signature="e#2015#2362#0" />
-            <element signature="e#2034#2197#0" />
-            <element signature="e#2085#2089#0" />
-            <element signature="e#2105#2108#0" />
-            <element signature="e#2126#2130#0" />
-            <element signature="e#2151#2154#0" />
-            <element signature="e#2243#2247#0" />
-            <element signature="e#2260#2263#0" />
-            <element signature="e#2280#2284#0" />
-            <element signature="e#2297#2300#0" />
-            <element signature="e#2319#2323#0" />
-            <element signature="e#2342#2345#0" />
-            <element signature="e#2569#2570#0" />
-            <element signature="e#2617#2620#0" />
-            <element signature="e#2484#2602#0" />
-            <element signature="e#2564#2568#0" />
-            <element signature="e#2588#2591#0" />
-            <element signature="e#2814#2815#0" />
-            <element signature="e#2844#2847#0" />
-            <element signature="e#2731#2855#0" />
-            <element signature="e#2796#2800#0" />
-            <element signature="e#2818#2821#0" />
-            <element signature="e#2918#3026#0" />
-            <element signature="e#3065#3138#0" />
-            <element signature="e#3345#3346#0" />
-            <element signature="e#3392#3395#0" />
-            <element signature="e#3423#3424#0" />
-            <element signature="e#3450#3453#0" />
-            <element signature="e#3308#3405#0" />
-            <element signature="e#3349#3353#0" />
-            <element signature="e#3365#3371#0" />
-            <element signature="e#3380#3384#0" />
-            <element signature="e#3397#3401#0" />
-            <element signature="e#3397#3401#0" />
-            <element signature="e#3414#3417#0" />
-            <element signature="e#3502#4278#0" />
-            <element signature="e#4157#4240#0" />
-            <element signature="e#4380#4611#0" />
-            <element signature="e#4655#4751#0" />
-            <element signature="e#4961#4962#0" />
-            <element signature="e#5005#5008#0" />
-            <element signature="e#5037#5038#0" />
-            <element signature="e#5070#5073#0" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.ShadowmaskMode.lua">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/Game.NetworkManager.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/Game.LuaWindow.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dll://E:/__Github/X-lua/Unity/Library/ScriptAssemblies/Assembly-CSharp.dll!/FairyGUI.Window.lua">
+    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/FairyGUI.DragDropManager.lua">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
-          <caret line="37" column="11" selection-start-line="37" selection-start-column="11" selection-end-line="37" selection-end-column="11" />
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UI/Joystick.lua">
+    <entry file="dll://E:/C#Project/X-lua/Code/UnityEngine.dll!/UnityEngine.GameObject.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="146" column="38" selection-start-line="146" selection-start-column="38" selection-end-line="146" selection-end-column="38" />
+        <state relative-caret-position="420">
+          <caret line="45" column="18" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UI/MHeadBar/DlgHeadBar.lua">
+    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/FairyGUI.Transition.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="385">
+          <caret line="35" column="18" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_PLUGINS_DIR$/EmmyLua/lib/EmmyLua-1.2.5-IDEA182.jar!/std/Lua53/string.lua">
+    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/FairyGUI.GObjectPool.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/FairyGUI.GSlider.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/FairyGUI.PopupMenu.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6215">
-          <caret line="30" column="18" lean-forward="true" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+        <state relative-caret-position="350">
+          <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xlua/utf8.lua" />
-    <entry file="file://E:/__Project/qyz/trunk_server/trunk/protocol.gsd.xml">
+    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/FairyGUI.GTweener.lua">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/FairyGUI.Relations.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1344">
-          <caret line="336" column="23" lean-forward="true" selection-start-line="336" selection-start-column="23" selection-end-line="336" selection-end-column="23" />
+        <state relative-caret-position="1085">
+          <caret line="31" column="38" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main.lua">
+    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/FairyGUI.GGraph.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-          <folding>
-            <element signature="e#177#386#0" />
-            <element signature="e#215#382#0" />
-            <element signature="e#271#275#0" />
-            <element signature="e#310#314#0" />
-            <element signature="e#310#314#0" />
-            <element signature="e#374#377#0" />
-            <element signature="e#783#872#0" />
-            <element signature="e#913#979#0" />
-            <element signature="e#1036#1117#0" />
-            <element signature="e#1147#1148#0" />
-            <element signature="e#1264#1267#0" />
-            <element signature="e#1269#1380#0" />
-            <element signature="e#1397#1836#0" />
-            <element signature="e#1848#1975#1" />
-          </folding>
+        <state relative-caret-position="245">
+          <caret line="7" column="31" lean-forward="true" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Manager/UIManager.lua">
+    <entry file="jar://$PROJECT_DIR$/../FairyGUIApi.zip!/FairyGUI.GRoot.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3136">
-          <caret line="112" column="4" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Global.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Modules.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xlua/extend.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="35" column="9" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protoc.lua">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="14" column="11" lean-forward="true" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        <state relative-caret-position="70">
+          <caret line="2" column="40" lean-forward="true" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Manager/NetworkManager.lua">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="175">
+          <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../UnityEngineApi.zip!/System.Action`1[[Game.NetworkChannel, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]].lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="14" column="11" lean-forward="true" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../UnityEngineApi.zip!/Game.SceneManager.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="700">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Common/FairyGUI.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Manager/UIManager.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1890">
+          <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Common/Class.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Common/Util.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1015">
+          <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Common/Event.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UnityEngine/Time.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2901">
+          <caret line="24" column="32" lean-forward="true" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Common/GameEvent.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Common/Timer.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Login.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Modules.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Global.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="75" lean-forward="true" selection-start-line="75" selection-end-line="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+          <folding>
+            <element signature="e#1021#1110#0" />
+            <element signature="e#1151#1217#0" />
+            <element signature="e#1274#1355#0" />
+            <element signature="e#1507#1618#0" />
+            <element signature="e#1635#2074#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Manager/SceneManager.lua">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="603">
+          <caret line="77" column="20" selection-start-line="77" selection-start-column="20" selection-end-line="77" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -841,7 +541,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Assembly-CSharp</last-edited>
+          <last-edited>UnityEngineApi</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

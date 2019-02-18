@@ -89,7 +89,7 @@ namespace Game
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogFormat("Download File Error = {0}, Exception = {1}", _remoteInfo.RelPath, e.Message);
+                    Debug.LogFormat("Download File Error = {0}, Exception = {1}", _uri, e.Message);
                     _updater._taskCompleted.Enqueue(() =>
                     {
                         _updater._redownloadList.Add(_remoteInfo.RelPath);
@@ -100,7 +100,8 @@ namespace Game
 
         private void AppendMd5File(AssetInfo remoteInfo)
         {
-            string file = Util.DataPath + ConstSetting.ResMD5File;
+           
+            string file = Util.DataPath + _resMD5FileRelPath;
             try
             {
                 using (var writer = new StreamWriter(new FileStream(file, FileMode.Append)))
@@ -115,7 +116,7 @@ namespace Game
         }
         private void AppendHasDownloadFile(string relPath)
         {
-            string file = Util.DataPath + ConstSetting.HasDownloadFile;
+            string file = Util.DataPath + _hasDownloadFileRelPath;
             try
             {
                 using (var writer = new StreamWriter(new FileStream(file, FileMode.Append)))

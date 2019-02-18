@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ToolFactory
 {
@@ -15,7 +11,7 @@ namespace ToolFactory
         static void Usage()
         {
             Console.WriteLine("-help 打印指令说明");
-            Console.WriteLine("-resversion 计算路径下文件md5,格式:path,md5,size");
+            Console.WriteLine("\n-resversion [dir saveDir] \n计算路径下文件md5,格式:path,md5,size");
         }
 
         static void Main(string[] args)
@@ -64,8 +60,6 @@ namespace ToolFactory
                 Util.LogError("初始化命令参数失败!");
                 Util.LogErrorFormat("{0}\r\n{1}", e.Message, e.StackTrace);
             }
-
-            Console.ReadKey();
         }
 
         static bool CheckArgList(string cmdName, List<string> list)

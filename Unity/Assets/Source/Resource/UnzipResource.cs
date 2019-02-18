@@ -18,10 +18,7 @@ namespace Game
             if (Client.UpdateMgr.HasdownloadFile)
                 yield break;
 
-            string zip = Util.StreamingPath + "data.zip";
-#if GAME_SIMULATION
-            zip = Application.streamingAssetsPath + "/data.zip";
-#endif
+            string zip = Util.StreamingPath + "../data.zip";
             Debug.Log("解压data:" + zip);
             WWW www = new WWW(zip);
             yield return www;
