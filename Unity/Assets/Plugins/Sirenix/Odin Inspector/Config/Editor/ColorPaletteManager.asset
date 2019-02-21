@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -47,7 +47,7 @@ MonoBehaviour:
     - {r: 0.82, g: 0.722, b: 0.318, a: 1}
     - {r: 0.537, g: 0.192, b: 0.153, a: 1}
     - {r: 0.996, g: 0.812, b: 0.012, a: 1}
-    - {r: 1, g: 0.431, b: 0.019607844, a: 1}
+    - {r: 1, g: 0.431, b: 0.02, a: 1}
     - {r: 0.937, g: 0.267, b: 0.094, a: 1}
     - {r: 0.42, g: 0.212, b: 0.18, a: 1}
     - {r: 0.992, g: 0.651, b: 0.004, a: 1}

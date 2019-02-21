@@ -47,26 +47,21 @@ namespace Sirenix.OdinInspector.Demos
                 genericMenu.AddSeparator("");
             }
 
-            genericMenu.AddItem(new GUIContent("Colors/Red"), false, () => this.SetColor(property, Color.red));
-            genericMenu.AddItem(new GUIContent("Colors/Green"), false, () => this.SetColor(property, Color.green));
-            genericMenu.AddItem(new GUIContent("Colors/Blue"), false, () => this.SetColor(property, Color.blue));
-            genericMenu.AddItem(new GUIContent("Colors/Yellow"), false, () => this.SetColor(property, Color.yellow));
-            genericMenu.AddItem(new GUIContent("Colors/Cyan"), false, () => this.SetColor(property, Color.cyan));
-            genericMenu.AddItem(new GUIContent("Colors/White"), false, () => this.SetColor(property, Color.white));
-            genericMenu.AddItem(new GUIContent("Colors/Black"), false, () => this.SetColor(property, Color.black));
+            genericMenu.AddItem(new GUIContent("Colors/Red"), false, () => this.SetColor(Color.red));
+            genericMenu.AddItem(new GUIContent("Colors/Green"), false, () => this.SetColor(Color.green));
+            genericMenu.AddItem(new GUIContent("Colors/Blue"), false, () => this.SetColor(Color.blue));
+            genericMenu.AddItem(new GUIContent("Colors/Yellow"), false, () => this.SetColor(Color.yellow));
+            genericMenu.AddItem(new GUIContent("Colors/Cyan"), false, () => this.SetColor(Color.cyan));
+            genericMenu.AddItem(new GUIContent("Colors/White"), false, () => this.SetColor(Color.white));
+            genericMenu.AddItem(new GUIContent("Colors/Black"), false, () => this.SetColor(Color.black));
             genericMenu.AddDisabledItem(new GUIContent("Colors/Magenta"));
         }
 
         // Helper function called by the context menu.
-        private void SetColor(InspectorProperty property, Color color)
+        private void SetColor(Color color)
         {
-            var entry = (IPropertyValueEntry<Color>)property.ValueEntry;
-            entry.SmartValue = color;
-
-            // Or:
-            //property.ValueEntry.WeakSmartValue = color;
-
-            entry.ApplyChanges();
+            this.ValueEntry.SmartValue = color;
+            this.ValueEntry.ApplyChanges(); // ApplyChanges will be called automatically from the DrawPropertyLayout method, but anywhere else you need to call it manually.
         }
     }
 

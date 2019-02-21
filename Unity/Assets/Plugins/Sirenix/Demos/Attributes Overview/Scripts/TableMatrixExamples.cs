@@ -25,6 +25,10 @@ namespace Sirenix.OdinInspector.Demos
         [TableMatrix(HorizontalTitle = "Custom Cell Drawing", DrawElementMethod = "DrawColoredEnumElement", ResizableColumns = false, RowHeight = 16)]
         public bool[,] CustomCellDrawing = new bool[30, 30];
 
+        [TableMatrix(HorizontalTitle = "Transposed Custom Cell Drawing", DrawElementMethod = "DrawColoredEnumElement", ResizableColumns = false, RowHeight = 16, Transpose = true), ShowInInspector, DoNotDrawAsReference]
+        public bool[,] Transposed { get { return CustomCellDrawing; } set { CustomCellDrawing = value; } }
+
+
 #if UNITY_EDITOR
 
         private static bool DrawColoredEnumElement(Rect rect, bool value)

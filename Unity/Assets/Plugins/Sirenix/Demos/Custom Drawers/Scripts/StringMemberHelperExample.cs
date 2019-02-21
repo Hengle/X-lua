@@ -45,7 +45,7 @@ namespace Sirenix.OdinInspector.Demos
 
         protected override void Initialize()
         {
-            this.stringMemberHelper = new StringMemberHelper(this.Property.ParentType, this.Attribute.Name);
+            this.stringMemberHelper = new StringMemberHelper(this.Property, this.Attribute.Name);
         }
 
         protected override void DrawPropertyLayout(GUIContent label)

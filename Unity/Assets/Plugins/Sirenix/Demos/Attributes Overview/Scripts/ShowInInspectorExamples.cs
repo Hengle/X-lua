@@ -1,4 +1,6 @@
 #if UNITY_EDITOR
+#pragma warning disable
+
 namespace Sirenix.OdinInspector.Demos
 {
     using UnityEngine;

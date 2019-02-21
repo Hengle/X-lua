@@ -16,14 +16,13 @@ namespace Sirenix.OdinInspector.Demos
 
 #if UNITY_EDITOR
 
-        [ShowInInspector]
         [EnumPaging, OnValueChanged("SetCurrentTool")]
         [InfoBox("Example of using EnumPaging together with OnValueChanged.")]
-        private UnityEditor.Tool sceneTool;
+        public UnityEditor.Tool SceneTool;
 
         private void SetCurrentTool()
         {
-            UnityEditor.Tools.current = this.sceneTool;
+            UnityEditor.Tools.current = this.SceneTool;
         }
 
 #endif
