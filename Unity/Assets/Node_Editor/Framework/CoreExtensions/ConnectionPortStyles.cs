@@ -15,35 +15,64 @@ namespace NodeEditorFramework
 		private static Dictionary<string, ConnectionPortStyle> connectionPortStyles;
 		private static Dictionary<string, ValueConnectionType> connectionValueTypes;
 
+        public static void InitSystem(out Dictionary<string, ConnectionPortStyle> ports, 
+            out Dictionary<string, ValueConnectionType> values)
+        {
+            ports = new Dictionary<string, ConnectionPortStyle>();
+            values = new Dictionary<string, ValueConnectionType>();
+            foreach (Type type in ReflectionUtility.getSubTypes(typeof(ConnectionPortStyle)))
+            {
+                ConnectionPortStyle portStyle = (ConnectionPortStyle)Activator.CreateInstance(type);
+                if (portStyle == null)
+                    throw new UnityException("Error with Connection Port Style Declaration " + type.FullName);
+                if (ports.ContainsKey(portStyle.Identifier))
+                    throw new Exception("Duplicate ConnectionPortStyle declaration " + portStyle.Identifier + "!");
+
+                ports.Add(portStyle.Identifier, portStyle);
+                if (type.IsSubclassOf(typeof(ValueConnectionType)))
+                    values.Add(portStyle.Identifier, (ValueConnectionType)portStyle);
+            }
+
+            connectionPortStyles = ports;
+            connectionValueTypes = values;
+        }
+
 		/// <summary>
 		/// Fetches every ConnectionPortStyle, ConnectionKnobStyle or ValueConnectionType declaration in the script assemblies to provide the framework with custom connection port styles
 		/// </summary>
-		public static void FetchConnectionPortStyles () 
+		public static void CheckPortStyles () 
 		{
-			connectionPortStyles = new Dictionary<string, ConnectionPortStyle> ();
-			connectionValueTypes = new Dictionary<string, ValueConnectionType> ();
-			foreach (Type type in ReflectionUtility.getSubTypes (typeof(ConnectionPortStyle)))
-			{
-				ConnectionPortStyle portStyle = (ConnectionPortStyle)Activator.CreateInstance (type);
-				if (portStyle == null)
-					throw new UnityException ("Error with Connection Port Style Declaration " + type.FullName);
-				if (!portStyle.isValid ())
-					throw new Exception (type.BaseType.Name + " declaration " + portStyle.Identifier + " is invalid!");
-				if (connectionPortStyles.ContainsKey (portStyle.Identifier))
-					throw new Exception ("Duplicate ConnectionPortStyle declaration " + portStyle.Identifier + "!");
+            //connectionPortStyles = new Dictionary<string, ConnectionPortStyle> ();
+            //connectionValueTypes = new Dictionary<string, ValueConnectionType> ();
+            //foreach (Type type in ReflectionUtility.getSubTypes (typeof(ConnectionPortStyle)))
+            //{
+            //	ConnectionPortStyle portStyle = (ConnectionPortStyle)Activator.CreateInstance (type);
+            //	if (portStyle == null)
+            //		throw new UnityException ("Error with Connection Port Style Declaration " + type.FullName);
+            //	if (!portStyle.isValid ())
+            //		throw new Exception (type.BaseType.Name + " declaration " + portStyle.Identifier + " is invalid!");
+            //	if (connectionPortStyles.ContainsKey (portStyle.Identifier))
+            //		throw new Exception ("Duplicate ConnectionPortStyle declaration " + portStyle.Identifier + "!");
 
-				connectionPortStyles.Add (portStyle.Identifier, portStyle);
-				if (type.IsSubclassOf (typeof(ValueConnectionType)))
-					connectionValueTypes.Add (portStyle.Identifier, (ValueConnectionType)portStyle);
-				if (!portStyle.isValid())
-					Debug.LogError("Style " + portStyle.Identifier + " is invalid!");
-			}
-		}
+            //	connectionPortStyles.Add (portStyle.Identifier, portStyle);
+            //	if (type.IsSubclassOf (typeof(ValueConnectionType)))
+            //		connectionValueTypes.Add (portStyle.Identifier, (ValueConnectionType)portStyle);
+            //	if (!portStyle.isValid())
+            //		Debug.LogError("Style " + portStyle.Identifier + " is invalid!");
+            //}
 
-		/// <summary>
-		/// Gets the ValueConnectionType type the specified type name representates or creates it if not defined
-		/// </summary>
-		public static Type GetValueType (string typeName)
+            foreach (var style in connectionPortStyles)
+            {
+                ConnectionPortStyle portStyle = style.Value;
+                if (!portStyle.isValid())
+                    Debug.LogError("Style " + portStyle.Identifier + " is invalid!");
+            }
+        }
+
+        /// <summary>
+        /// Gets the ValueConnectionType type the specified type name representates or creates it if not defined
+        /// </summary>
+        public static Type GetValueType (string typeName)
 		{
 			return ((ValueConnectionType)GetPortStyle (typeName, typeof(ValueConnectionType))).Type ?? typeof(void);
 		}
@@ -54,7 +83,7 @@ namespace NodeEditorFramework
 		public static ConnectionPortStyle GetPortStyle (string styleName, Type baseStyleClass = null)
 		{
 			if (connectionPortStyles == null || connectionPortStyles.Count == 0)
-				FetchConnectionPortStyles ();
+				CheckPortStyles ();
 			if (baseStyleClass == null || !typeof(ConnectionPortStyle).IsAssignableFrom (typeof(ConnectionPortStyle)))
 				baseStyleClass = typeof(ConnectionPortStyle);
 			ConnectionPortStyle portStyle;
@@ -91,7 +120,7 @@ namespace NodeEditorFramework
 		public static ValueConnectionType GetValueConnectionType (Type type)
 		{
 			if (connectionPortStyles == null || connectionPortStyles.Count == 0)
-				FetchConnectionPortStyles ();
+				CheckPortStyles ();
 			ValueConnectionType valueType = connectionValueTypes.Values.FirstOrDefault ((ValueConnectionType data) => data.isValid () && data.Type == type);
 			if (valueType == null) // ValueConnectionType with type does not exist, create it
 			{

@@ -1,11 +1,9 @@
 ﻿using NodeEditorFramework;
-using NodeEditorFramework.Standard;
 using NodeEditorFramework.Utilities;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
 using System.IO;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,35 +11,42 @@ namespace ActorEditor
 {
     public class ActorEditorWindow : NodeMenuWindow
     {
-        [MenuItem("Node Editor/Open Actor Editor", false, 1)]
+        [MenuItem("Node Editor/" + TITLE, false, 1)]
         private static ActorEditorWindow OpenActorEditor()
         {
             _ins = GetWindow<ActorEditorWindow>("资源导入设置");
             _ins.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
 
-            NodeEditor.ReInit(false);
             Texture iconTexture = ResourceManager.LoadTexture(EditorGUIUtility.isProSkin ? "Textures/Icon_Dark.png" : "Textures/Icon_Light.png");
-            _ins.titleContent = new GUIContent("Actor Editor", iconTexture);
-
+            _ins.titleContent = new GUIContent(TITLE, iconTexture);
             return _ins;
         }
-        [MenuItem("Node Editor/Close Actor Editor", false, 2)]
+        [MenuItem("Node Editor/Close " + TITLE, false, 2)]
         private static void CloseActorEditor()
         {
             if (_ins != null)
                 _ins.Close();
         }
-        public static void AssureEditor()
-        {
-            if (_ins == null)
-                OpenActorEditor();
-        }
 
+        [MenuItem("Node Editor/Check Path Data")]
+        private static void CheckPathData()
+        {
+            string path = ResourceManager.ActorEditorPath;
+            string[] assets = Directory.GetFiles(path, "*.asset");
+            for (int i = 0; i < assets.Length; i++)
+            {
+                var asset = ResourceManager.LoadResource<NodeCanvas>(assets[i]);
+                string newPath = ResourceManager.PreparePath(assets[i]);
+                asset.UpdateSource(newPath);
+                EditorUtility.DisplayProgressBar(TITLE, asset.name, (i + 1f) / assets.Length);
+            }
+            EditorUtility.ClearProgressBar();
+        }
 
         public static ActorEditorWindow Ins { get { return _ins; } }
         private static ActorEditorWindow _ins;
 
-        private const string AssetPath = "Assets/Node_Editor/Resources/Saves";
+        public const string TITLE = "Actor Editor";
 
         // Canvas cache
         private NodeEditorUserCache _canvasCache;
@@ -52,16 +57,24 @@ namespace ActorEditor
         #region GUI
         protected override OdinMenuTree BuildMenuTree()
         {
+            XProfile.Begin("");
             var tree = new OdinMenuTree(false);
             tree.Config.DrawSearchToolbar = true;
             tree.Config.SearchToolbarHeight = (int)_editorInterface.toolbarHeight + 2;
 
-            string[] assets = Directory.GetFiles(AssetPath, "*.asset");
-            tree.AddAllAssetsAtPath(null, AssetPath, typeof(NodeCanvas));
+            string path = ResourceManager.ActorEditorPath;
+            string[] assets = Directory.GetFiles(path, "*.asset");
+            for (int i = 0; i < assets.Length; i++)
+            {
+                var asset = ResourceManager.LoadResource<NodeCanvas>(assets[i]);
+                tree.Add(asset.name, asset.savePath);
+                EditorUtility.DisplayProgressBar(TITLE, asset.name, (i + 1f) / assets.Length);
+            }
+            EditorUtility.ClearProgressBar();
             tree.SortMenuItemsByName();
+            XProfile.End(true);
 
             tree.Selection.SelectionConfirmed += SelectionConfirmed;
-
             return tree;
         }
 
@@ -69,8 +82,11 @@ namespace ActorEditor
         {
             if (items != null && items.Count > 0)
             {
-                var selected = items[0].Value as NodeCanvas;
-                _ins._canvasCache.LoadNodeCanvas(selected.savePath);
+                if (_editorInterface != null)
+                    _editorInterface.CheckCanvasState();
+
+                var assetPath = items[0].Value as string;
+                _ins._canvasCache.LoadNodeCanvas(assetPath);
             }
         }
 
@@ -85,7 +101,6 @@ namespace ActorEditor
                 GUILayout.Label("Node Editor Initiation failed! Check console for more information!");
                 return;
             }
-            AssureEditor();
             AssureSetup();
 
             // ROOT: Start Overlay GUI for popups
@@ -96,8 +111,12 @@ namespace ActorEditor
             _canvasCache.editorState.canvasRect = CanvasWindowRect;
 
             try
-            { // Perform drawing with error-handling
+            {//-----------------添加Node等无法监听到修改
+                EditorGUI.BeginChangeCheck();
+                // Perform drawing with error-handling
                 NodeEditor.DrawCanvas(_canvasCache.nodeCanvas, _canvasCache.editorState);
+                if (EditorGUI.EndChangeCheck())
+                    Debug.LogErrorFormat("{0}\n---> Change", _canvasCache.openedCanvasPath);
             }
             catch (UnityException e)
             { // On exceptions in drawing flush the canvas to avoid locking the UI
@@ -116,7 +135,6 @@ namespace ActorEditor
 
             // END ROOT: End Overlay GUI and draw popups
             OverlayGUI.EndOverlayGUI();
-
         }
         #endregion
 
@@ -124,54 +142,26 @@ namespace ActorEditor
         private void OnEnable()
         {
             _ins = this;
-            NormalReInit();
+            NodeEditor.ReInit(false);
+            AssureSetup();
 
             // Subscribe to events
             NodeEditor.ClientRepaints -= Repaint;
             NodeEditor.ClientRepaints += Repaint;
-            EditorLoadingControl.justLeftPlayMode -= NormalReInit;
-            EditorLoadingControl.justLeftPlayMode += NormalReInit;
-            EditorLoadingControl.justOpenedNewScene -= NormalReInit;
-            EditorLoadingControl.justOpenedNewScene += NormalReInit;
         }
 
-
-
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
-            // Unsubscribe from events
+            base.OnDestroy();
             NodeEditor.ClientRepaints -= Repaint;
-            EditorLoadingControl.justLeftPlayMode -= NormalReInit;
-            EditorLoadingControl.justOpenedNewScene -= NormalReInit;
-
-            // Clear Cache
             _canvasCache.ClearCacheEvents();
-        }
-
-        private void OnLostFocus()
-        { // Save any changes made while focussing this window
-          // Will also save before possible assembly reload, scene switch, etc. because these require focussing of a different window
-            _canvasCache.SaveCache();
-        }
-
-        private void OnFocus()
-        { // Make sure the canvas hasn't been corrupted externally
-            NormalReInit();
-        }
-
-        private void NormalReInit()
-        {
-            NodeEditor.ReInit(false);
-            AssureSetup();
-            if (_canvasCache.nodeCanvas)
-                _canvasCache.nodeCanvas.Validate();
         }
 
         private void AssureSetup()
         {
             if (_canvasCache == null)
             { // Create cache
-                _canvasCache = new NodeEditorUserCache(Path.GetDirectoryName(AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this))));
+                _canvasCache = new NodeEditorUserCache();
             }
             _canvasCache.AssureCanvas();
             if (_editorInterface == null)
@@ -182,7 +172,5 @@ namespace ActorEditor
             }
         }
         #endregion
-
-
     }
 }

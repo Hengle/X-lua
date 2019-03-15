@@ -1,17 +1,17 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections.Generic;
 using NodeEditorFramework.Utilities;
 using NodeEditorFramework;
 
 namespace ActorEditor
 {
-	[Node(false, "ÆÕÍ¨¶¯×÷")]
+	[Node(false, "æ™®é€šåŠ¨ä½œ")]
 	public class GeneralActionNode : Node
 	{
 		public const string ID = "GeneralActionNode";
 		public override string GetID { get { return ID; } }
 
-		public override string Title { get { return "ÆÕÍ¨¶¯×÷"; } }
+		public override string Title { get { return "æ™®é€šåŠ¨ä½œ"; } }
 		public override Vector2 MinSize { get { return new Vector2(200, 10); } }
 		public override bool AutoLayout { get { return true; } } // IMPORTANT -> Automatically resize to fit list
 
@@ -34,13 +34,13 @@ namespace ActorEditor
 
 			// Display text field and add button
 			GUILayout.BeginHorizontal();
-			newLabel = RTEditorGUI.TextField(GUIContent.none, newLabel);
-			if (GUILayout.Button("Add", GUILayout.ExpandWidth(false)))
-			{
-				labels.Add(newLabel);
-				CreateValueConnectionKnob(dynaCreationAttribute);
-			}
-			GUILayout.EndHorizontal();
+            newLabel = RTEditorGUI.TextField(GUIContent.none, newLabel);
+            if (GUILayout.Button("Add", GUILayout.ExpandWidth(false)))
+            {
+                labels.Add(newLabel);
+                CreateValueConnectionKnob(dynaCreationAttribute);
+            }
+            GUILayout.EndHorizontal();
 
 			for (int i = 0; i < labels.Count; i++)
 			{ // Display label and delete button

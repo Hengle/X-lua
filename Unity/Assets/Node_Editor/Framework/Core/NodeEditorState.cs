@@ -10,7 +10,7 @@ namespace NodeEditorFramework
 		public NodeEditorState parentEditor;
 
 		// Canvas options
-		[NonSerialized] public bool drawing = true; // whether to draw the canvas
+		[NonSerialized] public bool drawing = true; // whether to draw the canvas			
 
 		// Selection State
 		public Node selectedNode; // selected Node

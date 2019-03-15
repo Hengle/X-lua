@@ -99,9 +99,7 @@ namespace NodeEditorFramework.Standard
             GUILayout.Space(10);
             GUILayout.FlexibleSpace();
 
-            GUILayout.Label(new GUIContent("" + canvasCache.nodeCanvas.fileName + " (" + (canvasCache.nodeCanvas.livesInScene ? "Scene Save" : "Asset Save") + ")",
-                                            "Opened Canvas path: " + canvasCache.nodeCanvas.savePath), NodeEditorGUI.toolbarLabel);
-            //GUILayout.Label(new GUIContent("" + canvasCache.nodeCanvas.fileName, "Opened Canvas path: " + canvasCache.nodeCanvas.savePath), NodeEditorGUI.toolbarLabel);
+            GUILayout.Label(new GUIContent(canvasCache.nodeCanvas.savePath, "Opened Canvas path: " + canvasCache.nodeCanvas.savePath), NodeEditorGUI.toolbarLabel);
             GUILayout.Label("Type: " + canvasCache.typeData.DisplayString, NodeEditorGUI.toolbarLabel);
             curToolbarHeight = Mathf.Max(curToolbarHeight, GUILayoutUtility.GetLastRect().yMax);
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -225,8 +225,8 @@ namespace NodeEditorFramework
 				hostCanvas.Validate();
 				NodeEditor.RepaintClients();
 			}
-
-			return node;
+            hostCanvas.isDirty = true;
+            return node;
 		}
 
 		/// <summary>
@@ -247,7 +247,9 @@ namespace NodeEditorFramework
 			DestroyImmediate (this, true);
 			if (!silent)
 				NodeEditor.curNodeCanvas.Validate ();
-		}
+
+            NodeEditor.curNodeCanvas.isDirty = true;
+        }
 
 		#endregion
 
