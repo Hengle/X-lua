@@ -198,7 +198,8 @@ namespace NodeEditorFramework
 				NodeEditorCallbacks.IssueOnAddConnection (this, port);
 				NodeEditor.curNodeCanvas.OnNodeChange(direction == Direction.In? port.body : body);
 			}
-		}
+            NodeEditor.curNodeCanvas.isDirty = true;
+        }
 
 		/// <summary>
 		/// Clears all connections of this port to other ports
@@ -225,7 +226,8 @@ namespace NodeEditorFramework
 			connections.Remove (port);
 
 			if (!silent) NodeEditor.curNodeCanvas.OnNodeChange (body);
-		}
+            NodeEditor.curNodeCanvas.isDirty = true;
+        }
 
 		#endregion
 	}

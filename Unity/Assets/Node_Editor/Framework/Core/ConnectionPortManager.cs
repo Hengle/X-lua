@@ -13,32 +13,38 @@ namespace NodeEditorFramework
 	{
 		private static Dictionary<string, ConnectionPortDeclaration[]> nodePortDeclarations;
 
-		/// <summary>
-		/// Fetches every node connection declaration for each node type for later use
-		/// </summary>
-		public static void FetchNodeConnectionDeclarations()
-		{
-			nodePortDeclarations = new Dictionary<string, ConnectionPortDeclaration[]> ();
-			foreach (NodeTypeData nodeData in NodeTypes.getNodeDefinitions ())	
-			{
-				Type nodeType = nodeData.type;
-				List<ConnectionPortDeclaration> declarations = new List<ConnectionPortDeclaration> ();
-				// Get all declared port fields
-				FieldInfo[] declaredPorts = ReflectionUtility.getFieldsOfType (nodeType, typeof(ConnectionPort));
-				foreach (FieldInfo portField in declaredPorts)
-				{ // Get info about that port declaration using the attribute
-					object[] declAttrs = portField.GetCustomAttributes (typeof(ConnectionPortAttribute), true);
-					if (declAttrs.Length < 1)
-						continue;
-					ConnectionPortAttribute declarationAttr = (ConnectionPortAttribute)declAttrs[0];
-					if (declarationAttr.MatchFieldType (portField.FieldType))
-						declarations.Add (new ConnectionPortDeclaration (portField, declarationAttr));
-					else
-						Debug.LogError ("Mismatched " + declarationAttr.GetType ().Name + " for " + portField.FieldType.Name + " '" + declarationAttr.Name + "' on " + nodeData.type.Name + "!");
-				}
-				nodePortDeclarations.Add (nodeData.typeID, declarations.ToArray ());
-			}
-		}
+        public static void InitSystem(out Dictionary<string, ConnectionPortDeclaration[]> nodePorts)
+        {
+            nodePorts = new Dictionary<string, ConnectionPortDeclaration[]>();
+            foreach (NodeTypeData nodeData in NodeTypes.getNodeDefinitions())
+            {
+                Type nodeType = nodeData.type;
+                List<ConnectionPortDeclaration> declarations = new List<ConnectionPortDeclaration>();
+                // Get all declared port fields
+                FieldInfo[] declaredPorts = ReflectionUtility.getFieldsOfType(nodeType, typeof(ConnectionPort));
+                foreach (FieldInfo portField in declaredPorts)
+                { // Get info about that port declaration using the attribute
+                    object[] declAttrs = portField.GetCustomAttributes(typeof(ConnectionPortAttribute), true);
+                    if (declAttrs.Length < 1)
+                        continue;
+                    ConnectionPortAttribute declarationAttr = (ConnectionPortAttribute)declAttrs[0];
+                    if (declarationAttr.MatchFieldType(portField.FieldType))
+                        declarations.Add(new ConnectionPortDeclaration(portField, declarationAttr));
+                    else
+                        Debug.LogError("Mismatched " + declarationAttr.GetType().Name + " for " + portField.FieldType.Name + " '" + declarationAttr.Name + "' on " + nodeData.type.Name + "!");
+                }
+                nodePorts.Add(nodeData.typeID, declarations.ToArray());
+            }
+            nodePortDeclarations = nodePorts;
+        }
+
+		///// <summary>
+		///// Fetches every node connection declaration for each node type for later use
+		///// </summary>
+		//public static void FetchNodeConnectionDeclarations()
+		//{
+  //          nodePortDeclarations = NodeSystemSetting.Inst.NodePortDec;
+		//}
 
 		/// <summary>
 		/// Updates all node connection ports in the given node and creates or adjusts them according to the declaration

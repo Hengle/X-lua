@@ -28,38 +28,36 @@ namespace NodeEditorFramework.Standard
         /// </summary>
         [MenuItem("Window/Node Editor")]
         public static NodeEditorWindow OpenNodeEditor()
-        {
+        {            
             _editor = GetWindow<NodeEditorWindow>();
             _editor.minSize = new Vector2(400, 200);
-
-            NodeEditor.ReInit(false);
+            NodeEditor.ReInit(false);//0.113 -> NodeEditorInputSystem.SetupInput()
             Texture iconTexture = ResourceManager.LoadTexture(EditorGUIUtility.isProSkin ? "Textures/Icon_Dark.png" : "Textures/Icon_Light.png");
-            _editor.titleContent = new GUIContent("Node Editor", iconTexture);
-
+            _editor.titleContent = new GUIContent("Node Editor", iconTexture);        
             return _editor;
         }
 
-        /*
+        
 		/// <summary>
 		/// Assures that the canvas is opened when double-clicking a canvas asset
 		/// </summary>
 		[UnityEditor.Callbacks.OnOpenAsset(1)]
-		private static bool AutoOpenCanvas(int instanceID, int line)
-		{
-			if (Selection.activeObject != null && Selection.activeObject is NodeCanvas)
-			{
-				string NodeCanvasPath = AssetDatabase.GetAssetPath(instanceID);
-				OpenNodeEditor().canvasCache.LoadNodeCanvas(NodeCanvasPath);
-				return true;
-			}
-			return false;
-		}
-		*/
+        private static bool AutoOpenCanvas(int instanceID, int line)
+        {
+            if (Selection.activeObject != null && Selection.activeObject is NodeCanvas)
+            {
+                string NodeCanvasPath = AssetDatabase.GetAssetPath(instanceID);
+                OpenNodeEditor().canvasCache.LoadNodeCanvas(NodeCanvasPath);
+                return true;
+            }
+            return false;
+        }
+
 
         private void OnEnable()
         {
             _editor = this;
-            NormalReInit();
+            NormalReInit();//0.215 -> NodeEditor.ReInit()
 
             // Subscribe to events
             NodeEditor.ClientRepaints -= Repaint;
@@ -79,28 +77,30 @@ namespace NodeEditorFramework.Standard
             EditorLoadingControl.justLeftPlayMode -= NormalReInit;
             EditorLoadingControl.justOpenedNewScene -= NormalReInit;
             SceneView.onSceneGUIDelegate -= OnSceneGUI;
-
-            // Clear Cache
-            canvasCache.ClearCacheEvents();
+          
+            // Clear Cache         
+            canvasCache.ClearCacheEvents();//0.492  -> NodeEditorSaveManager.SaveNodeCanvas()          
         }
 
         private void OnLostFocus()
         { // Save any changes made while focussing this window
-          // Will also save before possible assembly reload, scene switch, etc. because these require focussing of a different window
-            canvasCache.SaveCache();
+          // Will also save before possible assembly reload, scene switch, etc. because these require focussing of a different window            
+            canvasCache.SaveCache();//1.142 -> NodeEditorSaveManager.SaveNodeCanvas()          
         }
 
         private void OnFocus()
         { // Make sure the canvas hasn't been corrupted externally
-            NormalReInit();
+           
+            NormalReInit();//0.199 -> NodeEditor.ReInit()
         }
 
         private void NormalReInit()
-        {
+        {            
             NodeEditor.ReInit(false);
-            AssureSetup();
+
+            AssureSetup();            
             if (canvasCache.nodeCanvas)
-                canvasCache.nodeCanvas.Validate();
+                canvasCache.nodeCanvas.Validate();            
         }
 
         private void AssureSetup()
@@ -166,15 +166,15 @@ namespace NodeEditorFramework.Standard
             NodeEditorGUI.EndNodeGUI();
 
             // END ROOT: End Overlay GUI and draw popups
-            OverlayGUI.EndOverlayGUI();
+            OverlayGUI.EndOverlayGUI();            
         }
 
         private void OnSceneGUI(SceneView sceneview)
-        {
+        {           
             AssureSetup();
             if (canvasCache.editorState != null && canvasCache.editorState.selectedNode != null)
                 canvasCache.editorState.selectedNode.OnSceneGUI();
-            SceneView.lastActiveSceneView.Repaint();
+            SceneView.lastActiveSceneView.Repaint();            
         }
 
         #endregion

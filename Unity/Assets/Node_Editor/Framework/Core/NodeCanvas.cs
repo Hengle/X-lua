@@ -18,14 +18,14 @@ namespace NodeEditorFramework
 
 		public NodeEditorState[] editorStates = new NodeEditorState[0];
 
-        public string fileName;
 		public string saveName;
 		public string savePath;
 
 		public bool livesInScene = false;
-
-		public List<Node> nodes = new List<Node> ();
+        public List<Node> nodes = new List<Node> ();
 		public List<NodeGroup> groups = new List<NodeGroup> ();
+
+        [NonSerialized] public bool isDirty = false; // canvas is dirty	
 
 		#region Constructors
 
@@ -183,8 +183,7 @@ namespace NodeEditorFramework
 				newName = path.Substring (nameStart, path.Length-nameStart-6);
 			}
 			if (!newName.ToLower ().Contains ("lastsession"))
-			{
-                fileName = System.IO.Path.GetFileNameWithoutExtension(newName);
+			{                
                 savePath = path;
 				saveName = newName;
 				livesInScene = path.StartsWith ("SCENE/");

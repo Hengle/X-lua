@@ -1,12 +1,14 @@
 ﻿using System;
 using UnityEngine;
-
+using UnityEditor;
 using NodeEditorFramework.IO;
 
 using GenericMenu = NodeEditorFramework.Utilities.GenericMenu;
 using System.IO;
+using NodeEditorFramework;
+using NodeEditorFramework.Utilities;
 
-namespace NodeEditorFramework.Standard
+namespace ActorEditor
 {
     public class ActorEditorInterface
     {
@@ -36,6 +38,43 @@ namespace NodeEditorFramework.Standard
                 ShowNotificationAction(message);
         }
 
+
+        public void CheckCanvasState()
+        {
+            NodeCanvas canvas = canvasCache.nodeCanvas;
+            if (canvas == null) return;
+
+            bool isDirty = canvas.isDirty;
+            //while (!isDirty)
+            //{
+            //    isDirty |= CheckState(canvas);
+            //}
+            if (isDirty)
+            {
+                if (EditorUtility.DisplayDialog("提示", canvas.name + "已经被修改,是否保存?", "是", "否"))
+                {
+                    string path = canvasCache.nodeCanvas.savePath;
+                    if (!string.IsNullOrEmpty(path))
+                        SaveCanvas();
+                    else
+                        SaveCanvasAs();
+                }
+            }
+        }
+        private bool CheckState(NodeCanvas canvas)
+        {
+            if (canvas == null) return false;
+
+            bool isDirty = false;
+            for (int i = 0; i < canvas.editorStates.Length; i++)
+            {
+                var state = canvas.editorStates[i];
+                isDirty |= state.canvas != null && state.canvas.isDirty;
+                if (isDirty) break;
+            }
+
+            return isDirty;
+        }
         #region GUI
 
         public void DrawToolbarGUI(Rect rect)
@@ -99,8 +138,8 @@ namespace NodeEditorFramework.Standard
             GUILayout.Space(10);
             GUILayout.FlexibleSpace();
 
-            GUILayout.Label(new GUIContent("" + canvasCache.nodeCanvas.fileName, "Opened Canvas path: " + canvasCache.nodeCanvas.savePath), NodeEditorGUI.toolbarLabel);
-            GUILayout.Label("Type: " + canvasCache.typeData.DisplayString, NodeEditorGUI.toolbarLabel);
+            string fileName = Path.GetFileNameWithoutExtension(canvasCache.nodeCanvas.savePath);
+            GUILayout.Label(new GUIContent(fileName, "Canvas: " + canvasCache.nodeCanvas.savePath), NodeEditorGUI.toolbarLabel);
             curToolbarHeight = Mathf.Max(curToolbarHeight, GUILayoutUtility.GetLastRect().yMax);
 
             GUI.backgroundColor = new Color(1, 0.3f, 0.3f, 1);
@@ -212,7 +251,7 @@ namespace NodeEditorFramework.Standard
 
         private void SaveCanvasAs()
         {
-            string panelPath = NodeEditor.editorPath + "Resources/Saves/";
+            string panelPath = ResourceManager.ActorEditorPath;
             if (canvasCache.nodeCanvas != null && !string.IsNullOrEmpty(canvasCache.nodeCanvas.savePath))
                 panelPath = canvasCache.nodeCanvas.savePath;
             string path = UnityEditor.EditorUtility.SaveFilePanelInProject("Save Node Canvas", "Node Canvas", "asset", "", panelPath);

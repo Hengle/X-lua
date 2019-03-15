@@ -235,17 +235,17 @@ namespace NodeEditorFramework
 		/// <summary>
 		/// Saves the the specified NodeCanvas as a new asset at path, optionally as a working copy and overwriting any existing save at path
 		/// </summary>
-		public static void SaveNodeCanvas (string path, ref NodeCanvas nodeCanvas, bool createWorkingCopy, bool safeOverwrite = true) 
+		public static void SaveNodeCanvas (string path, ref NodeCanvas nodeCanvas, bool createWorkingCopy = false, bool safeOverwrite = true) 
 		{
-	#if !UNITY_EDITOR
+#if !UNITY_EDITOR
 			throw new System.NotImplementedException ();
-	#else
-			if (string.IsNullOrEmpty (path)) throw new System.ArgumentNullException ("Cannot save NodeCanvas: No path specified!");
+#else            
+            if (string.IsNullOrEmpty (path)) throw new System.ArgumentNullException ("Cannot save NodeCanvas: No path specified!");
 			if (nodeCanvas == null) throw new System.ArgumentNullException ("Cannot save NodeCanvas: The specified NodeCanvas that should be saved to path '" + path + "' is null!");
 			if (nodeCanvas.GetType () == typeof(NodeCanvas)) throw new System.ArgumentException ("Cannot save NodeCanvas: The NodeCanvas has no explicit type! Please convert it to a valid sub-type of NodeCanvas!");
 			if (nodeCanvas.allowSceneSaveOnly) throw new System.InvalidOperationException("Cannot save NodeCanvas: NodeCanvas is marked to contain scene data and cannot be saved as an asset!");
-
-			nodeCanvas.Validate();
+           
+            nodeCanvas.Validate();
 
 			if (nodeCanvas.livesInScene)
 			{
@@ -268,8 +268,8 @@ namespace NodeEditorFramework
 			if (createWorkingCopy)
 				processedCanvas = CreateWorkingCopy(processedCanvas);
 
-			// Differenciate canvasSave as the canvas asset and nodeCanvas as the source incase an existing save has been overwritten
-			NodeCanvas canvasSave = processedCanvas;
+            // Differenciate canvasSave as the canvas asset and nodeCanvas as the source incase an existing save has been overwritten
+            NodeCanvas canvasSave = processedCanvas;
 			NodeCanvas prevSave;
 			if (safeOverwrite && (prevSave = ResourceManager.LoadResource<NodeCanvas> (path)) != null && prevSave.GetType () == canvasSave.GetType ())
 			{ // OVERWRITE: Delete contents of old save
@@ -289,31 +289,33 @@ namespace NodeEditorFramework
 				UnityEditor.AssetDatabase.CreateAsset(processedCanvas, path);
 			}
 
-			// Write editorStates
-			AddSubAssets (processedCanvas.editorStates, canvasSave);
-			// Write nodes + contents
-			foreach (Node node in processedCanvas.nodes)
-			{ // Write node and additional scriptable objects
-				AddSubAsset (node, canvasSave);
-				AddSubAssets (node.GetScriptableObjects (), node);
-				// Make sure all node ports are included in the representative connectionPorts list
-				ConnectionPortManager.UpdatePortLists(node);
-				foreach (ConnectionPort port in node.connectionPorts)
-					AddSubAsset (port, node);
-			}
+            // Write editorStates
+            AddSubAssets (processedCanvas.editorStates, canvasSave);
+            // Write nodes + contents
+            foreach (Node node in processedCanvas.nodes)
+            { // Write node and additional scriptable objects
+                AddSubAsset(node, canvasSave);
+                AddSubAssets(node.GetScriptableObjects(), node);
+                // Make sure all node ports are included in the representative connectionPorts list
+                ConnectionPortManager.UpdatePortLists(node);
+                foreach (ConnectionPort port in node.connectionPorts)
+                    AddSubAsset(port, node);
+            }
 
-			UnityEditor.AssetDatabase.SaveAssets ();
+            XProfile.Begin("-");
+            UnityEditor.AssetDatabase.SaveAssets ();
 			UnityEditor.AssetDatabase.Refresh ();
+            XProfile.End(true);
 
-			NodeEditorCallbacks.IssueOnSaveCanvas (canvasSave);
-			
+            NodeEditorCallbacks.IssueOnSaveCanvas (canvasSave);
+            
 	#endif
 		}
 
 		/// <summary>
 		/// Loads the NodeCanvas from the asset file at path and optionally creates a working copy of it before returning
 		/// </summary>
-		public static NodeCanvas LoadNodeCanvas (string path, bool createWorkingCopy)
+		public static NodeCanvas LoadNodeCanvas (string path, bool createWorkingCopy = false)
 		{
 	#if !UNITY_EDITOR
 			throw new System.NotImplementedException ();

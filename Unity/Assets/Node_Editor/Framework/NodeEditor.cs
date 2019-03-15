@@ -14,7 +14,7 @@ namespace NodeEditorFramework
 	/// </summary>
 	public static partial class NodeEditor 
 	{
-		public static string editorPath = "Assets/Plugins/Node_Editor/";
+		public static string editorPath = "Assets/Node_Editor/";
 
 		// The NodeCanvas which represents the currently drawn Node Canvas; globally accessed
 		public static NodeCanvas curNodeCanvas;
@@ -49,15 +49,7 @@ namespace NodeEditorFramework
 				if (GUIFunction && !initiatedGUI)
 					setupGUI();
 			}
-		}
-
-		/// <summary>
-		/// Resets the initiation state so next time calling checkInit it will re-initiate
-		/// </summary>
-		public static void resetInit()
-		{
-			InitiationError = initiatedBase = initiatedGUI = false;
-		}
+		}	
 
 		/// <summary>
 		/// Re-Inits the NodeCanvas regardless of whetehr it was initiated before
@@ -65,7 +57,7 @@ namespace NodeEditorFramework
 		public static void ReInit (bool GUIFunction) 
 		{
 			InitiationError = initiatedBase = initiatedGUI = false;
-			
+
 			setupBaseFramework ();
 			if (GUIFunction)
 				setupGUI ();
@@ -76,29 +68,17 @@ namespace NodeEditorFramework
 		/// </summary>
 		private static void setupBaseFramework ()
 		{
-			CheckEditorPath ();
+            // Run fetching algorithms searching the script assemblies for Custom Nodes / Connection Types / NodeCanvas Types
+            ConnectionPortStyles.CheckPortStyles();
 
-			// Init Resource system. Can be called anywhere else, too, if it's needed before.
-			ResourceManager.SetDefaultResourcePath (editorPath + "Resources/");
-
-			// Run fetching algorithms searching the script assemblies for Custom Nodes / Connection Types / NodeCanvas Types
-			ConnectionPortStyles.FetchConnectionPortStyles();
-			NodeTypes.FetchNodeTypes ();
-			NodeCanvasManager.FetchCanvasTypes ();
-			ConnectionPortManager.FetchNodeConnectionDeclarations ();
-			ImportExportManager.FetchIOFormats ();
-
-			// Setup Callback system
-			NodeEditorCallbacks.SetupReceivers ();
+            // Setup Callback system
+            NodeEditorCallbacks.SetupReceivers ();
 			NodeEditorCallbacks.IssueOnEditorStartUp ();
-
-			// Init input
-			NodeEditorInputSystem.SetupInput ();
-
-		#if UNITY_EDITOR
-			UnityEditor.EditorApplication.update -= Update;
+                 
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.update -= Update;
 			UnityEditor.EditorApplication.update += Update;
-		#endif
+#endif
 
 			initiatedBase = true;
 		}
@@ -108,8 +88,6 @@ namespace NodeEditorFramework
 		/// </summary>
 		private static void setupGUI ()
 		{
-			if (!initiatedBase)
-				setupBaseFramework();
 			initiatedGUI = false;
 			
 			// Init GUIScaleUtility. This fetches reflected calls and might throw a message notifying about incompability.
@@ -127,37 +105,6 @@ namespace NodeEditorFramework
 
 			initiatedGUI = true;
 		}
-
-		/// <summary>
-		/// Checks the editor path and corrects it when possible.
-		/// </summary>
-		public static void CheckEditorPath () 
-		{
-	#if UNITY_EDITOR
-			Object script = UnityEditor.AssetDatabase.LoadAssetAtPath (editorPath + "Framework/NodeEditor.cs", typeof(Object));
-			if (script == null) 
-			{ // Not installed in default path
-				string[] assets = UnityEditor.AssetDatabase.FindAssets ("NodeEditorCallbackReceiver"); // Something relatively unique
-				if (assets.Length != 1) 
-				{
-					assets = UnityEditor.AssetDatabase.FindAssets ("ConnectionPortManager"); // Another try
-					if (assets.Length != 1) 
-						throw new UnityException ("Node Editor: Not installed in default directory '" + editorPath + "'! Correct path could not be detected! Please correct the editorPath variable in NodeEditor.cs!");
-				}
-				
-				string correctEditorPath = UnityEditor.AssetDatabase.GUIDToAssetPath (assets[0]);
-				int subFolderIndex = correctEditorPath.LastIndexOf ("Framework/");
-				if (subFolderIndex == -1)
-					throw new UnityException ("Node Editor: Not installed in default directory '" + editorPath + "'! Correct path could not be detected! Please correct the editorPath variable in NodeEditor.cs!");
-				correctEditorPath = correctEditorPath.Substring (0, subFolderIndex);
-				
-				Debug.LogWarning ("Node Editor: Not installed in default directory '" + editorPath + "'! " +
-								  "Editor-only automatic detection adjusted the path to " + correctEditorPath + ", but if you plan to use at runtime, please correct the editorPath variable in NodeEditor.cs!");
-				editorPath = correctEditorPath;
-			}
-	#endif
-		}
-		
 		#endregion
 		
 		#region GUI
