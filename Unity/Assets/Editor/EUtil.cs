@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor;
 
 namespace GameEditor
 {
     public class EUtil
     {
+        #region 文件路径操作
         public static string FilePath2UnityPath(string path)
         {
             return path.Replace(Application.dataPath, "Assets");
@@ -18,8 +20,7 @@ namespace GameEditor
                 return path;
             }
             return Application.dataPath + path.Substring(6, path.Length - 6);
-        }
-
+        }        
         public static string StandardlizePath(string path)
         {
             return StandardlizePath(path, false);
@@ -32,6 +33,31 @@ namespace GameEditor
         {
             string pathReplace = path.Replace(@"\", @"/");
             return toLower ? pathReplace.ToLower() : pathReplace;
+        }
+        #endregion
+
+        #region 文件/目录内容读取
+        /// <summary>  
+        /// 得到选中资产路径列表    
+        /// </summary>   
+        /// <returns></returns> 
+        public static List<string> GetSelectionAssetPaths()
+        {
+            List<string> assetPaths = new List<string>();
+            // 这个接口才能取到两列模式时候的文件夹  
+            foreach (var guid in Selection.assetGUIDs)
+            {
+                if (string.IsNullOrEmpty(guid))
+                {
+                    continue;
+                }
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    assetPaths.Add(path);
+                }
+            }
+            return assetPaths;
         }
 
         /// <summary>
@@ -94,6 +120,6 @@ namespace GameEditor
             }
             return list.ToArray();
         }
-
+        #endregion
     }
 }

@@ -118,7 +118,10 @@ namespace NodeEditorFramework
 				return;
 			checkInit (true);
 
-			DrawSubCanvas (nodeCanvas, editorState);
+            UnityEditor.EditorGUI.BeginChangeCheck();
+            DrawSubCanvas (nodeCanvas, editorState);
+            if (UnityEditor.EditorGUI.EndChangeCheck())
+                nodeCanvas.isDirty = true;
 		}
 
 		/// <summary>

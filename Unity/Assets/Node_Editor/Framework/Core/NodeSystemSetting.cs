@@ -25,7 +25,6 @@ namespace NodeEditorFramework
         }
     }
 
-
     public class NodeSystemSetting : ScriptableObject
     {
         [Title("Base Confing")]
@@ -67,7 +66,8 @@ namespace NodeEditorFramework
         public static NodeSystemSetting Inst { get { return _inst; } }
 
         static NodeSystemSetting _inst;
-        const string _assetPath = "Assets/Editor/Node_Editor/NodeSystemSetting.asset";
+        const string ASSET_PATH = "Assets/Node_Editor/Framework/Core/NodeSystemSetting.asset";
+
 
         bool showEventHandlers = false;
         bool showHotkeyHandlers = false;
@@ -77,12 +77,12 @@ namespace NodeEditorFramework
         [MenuItem("Node Editor/Update System Setting", false, 1000)]
         public static void InitSystem()
         {
-            _inst = AssetDatabase.LoadAssetAtPath<NodeSystemSetting>(_assetPath);
+            _inst = AssetDatabase.LoadAssetAtPath<NodeSystemSetting>(ASSET_PATH);
             bool hasExist = _inst != null;
             if (!hasExist)
             {
                 _inst = CreateInstance<NodeSystemSetting>();
-                AssetDatabase.CreateAsset(_inst, _assetPath);
+                AssetDatabase.CreateAsset(_inst, ASSET_PATH);
             }
 
             ConnectionPortStyles.InitSystem(out _inst.portStyles, out _inst.valueTypes);

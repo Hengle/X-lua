@@ -57,7 +57,6 @@ namespace ActorEditor
         #region GUI
         protected override OdinMenuTree BuildMenuTree()
         {
-            XProfile.Begin("");
             var tree = new OdinMenuTree(false);
             tree.Config.DrawSearchToolbar = true;
             tree.Config.SearchToolbarHeight = (int)_editorInterface.toolbarHeight + 2;
@@ -72,7 +71,6 @@ namespace ActorEditor
             }
             EditorUtility.ClearProgressBar();
             tree.SortMenuItemsByName();
-            XProfile.End(true);
 
             tree.Selection.SelectionConfirmed += SelectionConfirmed;
             return tree;
@@ -111,12 +109,9 @@ namespace ActorEditor
             _canvasCache.editorState.canvasRect = CanvasWindowRect;
 
             try
-            {//-----------------添加Node等无法监听到修改
-                EditorGUI.BeginChangeCheck();
+            {
                 // Perform drawing with error-handling
                 NodeEditor.DrawCanvas(_canvasCache.nodeCanvas, _canvasCache.editorState);
-                if (EditorGUI.EndChangeCheck())
-                    Debug.LogErrorFormat("{0}\n---> Change", _canvasCache.openedCanvasPath);
             }
             catch (UnityException e)
             { // On exceptions in drawing flush the canvas to avoid locking the UI
