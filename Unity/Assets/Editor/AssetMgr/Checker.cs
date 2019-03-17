@@ -9,7 +9,7 @@ namespace AssetMgr
 {
     public class Checker
     {
-        [MenuItem("AssetMgr/资源重名检查")]
+        [MenuItem("Tools/AssetMgr/资源重名检查")]
         static void Open()
         {
             //var window = GetWindow<Checker>();

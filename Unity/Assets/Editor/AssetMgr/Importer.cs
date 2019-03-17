@@ -10,7 +10,7 @@
 
     public class Importer : OdinMenuEditorWindow
     {
-        [MenuItem("Window/AssetMgr/Importer Open", false, 1)]
+        [MenuItem("Tools/AssetMgr/Importer Open", false, 1)]
         private static void OdinOpen()
         {
             Instance = GetWindow<Importer>("资源导入设置");
@@ -19,7 +19,7 @@
             Instance._import = new GUIContent(EditorIcons.Refresh.Raw);
             Instance._importAll = new GUIContent("导入当前配置");
         }
-        [MenuItem("Window/AssetMgr/Importer Close", false, 1)]
+        [MenuItem("Tools/AssetMgr/Importer Close", false, 1)]
         private static void OdinClose()
         {
             Instance = GetWindow<Importer>("资源导入设置");

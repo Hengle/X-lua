@@ -3,6 +3,7 @@ using NodeEditorFramework.Utilities;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -57,7 +58,7 @@ namespace ActorEditor
         #region GUI
         protected override OdinMenuTree BuildMenuTree()
         {
-            var tree = new OdinMenuTree(false);
+            var tree = new OdinMenuTree(true);
             tree.Config.DrawSearchToolbar = true;
             tree.Config.SearchToolbarHeight = (int)_editorInterface.toolbarHeight + 2;
 
@@ -66,16 +67,18 @@ namespace ActorEditor
             for (int i = 0; i < assets.Length; i++)
             {
                 var asset = ResourceManager.LoadResource<NodeCanvas>(assets[i]);
-                tree.Add(asset.name, asset.savePath);
+                SVNMenuItem item = new SVNMenuItem(tree, asset.name, asset.savePath);
+                tree.AddMenuItemAtPath("", item);
                 EditorUtility.DisplayProgressBar(TITLE, asset.name, (i + 1f) / assets.Length);
             }
             EditorUtility.ClearProgressBar();
             tree.SortMenuItemsByName();
 
             tree.Selection.SelectionConfirmed += SelectionConfirmed;
+
             return tree;
         }
-
+        
         void SelectionConfirmed(OdinMenuTreeSelection items)
         {
             if (items != null && items.Count > 0)

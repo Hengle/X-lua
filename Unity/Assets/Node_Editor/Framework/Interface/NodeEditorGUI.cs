@@ -41,6 +41,7 @@ namespace NodeEditorFramework
 		public static GUIStyle toolbarLabel;
 		public static GUIStyle toolbarDropdown;
 		public static GUIStyle toolbarButton;
+		public static GUIStyle toolbarArrow;
 
 		public static bool Init ()
 		{
@@ -93,7 +94,8 @@ namespace NodeEditorFramework
 			toolbarButton = GUI.skin.FindStyle("toolbarButton");
 			toolbarLabel = GUI.skin.FindStyle("toolbarButton");
 			toolbarDropdown = GUI.skin.FindStyle("toolbarDropdown");
-			if (toolbar == null || toolbarButton == null || toolbarLabel == null || toolbarDropdown == null)
+            toolbarArrow = GUI.skin.FindStyle("GUIEditor.BreadcrumbLeft");
+            if (toolbar == null || toolbarButton == null || toolbarLabel == null || toolbarDropdown == null)
 			{ // No editor styles available - use custom skin
 				toolbar = new GUIStyle(nodeSkin.box);
 				toolbar.normal.background = GUIToolbar;
@@ -111,8 +113,8 @@ namespace NodeEditorFramework
 				toolbarButton = new GUIStyle(toolbarLabel);
 				toolbarButton.active.background = RTEditorGUI.ColorToTex(1, NE_LightColor);
 
-				toolbarDropdown = new GUIStyle(toolbarButton);
-			}
+				toolbarDropdown = new GUIStyle(toolbarButton);               
+            }
 			GUI.skin = null;
 
 			return true;

@@ -16,7 +16,7 @@ public class AnimCompressTool
     /// <summary>
     /// 压缩所有
     /// </summary>
-    [MenuItem("Window/AssetMgr/Compress All Anim Key-Float", false, 500)]
+    [MenuItem("Tools/AssetMgr/Compress All Anim Key-Float", false, 500)]
     static void CompressAllKeyAndFloatPrecision()
     {
 

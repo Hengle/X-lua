@@ -5,9 +5,19 @@ using UnityEngine.Profiling;
 using System.Timers;
 using System.Diagnostics;
 using UDebug = UnityEngine.Debug;
+using UnityEditor;
 
-public static class XProfile
+public class XProfile 
 {
+    //[MenuItem("Assets/LoadScript")]
+    //static void LoadScript()
+    //{
+    //    string path = AssetDatabase.GetAssetPath(Selection.activeInstanceID);
+    //    var mono = AssetDatabase.LoadAssetAtPath<MonoScript>(path);
+    //    UDebug.LogError(mono.GetClass());
+    //    UDebug.LogError(mono);
+    //}
+
     static Stopwatch stopwatch = new Stopwatch();
     public static void Begin(string name)
     {

@@ -2,11 +2,11 @@
 using UnityEngine;
 using UnityEditor;
 using NodeEditorFramework.IO;
-
 using GenericMenu = NodeEditorFramework.Utilities.GenericMenu;
 using System.IO;
 using NodeEditorFramework;
 using NodeEditorFramework.Utilities;
+using Sirenix.Utilities.Editor;
 
 namespace ActorEditor
 {
@@ -84,18 +84,16 @@ namespace ActorEditor
             GUILayout.BeginHorizontal();
             float curToolbarHeight = 0;
 
+
             if (GUILayout.Button("File", NodeEditorGUI.toolbarDropdown, GUILayout.Width(50)))
             {
                 GenericMenu menu = new GenericMenu(!Application.isPlaying);
 
                 // New Canvas filled with canvas types
-                NodeCanvasManager.FillCanvasTypeMenu(ref menu, NewNodeCanvas, "New Canvas/");
-                menu.AddSeparator("");
-
+                NodeCanvasManager.FillCanvasTypeMenu(ref menu, NewNodeCanvas, "新建画布/");
                 // Load / Save
 #if UNITY_EDITOR
-                menu.AddItem(new GUIContent("Load Canvas"), false, LoadCanvas);
-                menu.AddItem(new GUIContent("Reload Canvas"), false, ReloadCanvas);
+                menu.AddItem(new GUIContent("重置画布"), false, ReloadCanvas);
                 menu.AddSeparator("");
                 if (canvasCache.nodeCanvas.allowSceneSaveOnly)
                 {
@@ -104,31 +102,13 @@ namespace ActorEditor
                 }
                 else
                 {
-                    menu.AddItem(new GUIContent("Save Canvas"), false, SaveCanvas);
-                    menu.AddItem(new GUIContent("Save Canvas As"), false, SaveCanvasAs);
+                    menu.AddItem(new GUIContent("保存画布"), false, SaveCanvas);
+                    menu.AddItem(new GUIContent("另存画布"), false, SaveCanvasAs);
                 }
                 menu.AddSeparator("");
 #endif
-
-                // Import / Export filled with import/export types
-                ImportExportManager.FillImportFormatMenu(ref menu, ImportCanvasCallback, "Import/");
-                if (canvasCache.nodeCanvas.allowSceneSaveOnly)
-                {
-                    menu.AddDisabledItem(new GUIContent("Export"));
-                }
-                else
-                {
-                    ImportExportManager.FillExportFormatMenu(ref menu, ExportCanvasCallback, "Export/");
-                }
-                menu.AddSeparator("");
-
-                // Scene Saving
-                string[] sceneSaves = NodeEditorSaveManager.GetSceneSaves();
-                if (sceneSaves.Length <= 0) // Display disabled item
-                    menu.AddItem(new GUIContent("Load Canvas from Scene"), false, null);
-                else foreach (string sceneSave in sceneSaves) // Display scene saves to load
-                        menu.AddItem(new GUIContent("Load Canvas from Scene/" + sceneSave), false, LoadSceneCanvasCallback, sceneSave);
-                menu.AddItem(new GUIContent("Save Canvas to Scene"), false, SaveSceneCanvasCallback);
+                menu.AddItem(new GUIContent("导入数据[未完成!]"), false, Import);
+                menu.AddItem(new GUIContent("导出数据[未完成!]"), false, Export);
 
                 // Show dropdown
                 menu.Show(new Vector2(5, toolbarHeight));
@@ -136,28 +116,13 @@ namespace ActorEditor
             curToolbarHeight = Mathf.Max(curToolbarHeight, GUILayoutUtility.GetLastRect().yMax);
 
             GUILayout.Space(10);
-            GUILayout.FlexibleSpace();
-
             string fileName = Path.GetFileNameWithoutExtension(canvasCache.nodeCanvas.savePath);
-            GUILayout.Label(new GUIContent(fileName, "Canvas: " + canvasCache.nodeCanvas.savePath), NodeEditorGUI.toolbarLabel);
+            GUILayout.Button(new GUIContent(fileName, canvasCache.nodeCanvas.savePath), NodeEditorGUI.toolbarArrow);
             curToolbarHeight = Mathf.Max(curToolbarHeight, GUILayoutUtility.GetLastRect().yMax);
-
-            GUI.backgroundColor = new Color(1, 0.3f, 0.3f, 1);
-            if (GUILayout.Button("Force Re-init", NodeEditorGUI.toolbarButton, GUILayout.Width(100)))
-            {
-                NodeEditor.ReInit(true);
-                canvasCache.nodeCanvas.Validate();
-            }
-#if !UNITY_EDITOR
-			GUILayout.Space(5);
-			if (GUILayout.Button("Quit", NodeEditorGUI.toolbarButton, GUILayout.Width(100)))
-				Application.Quit ();
-#endif
-            curToolbarHeight = Mathf.Max(curToolbarHeight, GUILayoutUtility.GetLastRect().yMax);
-            GUI.backgroundColor = Color.white;
 
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
+
             if (Event.current.type == EventType.Repaint)
                 toolbarHeight = curToolbarHeight;
         }
@@ -207,18 +172,6 @@ namespace ActorEditor
         }
 
 #if UNITY_EDITOR
-        private void LoadCanvas()
-        {
-            string path = UnityEditor.EditorUtility.OpenFilePanel("Load Node Canvas", NodeEditor.editorPath + "Resources/Saves/", "asset");
-            if (!path.Contains(Application.dataPath))
-            {
-                if (!string.IsNullOrEmpty(path))
-                    ShowNotification(new GUIContent("You should select an asset inside your project folder!"));
-            }
-            else
-                canvasCache.LoadNodeCanvas(path);
-        }
-
         private void ReloadCanvas()
         {
             string path = canvasCache.nodeCanvas.savePath;
@@ -259,83 +212,14 @@ namespace ActorEditor
                 canvasCache.SaveNodeCanvas(path);
         }
 #endif
-
-        private void LoadSceneCanvasCallback(object canvas)
+        private void Import()
         {
-            canvasCache.LoadSceneNodeCanvas((string)canvas);
-            sceneCanvasName = canvasCache.nodeCanvas.name;
-        }
 
-        private void SaveSceneCanvasCallback()
+        }
+        private void Export()
         {
-            modalPanelContent = SaveSceneCanvasPanel;
-            showModalPanel = true;
+
         }
-
-        private void ImportCanvasCallback(string formatID)
-        {
-            IOFormat = ImportExportManager.ParseFormat(formatID);
-            if (IOFormat.RequiresLocationGUI)
-            {
-                ImportLocationGUI = IOFormat.ImportLocationArgsGUI;
-                modalPanelContent = ImportCanvasGUI;
-                showModalPanel = true;
-            }
-            else if (IOFormat.ImportLocationArgsSelection(out IOLocationArgs))
-                canvasCache.SetCanvas(ImportExportManager.ImportCanvas(IOFormat, IOLocationArgs));
-        }
-
-        private void ImportCanvasGUI()
-        {
-            if (ImportLocationGUI != null)
-            {
-                bool? state = ImportLocationGUI(ref IOLocationArgs);
-                if (state == null)
-                    return;
-
-                if (state == true)
-                    canvasCache.SetCanvas(ImportExportManager.ImportCanvas(IOFormat, IOLocationArgs));
-
-                ImportLocationGUI = null;
-                modalPanelContent = null;
-                showModalPanel = false;
-            }
-            else
-                showModalPanel = false;
-        }
-
-        private void ExportCanvasCallback(string formatID)
-        {
-            IOFormat = ImportExportManager.ParseFormat(formatID);
-            if (IOFormat.RequiresLocationGUI)
-            {
-                ExportLocationGUI = IOFormat.ExportLocationArgsGUI;
-                modalPanelContent = ExportCanvasGUI;
-                showModalPanel = true;
-            }
-            else if (IOFormat.ExportLocationArgsSelection(canvasCache.nodeCanvas.saveName, out IOLocationArgs))
-                ImportExportManager.ExportCanvas(canvasCache.nodeCanvas, IOFormat, IOLocationArgs);
-        }
-
-        private void ExportCanvasGUI()
-        {
-            if (ExportLocationGUI != null)
-            {
-                bool? state = ExportLocationGUI(canvasCache.nodeCanvas.saveName, ref IOLocationArgs);
-                if (state == null)
-                    return;
-
-                if (state == true)
-                    ImportExportManager.ExportCanvas(canvasCache.nodeCanvas, IOFormat, IOLocationArgs);
-
-                ImportLocationGUI = null;
-                modalPanelContent = null;
-                showModalPanel = false;
-            }
-            else
-                showModalPanel = false;
-        }
-
         #endregion
     }
 }

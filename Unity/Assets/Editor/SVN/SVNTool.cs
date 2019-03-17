@@ -22,6 +22,18 @@ using UnityEngine;
 /// 路径示例：Assets/1.png
 public static class SVNTool
 {
+    /// <summary>
+    /// 通用菜单列表
+    /// </summary>
+    public static void DrawGenericMenu(ref GenericMenu menu, List<string> paths)
+    {
+        menu.AddItem(new GUIContent("更新"), false, () => Update(paths));
+        menu.AddItem(new GUIContent("提交"), false, () => Commit(paths));
+        menu.AddItem(new GUIContent("还原"), false, () => Revert(paths));
+        menu.AddItem(new GUIContent("解决"), false, () => Resolve(paths));
+    }
+
+    #region SVN操作
     public static void UpdateAtPath(string path)
     {
         Update(new List<string>() { path });
@@ -125,5 +137,6 @@ public static class SVNTool
         });
         return result.StandardOutput;
     }
+    #endregion
 }
 

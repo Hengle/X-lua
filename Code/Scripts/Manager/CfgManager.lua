@@ -1,21 +1,29 @@
 local format = string.format
+local ipairs = ipairs
+local Stream = require("Cfg.DataStruct")
 local CSUtil = CSUtil
 local allCfgs = nil
 
-local CfgManager = {}
--- 配置名列表 --
-CfgManager.NameTable = {}
+local function LoadCsv(relPath, methodName, index)
+    local path = format('%sconfig/csv/%s', CSUtil.DataPath, relPath)
+    local data = Stream.new(path)
+    local cfg = {}
+    while data:NextRow() do
+        local value = data[methodName](data)
+        local key = value[index]
+        cfg[key] = value
+    end
+    return cfg
+end
 
----便于修改csv数据路径
-function create_datastream_path(relPath)
-    return format('%sconfig/csv/%s', CSUtil.DataPath, relPath)
+local function LoadAllCsv(cfgs)
+    for _, s in ipairs(cfgs) do
+        allCfgs[s.name] = LoadCsv(s.output, s.method, s.index)
+    end
 end
 
 local function Init()
-    allCfgs = require "Cfg.Config"
-    for k, _ in pairs(allCfgs) do
-        CfgManager.NameTable[k] = k
-    end
+    LoadAllCsv(require "Cfg.Config")
 end
 
 local function GetConfig(name)
