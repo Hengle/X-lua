@@ -1,174 +1,108 @@
-﻿using NodeEditorFramework;
-using NodeEditorFramework.Utilities;
-using Sirenix.OdinInspector.Editor;
-using Sirenix.Utilities;
-using Sirenix.Utilities.Editor;
-using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
-using UnityEngine;
-
-namespace ActorEditor
+﻿namespace ActorEditor
 {
-    public class ActorEditorWindow : NodeMenuWindow
+    using UnityEngine;
+    using UnityEditor;
+    using System.Linq;
+    using Sirenix.Utilities;
+    using Sirenix.Utilities.Editor;
+    using Sirenix.OdinInspector.Editor;
+    using Cfg.Character;
+    using System.Collections.Generic;
+
+    internal class ActorEditorWindow : OdinMenuEditorWindow
     {
-        [MenuItem("Node Editor/" + TITLE, false, 1)]
-        private static ActorEditorWindow OpenActorEditor()
+        [MenuItem("Window/Action Designer/Load Action")]
+        private static void Open()
         {
-            _ins = GetWindow<ActorEditorWindow>("资源导入设置");
-            _ins.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
-
-            Texture iconTexture = ResourceManager.LoadTexture(EditorGUIUtility.isProSkin ? "Textures/Icon_Dark.png" : "Textures/Icon_Light.png");
-            _ins.titleContent = new GUIContent(TITLE, iconTexture);
-            return _ins;
-        }
-        [MenuItem("Node Editor/Close " + TITLE, false, 2)]
-        private static void CloseActorEditor()
-        {
-            if (_ins != null)
-                _ins.Close();
+            var window = GetWindow<ActorEditorWindow>("模型配置窗口");
+            window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
+            window.minSize = new Vector2(400, 500);
+            ActorConfig.LoadInstanceIfAssetExists();
+            HomeConfig.Instance.LoadAll();            
         }
 
-        [MenuItem("Node Editor/Check Path Data")]
-        private static void CheckPathData()
+
+        Rect _windowRect = new Rect(100, 100, 200, 200);
+        ActorEditor _actor;
+        List<OdinMenuItem> _currentItems = new List<OdinMenuItem>();
+
+        public void RefreshTree()
         {
-            string path = ResourceManager.ActorEditorPath;
-            string[] assets = Directory.GetFiles(path, "*.asset");
-            for (int i = 0; i < assets.Length; i++)
+            if (MenuTree == null) return;
+            foreach (var group in HomeConfig.Instance.ModelGroupDict)
             {
-                var asset = ResourceManager.LoadResource<NodeCanvas>(assets[i]);
-                string newPath = ResourceManager.PreparePath(assets[i]);
-                asset.UpdateSource(newPath);
-                EditorUtility.DisplayProgressBar(TITLE, asset.name, (i + 1f) / assets.Length);
+                foreach (var item in group.Value)
+                {
+                    MenuTree.Add(item.MenuItemName, item);
+                }
             }
-            EditorUtility.ClearProgressBar();
         }
-
-        public static ActorEditorWindow Ins { get { return _ins; } }
-        private static ActorEditorWindow _ins;
-
-        public const string TITLE = "Actor Editor";
-
-        // Canvas cache
-        private NodeEditorUserCache _canvasCache;
-        private ActorEditorInterface _editorInterface;
-        private float _menuWith;
-        private Rect CanvasWindowRect { get { return new Rect(MenuWidth, _editorInterface.toolbarHeight, position.width - MenuWidth - 2, position.height - _editorInterface.toolbarHeight); } }
-
-        #region GUI
         protected override OdinMenuTree BuildMenuTree()
         {
-            var tree = new OdinMenuTree(true);
+            OdinMenuTree tree = new OdinMenuTree(supportsMultiSelect: false);
             tree.Config.DrawSearchToolbar = true;
-            tree.Config.SearchToolbarHeight = (int)_editorInterface.toolbarHeight + 2;
-
-            string path = ResourceManager.ActorEditorPath;
-            string[] assets = Directory.GetFiles(path, "*.asset");
-            for (int i = 0; i < assets.Length; i++)
+            foreach (var item in ActorConfig.MenuItems)
             {
-                var asset = ResourceManager.LoadResource<NodeCanvas>(assets[i]);
-                SVNMenuItem item = new SVNMenuItem(tree, asset.name, asset.savePath);
-                tree.AddMenuItemAtPath("", item);
-                EditorUtility.DisplayProgressBar(TITLE, asset.name, (i + 1f) / assets.Length);
+                if (item.Key != GroupType.None)
+                    tree.Add(item.Value, null, EditorIcons.Table);
+                else
+                    tree.Add("主页", HomeConfig.Instance, EditorIcons.House);
             }
-            EditorUtility.ClearProgressBar();
-            tree.SortMenuItemsByName();
+            foreach (var group in HomeConfig.Instance.ModelGroupDict)
+            {
+                foreach (var item in group.Value)
+                {
+                    tree.Add(item.MenuItemName, item);
+                }
+            }
 
-            tree.Selection.SelectionConfirmed += SelectionConfirmed;
-
+            tree.Selection.SelectionChanged += OnMenuItemChange;
             return tree;
         }
-        
-        void SelectionConfirmed(OdinMenuTreeSelection items)
-        {
-            if (items != null && items.Count > 0)
-            {
-                if (_editorInterface != null)
-                    _editorInterface.CheckCanvasState();
 
-                var assetPath = items[0].Value as string;
-                _ins._canvasCache.LoadNodeCanvas(assetPath);
+        protected void OnMenuItemChange(SelectionChangedType state)
+        {
+            foreach (var item in _currentItems)
+            {
+                if (item.Value is ActorEditor)
+                    (item.Value as ActorEditor).ReselectedState();
             }
+            _currentItems.Clear();
+            _currentItems.AddRange(MenuTree.Selection);
         }
 
-        protected override void OnGUI()
+        protected override void OnBeginDrawEditors()
         {
-            base.OnGUI();
+            if (MenuTree == null) return;
 
-            // Initiation
-            NodeEditor.checkInit(true);
-            if (NodeEditor.InitiationError)
+            var selected = this.MenuTree.Selection.FirstOrDefault();
+            var toolbarHeight = this.MenuTree.Config.SearchToolbarHeight;
+
+            SirenixEditorGUI.BeginHorizontalToolbar(toolbarHeight);
             {
-                GUILayout.Label("Node Editor Initiation failed! Check console for more information!");
-                return;
+                if (selected != null)
+                {
+                    var old = GUI.color;
+                    GUI.color = Color.cyan;
+                    GUILayout.Label(selected.Name, SirenixGUIStyles.BoldLabel);
+                    GUI.color = old;
+                }
             }
-            AssureSetup();
-
-            // ROOT: Start Overlay GUI for popups
-            OverlayGUI.StartOverlayGUI("ActorEditorWindow");
-
-            // Begin Node Editor GUI and set canvas rect
-            NodeEditorGUI.StartNodeGUI(true);
-            _canvasCache.editorState.canvasRect = CanvasWindowRect;
-
-            try
-            {
-                // Perform drawing with error-handling
-                NodeEditor.DrawCanvas(_canvasCache.nodeCanvas, _canvasCache.editorState);
-            }
-            catch (UnityException e)
-            { // On exceptions in drawing flush the canvas to avoid locking the UI
-                _canvasCache.NewNodeCanvas();
-                NodeEditor.ReInit(true);
-                Debug.LogError("Unloaded Canvas due to an exception during the drawing phase!");
-                Debug.LogException(e);
-            }
-
-            // Draw Interface
-            _editorInterface.DrawToolbarGUI(new Rect(MenuWidth - 5, 0, Screen.width - MenuWidth + 5, 30));
-            _editorInterface.DrawModalPanel();
-
-            // End Node Editor GUI
-            NodeEditorGUI.EndNodeGUI();
-
-            // END ROOT: End Overlay GUI and draw popups
-            OverlayGUI.EndOverlayGUI();
+            SirenixEditorGUI.EndHorizontalToolbar();
         }
-        #endregion
-
-        #region General 
-        private void OnEnable()
-        {
-            _ins = this;
-            NodeEditor.ReInit(false);
-            AssureSetup();
-
-            // Subscribe to events
-            NodeEditor.ClientRepaints -= Repaint;
-            NodeEditor.ClientRepaints += Repaint;
-        }
-
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            NodeEditor.ClientRepaints -= Repaint;
-            _canvasCache.ClearCacheEvents();
+
+            HomeConfig.Instance.Destroy();
+
+            Clipboard.Clear();
+            EditorUtility.UnloadUnusedAssetsImmediate(true);
+            EditorUtility.ClearProgressBar();
+            AssetDatabase.Refresh();
+           
+            Debug.Log("[模型配置窗口]关闭~~");
         }
 
-        private void AssureSetup()
-        {
-            if (_canvasCache == null)
-            { // Create cache
-                _canvasCache = new NodeEditorUserCache();
-            }
-            _canvasCache.AssureCanvas();
-            if (_editorInterface == null)
-            { // Setup editor interface
-                _editorInterface = new ActorEditorInterface();
-                _editorInterface.canvasCache = _canvasCache;
-                _editorInterface.ShowNotificationAction = ShowNotification;
-            }
-        }
-        #endregion
     }
 }

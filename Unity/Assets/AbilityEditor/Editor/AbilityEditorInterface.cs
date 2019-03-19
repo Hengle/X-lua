@@ -6,11 +6,10 @@ using GenericMenu = NodeEditorFramework.Utilities.GenericMenu;
 using System.IO;
 using NodeEditorFramework;
 using NodeEditorFramework.Utilities;
-using Sirenix.Utilities.Editor;
 
-namespace ActorEditor
+namespace AbilityEditor
 {
-    public class ActorEditorInterface
+    public class AbilityEditorInterface
     {
         public NodeEditorUserCache canvasCache;
         public Action<GUIContent> ShowNotificationAction;

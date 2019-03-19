@@ -50,11 +50,7 @@ namespace TimelineEditor
         }
 
 
-        [MenuItem("Tool/Load Timeline")]
-        public static void TEST()
-        {
-
-        }
+      
     }
 }
 
