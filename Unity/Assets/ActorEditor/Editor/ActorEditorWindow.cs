@@ -11,7 +11,7 @@
 
     internal class ActorEditorWindow : OdinMenuEditorWindow
     {
-        [MenuItem("Window/Action Designer/Load Action")]
+        [MenuItem("Actor Editor/Open Actor Editor")]
         private static void Open()
         {
             var window = GetWindow<ActorEditorWindow>("模型配置窗口");

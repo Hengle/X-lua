@@ -6,9 +6,11 @@ BaseEntity - 物体基类
 Ability - 能力基类
 ...衍生能力
 
-#--设计思路
+==>物体具有哪些能力
 
-
+#--参考
+http://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
+http://moddota.com/forums/discussion/13/datadriven-ability-events-modifiers#Comment_28
 
 
 ------------------------------------------------
