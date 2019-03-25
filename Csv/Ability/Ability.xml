@@ -1,0 +1,33 @@
+<Define Namespace = "Ability">
+    <Class Name = "Ability"  Index = "ModelName" DataPath="ActorCfg">
+        <Field Name = "Name" Value = "string" Des = "技能名称" />
+        <Field Name = "BaseClass" Value = "string" Des = "继承类型,默认ability(基类)" />
+        <Field Name = "Behavior" Value = "BehaviorType" Des = "技能行为类型,定义了技能的释放形式;可用|组合多个类型" />
+        <Field Name = "ClipPoint" Value = "float" Des = "技能触发时间点,AnimationClip时间点" />
+        <Field Name = "ClipName" Value = "string" Des = "动作剪辑文件名称,当能力绑定到其他角色时,检查角色是否包含动作" />
+        <Field Name = "ClipSpeed" Value = "float" Des = "剪辑播放速度" />
+        <Field Name = "AoERadius" Value = "float" Des = "技能释放半径" />
+        <Field Name = "AttackRange" Value = "float" Des = "显示能力可作用范围" />
+        <Field Name = "Cooldown" Value = "float" Des = "冷却时间" />
+        <Field Name = "ManaCost" Value = "float" Des = "魔力消耗" />
+        <Field Name = "Duration" Value = "float" Des = "持续时间" />
+        <Field Name = "SpecialArgs" Value = "list:SpecialArg" Des = "变量列表,可指定常量,也可指定变量引用Excel,使用"Table."替换"%"索引数据" />
+        <Field Name = "Events" Value = "list:string" Des = "基础事件列表" />
+        <Field Name = "Modifys" Value = "list:string" Des = "修饰器列表,可定义多个修饰器" />
+    </Class>
+
+    <Class Name = "SpecialArg">
+        <Field Name = "varType" Value = "string" Des = "变量类型" />
+        <Field Name = "varName" Value = "string" Des = "变量名称" />
+        <Field Name = "varValue" Value = "string" Des = "变量数据" />
+    </Class>
+
+    <Enum Name="BehaviorType">
+        <Const Name = "ABILITY_BEHAVIOR_PASSIVE" Value = "0" Des = "被动技能，不能被使用，但是会在HUD上显示" />
+        <Const Name = "ABILITY_BEHAVIOR_UNIT_TARGET" Value = "1" Des = "需要指定一个目标来释放" />
+        <Const Name = "ABILITY_BEHAVIOR_NO_TARGET" Value = "2" Des = "不需要指定目标就能释放的技能，当按下技能按钮的时候，这个技能就会被释放" />
+        <Const Name = "ABILITY_BEHAVIOR_CHANNELLED" Value = "3" Des = "持续性施法技能" />
+        <Const Name = "ABILITY_BEHAVIOR_POINT" Value = "4" Des = "技能将会在鼠标指定的位置释放" />
+        <Const Name = "ABILITY_BEHAVIOR_AOE" Value = "5" Des = "范围型技能,将会显示技能释放的范围" />
+    </Enum>
+</Define>
