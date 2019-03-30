@@ -1,5 +1,5 @@
 <Define Namespace = "Ability">
-    <Class Name = "Ability"  Index = "Name" DataPath="ActorCfg">
+    <Class Name = "Ability"  Index = "Name" DataPath="Config">
         <Field Name = "Name" Value = "string" Des = "技能名称" />
         <Field Name = "BaseClass" Value = "string" Des = "继承类型,默认ability(基类)" />
         <Field Name = "Behavior" Value = "BehaviorType" Des = "技能行为类型,定义了技能的释放形式;可用|组合多个类型" />
