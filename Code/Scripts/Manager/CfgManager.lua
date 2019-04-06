@@ -10,7 +10,6 @@ local function LoadCsv(relPath, method, index)
     local cfg = {}
     for i = 1, data:GetInt() do
         local value = data[method](data)
-        print(dump(value, index))
         local key = value[index]
         cfg[key] = value
     end
