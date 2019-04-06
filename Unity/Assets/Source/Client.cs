@@ -18,6 +18,9 @@ namespace Game
 
         void Awake()
         {
+            Cfg.CfgManager.ConfigDir = Application.dataPath + "/../../GamePlayer/Data/config/csv/";
+            Cfg.CfgManager.LoadAll();
+
             Ins = this;
             DontDestroyOnLoad(gameObject);
 

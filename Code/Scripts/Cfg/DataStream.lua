@@ -1,88 +1,78 @@
-local lower = string.lower
-local setmetatable = setmetatable
-local tonumber = tonumber
-local lines = io.lines
-local split = string.split
-local format= string.format
-local Stream = {}
-Stream.__index = Stream
-Stream.name = "Stream"
-local Split = function (line)
-	return split(line, '▃')
-end
-function Stream.new(dataFile)
-	local o = {}
+local tonumber = tonumber;
+local gsub = string.gsub;
+local lower = string.lower;
+local error = error;
+local setmetatable = setmetatable;
+local tostring = tostring;
+local lines = io.lines;
+
+local Stream = {};
+Stream.__index = Stream;
+
+function Stream.new(file)
+	local o = {};
 	setmetatable(o, Stream)
-	o.dataFile = dataFile
-	o.GetLine = lines(dataFile)
-	o.idx = 0
-	o.line = 0
+	o.dataIter = lines(file);
 	return o
 end
-function Stream:Count()
-	return #self.columns
-end
-function Stream:NextRow()
-	local line = self.GetLine()
-	if line == nil or #line == 0 then
-		return false
+
+function Stream:Close()
+	while self.dataIter() do
 	end
-	self.columns = Split(line)
-	self.idx = 1
-	self.line = self.line + 1
-	return true
 end
-function Stream:NextColum()
-	if self.idx > #self.columns then
-		local status = self:NextRow()
-		if not status then
-			self.hasNext = false
-			return nil
-		end
-	end
-	local result = self.columns[self.idx]
-	self.idx = self.idx + 1
-	return result
+
+function Stream:GetNext()
+	return self.dataIter()
 end
-function Stream:GetInt()
-	local next = self:NextColum()
-	return tonumber(next)
-end
-function Stream:GetLong()
-	local next = self:NextColum()
-	return tonumber(next)
-end
-function Stream:GetFloat()
-	local next = self:NextColum()
-	return tonumber(next)
-end
+
 function Stream:GetBool()
-	local next = lower(self:NextColum())
-	if next == '0' then
+	local next = self:GetNext();
+	if next == "true" then
+		return true
+	elseif next == "false" then
 		return false
 	else
-		return true
+		error(tostring(next) .. " isn't bool! ")
 	end
 end
-function Stream:GetString()
-	return self:NextColum()
+
+function Stream:GetInt()
+	local next = self:GetNext();
+	return tonumber(next)
 end
+
+function Stream:GetLong()
+	local next = self:GetNext();
+	return tonumber(next)
+end
+
+function Stream:GetFloat()
+	local next = self:GetNext();
+	return tonumber(next)
+end
+
+function Stream:GetString()
+	local next = self:GetNext();
+	return next
+end
+
 function Stream:GetList(type)
-	local result = {}
-	local method = self['Get' .. type]
-	local length = self:GetInt()
+	local result = {};
+	local method = self['Get' .. type];
+	local length = self:GetInt();
 	for i = 1, length do
-		result[i] = method(self)
+		result[i] = method(self);
 	end
 	return result
 end
-function Stream:GetDict(key, value)
-	local result = {}
-	local optKey = self['Get' .. key]
-	local optValue = self['Get' .. value]
-	local length = self:GetInt()
+
+function Stream:GetDict(key,value)
+	local result = {};
+	local optKey = self['Get' .. key];
+	local optValue = self['Get' .. value];
+	local length = self:GetInt();
 	for i = 1, length do
-		result[optKey(self)] = optValue(self)
+		result[optKey(self)] = optValue(self);
 	end
 	return result
 end
