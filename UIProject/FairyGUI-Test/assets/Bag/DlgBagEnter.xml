@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<component size="1280,720">
-  <displayList>
-    <text id="n0_gp6d" name="n0" xy="76,38" size="1125,80" fontSize="24" color="#ffffff" align="center" autoSize="none" strokeColor="#000000" text="Icons are in seperated assetbundles. &#xA;Use 'Window Menu->Build FairyGUI example bundles' to create them"/>
-    <component id="n1_gp6d" name="Button_Enter" src="mr0ja" fileName="BagButton.xml" xy="47,571"/>
-  </displayList>
-</component>

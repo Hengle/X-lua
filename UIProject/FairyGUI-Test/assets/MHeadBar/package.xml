@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<packageDescription id="v3f5kisz" jpegQuality="80" compressPNG="true">
-  <resources>
-    <component id="jior0" name="ItemHeadBar.xml" path="/" exported="true"/>
-    <component id="jior1" name="ProgressBar_hp.xml" path="/"/>
-    <component id="jior3" name="DlgHeadBar.xml" path="/" exported="true"/>
-  </resources>
-  <publish name="MHeadBar"/>
-</packageDescription>

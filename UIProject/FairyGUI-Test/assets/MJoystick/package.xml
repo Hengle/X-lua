@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<packageDescription id="5p790va2" jpegQuality="80" compressPNG="true">
-  <resources>
-    <component id="mkqn1" name="Joystick.xml" path="/"/>
-    <component id="mkqn2" name="DlgJoystick.xml" path="/" exported="true"/>
-  </resources>
-  <publish name="MJoystick"/>
-</packageDescription>

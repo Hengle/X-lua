@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<component size="1280,720">
-  <displayList>
-    <component id="n0_m1wz" name="Button_Bag" src="m1wz1" fileName="ButtonBag.xml" xy="1020,524"/>
-    <component id="n1_m1wz" name="Button_Start" src="m1wz0" fileName="ButtonStartGuide.xml" xy="515,310"/>
-  </displayList>
-</component>

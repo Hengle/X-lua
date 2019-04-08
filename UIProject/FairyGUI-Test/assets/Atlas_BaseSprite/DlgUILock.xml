@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<component size="1280,720">
-  <displayList>
-    <graph id="n0_b3l5" name="mask" xy="0,0" size="1280,720" type="rect" lineColor="#00666666" fillColor="#cc666666"/>
-    <text id="n1_b3l5" name="title" xy="506,300" size="200,40" fontSize="27" color="#ffffff" autoSize="none" text="等待窗口加载.."/>
-  </displayList>
-</component>
