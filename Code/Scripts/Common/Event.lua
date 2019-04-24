@@ -11,7 +11,7 @@ local Class = Class
 local Util = Util
 local List = List
 local ilist = ilist
-local _event = Class:new("Event")
+local _event = Class:new()
 
 function _event:ctor(name)
     self.name = name or "__unknown__"

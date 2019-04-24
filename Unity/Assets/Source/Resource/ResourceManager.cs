@@ -67,7 +67,7 @@ namespace Game
         public AssetBundle bundle;
     }
 
-    public partial class ResourceManager : IManager
+    public partial class ResourceManager : Manager
     {
         public ResourceManager() { }
 
@@ -115,7 +115,7 @@ namespace Game
         /// <summary>
         /// 初始化
         /// </summary>
-        public void Init()
+        public override void Init()
         {
             int memorySize = 1024 * 1024; //内存大小1GB
             if (memorySize <= 1024 * 1024)
@@ -692,7 +692,7 @@ namespace Game
         }
 
         //其他操作        
-        public void Dispose()
+        public override void Dispose()
         {
             foreach (KeyValuePair<string, Object> pair in _persistantObjects)
             {

@@ -18,8 +18,8 @@ namespace Game
 
         void Awake()
         {
-            Cfg.CfgManager.ConfigDir = Application.dataPath + "/../../GamePlayer/Data/config/csv/";
-            Cfg.CfgManager.LoadAll();
+            //Cfg.CfgManager.ConfigDir = Application.dataPath + "/../../GamePlayer/Data/config/csv/";
+            //Cfg.CfgManager.LoadAll();
 
             Ins = this;
             DontDestroyOnLoad(gameObject);
@@ -40,16 +40,24 @@ namespace Game
         {
             ResMgr.Update();
             NetworkMgr.Update();
+            LuaMgr.Update();
         }
-
+        void FixedUpdate()
+        {
+            LuaMgr.FixedUpdate();
+        }
+        void LateUpdate()
+        {
+            LuaMgr.LateUpdate();
+        }
         void OnDestroy()
         {
             NetworkMgr.Dispose();
             ServerMgr.Dispose();
             UpdateMgr.Dispose();
-            ResMgr.Dispose();
             PoolMgr.Dispose();
             SceneMgr.Dispose();
+            ResMgr.Dispose();
             LuaMgr.Dispose();
             GameMgr.Dispose();
 

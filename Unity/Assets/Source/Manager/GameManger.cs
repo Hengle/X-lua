@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Game
 {
-    public class GameManager : IManager
+    public class GameManager : Manager
     {
         public GameManager() { }
 
-        public void Init()
+        public override void Init()
         {
             Interface.Create();
             Interface.Instance.Init();
@@ -78,9 +78,6 @@ namespace Game
         }
         IEnumerator StartGame()
         {
-#if GAME_SIMULATION
-            Client.LuaMgr.AddSearchPath(Util.DataPath + "Scripts");
-#endif
             Client.LuaMgr.AddSearchPath(ConstSetting.LuaDir);
             Client.LuaMgr.InitScripts();
             Launcher.Ins.SetLaunchState(LaunchState.InitScripts, 1);
@@ -94,7 +91,7 @@ namespace Game
             }
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             Util.ResetPath();
             Resources.UnloadUnusedAssets();

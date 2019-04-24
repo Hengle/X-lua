@@ -2,7 +2,7 @@ local format = string.format
 local ipairs = ipairs
 local Stream = require("Cfg.DataStruct")
 local CSUtil = CSUtil
-local allCfgs = nil
+local allCfgs = {}
 
 local function LoadCsv(relPath, method, index)
     local path = format('%sconfig/csv/%s', CSUtil.DataPath, relPath)

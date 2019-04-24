@@ -14,8 +14,9 @@ namespace Cfg
 		/// <summary>
 		public static string ConfigDir;
 		
-		public static readonly Dictionary<int, Cfg.AllType.AllClass> AllClass = new Dictionary<int, Cfg.AllType.AllClass>();
-		public static readonly Dictionary<int, Cfg.AllType.Test> Test = new Dictionary<int, Cfg.AllType.Test>();
+		public static readonly Dictionary<int, AllType.AllClass> AllClass = new Dictionary<int, AllType.AllClass>();
+		public static readonly Dictionary<string, Cfg.Character.Model> Model = new Dictionary<string, Cfg.Character.Model>();
+		public static readonly Dictionary<string, Cfg.Skill.ActorConfig> ActorConfig = new Dictionary<string, Cfg.Skill.ActorConfig>();
 		
 		public static int _row;
 		/// <summary>
@@ -43,12 +44,15 @@ namespace Cfg
 			string path = "Data Path Empty";
 			try
 			{
-				path = ConfigDir + "alltype/allclass.data";
-				var allclasss = Load(path, (d) => new Cfg.AllType.AllClass(d));
+				path = ConfigDir + "ype/allclass.data";
+				var allclasss = Load(path, (d) => new AllType.AllClass(d));
 				allclasss.ForEach(v => AllClass.Add(v.ID, v));
-				path = ConfigDir + "alltype/test.data";
-				var tests = Load(path, (d) => new Cfg.AllType.Test(d));
-				tests.ForEach(v => Test.Add(v.TID, v));
+				path = ConfigDir + "character/model.data";
+				var models = Load(path, (d) => new Cfg.Character.Model(d));
+				models.ForEach(v => Model.Add(v.Name, v));
+				path = ConfigDir + "skill/actorconfig.data";
+				var actorconfigs = Load(path, (d) => new Cfg.Skill.ActorConfig(d));
+				actorconfigs.ForEach(v => ActorConfig.Add(v.ModelName, v));
 			}
 			catch (Exception e)
 			{
@@ -59,7 +63,8 @@ namespace Cfg
 		public static void Clear()
 		{
 			AllClass.Clear();
-Test.Clear();
+Model.Clear();
+ActorConfig.Clear();
 		}
 		
 	}

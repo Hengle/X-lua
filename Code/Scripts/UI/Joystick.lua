@@ -6,7 +6,7 @@ local Mathf = Mathf
 local handler = handler
 
 ---@class Joystick
-local Joystick = Class:new("Joystick")
+local Joystick = Class:new()
 
 local DoMoveStart = nil
 local DoMove = nil
